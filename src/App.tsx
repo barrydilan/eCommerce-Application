@@ -1,10 +1,9 @@
 import './App.css';
 
-console.log('Setup Husky - done');
-
 function App() {
   return (
     <>
+      <h1>Is is my test header!</h1>
       <div>
         <h2>It is testing div</h2>
       </div>
