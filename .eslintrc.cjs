@@ -32,6 +32,9 @@ module.exports = {
       typescript: {
         alwaysTryTypes: true,
       },
+      react: {
+        version: 'detect',
+      },
     },
   },
 };

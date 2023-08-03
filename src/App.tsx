@@ -1,7 +1,6 @@
 import './App.css';
 
-console.log('trololo');
-var a;
+console.log('Setup Husky - done');
 
 function App() {
   return (
