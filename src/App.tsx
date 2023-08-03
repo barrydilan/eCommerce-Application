@@ -1,5 +1,8 @@
 import './App.css';
 
+console.log('trololo');
+var a;
+
 function App() {
   return (
     <>
