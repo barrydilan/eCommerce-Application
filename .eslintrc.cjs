@@ -26,8 +26,8 @@ module.exports = {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/react-in-jsx-scope': 0,
     'import/extensions': 0,
+    "import/no-extraneous-dependencies": 0,
     'no-param-reassign': 0,
-    "import/no-extraneous-dependencies": 0
   },
   settings: {
     'import/resolver': {
