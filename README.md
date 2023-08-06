@@ -1,27 +1,83 @@
-# React + TypeScript + Vite
+# *Имя нашего сайта*
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+*Имя нашего сайта* - is not just your regular food delivery, it's also one of the best *RS2023Q1 graduation projects!* :smirk: 
 
-Currently, two official plugins are available:
+## Getting Started :boom:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To run our project locally, you woud have to download zip file with our repository or run git clone.
 
-## Expanding the ESLint configuration
+### Prerequisites :computer:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+What things do you need to run our project locally?
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+* Latest version of Node.js :boom:
+* Installed .git :boom:
+* Code Editor :boom:
+
+
+### Installing :exclamation:
+
+First make sure you have all the prerequisites installed and then run:
+
+```
+git clone git@github.com:Quiddlee/eCommerce-Application.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Then navigate into project folder and run: 
+
+```
+npm install
+```
+To run a development server: 
+```
+npm run dev
+```
+Congratulations! :sunglasses:
+
+## Running the tests :grimacing:
+
+To run tests simply type in your console
+
+```
+npm run test
+```
+
+## Useful scripts :point_left:
+
+Linting and Prettifying happens automatically when files are staged, however:
+
+To manually run ESlint:
+
+```
+npm run lint
+```
+
+To manually run Prettier:
+
+```
+npm run format
+```
+
+## Built With :muscle:
+
+* [React](https://react.dev/) - The web framework used
+* [Redux](https://redux.js.org/) - State Management
+* [Tailwind](https://tailwindcss.com/) - CSS Framework
+* [Jest](https://jestjs.io/) - Testing Framework
+* [Vite](https://vitejs.dev/) - Bundler
+
+## Authors :alien: :alien: :alien:
+
+* **Bogdan** - [Quiddlee](https://github.com/Quiddlee)
+* **Oleksii** - [Tedzury](https://github.com/Tedzury)
+* **Harry** - [barrydilan](https://github.com/barrydilan)
+
+## License :mortar_board:
+
+This project is licensed under the MIT License.
+
+## Acknowledgments :collision:
+
+:collision: :collision: :collision: We want to thank [RS-School](https://rs.school/) community
+:collision: :collision: :collision: And especially our mentor, [Andrej Podlubnyj](https://github.com/andron13)
