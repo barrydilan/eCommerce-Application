@@ -3,8 +3,8 @@
 interface InputProps {
   id: string;
   label: string;
-  type: string;
-  disabled: boolean;
+  type?: string;
+  disabled?: boolean;
 }
 
 export default function Input({ id, label, disabled, type = 'text' }: InputProps): React.ReactElement {
@@ -52,3 +52,8 @@ export default function Input({ id, label, disabled, type = 'text' }: InputProps
     </div>
   );
 }
+
+Input.defaultProps = {
+  disabled: false,
+  type: 'text',
+};

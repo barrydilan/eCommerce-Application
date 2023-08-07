@@ -1,7 +1,12 @@
+import Button from '../../shared/Button';
 import Input from '../../shared/Input';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 export default function SignIn() {
+  function handleClick() {
+    console.log('btn clicked');
+  }
+
   return (
     <section className="fixed inset-0 bg-modal-overlay bg-opacity-20">
       <form
@@ -14,8 +19,9 @@ export default function SignIn() {
         </div>
         <Input id="email" label="Email" disabled={false} type="text" />
         <Input id="password" label="Password" disabled={false} type="password" />
-        <div className="mt-10">
-          <button type="submit">Sign In</button>
+        <div className="mt-10 w-full">
+          <Button label="Sign In" disabled={false} onClick={() => handleClick()} />
+          <Button label="Sign Up" disabled={false} onClick={() => handleClick()} />
         </div>
       </form>
     </section>
