@@ -1,3 +1,9 @@
+import SignIn from '../widgets/signIn/SignIn';
+
 export default function App() {
-  return <h3>Hello world</h3>;
+  return (
+    <div>
+      <SignIn />
+    </div>
+  );
 }
