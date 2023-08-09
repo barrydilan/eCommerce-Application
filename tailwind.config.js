@@ -21,7 +21,22 @@ export default {
     fontFamily: {
       poppins: ['Poppins', 'sans-serif'],
     },
-    extend: {},
+    extend: {
+      content: {
+        'searchSvg': "url('./src/assets/icons/search.svg')",
+      },
+      gridTemplateColumns: {
+        'tabGridCols': '11rem 1fr',
+        'deskGridCols': '22rem 1fr'
+      },
+      gridTemplateRows: {
+        'mobGridRows': 'auto 1fr auto',
+        'tabGridRows': 'auto 1fr',
+      },
+      spacing: {
+        '89': '22rem',
+      }
+    },
   },
   plugins: []
 }
