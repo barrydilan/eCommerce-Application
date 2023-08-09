@@ -1,7 +1,8 @@
 import Header from '../widgets/Header/Header';
 import NavBlock from '../pages/NavBlock/NavBlock';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-export default function App() {
+function MainPage() {
   return (
     <main
       className="
@@ -29,5 +30,21 @@ export default function App() {
       </div>
       <NavBlock />
     </main>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<MainPage />} />
+        <Route path="registration" element={<p>Registration</p>} />
+        <Route path="login" element={<p>Login</p>} />
+        <Route path="delivery" element={<p>Delivery</p>} />
+        <Route path="payment" element={<p>Payment</p>} />
+        <Route path="about" element={<p>About us</p>} />
+        <Route path="*" element={<p>Page not found</p>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
