@@ -1,9 +1,9 @@
-import menuIcon from '../../assets/icons/menu.svg';
-import cartIcon from '../../assets/icons/shopping-cart.svg';
-import deliveryIcon from '../../assets/icons/delivery.svg';
 import paymentIcon from '../../assets/icons/credit-card.svg';
-import contactsIcon from '../../assets/icons/phone.svg';
+import deliveryIcon from '../../assets/icons/delivery.svg';
 import logOutIcon from '../../assets/icons/log-out.svg';
+import menuIcon from '../../assets/icons/menu.svg';
+import contactsIcon from '../../assets/icons/phone.svg';
+import cartIcon from '../../assets/icons/shopping-cart.svg';
 
 function NavMenu() {
   return (
