@@ -22,7 +22,7 @@ export default function SignIn() {
         <Input id="email" label="Email" disabled={false} type="text" />
         <Input id="password" label="Password" disabled={false} type="password" />
         <div className="mt-10 w-full">
-          <Button label="Sign Up" disabled={false} onClick={() => handleClick()} />
+          <Button label="Sign Up" outline disabled={false} onClick={() => handleClick()} />
         </div>
       </form>
     </section>

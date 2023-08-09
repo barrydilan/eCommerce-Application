@@ -39,6 +39,6 @@ export default function Button({ label, onClick, disabled, outline, small }: But
 
 Button.defaultProps = {
   disabled: false,
-  outline: false,
+  outline: true,
   small: false,
 };
