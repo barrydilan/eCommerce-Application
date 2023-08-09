@@ -1,6 +1,7 @@
-import Header from '../widgets/Header/Header';
-import NavBlock from '../pages/NavBlock/NavBlock';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import NavBlock from '../pages/NavBlock/NavBlock';
+import Header from '../widgets/Header/Header';
 
 function MainPage() {
   return (

@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
 import { productService } from '../../shared/api';
 
 const rootReducer = combineReducers({
