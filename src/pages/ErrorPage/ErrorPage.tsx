@@ -7,8 +7,8 @@ function ErrorPage() {
       <div className="w-40 object-contain sm:w-64">
         <img src={keanu} alt="sad Keanu Reeves sitting on a bench" />
       </div>
-      <h5 className="mt-3 text-2xl font-bold">404 error</h5>
-      <p className="mt-3 text-center">
+      <h5 className="mt-3 text-2xl font-bold text-text-grey">404 error</h5>
+      <p className="mt-3 text-center text-text-grey">
         Sorry, there is no such page for now, or it has never existed... <br />
         Maybe, you want to checkout our main page?
       </p>
