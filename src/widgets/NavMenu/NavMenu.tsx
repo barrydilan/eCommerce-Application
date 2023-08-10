@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import menuIcon from '../../assets/icons/menu.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
 import deliveryIcon from '../../assets/icons/delivery.svg';
@@ -23,34 +24,34 @@ function NavMenu() {
         "
     >
       <li className="navMenuItem">
-        <a href="/" className="navMenuLink text-text-grey">
+        <Link to="/" className="navMenuLink text-text-grey">
           <img src={menuIcon} alt="" className="navMenuIcon md:inline-block" />
           Our&nbsp;menu
-        </a>
+        </Link>
       </li>
       <li className="navMenuItem lg:hidden">
-        <a href="/cart" className="navMenuLink text-text-grey">
+        <Link to="/cart" className="navMenuLink text-text-grey">
           <img src={cartIcon} alt="" className="navMenuIcon md:inline-block" />
           Cart
-        </a>
+        </Link>
       </li>
       <li className="navMenuItem">
-        <a href="/delivery" className="navMenuLink text-text-grey">
+        <Link to="/delivery" className="navMenuLink text-text-grey">
           <img src={deliveryIcon} alt="" className="navMenuIcon md:inline-block" />
           Delivery
-        </a>
+        </Link>
       </li>
       <li className="navMenuItem">
-        <a href="/payment" className="navMenuLink text-text-grey">
+        <Link to="/payment" className="navMenuLink text-text-grey">
           <img src={paymentIcon} alt="" className="navMenuIcon md:inline-block" />
           Payment
-        </a>
+        </Link>
       </li>
       <li className="navMenuItem">
-        <a href="/contacts" className="navMenuLink text-text-grey">
+        <Link to="/about" className="navMenuLink text-text-grey">
           <img src={contactsIcon} alt="" className="navMenuIcon md:inline-block" />
           Contacts
-        </a>
+        </Link>
       </li>
       <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">
         <button type="button" className="navMenuLink text-text-grey">
