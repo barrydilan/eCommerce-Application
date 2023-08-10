@@ -34,7 +34,7 @@ export default {
       },
       spacing: {
         '89': '22rem',
-      }
+      },
     },
     maxHeight: {
       '0': '0',

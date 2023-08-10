@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from '../widgets/Header/Header';
 import NavBlock from '../pages/NavBlock/NavBlock';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
 
 export default function App() {
   return (
@@ -36,7 +37,7 @@ export default function App() {
             <Route path="delivery" element={<p>Delivery</p>} />
             <Route path="payment" element={<p>Payment</p>} />
             <Route path="about" element={<p>About us</p>} />
-            <Route path="*" element={<p>Page not found</p>} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </div>
         <NavBlock />
