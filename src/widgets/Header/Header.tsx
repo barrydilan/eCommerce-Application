@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import logoIcon from '../../assets/icons/logo.svg';
 import userPic from '../../assets/img/UserImg.jpg';
 
@@ -85,9 +86,9 @@ function Header() {
             "
         />
       </label>
-      <a href="/profile" className="block md:hidden">
+      <Link to="/profile" className="block md:hidden">
         <img src={userPic} alt="" className="mr-2 w-8 rounded-full" />
-      </a>
+      </Link>
     </header>
   );
 }
