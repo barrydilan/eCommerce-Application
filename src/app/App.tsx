@@ -1,6 +1,7 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from '../widgets/Header/Header';
 import NavBlock from '../pages/NavBlock/NavBlock';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
 
 function MainPage() {
   return (
@@ -26,7 +27,7 @@ function MainPage() {
           md:row-end-3
           "
       >
-        Main content will be here
+        <ErrorPage />
       </div>
       <NavBlock />
     </main>
