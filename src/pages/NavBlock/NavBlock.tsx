@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import userPic from '../../assets/img/UserImg.jpg';
 import NavMenu from '../../widgets/NavMenu/NavMenu';
 
@@ -19,8 +20,8 @@ function NavBlock() {
         md:bg-opacity-0
       "
     >
-      <a
-        href="/profile"
+      <Link
+        to="/profile"
         className="
           hidden 
           w-full 
@@ -65,7 +66,7 @@ function NavBlock() {
             Good morning !
           </h6>
         </div>
-      </a>
+      </Link>
       <NavMenu />
     </div>
   );
