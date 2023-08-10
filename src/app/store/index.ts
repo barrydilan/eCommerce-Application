@@ -1,2 +1,2 @@
+export type { AppDispatch, AppStore, RootState } from './store.ts';
 export { setupStore } from './store.ts';
-export type { RootState, AppStore, AppDispatch } from './store.ts';
