@@ -1,4 +1,2 @@
-import authService from './authService.ts';
-import productService from './ProductService.ts';
-
-export { authService, productService };
+export { authApi } from './AuthApi.ts';
+export { productApi } from './ProductApi.ts';

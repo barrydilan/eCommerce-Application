@@ -29,8 +29,8 @@ const ACCESS_TOKEN = 'PLACEHOLDER';
 const PROJECT_KEY = 'PLACEHOLDER';
 const PRODUCT_SERVICE_URL = `https://api.europe-west1.gcp.commercetools.com/${PROJECT_KEY}`;
 
-const productService = createApi({
-	reducerPath: 'productService',
+export const productApi = createApi({
+	reducerPath: 'productApi',
 	baseQuery: fetchBaseQuery({
 		baseUrl: PRODUCT_SERVICE_URL,
 		prepareHeaders: (headers) => {
@@ -49,4 +49,4 @@ const productService = createApi({
 	}),
 });
 
-export default productService;
+export const { useFetchProductsQuery } = productApi;
