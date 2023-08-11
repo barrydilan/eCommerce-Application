@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
-import menuIcon from '../../assets/icons/menu.svg';
-import cartIcon from '../../assets/icons/shopping-cart.svg';
-import deliveryIcon from '../../assets/icons/delivery.svg';
-import paymentIcon from '../../assets/icons/credit-card.svg';
-import contactsIcon from '../../assets/icons/phone.svg';
-import logOutIcon from '../../assets/icons/log-out.svg';
 
-function NavMenu() {
+import paymentIcon from '../../assets/icons/credit-card.svg';
+import deliveryIcon from '../../assets/icons/delivery.svg';
+import logOutIcon from '../../assets/icons/log-out.svg';
+import menuIcon from '../../assets/icons/menu.svg';
+import contactsIcon from '../../assets/icons/phone.svg';
+import cartIcon from '../../assets/icons/shopping-cart.svg';
+
+function NavMenu(props: { isLogged: boolean }) {
+  const { isLogged } = props;
   return (
     <ul
       className="
@@ -20,7 +22,7 @@ function NavMenu() {
         md:items-end
         md:justify-start
         md:gap-6
-        lg:mt-16
+        lg:mt-12
         "
     >
       <li className="navMenuItem">
@@ -53,12 +55,14 @@ function NavMenu() {
           Contacts
         </Link>
       </li>
-      <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">
-        <button type="button" className="navMenuLink text-text-grey">
-          <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
-          Log out
-        </button>
-      </li>
+      {isLogged && (
+        <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">
+          <button type="button" className="navMenuLink text-text-dark">
+            <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
+            Log out
+          </button>
+        </li>
+      )}
     </ul>
   );
 }

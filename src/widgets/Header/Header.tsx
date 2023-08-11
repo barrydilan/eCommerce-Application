@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
 import logoIcon from '../../assets/icons/logo.svg';
-import userPic from '../../assets/img/UserImg.jpg';
+import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 
-function Header() {
+function Header(props: { isLogged: boolean }) {
+  const { isLogged } = props;
   return (
     <header
       className="
@@ -28,7 +28,7 @@ function Header() {
           pt-2
           md:h-16
           md:w-44
-          md:border-r-4
+          md:border-r-2
           md:border-separation-line
           lg:mr-0
           lg:w-89
@@ -48,7 +48,7 @@ function Header() {
             text-2xl 
             font-light
             tracking-tight 
-            text-text-grey
+            text-text-dark
             md:pt-2
           "
         >
@@ -86,9 +86,7 @@ function Header() {
             "
         />
       </label>
-      <Link to="/profile" className="block md:hidden">
-        <img src={userPic} alt="" className="mr-2 w-8 rounded-full" />
-      </Link>
+      <UserProfileLink isHeader isLogged={isLogged} />
     </header>
   );
 }
