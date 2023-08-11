@@ -15,7 +15,7 @@ function NavBlock(props: { isLogged: boolean }) {
         md:row-end-3
         md:h-full
         md:w-full
-        md:border-r-4
+        md:border-r-2
         md:border-separation-line
         md:bg-opacity-0
       "

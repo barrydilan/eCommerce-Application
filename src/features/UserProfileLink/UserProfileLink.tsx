@@ -21,6 +21,7 @@ function UserProfileLink(props: { isHeader: boolean; isLogged: boolean }) {
                 text-ellipsis 
                 text-xl 
                 font-light 
+                text-text-dark
                 md:text-center 
                 lg:w-full 
                 lg:text-start"

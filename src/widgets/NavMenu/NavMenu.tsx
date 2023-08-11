@@ -57,7 +57,7 @@ function NavMenu(props: { isLogged: boolean }) {
       </li>
       {isLogged && (
         <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">
-          <button type="button" className="navMenuLink text-text-grey">
+          <button type="button" className="navMenuLink text-text-dark">
             <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
             Log out
           </button>

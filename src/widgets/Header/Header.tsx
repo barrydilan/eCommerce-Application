@@ -28,7 +28,7 @@ function Header(props: { isLogged: boolean }) {
           pt-2
           md:h-16
           md:w-44
-          md:border-r-4
+          md:border-r-2
           md:border-separation-line
           lg:mr-0
           lg:w-89
@@ -48,7 +48,7 @@ function Header(props: { isLogged: boolean }) {
             text-2xl 
             font-light
             tracking-tight 
-            text-text-grey
+            text-text-dark
             md:pt-2
           "
         >
