@@ -1,2 +1,2 @@
-export { authApi } from './AuthApi.ts';
-export { productApi } from './ProductApi.ts';
+export { authApi, useAnonymousSessionMutation, useLoginUserMutation } from './AuthApi.ts';
+export { productApi, useFetchProductsQuery } from './ProductApi.ts';
