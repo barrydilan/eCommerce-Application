@@ -1,7 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from '../widgets/Header/Header';
-import NavBlock from '../pages/NavBlock/NavBlock';
+
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import NavBlock from '../pages/NavBlock/NavBlock';
+import Header from '../widgets/Header/Header';
+
+const isLogged = true;
 
 export default function App() {
   return (
@@ -19,7 +22,7 @@ export default function App() {
           lg:grid-cols-deskGridCols
           "
       >
-        <Header />
+        <Header isLogged={isLogged} />
         <div
           className="
             md:col-start-2
@@ -40,7 +43,7 @@ export default function App() {
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </div>
-        <NavBlock />
+        <NavBlock isLogged={isLogged} />
       </main>
     </BrowserRouter>
   );
