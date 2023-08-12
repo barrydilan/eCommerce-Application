@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { ACCESS_TOKEN, API_HOST_URL, PROJECT_KEY } from '../../../shared/const';
 
-interface IProduct {
+type IProductResponse = Readonly<{
 	limit: number;
 	count: number;
 	total: number;
@@ -25,7 +25,7 @@ interface IProduct {
 			};
 		},
 	];
-}
+}>;
 
 export const productApi = createApi({
 	reducerPath: 'productApi',
@@ -36,7 +36,7 @@ export const productApi = createApi({
 		},
 	}),
 	endpoints: (build) => ({
-		fetchProducts: build.query<IProduct[], number>({
+		fetchProducts: build.query<IProductResponse[], number>({
 			query: (limit = 5) => ({
 				url: `/${PROJECT_KEY}/products`,
 				params: {
