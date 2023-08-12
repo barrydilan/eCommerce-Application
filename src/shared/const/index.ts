@@ -5,5 +5,4 @@ export {
 	AUTH_SERVICE_URL,
 	CLIENT_ID,
 	CLIENT_SECRET,
-	signUpData,
 } from './constants.ts';
