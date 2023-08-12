@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { AUTH_SERVICE_URL, CLIENT_ID, CLIENT_SECRET, DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../model';
+
 interface ILoginUserParams {
 	password: string;
 	email: string;
@@ -14,13 +16,6 @@ interface IAuthResponse {
 	token_type: string;
 }
 
-const PROJECT_KEY = 'async-await-ecommerce-application';
-const CLIENT_ID = 'placeholder';
-const CLIENT_SECRET = 'placeholder';
-
-const AUTH_SERVICE_URL = `https://auth.europe-west1.gcp.commercetools.com/oauth/${PROJECT_KEY}`;
-const DEFAULT_CUSTOMER_SCOPE = `view_published_products:${PROJECT_KEY} manage_my_orders:${PROJECT_KEY} manage_my_profile:${PROJECT_KEY}`;
-
 export const authApi = createApi({
 	reducerPath: 'productAPI',
 	baseQuery: fetchBaseQuery({
@@ -32,7 +27,7 @@ export const authApi = createApi({
 	endpoints: (build) => ({
 		loginUser: build.mutation<IAuthResponse, ILoginUserParams>({
 			query: ({ password, email, scope = DEFAULT_CUSTOMER_SCOPE }) => ({
-				url: `/customers/token`,
+				url: `/oauth/${PROJECT_KEY}/customers/token`,
 				method: 'POST',
 				body: {},
 				params: {
@@ -46,7 +41,7 @@ export const authApi = createApi({
 
 		anonymousSession: build.mutation<IAuthResponse, string>({
 			query: (scope) => ({
-				url: `/anonymous/token`,
+				url: `/oauth/${PROJECT_KEY}/anonymous/token`,
 				method: 'POST',
 				body: {},
 				params: {
