@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { ACCESS_TOKEN, API_HOST_URL, PROJECT_KEY } from '../../../shared/const';
+
 interface IProduct {
 	limit: number;
 	count: number;
@@ -25,14 +27,10 @@ interface IProduct {
 	];
 }
 
-const ACCESS_TOKEN = 'PLACEHOLDER';
-const PROJECT_KEY = 'PLACEHOLDER';
-const PRODUCT_SERVICE_URL = `https://api.europe-west1.gcp.commercetools.com/${PROJECT_KEY}`;
-
 export const productApi = createApi({
 	reducerPath: 'productApi',
 	baseQuery: fetchBaseQuery({
-		baseUrl: PRODUCT_SERVICE_URL,
+		baseUrl: API_HOST_URL,
 		prepareHeaders: (headers) => {
 			headers.set('Authorization', `Bearer ${ACCESS_TOKEN}`);
 		},
@@ -40,7 +38,7 @@ export const productApi = createApi({
 	endpoints: (build) => ({
 		fetchProducts: build.query<IProduct[], number>({
 			query: (limit = 5) => ({
-				url: '/products',
+				url: `/${PROJECT_KEY}/products`,
 				params: {
 					_limit: limit,
 				},

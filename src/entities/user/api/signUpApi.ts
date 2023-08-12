@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 
-import { API_HOST_URL, PROJECT_KEY } from '../model';
-import { BEARER } from '../model/constants.ts';
+import { API_HOST_URL, BEARER, PROJECT_KEY } from '../../../shared/const';
 
 interface ISignUpAddress {
 	streetName: string;
@@ -39,7 +38,7 @@ type ISignUpResponse = Readonly<{
 	};
 }>;
 
-export const authApi = createApi({
+export const signUpApi = createApi({
 	reducerPath: 'productAPI',
 	baseQuery: fetchBaseQuery({
 		baseUrl: API_HOST_URL,
@@ -58,4 +57,4 @@ export const authApi = createApi({
 	}),
 });
 
-export const { useSignUpMutation } = authApi;
+export const { useSignUpMutation } = signUpApi;

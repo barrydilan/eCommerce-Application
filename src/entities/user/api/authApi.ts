@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { AUTH_SERVICE_URL, CLIENT_ID, CLIENT_SECRET, DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../model';
+import { AUTH_SERVICE_URL, CLIENT_ID, CLIENT_SECRET, DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../../../shared/const';
 
 interface ILoginUserParams {
 	password: string;
