@@ -25,8 +25,9 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/react-in-jsx-scope': 0,
-    'import/extensions': 0,
     'import/no-extraneous-dependencies': 0,
+    'import/extensions': 0,
+    'import/no-cycle': 0,
     'no-param-reassign': 0,
     'sort-imports': ['error', {ignoreCase: true, ignoreDeclarationSort: true}],
     'import/order': [
