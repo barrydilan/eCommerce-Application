@@ -1,6 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { AUTH_SERVICE_URL, CLIENT_ID, CLIENT_SECRET, DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../../../shared/const';
+import basicBaseQuery from '../../../shared/api/basicBaseQuery.ts';
+import { DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../../../shared/const';
 
 interface ILoginUserParams {
 	password: string;
@@ -18,12 +19,7 @@ type IAuthResponse = Readonly<{
 
 export const authApi = createApi({
 	reducerPath: 'productAPI',
-	baseQuery: fetchBaseQuery({
-		baseUrl: AUTH_SERVICE_URL,
-		prepareHeaders: (headers) => {
-			headers.set('Authorization', `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`);
-		},
-	}),
+	baseQuery: basicBaseQuery,
 	endpoints: (build) => ({
 		loginUser: build.mutation<IAuthResponse, ILoginUserParams>({
 			query: ({ password, email, scope = DEFAULT_CUSTOMER_SCOPE }) => ({

@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
-import { RootState } from '../../../app/store';
-import { API_HOST_URL, PROJECT_KEY } from '../../../shared/const';
+import bearerBaseQuery from '../../../shared/api/bearerBaseQuery.ts';
+import { PROJECT_KEY } from '../../../shared/const';
 
 interface ISignUpAddress {
 	streetName: string;
@@ -41,13 +41,7 @@ type ISignUpResponse = Readonly<{
 
 export const signUpApi = createApi({
 	reducerPath: 'productAPI',
-	baseQuery: fetchBaseQuery({
-		baseUrl: API_HOST_URL,
-		prepareHeaders: (headers, { getState }) => {
-			const { accessToken } = (getState() as RootState).userReducer;
-			headers.set('Authorization', `Bearer ${accessToken}`);
-		},
-	}),
+	baseQuery: bearerBaseQuery,
 	endpoints: (build) => ({
 		signUp: build.mutation<ISignUpResponse, ISignUpParams>({
 			query: (signUpData) => ({
