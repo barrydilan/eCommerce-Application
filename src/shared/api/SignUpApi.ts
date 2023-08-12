@@ -23,7 +23,7 @@ interface ISignUpParams {
 	defaultBillingAddress?: number;
 }
 
-interface ISignUpResponse {
+type ISignUpResponse = Readonly<{
 	customer: {
 		addresses: string[];
 		email: string;
@@ -37,7 +37,7 @@ interface ISignUpResponse {
 		lastModifiedAt: string;
 		authenticationMode: string;
 	};
-}
+}>;
 
 export const authApi = createApi({
 	reducerPath: 'productAPI',
