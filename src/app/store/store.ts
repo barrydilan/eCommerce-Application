@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { productApi } from '../../entities/product';
-import { authApi } from '../../entities/user';
+import { authApi, userReducer } from '../../entities/user';
 
 const rootReducer = combineReducers({
 	[authApi.reducerPath]: authApi.reducer,
 	[productApi.reducerPath]: productApi.reducer,
+	userReducer,
 });
 
 export const setupStore = () =>

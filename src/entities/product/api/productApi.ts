@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { ACCESS_TOKEN, API_HOST_URL, PROJECT_KEY } from '../../../shared/const';
+import { RootState } from '../../../app/store';
+import { API_HOST_URL, PROJECT_KEY } from '../../../shared/const';
 
 type IProductResponse = Readonly<{
 	limit: number;
@@ -31,8 +32,10 @@ export const productApi = createApi({
 	reducerPath: 'productApi',
 	baseQuery: fetchBaseQuery({
 		baseUrl: API_HOST_URL,
-		prepareHeaders: (headers) => {
-			headers.set('Authorization', `Bearer ${ACCESS_TOKEN}`);
+		prepareHeaders: (headers, { getState }) => {
+			const { accessToken } = (getState() as RootState).userReducer;
+
+			headers.set('Authorization', `Bearer ${accessToken}`);
 		},
 	}),
 	endpoints: (build) => ({

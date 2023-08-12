@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 
-import { API_HOST_URL, BEARER, PROJECT_KEY } from '../../../shared/const';
+import { RootState } from '../../../app/store';
+import { API_HOST_URL, PROJECT_KEY } from '../../../shared/const';
 
 interface ISignUpAddress {
 	streetName: string;
@@ -42,8 +43,9 @@ export const signUpApi = createApi({
 	reducerPath: 'productAPI',
 	baseQuery: fetchBaseQuery({
 		baseUrl: API_HOST_URL,
-		prepareHeaders: (headers) => {
-			headers.set('Authorization', `Bearer ${BEARER}`);
+		prepareHeaders: (headers, { getState }) => {
+			const { accessToken } = (getState() as RootState).userReducer;
+			headers.set('Authorization', `Bearer ${accessToken}`);
 		},
 	}),
 	endpoints: (build) => ({

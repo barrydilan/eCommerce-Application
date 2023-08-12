@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from '../widgets/Header/Header';
-import NavBlock from '../pages/NavBlock/NavBlock';
+
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import NavBlock from '../pages/NavBlock/NavBlock';
+import Header from '../widgets/Header/Header';
 
 export default function App() {
   return (
