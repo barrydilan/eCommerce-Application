@@ -11,9 +11,9 @@ export default function App() {
     <BrowserRouter>
       <main
         className="
-          mx-auto 
-          grid 
-          min-h-screen 
+          mx-auto
+          grid
+          min-h-screen
           grid-cols-1
           grid-rows-mobGridRows
           2xl:container
