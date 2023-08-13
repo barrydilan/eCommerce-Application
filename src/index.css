@@ -17,13 +17,13 @@
     @apply block relative w-full h-9 mt-6 rounded-md
   }
   .loginRegInput {
-    @apply text-sm pl-9 w-full h-full border-2 border-separation-line outline-none focus:border-text-grey rounded-md invalid:border-shop-cart-red valid:border-accent
+    @apply text-sm pl-9 w-full h-full border-2 border-separation-line outline-none focus:border-text-grey rounded-md 
   }
   .invalidInputIcon {
     @apply absolute top-2 left-2  bg-contain  bg-no-repeat  w-5  h-5
   }
   .invalidInputMsg {
-    @apply hidden absolute  -top-5  left-2  text-shop-cart-red  text-xs peer-invalid:block
+    @apply absolute  -top-5  left-2  text-shop-cart-red  text-xs peer-invalid:block
   }
 }
 

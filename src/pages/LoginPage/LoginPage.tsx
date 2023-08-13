@@ -1,76 +1,60 @@
+import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 
-function validate(target: EventTarget, inputType: string) {
-  const emailRegex = /^\S+@\S+\.\S+$/;
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).{8,}$/;
-  const regex = inputType === 'email' ? emailRegex : passwordRegex;
-  const { value } = target as HTMLInputElement;
-  (target as HTMLInputElement).value = value.trim();
-  if (value.length === 0) {
-    (target as HTMLObjectElement).setCustomValidity(`Field ${inputType === 'email' ? 'email' : 'password'} required.`);
-    return;
-  }
-
-  if (regex.test(value)) {
-    (target as HTMLObjectElement).setCustomValidity('');
-  } else {
-    (target as HTMLObjectElement).setCustomValidity(
-      `Invalid ${inputType === 'email' ? 'email address' : 'password'} format`,
-    );
-  }
-}
-
-function togglePassVisibility() {
-  const passInput = document.querySelector('#passLogInput');
-  if (passInput && (passInput as HTMLInputElement).type === 'password') {
-    (passInput as HTMLInputElement).type = 'text';
-  } else {
-    (passInput as HTMLInputElement).type = 'password';
-  }
-}
+import { togglePassVisibility, validationSchema } from './model/loginPageModel';
 
 function LoginPage() {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      name: '',
+    },
+    validationSchema,
+    onSubmit: () => {},
+  });
+
   return (
     <div
       className="
-    flex 
-    h-full 
-    w-full 
-    items-center 
-    justify-center 
-    font-poppins 
-  "
+        flex 
+        h-full 
+        w-full 
+        items-center 
+        justify-center 
+        font-poppins 
+      "
     >
       <form
-        action=""
+        onSubmit={formik.handleSubmit}
         className="
-      min-w-78 
-      ml-3 
-      mr-3 
-      box-border 
-      w-128 
-      rounded-3xl 
-      border-2 
-      border-separation-line 
-      pb-2 
-      pl-4 
-      pr-4 
-      pt-2
-    "
+          min-w-78 
+          ml-3 
+          mr-3 
+          box-border 
+          w-128 
+          rounded-3xl 
+          border-2 
+          border-separation-line 
+          pb-2 
+          pl-4 
+          pr-4 
+          pt-2
+        "
       >
         <h5
           className="
-        text-2xl 
-        text-text-dark
-        "
+            text-2xl 
+            text-text-dark
+            "
         >
           Log in
         </h5>
         <h6
           className="
-        text-base 
-        text-text-grey
-        "
+            text-base 
+            text-text-grey
+            "
         >
           Welcome back!
         </h6>
@@ -78,61 +62,69 @@ function LoginPage() {
           <input
             id="emailLogInput"
             type="email"
+            name="email"
             placeholder="Email"
-            onFocus={(e) => validate(e.target, 'email')}
-            onInput={(e) => validate(e.target, 'email')}
-            className="loginRegInput peer"
+            className={`loginRegInput ${formik.touched.email && formik.errors.email ? 'border-shop-cart-red' : ''}`}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
           />
           <div
-            className="
-          invalidInputIcon
-          bg-emailIcon
-          peer-invalid:bg-emailIconRed 
-        "
+            className={`
+              invalidInputIcon
+              ${formik.touched.email && formik.errors.email ? 'bg-emailIconRed' : 'bg-emailIcon'}
+            `}
           />
-          <p className="invalidInputMsg">Enter valid email</p>
+          {formik.touched.email && formik.errors.email ? (
+            <p className="invalidInputMsg">{formik.errors.email}</p>
+          ) : null}
         </label>
         <label htmlFor="passLogInput" className="loginRegLabel">
           <input
             id="passLogInput"
             type="password"
+            name="password"
             placeholder="Password"
-            onFocus={(e) => validate(e.target, 'pass')}
-            onInput={(e) => validate(e.target, 'pass')}
-            className="loginRegInput peer"
+            className={`loginRegInput ${
+              formik.touched.password && formik.errors.password ? 'border-shop-cart-red' : ''
+            }`}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
           />
           <div
-            className="
-          invalidInputIcon
-          bg-lockIcon
-          peer-invalid:bg-lockIconRed 
-        "
+            className={`
+              invalidInputIcon
+              ${formik.touched.password && formik.errors.password ? 'bg-lockIconRed' : 'bg-lockIcon'}
+            `}
           />
-          <p className="invalidInputMsg">Enter valid password</p>
+          {formik.touched.password && formik.errors.password ? (
+            <p className="invalidInputMsg">{formik.errors.password}</p>
+          ) : null}
         </label>
         <div
           className="
-        mt-2
-        flex
-        h-8
-        w-full
-        items-center
-        justify-center
-      "
+            mt-2
+            flex
+            h-8
+            w-full
+            items-center
+            justify-center
+          "
         >
           <input
             id="passToggler"
             type="checkbox"
-            onClick={() => togglePassVisibility()}
+            onClick={() => togglePassVisibility(document.querySelector('#passLogInput'))}
             className="
-            peer/passToggler
-            mr-2
-            h-5
-            w-5
-            appearance-none
-            rounded-md
-            bg-accent
-          "
+              peer/passToggler
+              mr-2
+              h-5
+              w-5
+              appearance-none
+              rounded-md
+              bg-accent
+            "
           />
           <label
             htmlFor="passToggler"
@@ -160,31 +152,32 @@ function LoginPage() {
         <button
           type="submit"
           className="
-        mt-3 
-        h-8 
-        w-full 
-        rounded-md 
-        bg-accent 
-        text-base 
-        text-primary
-        "
+            mt-3 
+            h-8 
+            w-full 
+            rounded-md 
+            bg-accent 
+            text-base 
+            text-primary
+            "
         >
           Log in
         </button>
         <p
           className="
-        mb-6 
-        mt-6 
-        w-full 
-        text-center 
-        text-xs
-        "
+            mb-6 
+            mt-6 
+            w-full 
+            text-center 
+            text-xs
+            "
         >
           Don&apos;t have an account yet?{' '}
           <Link
             className="
-          font-bold
-           text-accent"
+              font-bold
+              text-accent
+            "
             to="/registration"
           >
             Sing up
