@@ -22,7 +22,10 @@ export default {
     },
     extend: {
       content: {
-        'searchSvg': "url('./src/assets/icons/search.svg')",
+        'searchIcon': "url('./src/assets/icons/search.svg')",
+        'lockIcon': "url('./src/assets/icons/lockIcon.svg')",
+        'emailIcon': "url('./src/assets/icons/emailIcon.svg')",
+        'emailIconRed': "url('./src/assets/icons/emailIconRed.svg')",
       },
       gridTemplateColumns: {
         'tabGridCols': '11rem 1fr',
@@ -34,7 +37,15 @@ export default {
       },
       spacing: {
         '89': '22rem',
+        '128': '32rem',
+        '2px': '2px'
       },
+      backgroundImage: {
+        'emailIcon': "url('./src/assets/icons/emailIcon.svg')",
+        'emailIconRed': "url('./src/assets/icons/emailIconRed.svg')",
+        'lockIcon': "url('./src/assets/icons/lockIcon.svg')",
+        'lockIconRed': "url('./src/assets/icons/lockIconRed.svg')"
+      }
     },
     maxHeight: {
       '0': '0',

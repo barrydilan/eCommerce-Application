@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import Header from '../widgets/Header/Header';
 
-const isLogged = true;
+const isLogged = false;
 
 export default function App() {
   return (
@@ -34,7 +35,7 @@ export default function App() {
           <Routes>
             <Route index element={<p>Here will be main content</p>} />
             <Route path="registration" element={<p>Registration</p>} />
-            <Route path="login" element={<p>Login</p>} />
+            <Route path="login" element={<LoginPage />} />
             <Route path="profile" element={<p>User profile</p>} />
             <Route path="cart" element={<p>Shopping cart</p>} />
             <Route path="delivery" element={<p>Delivery</p>} />

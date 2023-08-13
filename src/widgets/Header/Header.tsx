@@ -67,7 +67,7 @@ function Header(props: { isLogged: boolean }) {
           before:right-2 
           before:top-3 
           before:w-5 
-          before:content-searchSvg
+          before:content-searchIcon
           md:leading-10
           lg:before:left-4
         "
