@@ -8,6 +8,8 @@ import Header from '../widgets/Header/Header';
 const isLogged = false;
 
 export function App() {
+  const check = 23;
+
   return (
     <main
       className="
