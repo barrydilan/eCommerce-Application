@@ -2,6 +2,10 @@ import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
+import emailIcon from '../../assets/icons/emailIcon.svg';
+import emailIconRed from '../../assets/icons/emailIconRed.svg';
+import lockIcon from '../../assets/icons/LockIcon.svg';
+import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import CustomForm from '../../entities/form/ui/CustomForm';
 import FormWrapper from '../../entities/form/ui/FormWrapper';
 
@@ -45,11 +49,10 @@ function LoginPage() {
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-          <div
-            className={`
-              invalidInputIcon
-              ${formik.touched.email && formik.errors.email ? 'bg-emailIconRed' : 'bg-emailIcon'}
-            `}
+          <img
+            className="invalidInputIcon"
+            src={formik.touched.email && formik.errors.email ? emailIconRed : emailIcon}
+            alt=""
           />
           {formik.touched.email && formik.errors.email ? (
             <p className="invalidInputMsg">{formik.errors.email}</p>
@@ -68,11 +71,10 @@ function LoginPage() {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          <div
-            className={`
-              invalidInputIcon
-              ${formik.touched.password && formik.errors.password ? 'bg-lockIconRed' : 'bg-lockIcon'}
-            `}
+          <img
+            className="invalidInputIcon"
+            src={formik.touched.password && formik.errors.password ? lockIconRed : lockIcon}
+            alt=""
           />
           {formik.touched.password && formik.errors.password ? (
             <p className="invalidInputMsg">{formik.errors.password}</p>

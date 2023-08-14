@@ -40,12 +40,6 @@ export default {
         '128': '32rem',
         '2px': '2px'
       },
-      backgroundImage: {
-        'emailIcon': "url('./src/assets/icons/emailIcon.svg')",
-        'emailIconRed': "url('./src/assets/icons/emailIconRed.svg')",
-        'lockIcon': "url('./src/assets/icons/lockIcon.svg')",
-        'lockIconRed': "url('./src/assets/icons/lockIconRed.svg')"
-      }
     },
     maxHeight: {
       '0': '0',
