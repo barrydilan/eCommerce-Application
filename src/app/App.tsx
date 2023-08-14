@@ -9,6 +9,7 @@ const isLogged = false;
 
 export function App() {
   const check = 23;
+  const check2 = 24;
 
   return (
     <main
