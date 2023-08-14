@@ -7,11 +7,10 @@ import Header from '../widgets/Header/Header';
 
 const isLogged = false;
 
-export default function App() {
+export function App() {
   return (
-    <BrowserRouter>
-      <main
-        className="
+    <main
+      className="
           mx-auto
           grid
           min-h-screen
@@ -22,30 +21,37 @@ export default function App() {
           md:grid-rows-tabGridRows
           lg:grid-cols-deskGridCols
           "
-      >
-        <Header isLogged={isLogged} />
-        <div
-          className="
+    >
+      <Header isLogged={isLogged} />
+      <div
+        className="
             md:col-start-2
             md:col-end-3
             md:row-start-2
             md:row-end-3
             "
-        >
-          <Routes>
-            <Route index element={<p>Here will be main content</p>} />
-            <Route path="registration" element={<p>Registration</p>} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="profile" element={<p>User profile</p>} />
-            <Route path="cart" element={<p>Shopping cart</p>} />
-            <Route path="delivery" element={<p>Delivery</p>} />
-            <Route path="payment" element={<p>Payment</p>} />
-            <Route path="about" element={<p>About us</p>} />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </div>
-        <NavBlock isLogged={isLogged} />
-      </main>
+      >
+        <Routes>
+          <Route index element={<p>Here will be main content</p>} />
+          <Route path="registration" element={<p>Registration</p>} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="profile" element={<p>User profile</p>} />
+          <Route path="cart" element={<p>Shopping cart</p>} />
+          <Route path="delivery" element={<p>Delivery</p>} />
+          <Route path="payment" element={<p>Payment</p>} />
+          <Route path="about" element={<p>About us</p>} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </div>
+      <NavBlock isLogged={isLogged} />
+    </main>
+  );
+}
+
+export function WrappedApp() {
+  return (
+    <BrowserRouter>
+      <App />
     </BrowserRouter>
   );
 }
