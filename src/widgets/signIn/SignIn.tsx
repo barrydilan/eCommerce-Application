@@ -1,7 +1,5 @@
-import Button from '../../shared/Button';
-import Input from '../../shared/Input';
+import { Button, Input } from '../../shared/ui';
 
-/* eslint-disable jsx-a11y/label-has-associated-control */
 export default function SignIn() {
   function handleClick() {}
 
