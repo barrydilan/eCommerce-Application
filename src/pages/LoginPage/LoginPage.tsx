@@ -2,46 +2,22 @@ import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
+import CustomForm from '../../entities/form/ui/CustomForm';
+import FormWrapper from '../../entities/form/ui/FormWrapper';
 
 function LoginPage() {
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      name: '',
     },
     validationSchema,
     onSubmit: () => {},
   });
 
   return (
-    <div
-      className="
-        flex 
-        h-full 
-        w-full 
-        items-center 
-        justify-center 
-        font-poppins 
-      "
-    >
-      <form
-        onSubmit={formik.handleSubmit}
-        className="
-          min-w-78 
-          ml-3 
-          mr-3 
-          box-border 
-          w-128 
-          rounded-3xl 
-          border-2 
-          border-separation-line 
-          pb-2 
-          pl-4 
-          pr-4 
-          pt-2
-        "
-      >
+    <FormWrapper>
+      <CustomForm onSubmit={formik.handleSubmit}>
         <h5
           className="
             text-2xl 
@@ -183,8 +159,8 @@ function LoginPage() {
             Sing up
           </Link>
         </p>
-      </form>
-    </div>
+      </CustomForm>
+    </FormWrapper>
   );
 }
 

@@ -10,7 +10,7 @@ export const validationSchema = Yup.object({
   password: Yup.string()
     .min(8, 'Minimum 8 symbols required')
     .matches(passwordRegex, { message: 'Password must have A, a, 1, ! symbols', excludeEmptyString: true })
-    .required('Password required'),
+    .required('Password is required'),
 });
 
 export function togglePassVisibility(target: HTMLInputElement | null) {
