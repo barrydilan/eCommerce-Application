@@ -36,14 +36,23 @@ export default {
         'tabGridRows': 'auto 1fr',
       },
       spacing: {
+        '30': '7.5rem',
         '78': '20rem',
         '89': '22rem',
         '128': '32rem',
         '2px': '2px'
       },
       borderWidth: {
+        '1': '1px',
+        '3': '3px',
         '6': '6px',
-      }
+        '12': '12px',
+      },
+      fontSize: {
+        '2xs': '10px',
+        '3xs': '8px',
+        '5xl': '38px'
+      },
     },
     maxHeight: {
       '0': '0',

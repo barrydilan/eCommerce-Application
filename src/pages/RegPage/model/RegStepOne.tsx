@@ -6,11 +6,12 @@ import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
+import CustomForm from '../../../entities/form/ui/CustomForm';
 
 const emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).{8,}$/;
 
-export const validationSchema = Yup.object({
+const validationSchema = Yup.object({
   email: Yup.string()
     .matches(emailRegEx, { message: 'Email must follow email@example.com pattern', excludeEmptyString: true })
     .required('Email is required'),
@@ -27,10 +28,11 @@ type UserData = {
 
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
+  next: () => void;
 };
 
-function RegStepOne(props: UserFormProps) {
-  const { email, password, updateData } = props;
+export default function RegStepOne(props: UserFormProps) {
+  const { email, password, updateData, next } = props;
   const formik = useFormik({
     initialValues: {
       email,
@@ -39,29 +41,15 @@ function RegStepOne(props: UserFormProps) {
     validationSchema,
     onSubmit: (values) => {
       updateData({ password: values.password, email: values.email });
+      next();
     },
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className=" 
-          ml-3 
-          mr-3 
-          box-border 
-          w-128 
-          rounded-3xl 
-          border-2 
-          border-separation-line 
-          pb-2 
-          pl-4 
-          pr-4 
-          pt-2
-        "
-    >
-      <label htmlFor="emailLogInput" className="loginRegLabel">
+    <CustomForm onSubmit={formik.handleSubmit}>
+      <label htmlFor="emailRegInput" className="loginRegLabel">
         <input
-          id="emailLogInput"
+          id="emailRegInput"
           type="email"
           name="email"
           placeholder="Email"
@@ -77,9 +65,9 @@ function RegStepOne(props: UserFormProps) {
         />
         {formik.touched.email && formik.errors.email ? <p className="invalidInputMsg">{formik.errors.email}</p> : null}
       </label>
-      <label htmlFor="passLogInput" className="loginRegLabel">
+      <label htmlFor="passRegInput" className="loginRegLabel">
         <input
-          id="passLogInput"
+          id="passRegInput"
           type="text"
           name="password"
           placeholder="Password"
@@ -97,29 +85,17 @@ function RegStepOne(props: UserFormProps) {
           <p className="invalidInputMsg">{formik.errors.password}</p>
         ) : null}
       </label>
-      <p className="mb-2 mt-4 text-xs text-text-grey">We need your email in order to contact you!</p>
-      <div className="mt-6 flex items-center justify-between font-poppins text-text-grey">
-        <button type="button" className="h-10 p-2">
-          Back
-        </button>
+      <div className="mt-6 flex items-center justify-around font-poppins text-text-grey">
         <p className="text-center text-xs sm:leading-10">
           Already have an account?{' '}
           <Link className="font-bold text-accent" to="/login">
             Log in
           </Link>
         </p>
-        <button
-          type="submit"
-          className="h-10 rounded-lg bg-accent p-2 text-primary"
-          onClick={() => {
-            console.log(formik.values);
-          }}
-        >
+        <button type="submit" className="h-10 rounded-lg bg-accent p-2 text-primary">
           Continue
         </button>
       </div>
-    </form>
+    </CustomForm>
   );
 }
-
-export default RegStepOne;

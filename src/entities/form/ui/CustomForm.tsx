@@ -18,6 +18,8 @@ export default function CustomForm(props: {
         pl-4 
         pr-4 
         pt-2
+        font-medium
+        text-text-grey
       "
     >
       {children}
