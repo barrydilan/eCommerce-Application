@@ -26,6 +26,7 @@ function LoginPage() {
       navigate('/');
       setCookie(accessToken, COOKIE_ACCESS_TOKEN_NAME, expiresIn);
     } catch (e) {
+      // TODO - implement to render error message
       // console.error(`Error occurred while logging the user! (${e.status})`);
     }
   }
