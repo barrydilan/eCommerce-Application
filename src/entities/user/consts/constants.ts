@@ -1,2 +1,2 @@
-const COOKIE_ACCESS_TOKEN = 'accessToken';
-export default COOKIE_ACCESS_TOKEN;
+const COOKIE_ACCESS_TOKEN_NAME = 'accessToken';
+export default COOKIE_ACCESS_TOKEN_NAME;
