@@ -1,13 +1,41 @@
+import { useEffect } from 'react';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { COOKIE_ACCESS_TOKEN_NAME, useAnonymousSessionMutation, userSlice } from '../entities/user';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
+import { getCookie, useAppDispatch, useAppSelector } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
 
-const isLogged = false;
-
 export function App() {
+  const [createAnonymousSession] = useAnonymousSessionMutation();
+  const dispatch = useAppDispatch();
+  const { updateAccessToken, loggedIn } = userSlice.actions;
+  const { isLogged } = useAppSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    async function fetchData() {
+      const storedToken = getCookie(COOKIE_ACCESS_TOKEN_NAME);
+
+      if (storedToken) {
+        dispatch(loggedIn(storedToken));
+        return;
+      }
+
+      try {
+        const { access_token: accessToken } = await createAnonymousSession('').unwrap();
+
+        dispatch(updateAccessToken(accessToken));
+      } catch (e) {
+        // console.error(`Error occurred while getting anonymous token! (${e.status})`);
+      }
+    }
+
+    fetchData();
+  }, [createAnonymousSession, dispatch, loggedIn, updateAccessToken]);
+
   return (
     <main
       className="

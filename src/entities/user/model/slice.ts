@@ -9,6 +9,11 @@ export const userSlice = createSlice({
 		updateAccessToken: (state, action: PayloadAction<string>) => {
 			state.accessToken = action.payload;
 		},
+
+		loggedIn: (state, action: PayloadAction<string>) => {
+			state.isLogged = true;
+			state.accessToken = action.payload;
+		},
 	},
 });
 
