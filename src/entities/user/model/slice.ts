@@ -14,6 +14,8 @@ export const userSlice = createSlice({
 			state.isLogged = true;
 			state.accessToken = action.payload;
 		},
+
+		loggedOut: () => initialState,
 	},
 });
 

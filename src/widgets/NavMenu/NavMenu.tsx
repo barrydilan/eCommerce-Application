@@ -6,10 +6,18 @@ import logOutIcon from '../../assets/icons/log-out.svg';
 import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
-import { useAppSelector } from '../../shared/lib/hooks';
+import { COOKIE_ACCESS_TOKEN_NAME, userSlice } from '../../entities/user';
+import { deleteCookie, useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 
 function NavMenu() {
   const { isLogged } = useAppSelector((state) => state.userReducer);
+  const dispatch = useAppDispatch();
+  const { loggedOut } = userSlice.actions;
+
+  function handleLogout() {
+    dispatch(loggedOut());
+    deleteCookie(COOKIE_ACCESS_TOKEN_NAME);
+  }
 
   return (
     <ul
@@ -59,7 +67,7 @@ function NavMenu() {
       </li>
       {isLogged && (
         <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">
-          <button type="button" className="navMenuLink text-text-dark">
+          <button onClick={handleLogout} type="button" className="navMenuLink text-text-dark">
             <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
             Log out
           </button>
