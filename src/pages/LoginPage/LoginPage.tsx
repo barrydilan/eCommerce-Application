@@ -1,29 +1,55 @@
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
+import { COOKIE_ACCESS_TOKEN_NAME, useLoginUserMutation, userSlice } from '../../entities/user';
+import { setCookie, useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import ILoginUserData from '../../shared/types';
 
 function LoginPage() {
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const dispatch = useAppDispatch();
+  const { isLogged } = useAppSelector((state) => state.userReducer);
+  const navigate = useNavigate();
+  const { loggedIn } = userSlice.actions;
+
+  async function handleSubmit(userData: ILoginUserData) {
+    if (isLogged) {
+      navigate('/');
+      return;
+    }
+
+    try {
+      const { access_token: accessToken, expires_in: expiresIn } = await loginUser(userData).unwrap();
+
+      dispatch(loggedIn(accessToken));
+      navigate('/');
+      setCookie(accessToken, COOKIE_ACCESS_TOKEN_NAME, expiresIn);
+    } catch (e) {
+      // console.error(`Error occurred while logging the user! (${e.status})`);
+    }
+  }
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      name: '',
     },
     validationSchema,
-    onSubmit: () => {},
+    onSubmit: handleSubmit,
   });
 
   return (
     <div
-      className="
-        flex 
-        h-full 
-        w-full 
-        items-center 
-        justify-center 
-        font-poppins 
-      "
+      className={`
+        flex
+        h-full
+        w-full
+        items-center
+        justify-center
+        font-poppins
+        ${isLoading ? 'opacity-70' : ''}
+        `}
     >
       <form
         onSubmit={formik.handleSubmit}
@@ -150,6 +176,7 @@ function LoginPage() {
           </label>
         </div>
         <button
+          disabled={isLoading}
           type="submit"
           className="
             mt-3 

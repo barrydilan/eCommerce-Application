@@ -2,12 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import basicBaseQuery from '../../../shared/api/basicBaseQuery.ts';
 import { DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../../../shared/const';
-
-interface ILoginUserParams {
-	password: string;
-	email: string;
-	scope?: string;
-}
+import ILoginUserParams from '../../../shared/types';
 
 type IAuthResponse = Readonly<{
 	access_token: string;
