@@ -6,14 +6,13 @@ import { COOKIE_ACCESS_TOKEN_NAME, useAnonymousSessionMutation, userSlice } from
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
-import { getCookie, useAppDispatch, useAppSelector } from '../shared/lib/hooks';
+import { getCookie, useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
 
 export function App() {
   const [createAnonymousSession] = useAnonymousSessionMutation();
   const dispatch = useAppDispatch();
   const { updateAccessToken, loggedIn } = userSlice.actions;
-  const { isLogged } = useAppSelector((state) => state.userReducer);
 
   useEffect(() => {
     async function fetchData() {
@@ -50,7 +49,7 @@ export function App() {
           lg:grid-cols-deskGridCols
           "
     >
-      <Header isLogged={isLogged} />
+      <Header />
       <div
         className="
             md:col-start-2
@@ -71,7 +70,7 @@ export function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-      <NavBlock isLogged={isLogged} />
+      <NavBlock />
     </main>
   );
 }

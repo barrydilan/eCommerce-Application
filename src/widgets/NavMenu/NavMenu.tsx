@@ -6,9 +6,11 @@ import logOutIcon from '../../assets/icons/log-out.svg';
 import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
+import { useAppSelector } from '../../shared/lib/hooks';
 
-function NavMenu(props: { isLogged: boolean }) {
-  const { isLogged } = props;
+function NavMenu() {
+  const { isLogged } = useAppSelector((state) => state.userReducer);
+
   return (
     <ul
       className="

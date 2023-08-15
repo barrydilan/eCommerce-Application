@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 
 import userPic from '../../assets/img/UserImg.jpg';
+import { useAppSelector } from '../../shared/lib/hooks';
 
-function UserProfileLink(props: { isHeader: boolean; isLogged: boolean }) {
-  const { isHeader, isLogged } = props;
+function UserProfileLink(props: { isHeader: boolean }) {
+  const { isLogged } = useAppSelector((state) => state.userReducer);
+  const { isHeader } = props;
 
   const headerLoggedClass = 'block md:hidden';
   const menuLoggedClass =
