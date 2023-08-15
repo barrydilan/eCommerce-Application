@@ -6,8 +6,7 @@ export default function CustomForm(props: {
   return (
     <form
       onSubmit={onSubmit}
-      className="
-        min-w-78 
+      className=" 
         ml-3 
         mr-3 
         box-border 
