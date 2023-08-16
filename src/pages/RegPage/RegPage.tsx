@@ -54,7 +54,7 @@ export default function RegPage() {
     });
   }
 
-  const { currentStepIndex, currForm, back, next } = useMultistepForm([
+  const { length, currentStepIndex, currForm, back, next } = useMultistepForm([
     <RegStepOne email={formData.email} password={formData.password} updateData={updateData} next={nextStep} key={0} />,
     <RegStepTwo
       firstName={formData.firstName}
@@ -103,7 +103,7 @@ export default function RegPage() {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <CirclesWrapper currStep={currentStepIndex} />
+      <CirclesWrapper currStep={currentStepIndex} quantity={length} />
       <div className="flex w-full justify-center">{currForm}</div>
     </div>
   );

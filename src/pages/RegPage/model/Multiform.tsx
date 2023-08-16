@@ -17,12 +17,12 @@ export default function useMultistepForm(steps: ReactElement[]) {
     });
   }
 
+  const { length } = steps;
+
   return {
     currentStepIndex,
     currForm: steps[currentStepIndex],
-    steps,
-    isFirstStep: currentStepIndex === 0,
-    isLastStep: currentStepIndex === steps.length - 1,
+    length,
     next,
     back,
   };

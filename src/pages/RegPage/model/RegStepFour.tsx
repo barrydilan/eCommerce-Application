@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
@@ -7,9 +6,11 @@ import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
+import NavBlock from '../ui/NavBlock';
 
 const usaPostCode = /^\d{5}(-\d{4})?$/;
 const ukrGerPostCode = /^\d{5}$/;
+const streetRegEx = /^(?=.*[a-zA-Z]).*$/;
 
 type UserData = {
   billPostalCode: string;
@@ -62,11 +63,15 @@ export default function RegStepFour(props: UserFormProps) {
     billPostalCode: Yup.string()
       .matches(billRegEx, { message: 'Enter valid postal code', excludeEmptyString: true })
       .required('PostalCode is required'),
-    billStreet: Yup.string().required('Street name is required'),
+    billStreet: Yup.string()
+      .matches(streetRegEx, { message: 'Street name must contain at least one letter', excludeEmptyString: true })
+      .required('Street name is required'),
     shipPostalCode: Yup.string()
       .matches(shipRegEx, { message: 'Enter valid postal code', excludeEmptyString: true })
       .required('PostalCode is required'),
-    shipStreet: Yup.string().required('Street name is required'),
+    shipStreet: Yup.string()
+      .matches(streetRegEx, { message: 'Street name must contain at least one letter', excludeEmptyString: true })
+      .required('Street name is required'),
   });
 
   const formik = useFormik({
@@ -268,30 +273,17 @@ export default function RegStepFour(props: UserFormProps) {
           </label>
         </div>
       </div>
-      <div className="mt-6 flex items-center justify-between font-poppins text-text-grey">
-        <button type="button" className="h-10 p-2" onClick={back}>
-          Back
-        </button>
-        <p className="text-center text-xs sm:leading-10">
-          Already have an account ?{' '}
-          <Link className="font-bold text-accent" to="/login">
-            Log in
-          </Link>
-        </p>
-        <button
-          type="submit"
-          className="h-10 rounded-lg bg-accent p-2 text-primary"
-          onClick={() => {
-            if (checkSameBillShip) {
-              formik.values.shipPostalCode = formik.values.billPostalCode;
-              formik.values.shipStreet = formik.values.billStreet;
-              formik.values.shipSetDefault = formik.values.billSetDefault;
-            }
-          }}
-        >
-          Continue
-        </button>
-      </div>
+      <NavBlock
+        isBackBtn
+        backFunc={back}
+        nextFunc={() => {
+          if (checkSameBillShip) {
+            formik.values.shipPostalCode = formik.values.billPostalCode;
+            formik.values.shipStreet = formik.values.billStreet;
+            formik.values.shipSetDefault = formik.values.billSetDefault;
+          }
+        }}
+      />
     </CustomForm>
   );
 }

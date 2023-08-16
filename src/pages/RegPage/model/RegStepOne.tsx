@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import emailIcon from '../../../assets/icons/emailIcon.svg';
@@ -7,6 +6,7 @@ import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
+import NavBlock from '../ui/NavBlock';
 
 const emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).{8,}$/;
@@ -85,17 +85,7 @@ export default function RegStepOne(props: UserFormProps) {
           <p className="invalidInputMsg">{formik.errors.password}</p>
         ) : null}
       </label>
-      <div className="mt-6 flex items-center justify-around font-poppins text-text-grey">
-        <p className="text-center text-xs sm:leading-10">
-          Already have an account?{' '}
-          <Link className="font-bold text-accent" to="/login">
-            Log in
-          </Link>
-        </p>
-        <button type="submit" className="h-10 rounded-lg bg-accent p-2 text-primary">
-          Continue
-        </button>
-      </div>
+      <NavBlock isBackBtn={false} backFunc={undefined} nextFunc={undefined} />
     </CustomForm>
   );
 }

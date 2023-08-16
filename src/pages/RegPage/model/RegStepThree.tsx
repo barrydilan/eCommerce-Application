@@ -1,11 +1,11 @@
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
+import NavBlock from '../ui/NavBlock';
 
 const nameRegEx = /^[a-zA-Z]+$/;
 
@@ -202,29 +202,16 @@ export default function RegStepThree(props: UserFormProps) {
           ) : null}
         </label>
       </div>
-      <div className="mt-6 flex items-center justify-between font-poppins text-text-grey">
-        <button type="button" className="h-10 p-2" onClick={back}>
-          Back
-        </button>
-        <p className="text-center text-xs sm:leading-10">
-          Already have an account?{' '}
-          <Link className="font-bold text-accent" to="/login">
-            Log in
-          </Link>
-        </p>
-        <button
-          type="submit"
-          className="h-10 rounded-lg bg-accent p-2 text-primary"
-          onClick={() => {
-            if (formik.values.sameBillShip) {
-              formik.values.shipCountry = formik.values.billCountry;
-              formik.values.shipCity = formik.values.billCity;
-            }
-          }}
-        >
-          Continue
-        </button>
-      </div>
+      <NavBlock
+        isBackBtn
+        backFunc={back}
+        nextFunc={() => {
+          if (formik.values.sameBillShip) {
+            formik.values.shipCountry = formik.values.billCountry;
+            formik.values.shipCity = formik.values.billCity;
+          }
+        }}
+      />
     </CustomForm>
   );
 }
