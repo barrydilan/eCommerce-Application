@@ -13,7 +13,7 @@ type IAuthResponse = Readonly<{
 }>;
 
 export const authApi = createApi({
-	reducerPath: 'productAPI',
+	reducerPath: 'authApi',
 	baseQuery: basicBaseQuery,
 	endpoints: (build) => ({
 		loginUser: build.mutation<IAuthResponse, ILoginUserParams>({
