@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -11,6 +13,7 @@ function LoginPage() {
   const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
+  const passwordInput = useRef<HTMLInputElement>(null);
   const { loggedIn } = userSlice.actions;
 
   async function handleSubmit(userData: ILoginUserData) {
@@ -108,6 +111,7 @@ function LoginPage() {
         </label>
         <label htmlFor="passLogInput" className="loginRegLabel">
           <input
+            ref={passwordInput}
             id="passLogInput"
             type="password"
             name="password"
@@ -142,7 +146,7 @@ function LoginPage() {
           <input
             id="passToggler"
             type="checkbox"
-            onClick={() => togglePassVisibility(document.querySelector('#passLogInput'))}
+            onClick={() => togglePassVisibility(passwordInput.current)}
             className="
               peer/passToggler
               mr-2
@@ -208,7 +212,7 @@ function LoginPage() {
             "
             to="/registration"
           >
-            Sing up
+            Sign up
           </Link>
         </p>
       </form>
