@@ -68,16 +68,27 @@ export default function RegStepFour(props: UserFormProps) {
   });
 
   const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+  const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
   return (
     <CustomForm onSubmit={handleSubmit}>
-      <label htmlFor="billPostalCodeInput" className="loginRegLabel">
+      <label
+        htmlFor="billPostalCodeInput"
+        className={`
+          loginRegLabel
+          ${sameBillShip ? '' : `${shipBillCluesStyles} after:content-["Billing"]`}
+        `}
+      >
         <input
           id="billPostCodeInput"
           type="text"
           name="billPostalCode"
           placeholder="Postal code"
-          className={`loginRegInput ${touched.billPostalCode && errors.billPostalCode ? 'border-shop-cart-red' : ''}`}
+          className={`
+            loginRegInput 
+            relative
+            ${touched.billPostalCode && errors.billPostalCode ? 'border-shop-cart-red' : ''}
+          `}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.billPostalCode}
@@ -131,13 +142,23 @@ export default function RegStepFour(props: UserFormProps) {
         </label>
       </div>
       <div className={sameBillShip ? 'hidden' : 'block'}>
-        <label htmlFor="shipPostalCodeInput" className="loginRegLabel">
+        <label
+          htmlFor="shipPostalCodeInput"
+          className={`
+            loginRegLabel
+            after:content-['Shipping']
+            ${shipBillCluesStyles}
+          `}
+        >
           <input
             id="shipPostCodeInput"
             type="text"
             name="shipPostalCode"
             placeholder="Postal code"
-            className={`loginRegInput ${touched.shipPostalCode && errors.shipPostalCode ? 'border-shop-cart-red' : ''}`}
+            className={`
+              loginRegInput   
+              ${touched.shipPostalCode && errors.shipPostalCode ? 'border-shop-cart-red' : ''}
+            `}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.shipPostalCode}

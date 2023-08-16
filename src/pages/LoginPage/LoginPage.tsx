@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 
@@ -18,6 +20,8 @@ function LoginPage() {
     validationSchema,
     onSubmit: () => {},
   });
+
+  const passwordInput = useRef(null);
 
   return (
     <FormWrapper>
@@ -70,6 +74,7 @@ function LoginPage() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
+            ref={passwordInput}
           />
           <img
             className="invalidInputIcon"
@@ -93,7 +98,7 @@ function LoginPage() {
           <input
             id="passToggler"
             type="checkbox"
-            onClick={() => togglePassVisibility(document.querySelector('#passLogInput'))}
+            onClick={() => togglePassVisibility(passwordInput.current)}
             className="
               peer/passToggler
               mr-2
