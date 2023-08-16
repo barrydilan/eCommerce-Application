@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
+import { validSchemaStepOne } from './validationSchemas';
 import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
@@ -8,18 +8,7 @@ import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
 import NavBlock from '../ui/NavBlock';
 
-const emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).{8,}$/;
-
-const validationSchema = Yup.object({
-  email: Yup.string()
-    .matches(emailRegEx, { message: 'Email must follow email@example.com pattern', excludeEmptyString: true })
-    .required('Email is required'),
-  password: Yup.string()
-    .min(8, 'Minimum 8 symbols required')
-    .matches(passwordRegex, { message: 'Password must have A, a, 1, ! symbols', excludeEmptyString: true })
-    .required('Password is required'),
-});
+const validationSchema = validSchemaStepOne();
 
 type UserData = {
   email: string;
@@ -45,25 +34,23 @@ export default function RegStepOne(props: UserFormProps) {
     },
   });
 
+  const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+
   return (
-    <CustomForm onSubmit={formik.handleSubmit}>
+    <CustomForm onSubmit={handleSubmit}>
       <label htmlFor="emailRegInput" className="loginRegLabel">
         <input
           id="emailRegInput"
           type="email"
           name="email"
           placeholder="Email"
-          className={`loginRegInput ${formik.touched.email && formik.errors.email ? 'border-shop-cart-red' : ''}`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
+          className={`loginRegInput ${touched.email && errors.email ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
         />
-        <img
-          className="invalidInputIcon"
-          src={formik.touched.email && formik.errors.email ? emailIconRed : emailIcon}
-          alt=""
-        />
-        {formik.touched.email && formik.errors.email ? <p className="invalidInputMsg">{formik.errors.email}</p> : null}
+        <img className="invalidInputIcon" src={touched.email && errors.email ? emailIconRed : emailIcon} alt="" />
+        {touched.email && errors.email && <p className="invalidInputMsg">{errors.email}</p>}
       </label>
       <label htmlFor="passRegInput" className="loginRegLabel">
         <input
@@ -71,19 +58,13 @@ export default function RegStepOne(props: UserFormProps) {
           type="text"
           name="password"
           placeholder="Password"
-          className={`loginRegInput ${formik.touched.password && formik.errors.password ? 'border-shop-cart-red' : ''}`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
+          className={`loginRegInput ${touched.password && errors.password ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
         />
-        <img
-          className="invalidInputIcon"
-          src={formik.touched.password && formik.errors.password ? lockIconRed : lockIcon}
-          alt=""
-        />
-        {formik.touched.password && formik.errors.password ? (
-          <p className="invalidInputMsg">{formik.errors.password}</p>
-        ) : null}
+        <img className="invalidInputIcon" src={touched.password && errors.password ? lockIconRed : lockIcon} alt="" />
+        {touched.password && errors.password ? <p className="invalidInputMsg">{errors.password}</p> : null}
       </label>
       <NavBlock isBackBtn={false} backFunc={undefined} nextFunc={undefined} />
     </CustomForm>

@@ -1,16 +1,12 @@
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
+import { validSchemaStepFour } from './validationSchemas';
 import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
 import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
 import NavBlock from '../ui/NavBlock';
-
-const usaPostCode = /^\d{5}(-\d{4})?$/;
-const ukrGerPostCode = /^\d{5}$/;
-const streetRegEx = /^(?=.*[a-zA-Z]).*$/;
 
 type UserData = {
   billPostalCode: string;
@@ -25,6 +21,7 @@ type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
   billCountry: string;
   shipCountry: string;
+  sameBillShip: boolean;
   next: () => void;
   back: () => void;
 };
@@ -33,6 +30,7 @@ export default function RegStepFour(props: UserFormProps) {
   const {
     shipCountry,
     billCountry,
+    sameBillShip,
     billPostalCode,
     billStreet,
     shipPostalCode,
@@ -44,35 +42,7 @@ export default function RegStepFour(props: UserFormProps) {
     next,
   } = props;
 
-  const checkSameBillShip = shipCountry === billCountry;
-
-  function getRegEx(country: string) {
-    switch (country) {
-      case 'ukraine':
-      case 'germany':
-        return ukrGerPostCode;
-      default:
-        return usaPostCode;
-    }
-  }
-
-  const billRegEx = getRegEx(billCountry);
-  const shipRegEx = getRegEx(shipCountry);
-
-  const validationSchema = Yup.object({
-    billPostalCode: Yup.string()
-      .matches(billRegEx, { message: 'Enter valid postal code', excludeEmptyString: true })
-      .required('PostalCode is required'),
-    billStreet: Yup.string()
-      .matches(streetRegEx, { message: 'Street name must contain at least one letter', excludeEmptyString: true })
-      .required('Street name is required'),
-    shipPostalCode: Yup.string()
-      .matches(shipRegEx, { message: 'Enter valid postal code', excludeEmptyString: true })
-      .required('PostalCode is required'),
-    shipStreet: Yup.string()
-      .matches(streetRegEx, { message: 'Street name must contain at least one letter', excludeEmptyString: true })
-      .required('Street name is required'),
-  });
+  const validationSchema = validSchemaStepFour(billCountry, shipCountry);
 
   const formik = useFormik({
     initialValues: {
@@ -97,29 +67,27 @@ export default function RegStepFour(props: UserFormProps) {
     },
   });
 
+  const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+
   return (
-    <CustomForm onSubmit={formik.handleSubmit}>
+    <CustomForm onSubmit={handleSubmit}>
       <label htmlFor="billPostalCodeInput" className="loginRegLabel">
         <input
           id="billPostCodeInput"
           type="text"
           name="billPostalCode"
           placeholder="Postal code"
-          className={`loginRegInput ${
-            formik.touched.billPostalCode && formik.errors.billPostalCode ? 'border-shop-cart-red' : ''
-          }`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.billPostalCode}
+          className={`loginRegInput ${touched.billPostalCode && errors.billPostalCode ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.billPostalCode}
         />
         <img
           className="invalidInputIcon"
-          src={formik.touched.billPostalCode && formik.errors.billPostalCode ? postalCodeIconRed : postalCodeIcon}
+          src={touched.billPostalCode && errors.billPostalCode ? postalCodeIconRed : postalCodeIcon}
           alt=""
         />
-        {formik.touched.billPostalCode && formik.errors.billPostalCode ? (
-          <p className="invalidInputMsg">{formik.errors.billPostalCode}</p>
-        ) : null}
+        {touched.billPostalCode && errors.billPostalCode && <p className="invalidInputMsg">{errors.billPostalCode}</p>}
       </label>
       <label htmlFor="billStreetInput" className="loginRegLabel">
         <input
@@ -127,86 +95,61 @@ export default function RegStepFour(props: UserFormProps) {
           type="text"
           name="billStreet"
           placeholder="Street"
-          className={`loginRegInput ${
-            formik.touched.billStreet && formik.errors.billStreet ? 'border-shop-cart-red' : ''
-          }`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.billStreet}
+          className={`loginRegInput ${touched.billStreet && errors.billStreet ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.billStreet}
         />
         <img
           className="invalidInputIcon"
-          src={formik.touched.billStreet && formik.errors.billStreet ? streetIconRed : streetIcon}
+          src={touched.billStreet && errors.billStreet ? streetIconRed : streetIcon}
           alt=""
         />
-        {formik.touched.billStreet && formik.errors.billStreet ? (
-          <p className="invalidInputMsg">{formik.errors.billStreet}</p>
-        ) : null}
+        {touched.billStreet && errors.billStreet && <p className="invalidInputMsg">{errors.billStreet}</p>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
         <input
           id="billSetDefInput"
           type="checkbox"
           name="billSetDefault"
-          checked={formik.values.billSetDefault}
-          onChange={formik.handleChange}
-          className="
-            peer/expand
-            mr-2
-            h-4
-            w-4
-            appearance-none
-            rounded-sm
-            border-1
-            border-accent
-            bg-primary
-          "
+          checked={values.billSetDefault}
+          onChange={handleChange}
+          className="hiddenCheckBox peer/expand"
         />
         <label
           htmlFor="billSetDefInput"
           className="
+          regFormCheckGulp
           relative
           text-3xs
           leading-3
-          before:absolute
-          before:-left-5
           before:top-0.5
-          before:hidden
-          before:h-1.5
-          before:w-2.5
-          before:-rotate-45
-          before:border-b-3
-          before:border-l-3
-          before:border-b-accent
-          before:border-l-accent
           peer-checked/expand:before:block
         "
         >
-          {checkSameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
+          {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
         </label>
       </div>
-      <div className={checkSameBillShip ? 'hidden' : 'block'}>
+      <div className={sameBillShip ? 'hidden' : 'block'}>
         <label htmlFor="shipPostalCodeInput" className="loginRegLabel">
           <input
             id="shipPostCodeInput"
             type="text"
             name="shipPostalCode"
             placeholder="Postal code"
-            className={`loginRegInput ${
-              formik.touched.shipPostalCode && formik.errors.shipPostalCode ? 'border-shop-cart-red' : ''
-            }`}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.shipPostalCode}
+            className={`loginRegInput ${touched.shipPostalCode && errors.shipPostalCode ? 'border-shop-cart-red' : ''}`}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.shipPostalCode}
           />
           <img
             className="invalidInputIcon"
-            src={formik.touched.shipPostalCode && formik.errors.shipPostalCode ? postalCodeIconRed : postalCodeIcon}
+            src={touched.shipPostalCode && errors.shipPostalCode ? postalCodeIconRed : postalCodeIcon}
             alt=""
           />
-          {formik.touched.shipPostalCode && formik.errors.shipPostalCode ? (
-            <p className="invalidInputMsg">{formik.errors.shipPostalCode}</p>
-          ) : null}
+          {touched.shipPostalCode && errors.shipPostalCode && (
+            <p className="invalidInputMsg">{errors.shipPostalCode}</p>
+          )}
         </label>
         <label htmlFor="shipStreetInput" className="loginRegLabel">
           <input
@@ -214,62 +157,39 @@ export default function RegStepFour(props: UserFormProps) {
             type="text"
             name="shipStreet"
             placeholder="Street"
-            className={`loginRegInput ${
-              formik.touched.shipStreet && formik.errors.shipStreet ? 'border-shop-cart-red' : ''
-            }`}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.shipStreet}
+            className={`loginRegInput ${touched.shipStreet && errors.shipStreet ? 'border-shop-cart-red' : ''}`}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.shipStreet}
           />
           <img
             className="invalidInputIcon"
-            src={formik.touched.shipStreet && formik.errors.shipStreet ? streetIconRed : streetIcon}
+            src={touched.shipStreet && errors.shipStreet ? streetIconRed : streetIcon}
             alt=""
           />
-          {formik.touched.shipStreet && formik.errors.shipStreet ? (
-            <p className="invalidInputMsg">{formik.errors.shipStreet}</p>
-          ) : null}
+          {touched.shipStreet && errors.shipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
         </label>
         <div className="mt-6 flex items-center text-text-grey">
           <input
             id="shipSetDefInput"
             type="checkbox"
             name="shipSetDefault"
-            checked={formik.values.shipSetDefault}
-            onChange={formik.handleChange}
-            className="
-              peer/expand
-              mr-2
-              h-4
-              w-4
-              appearance-none
-              rounded-sm
-              border-1
-              border-accent
-              bg-primary
-            "
+            checked={values.shipSetDefault}
+            onChange={handleChange}
+            className="peer/expand hiddenCheckBox"
           />
           <label
             htmlFor="shipSetDefInput"
             className="
+            regFormCheckGulp
             relative
             text-3xs
             leading-3
-            before:absolute
-            before:-left-5
             before:top-0.5
-            before:hidden
-            before:h-1.5
-            before:w-2.5
-            before:-rotate-45
-            before:border-b-3
-            before:border-l-3
-            before:border-b-accent
-            before:border-l-accent
             peer-checked/expand:before:block
           "
           >
-            {checkSameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
+            {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
           </label>
         </div>
       </div>
@@ -277,10 +197,10 @@ export default function RegStepFour(props: UserFormProps) {
         isBackBtn
         backFunc={back}
         nextFunc={() => {
-          if (checkSameBillShip) {
-            formik.values.shipPostalCode = formik.values.billPostalCode;
-            formik.values.shipStreet = formik.values.billStreet;
-            formik.values.shipSetDefault = formik.values.billSetDefault;
+          if (sameBillShip) {
+            values.shipPostalCode = values.billPostalCode;
+            values.shipStreet = values.billStreet;
+            values.shipSetDefault = values.billSetDefault;
           }
         }}
       />

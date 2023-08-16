@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
+import { validSchemaStepTwo } from './validationSchemas';
 import calendarIcon from '../../../assets/icons/CalendarIcon.svg';
 import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
@@ -10,23 +10,7 @@ import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
 import NavBlock from '../ui/NavBlock';
 
-const nameRegEx = /^[a-zA-Z]+$/;
-
-const currentDate = new Date();
-const max = new Date(currentDate.getFullYear() - 13, currentDate.getMonth(), currentDate.getDate());
-const ageLimit = `${max.getFullYear()} ${max.getMonth()} ${max.getDate()}`;
-
-const validationSchema = Yup.object({
-  firstName: Yup.string()
-    .matches(nameRegEx, { message: 'First name must contain only letters', excludeEmptyString: true })
-    .max(20, 'Too long name')
-    .required('First name is required'),
-  lastName: Yup.string()
-    .matches(nameRegEx, { message: 'Last name must contain A, a letters', excludeEmptyString: true })
-    .max(20, 'Too long name')
-    .required('Last name is required'),
-  birthDate: Yup.date().max(ageLimit, 'You can`t use service if under 13 years old').required('Birth date is required'),
-});
+const validationSchema = validSchemaStepTwo();
 
 type UserData = {
   firstName: string;
@@ -42,7 +26,6 @@ type UserFormProps = UserData & {
 
 export default function RegStepTwo(props: UserFormProps) {
   const { firstName, lastName, birthDate, updateData, back, next } = props;
-  const [dateInputType, setDateInputType] = useState('text');
   const formik = useFormik({
     initialValues: {
       firstName,
@@ -55,6 +38,8 @@ export default function RegStepTwo(props: UserFormProps) {
       next();
     },
   });
+  const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+  const [dateInputType, setDateInputType] = useState('text');
   function blurHandler() {
     formik.handleBlur;
     setDateInputType('text');
@@ -65,28 +50,20 @@ export default function RegStepTwo(props: UserFormProps) {
   }
 
   return (
-    <CustomForm onSubmit={formik.handleSubmit}>
+    <CustomForm onSubmit={handleSubmit}>
       <label htmlFor="firstNameInput" className="loginRegLabel">
         <input
           id="firstNameInput"
           type="text"
           name="firstName"
           placeholder="First name"
-          className={`loginRegInput ${
-            formik.touched.firstName && formik.errors.firstName ? 'border-shop-cart-red' : ''
-          }`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.firstName}
+          className={`loginRegInput ${touched.firstName && errors.firstName ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.firstName}
         />
-        <img
-          className="invalidInputIcon"
-          src={formik.touched.firstName && formik.errors.firstName ? userIconRed : userIcon}
-          alt=""
-        />
-        {formik.touched.firstName && formik.errors.firstName ? (
-          <p className="invalidInputMsg">{formik.errors.firstName}</p>
-        ) : null}
+        <img className="invalidInputIcon" src={touched.firstName && errors.firstName ? userIconRed : userIcon} alt="" />
+        {touched.firstName && errors.firstName && <p className="invalidInputMsg">{errors.firstName}</p>}
       </label>
       <label htmlFor="lastNameInput" className="loginRegLabel">
         <input
@@ -94,19 +71,13 @@ export default function RegStepTwo(props: UserFormProps) {
           type="text"
           name="lastName"
           placeholder="Last name"
-          className={`loginRegInput ${formik.touched.lastName && formik.errors.lastName ? 'border-shop-cart-red' : ''}`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.lastName}
+          className={`loginRegInput ${touched.lastName && errors.lastName ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.lastName}
         />
-        <img
-          className="invalidInputIcon"
-          src={formik.touched.lastName && formik.errors.lastName ? userIconRed : userIcon}
-          alt=""
-        />
-        {formik.touched.lastName && formik.errors.lastName ? (
-          <p className="invalidInputMsg">{formik.errors.lastName}</p>
-        ) : null}
+        <img className="invalidInputIcon" src={touched.lastName && errors.lastName ? userIconRed : userIcon} alt="" />
+        {touched.lastName && errors.lastName && <p className="invalidInputMsg">{errors.lastName}</p>}
       </label>
       <label htmlFor="birthDateInput" className="loginRegLabel">
         <input
@@ -115,21 +86,17 @@ export default function RegStepTwo(props: UserFormProps) {
           name="birthDate"
           placeholder="Birth date"
           onFocus={focusHandler}
-          className={`loginRegInput ${
-            formik.touched.birthDate && formik.errors.birthDate ? 'border-shop-cart-red' : ''
-          }`}
-          onChange={formik.handleChange}
+          className={`loginRegInput ${touched.birthDate && errors.birthDate ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
           onBlur={blurHandler}
-          value={formik.values.birthDate}
+          value={values.birthDate}
         />
         <img
           className="invalidInputIcon"
-          src={formik.touched.birthDate && formik.errors.birthDate ? calendarIconRed : calendarIcon}
+          src={touched.birthDate && errors.birthDate ? calendarIconRed : calendarIcon}
           alt=""
         />
-        {formik.touched.birthDate && formik.errors.birthDate ? (
-          <p className="invalidInputMsg">{formik.errors.birthDate}</p>
-        ) : null}
+        {touched.birthDate && errors.birthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
       </label>
       <NavBlock isBackBtn backFunc={back} nextFunc={undefined} />
     </CustomForm>

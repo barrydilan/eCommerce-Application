@@ -79,6 +79,7 @@ export default function RegPage() {
     <RegStepFour
       billCountry={formData.billCountry}
       shipCountry={formData.shipCountry}
+      sameBillShip={formData.sameBillShip}
       billPostalCode={formData.billPostalCode}
       billStreet={formData.billStreet}
       shipPostalCode={formData.shipPostalCode}

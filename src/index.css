@@ -27,3 +27,15 @@
   }
 }
 
+@layer components {
+  .hiddenCheckBox {
+    @apply mr-2 h-4 w-4 appearance-none rounded-sm border-1 border-accent bg-primary
+  }
+}
+
+@layer utilities {
+  .regFormCheckGulp {
+    @apply before:absolute before:-left-5 before:top-2 before:hidden before:h-1.5 before:w-2.5 before:-rotate-45 before:border-b-3 before:border-l-3 before:border-b-accent before:border-l-accent
+  }
+}
+

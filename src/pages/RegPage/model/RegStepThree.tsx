@@ -1,24 +1,13 @@
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
+import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
 import NavBlock from '../ui/NavBlock';
 
-const nameRegEx = /^[a-zA-Z]+$/;
-
-const validationSchema = Yup.object({
-  billCity: Yup.string()
-    .matches(nameRegEx, { message: 'City name must contain only letters', excludeEmptyString: true })
-    .max(20, 'Too long name')
-    .required('City name is required'),
-  shipCity: Yup.string()
-    .matches(nameRegEx, { message: 'City name must contain A, a letters', excludeEmptyString: true })
-    .max(20, 'Too long name')
-    .required('City name is required'),
-});
+const validationSchema = validSchemaStepThree();
 
 type UserData = {
   billCountry: string;
@@ -33,6 +22,8 @@ type UserFormProps = UserData & {
   next: () => void;
   back: () => void;
 };
+
+const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
 export default function RegStepThree(props: UserFormProps) {
   const { shipCountry, shipCity, billCountry, billCity, sameBillShip, updateData, back, next } = props;
@@ -57,29 +48,24 @@ export default function RegStepThree(props: UserFormProps) {
       next();
     },
   });
+  const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
 
   return (
-    <CustomForm onSubmit={formik.handleSubmit}>
+    <CustomForm onSubmit={handleSubmit}>
       <label
         htmlFor="billCountryInput"
         className={`
         loginRegLabel
-        ${
-          formik.values.sameBillShip
-            ? ''
-            : "relative after:absolute after:-top-5 after:right-0 after:text-2xs after:content-['Billing']"
-        }
+        ${values.sameBillShip ? '' : `${shipBillCluesStyles} after:content-['Billing']`}
       `}
       >
         <select
           id="billCountryInput"
           name="billCountry"
-          className={`loginRegInput ${
-            formik.touched.billCountry && formik.errors.billCountry ? 'border-shop-cart-red' : ''
-          }`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.billCountry}
+          className={`loginRegInput ${touched.billCountry && errors.billCountry ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.billCountry}
         >
           <option value="usa">USA</option>
           <option value="ukraine">Ukraine</option>
@@ -93,85 +79,44 @@ export default function RegStepThree(props: UserFormProps) {
           type="text"
           name="billCity"
           placeholder="City"
-          className={`loginRegInput ${formik.touched.billCity && formik.errors.billCity ? 'border-shop-cart-red' : ''}`}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.billCity}
+          className={`loginRegInput ${touched.billCity && errors.billCity ? 'border-shop-cart-red' : ''}`}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.billCity}
         />
-        <img
-          className="invalidInputIcon"
-          src={formik.touched.billCity && formik.errors.billCity ? cityIconRed : cityIcon}
-          alt=""
-        />
-        {formik.touched.billCity && formik.errors.billCity ? (
-          <p className="invalidInputMsg">{formik.errors.billCity}</p>
-        ) : null}
+        <img className="invalidInputIcon" src={touched.billCity && errors.billCity ? cityIconRed : cityIcon} alt="" />
+        {touched.billCity && errors.billCity && <p className="invalidInputMsg">{errors.billCity}</p>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
         <input
           id="expand"
           type="checkbox"
           name="sameBillShip"
-          checked={formik.values.sameBillShip}
-          onChange={formik.handleChange}
-          className="
-            peer/expand
-            mr-2
-            h-4
-            w-4
-            appearance-none
-            rounded-sm
-            border-1
-            border-accent
-            bg-primary
-          "
+          checked={values.sameBillShip}
+          onChange={handleChange}
+          className="hiddenCheckBox peer/expand"
         />
         <label
           htmlFor="expand"
-          className="
-          relative
-          text-3xs
-          leading-3
-          before:absolute
-          before:-left-5
-          before:top-2
-          before:hidden
-          before:h-1.5
-          before:w-2.5
-          before:-rotate-45
-          before:border-b-3
-          before:border-l-3
-          before:border-b-accent
-          before:border-l-accent
-          peer-checked/expand:before:block
-        "
+          className="regFormCheckGulp relative text-3xs leading-3 peer-checked/expand:before:block"
         >
           Use the same address <br />
           as a billing and a shipping
         </label>
       </div>
-      <div className={formik.values.sameBillShip ? 'hidden' : 'block'}>
+      <div className={values.sameBillShip ? 'hidden' : 'block'}>
         <label
           htmlFor="billCountryInput"
-          className="
-        loginRegLabel
-        relative
-        after:absolute
-        after:-top-5
-        after:right-0
-        after:text-2xs
-        after:content-['Shipping']
-        "
+          className={`loginRegLabel ${`${shipBillCluesStyles} after:content-['Shipping']`}
+        `}
         >
           <select
             id="shipCountryInput"
             name="shipCountry"
-            className={`loginRegInput ${
-              formik.touched.shipCountry && formik.errors.shipCountry ? 'border-shop-cart-red' : ''
-            }`}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.shipCountry}
+            className={`loginRegInput ${touched.shipCountry && errors.shipCountry ? 'border-shop-cart-red' : ''}`}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.shipCountry}
           >
             <option value="usa">USA</option>
             <option value="ukraine">Ukraine</option>
@@ -185,30 +130,22 @@ export default function RegStepThree(props: UserFormProps) {
             type="text"
             name="shipCity"
             placeholder="City"
-            className={`loginRegInput ${
-              formik.touched.shipCity && formik.errors.shipCity ? 'border-shop-cart-red' : ''
-            }`}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.shipCity}
+            className={`loginRegInput ${touched.shipCity && errors.shipCity ? 'border-shop-cart-red' : ''}`}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.shipCity}
           />
-          <img
-            className="invalidInputIcon"
-            src={formik.touched.shipCity && formik.errors.shipCity ? cityIconRed : cityIcon}
-            alt=""
-          />
-          {formik.touched.shipCity && formik.errors.shipCity ? (
-            <p className="invalidInputMsg">{formik.errors.shipCity}</p>
-          ) : null}
+          <img className="invalidInputIcon" src={touched.shipCity && errors.shipCity ? cityIconRed : cityIcon} alt="" />
+          {touched.shipCity && errors.shipCity ? <p className="invalidInputMsg">{errors.shipCity}</p> : null}
         </label>
       </div>
       <NavBlock
         isBackBtn
         backFunc={back}
         nextFunc={() => {
-          if (formik.values.sameBillShip) {
-            formik.values.shipCountry = formik.values.billCountry;
-            formik.values.shipCity = formik.values.billCity;
+          if (values.sameBillShip) {
+            values.shipCountry = values.billCountry;
+            values.shipCity = values.billCity;
           }
         }}
       />
