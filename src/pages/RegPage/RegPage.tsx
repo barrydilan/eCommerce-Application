@@ -54,38 +54,57 @@ export default function RegPage() {
     });
   }
 
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    birthDate,
+    sameBillShip,
+    billCountry,
+    billCity,
+    billPostalCode,
+    billStreet,
+    billSetDefault,
+    shipCountry,
+    shipCity,
+    shipPostalCode,
+    shipStreet,
+    shipSetDefault,
+  } = formData;
+
   const { length, currentStepIndex, currForm, back, next } = useMultistepForm([
-    <RegStepOne email={formData.email} password={formData.password} updateData={updateData} next={nextStep} key={0} />,
+    <RegStepOne email={email} password={password} updateData={updateData} next={nextStep} key={0} />,
     <RegStepTwo
-      firstName={formData.firstName}
-      lastName={formData.lastName}
-      birthDate={formData.birthDate}
+      firstName={firstName}
+      lastName={lastName}
+      birthDate={birthDate}
       updateData={updateData}
       back={prevStep}
       next={nextStep}
       key={1}
     />,
     <RegStepThree
-      billCountry={formData.billCountry}
-      billCity={formData.billCity}
-      shipCountry={formData.shipCountry}
-      shipCity={formData.shipCity}
-      sameBillShip={formData.sameBillShip}
+      billCountry={billCountry}
+      billCity={billCity}
+      shipCountry={shipCountry}
+      shipCity={shipCity}
+      sameBillShip={sameBillShip}
       updateData={updateData}
       back={prevStep}
       next={nextStep}
       key={3}
     />,
     <RegStepFour
-      billCountry={formData.billCountry}
-      shipCountry={formData.shipCountry}
-      sameBillShip={formData.sameBillShip}
-      billPostalCode={formData.billPostalCode}
-      billStreet={formData.billStreet}
-      shipPostalCode={formData.shipPostalCode}
-      shipStreet={formData.shipStreet}
-      billSetDefault={formData.billSetDefault}
-      shipSetDefault={formData.shipSetDefault}
+      billCountry={billCountry}
+      shipCountry={shipCountry}
+      sameBillShip={sameBillShip}
+      billPostalCode={billPostalCode}
+      billStreet={billStreet}
+      shipPostalCode={shipPostalCode}
+      shipStreet={shipStreet}
+      billSetDefault={billSetDefault}
+      shipSetDefault={shipSetDefault}
       updateData={updateData}
       back={prevStep}
       next={nextStep}
