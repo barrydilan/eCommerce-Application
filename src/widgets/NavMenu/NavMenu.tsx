@@ -7,7 +7,8 @@ import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
 import { COOKIE_ACCESS_TOKEN_NAME, userSlice } from '../../entities/user';
-import { deleteCookie, useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import { deleteCookie } from '../../shared/lib/helpers';
+import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 
 function NavMenu() {
   const { isLogged } = useAppSelector((state) => state.userReducer);

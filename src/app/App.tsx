@@ -6,7 +6,8 @@ import { COOKIE_ACCESS_TOKEN_NAME, useAnonymousSessionMutation, userSlice } from
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
-import { getCookie, useAppDispatch } from '../shared/lib/hooks';
+import { getCookie } from '../shared/lib/helpers';
+import { useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
 
 export function App() {

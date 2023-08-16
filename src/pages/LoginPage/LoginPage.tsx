@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
 import { COOKIE_ACCESS_TOKEN_NAME, useLoginUserMutation, userSlice } from '../../entities/user';
-import { setCookie, useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import { setCookie } from '../../shared/lib/helpers';
+import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import ILoginUserData from '../../shared/types';
 
 function LoginPage() {
