@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import accentGulp from '../../../assets/icons/AccentGulp.svg';
 import redCross from '../../../assets/icons/RedCross.svg';
 
-export default function RegFinal(props: { isSuccess: boolean }) {
-  const { isSuccess } = props;
+export default function RegFinal(props: { isSuccess: boolean; returnStepOne: () => void }) {
+  const { isSuccess, returnStepOne } = props;
   return (
     <div
       className=" 
@@ -45,6 +45,7 @@ export default function RegFinal(props: { isSuccess: boolean }) {
       </div>
       <Link
         to={isSuccess ? '/' : '/registration'}
+        onClick={returnStepOne}
         className="
           mb-9 
           mt-9 

@@ -73,7 +73,7 @@ export default function RegPage() {
     shipSetDefault,
   } = formData;
 
-  const { length, currentStepIndex, currForm, back, next } = useMultistepForm([
+  const { reStart, length, currentStepIndex, currForm, back, next } = useMultistepForm([
     <RegStepOne email={email} password={password} updateData={updateData} next={nextStep} key={0} />,
     <RegStepTwo
       firstName={firstName}
@@ -110,7 +110,7 @@ export default function RegPage() {
       next={nextStep}
       key={4}
     />,
-    <RegFinal isSuccess key={5} />,
+    <RegFinal isSuccess={false} key={5} returnStepOne={returnStepOne} />,
   ]);
 
   function nextStep() {
@@ -121,6 +121,9 @@ export default function RegPage() {
     back();
   }
 
+  function returnStepOne() {
+    reStart();
+  }
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <CirclesWrapper currStep={currentStepIndex} quantity={length} />
