@@ -18,6 +18,7 @@ function NavMenu() {
   function handleLogout() {
     dispatch(loggedOut());
     deleteCookie(COOKIE_ACCESS_TOKEN_NAME);
+    localStorage.clear();
   }
 
   return (

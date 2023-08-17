@@ -4,33 +4,48 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
-import { COOKIE_ACCESS_TOKEN_NAME, useLoginUserMutation, userSlice } from '../../entities/user';
-import { setCookie } from '../../shared/lib/helpers';
+import {
+  COOKIE_ACCESS_TOKEN_NAME,
+  useGetLoginTokenMutation,
+  useLoginUserDataMutation,
+  USER_LOGGED_IN_DATA_KEY,
+  userSlice,
+} from '../../entities/user';
+import { setCookie, setLocalStorage } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import ILoginUserData from '../../shared/types';
+import { ILoginUserParams } from '../../shared/types';
 
 function LoginPage() {
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [loginUser, { isLoading }] = useGetLoginTokenMutation();
+  const [getLoginUserData] = useLoginUserDataMutation();
   const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const passwordInput = useRef<HTMLInputElement>(null);
   const { loggedIn } = userSlice.actions;
 
-  async function handleSubmit(userData: ILoginUserData) {
+  async function handleSubmit(userData: ILoginUserParams) {
     if (isLogged) {
       navigate('/');
       return;
     }
 
     try {
-      const { access_token: accessToken, expires_in: expiresIn } = await loginUser(userData).unwrap();
+      const waitLoginUser = loginUser(userData).unwrap();
+      const waitLoginUserData = getLoginUserData(userData).unwrap();
 
-      dispatch(loggedIn(accessToken));
+      const [{ access_token: accessToken, expires_in: expiresIn }, userLoggedInData] = await Promise.all([
+        waitLoginUser,
+        waitLoginUserData,
+      ]);
+
+      dispatch(loggedIn({ accessToken, userLoggedInData }));
       navigate('/');
+
       setCookie(accessToken, COOKIE_ACCESS_TOKEN_NAME, expiresIn);
+      setLocalStorage(USER_LOGGED_IN_DATA_KEY, userLoggedInData);
     } catch (e) {
-      // TODO - implement to render error message
+      // TODO - implement error message
       // console.error(`Error occurred while logging the user! (${e.status})`);
     }
   }

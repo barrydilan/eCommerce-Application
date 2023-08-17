@@ -1,15 +1,21 @@
 import { Link } from 'react-router-dom';
 
 import userPic from '../../assets/img/UserImg.jpg';
+import { getFullName } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
 
 function UserProfileLink(props: { isHeader: boolean }) {
-  const { isLogged } = useAppSelector((state) => state.userReducer);
+  const {
+    isLogged,
+    userData: { customer },
+  } = useAppSelector((state) => state.userReducer);
   const { isHeader } = props;
 
   const headerLoggedClass = 'block md:hidden';
   const menuLoggedClass =
     'hidden w-full justify-center gap-3 text-text-grey md:mt-6 md:flex md:flex-col md:items-center lg:mt-12 lg:flex-row';
+
+  const userFullName = getFullName(customer?.firstName, customer?.lastName);
 
   if (isLogged) {
     return (
@@ -28,7 +34,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
                 lg:w-full 
                 lg:text-start"
           >
-            Vasisualii Lokhankin
+            {userFullName}
           </h5>
           <h6
             className="

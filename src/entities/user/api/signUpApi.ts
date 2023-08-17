@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
 import bearerBaseQuery from '../../../shared/api/bearerBaseQuery.ts';
 import { PROJECT_KEY } from '../../../shared/const';
+import { ILoginUserDataResponse, ILoginUserParams } from '../../../shared/types';
 
 interface ISignUpAddress {
 	streetName: string;
@@ -40,9 +41,17 @@ type ISignUpResponse = Readonly<{
 }>;
 
 export const signUpApi = createApi({
-	reducerPath: 'productAPI',
+	reducerPath: 'signUpApi',
 	baseQuery: bearerBaseQuery,
 	endpoints: (build) => ({
+		loginUserData: build.mutation<ILoginUserDataResponse, ILoginUserParams>({
+			query: (loginData) => ({
+				url: `/${PROJECT_KEY}/login`,
+				method: 'POST',
+				body: JSON.stringify(loginData),
+			}),
+		}),
+
 		signUp: build.mutation<ISignUpResponse, ISignUpParams>({
 			query: (signUpData) => ({
 				url: `/${PROJECT_KEY}/me/signup`,
@@ -53,4 +62,4 @@ export const signUpApi = createApi({
 	}),
 });
 
-export const { useSignUpMutation } = signUpApi;
+export const { useSignUpMutation, useLoginUserDataMutation } = signUpApi;

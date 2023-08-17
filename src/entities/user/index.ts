@@ -1,6 +1,7 @@
-import COOKIE_ACCESS_TOKEN_NAME from './consts/constants.ts';
+import getFullName from './lib/helpers/getFullName.ts';
 
-export { signUpApi, useSignUpMutation } from './api/signUpApi.ts';
-export { authApi, useAnonymousSessionMutation, useLoginUserMutation } from './api/authApi.ts';
+export { signUpApi, useSignUpMutation, useLoginUserDataMutation } from './api/signUpApi.ts';
+export { COOKIE_ACCESS_TOKEN_NAME, USER_LOGGED_IN_DATA_KEY } from './consts/constants.ts';
+export { authApi, useAnonymousSessionMutation, useGetLoginTokenMutation } from './api/authApi.ts';
 export { userReducer, userSlice } from './model/slice.ts';
-export { COOKIE_ACCESS_TOKEN_NAME };
+export { getFullName };

@@ -1,3 +1,1 @@
-import { ILoginUserParams } from './interfaces.ts';
-
-export default ILoginUserParams;
+export type { ILoginUserParams, ILoginUserDataResponse } from './interfaces.ts';

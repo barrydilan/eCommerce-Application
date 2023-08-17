@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import basicBaseQuery from '../../../shared/api/basicBaseQuery.ts';
 import { DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../../../shared/const';
-import ILoginUserParams from '../../../shared/types';
+import { ILoginUserParams } from '../../../shared/types';
 
 type IAuthResponse = Readonly<{
 	access_token: string;
@@ -16,7 +16,7 @@ export const authApi = createApi({
 	reducerPath: 'authApi',
 	baseQuery: basicBaseQuery,
 	endpoints: (build) => ({
-		loginUser: build.mutation<IAuthResponse, ILoginUserParams>({
+		getLoginToken: build.mutation<IAuthResponse, ILoginUserParams>({
 			query: ({ password, email, scope = DEFAULT_CUSTOMER_SCOPE }) => ({
 				url: `/oauth/${PROJECT_KEY}/customers/token`,
 				method: 'POST',
@@ -44,4 +44,4 @@ export const authApi = createApi({
 	}),
 });
 
-export const { useLoginUserMutation, useAnonymousSessionMutation } = authApi;
+export const { useGetLoginTokenMutation, useAnonymousSessionMutation } = authApi;
