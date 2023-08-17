@@ -17,17 +17,19 @@ export default function useMultistepForm(steps: ReactElement[]) {
     });
   }
 
-  function reStart() {
+  function reStartForm() {
     setCurrentStepIndex(0);
   }
 
-  const { length } = steps;
+  const formLength = steps.length;
 
   return {
-    reStart,
+    reStartForm,
+    isFirstStep: currentStepIndex === 0,
+    isLastStep: currentStepIndex === steps.length - 1,
     currentStepIndex,
     currForm: steps[currentStepIndex],
-    length,
+    formLength,
     next,
     back,
   };

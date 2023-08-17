@@ -49,6 +49,7 @@ const initVals = {
 export default function RegPage() {
   const [formData, setFormData] = useState(initVals);
   const [btnEnabled, setBtnEnabled] = useState(false);
+  const [isformSubmitted, setIsFormSubmitted] = useState(false);
 
   function updateData(fields: Partial<FormDataType>) {
     setFormData((prev) => {
@@ -75,7 +76,7 @@ export default function RegPage() {
     shipSetDefault,
   } = formData;
 
-  const { length, currentStepIndex, currForm, back, next } = useMultistepForm([
+  const { isLastStep, formLength, reStartForm, currentStepIndex, currForm, back, next } = useMultistepForm([
     <RegStepOne email={email} password={password} updateData={updateData} key={0} setBtnEnabled={setBtnEnabled} />,
     <RegStepTwo
       firstName={firstName}
@@ -109,25 +110,30 @@ export default function RegPage() {
       setBtnEnabled={setBtnEnabled}
       key={4}
     />,
-    <RegFinal isSuccess key={5} />,
   ]);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="m-2 flex h-auto flex-col items-center justify-center rounded-2xl border-2 border-separation-line">
-        <CirclesWrapper currStep={currentStepIndex} quantity={length} />
-        <div className="flex w-full justify-center">{currForm}</div>
-        <NavBlock
-          isBackBtn
-          backFunc={back}
-          nextFunc={() => {
-            if (btnEnabled) {
-              next();
-              console.log(formData);
-            }
-          }}
-        />
-      </div>
+      {isformSubmitted ? (
+        <RegFinal isSuccess reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
+      ) : (
+        <div className="m-2 flex h-auto flex-col items-center justify-center rounded-2xl border-2 border-separation-line">
+          <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
+          <div className="flex w-full justify-center">{currForm}</div>
+          <NavBlock
+            isBackBtn
+            backFunc={back}
+            nextFunc={() => {
+              if (btnEnabled) {
+                next();
+                if (isLastStep) {
+                  setIsFormSubmitted(true);
+                }
+              }
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

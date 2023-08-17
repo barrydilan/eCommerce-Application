@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom';
 import accentGulp from '../../../assets/icons/AccentGulp.svg';
 import redCross from '../../../assets/icons/RedCross.svg';
 
-export default function RegFinal(props: { isSuccess: boolean }) {
-  const { isSuccess } = props;
+export default function RegFinal(props: {
+  isSuccess: boolean;
+  reStartForm: () => void;
+  setIsFormSubmitted: (arg: boolean) => void;
+}) {
+  const { isSuccess, reStartForm, setIsFormSubmitted } = props;
   return (
     <div
       className=" 
@@ -44,6 +48,10 @@ export default function RegFinal(props: { isSuccess: boolean }) {
         <img src={isSuccess ? accentGulp : redCross} alt="" />
       </div>
       <Link
+        onClick={() => {
+          reStartForm;
+          setIsFormSubmitted(false);
+        }}
         to={isSuccess ? '/' : '/registration'}
         className="
           mb-9 
