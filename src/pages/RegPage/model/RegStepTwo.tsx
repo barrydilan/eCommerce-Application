@@ -7,6 +7,7 @@ import calendarIcon from '../../../assets/icons/CalendarIcon.svg';
 import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
+import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
 
 const validationSchema = validSchemaStepTwo();
 
@@ -18,11 +19,11 @@ type UserData = {
 
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
-  setBtnEnabled: (arg: boolean) => void;
+  setIsNextEnabled: (arg: boolean) => void;
 };
 
 export default function RegStepTwo(props: UserFormProps) {
-  const { firstName, lastName, birthDate, updateData, setBtnEnabled } = props;
+  const { firstName, lastName, birthDate, updateData, setIsNextEnabled } = props;
   const formik = useFormik({
     initialValues: {
       firstName,
@@ -30,11 +31,9 @@ export default function RegStepTwo(props: UserFormProps) {
       birthDate,
     },
     validationSchema,
-    onSubmit: (values) => {
-      updateData({ firstName: values.firstName, lastName: values.lastName, birthDate: values.birthDate });
-    },
+    onSubmit: () => {},
   });
-  const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+  const { handleChange, handleBlur, errors, touched, values } = formik;
   const [dateInputType, setDateInputType] = useState('text');
   function blurHandler(e: React.FocusEvent<HTMLInputElement, Element>) {
     formik.handleBlur(e);
@@ -53,28 +52,18 @@ export default function RegStepTwo(props: UserFormProps) {
       (touched.lastName === undefined && values.lastName === '') ||
       (touched.birthDate === undefined && values.birthDate === '')
     ) {
-      setBtnEnabled(false);
+      setIsNextEnabled(false);
       return;
     }
     if (errors.firstName || errors.lastName || errors.birthDate) {
-      setBtnEnabled(false);
+      setIsNextEnabled(false);
       return;
     }
-    setBtnEnabled(true);
+    setIsNextEnabled(true);
   }, [values, errors, touched]);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="
-        ml-3 
-        mr-3 
-        box-border 
-        w-full
-        font-medium
-        text-text-grey
-      "
-    >
+    <CustomRegForm>
       <label htmlFor="firstNameInput" className="loginRegLabel">
         <input
           id="firstNameInput"
@@ -122,6 +111,6 @@ export default function RegStepTwo(props: UserFormProps) {
         />
         {touched.birthDate && errors.birthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
       </label>
-    </form>
+    </CustomRegForm>
   );
 }

@@ -1,31 +1,50 @@
 import { Link } from 'react-router-dom';
 
 type PropsType = {
-  isBackBtn: boolean;
-  backFunc: undefined | (() => void);
-  nextFunc: undefined | (() => void);
+  backFunc: () => void;
+  nextFunc: () => void;
+  isNextEnabled: boolean;
+  isFirstStep: boolean;
 };
 
 export default function NavBlock(props: PropsType) {
-  const { isBackBtn, backFunc, nextFunc } = props;
+  const { backFunc, nextFunc, isNextEnabled, isFirstStep } = props;
   return (
     <div
-      className={`mt-6 flex items-center ${
-        isBackBtn ? 'justify-between' : 'justify-around'
-      } font-poppins text-text-grey`}
+      className="
+        mb-6 
+        mt-6
+        flex 
+        w-full
+        items-center 
+        justify-between
+        gap-4 
+        pl-4
+        pr-4
+        font-poppins
+        text-text-grey
+      "
     >
-      {isBackBtn && (
-        <button type="button" className="h-10 p-2" onClick={backFunc}>
-          Back
-        </button>
-      )}
+      <button
+        type="button"
+        className="h-10 rounded-lg p-2 disabled:bg-separation-line"
+        onClick={backFunc}
+        disabled={isFirstStep}
+      >
+        Back
+      </button>
       <p className="text-center text-xs sm:leading-10">
         Already have an account?{' '}
         <Link className="font-bold text-accent" to="/login">
           Log in
         </Link>
       </p>
-      <button type="submit" className="h-10 rounded-lg bg-accent p-2 text-primary" onClick={nextFunc}>
+      <button
+        type="submit"
+        className="h-10 rounded-lg bg-accent p-2 text-primary disabled:bg-separation-line disabled:text-text-grey"
+        onClick={nextFunc}
+        disabled={!isNextEnabled}
+      >
         Continue
       </button>
     </div>

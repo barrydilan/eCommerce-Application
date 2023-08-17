@@ -6,7 +6,7 @@ import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
-import CustomForm from '../../../entities/form/ui/CustomForm';
+import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
 
 const validationSchema = validSchemaStepThree();
 
@@ -20,13 +20,13 @@ type UserData = {
 
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
-  setBtnEnabled: (arg: boolean) => void;
+  setIsNextEnabled: (arg: boolean) => void;
 };
 
 const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
 export default function RegStepThree(props: UserFormProps) {
-  const { shipCountry, shipCity, billCountry, billCity, sameBillShip, updateData, setBtnEnabled } = props;
+  const { shipCountry, shipCity, billCountry, billCity, sameBillShip, updateData, setIsNextEnabled } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -37,22 +37,18 @@ export default function RegStepThree(props: UserFormProps) {
       sameBillShip,
     },
     validationSchema,
-    onSubmit: (values) => {
-      updateData({
-        shipCountry: values.shipCountry,
-        shipCity: values.shipCity,
-        billCountry: values.billCountry,
-        billCity: values.billCity,
-        sameBillShip: values.sameBillShip,
-      });
-    },
+    onSubmit: () => {},
   });
-  const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+  const { handleChange, handleBlur, errors, touched, values } = formik;
 
   useEffect(() => {
     if (values.sameBillShip === true) {
       values.shipCountry = values.billCountry;
       values.shipCity = values.billCity;
+      errors.shipCountry = undefined;
+      errors.shipCity = undefined;
+      touched.shipCountry = true;
+      touched.shipCity = true;
     }
 
     updateData({
@@ -69,18 +65,18 @@ export default function RegStepThree(props: UserFormProps) {
       (touched.billCountry === undefined && values.billCountry === '') ||
       (touched.billCity === undefined && values.billCity === '')
     ) {
-      setBtnEnabled(false);
+      setIsNextEnabled(false);
       return;
     }
     if (errors.shipCountry || errors.shipCity || errors.billCountry || errors.billCity) {
-      setBtnEnabled(false);
+      setIsNextEnabled(false);
       return;
     }
-    setBtnEnabled(true);
+    setIsNextEnabled(true);
   }, [values, errors, touched]);
 
   return (
-    <CustomForm onSubmit={handleSubmit}>
+    <CustomRegForm>
       <label
         htmlFor="billCountryInput"
         className={`
@@ -168,6 +164,6 @@ export default function RegStepThree(props: UserFormProps) {
           {touched.shipCity && errors.shipCity ? <p className="invalidInputMsg">{errors.shipCity}</p> : null}
         </label>
       </div>
-    </CustomForm>
+    </CustomRegForm>
   );
 }

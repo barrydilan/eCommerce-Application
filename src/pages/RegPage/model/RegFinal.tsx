@@ -16,7 +16,7 @@ export default function RegFinal(props: {
       mr-3
       box-border
       flex 
-      w-128 
+      w-10/12 
       flex-col 
       items-center 
       rounded-3xl 
@@ -26,6 +26,7 @@ export default function RegFinal(props: {
       pl-4 
       pr-4 
       pt-2
+      sm:w-128
     "
     >
       <h3 className="text-5xl font-medium text-text-dark">{isSuccess ? 'Success!' : 'Oh snap!'}</h3>

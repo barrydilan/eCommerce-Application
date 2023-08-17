@@ -48,7 +48,7 @@ const initVals = {
 
 export default function RegPage() {
   const [formData, setFormData] = useState(initVals);
-  const [btnEnabled, setBtnEnabled] = useState(false);
+  const [isNextEnabled, setIsNextEnabled] = useState(false);
   const [isformSubmitted, setIsFormSubmitted] = useState(false);
 
   function updateData(fields: Partial<FormDataType>) {
@@ -76,41 +76,49 @@ export default function RegPage() {
     shipSetDefault,
   } = formData;
 
-  const { isLastStep, formLength, reStartForm, currentStepIndex, currForm, back, next } = useMultistepForm([
-    <RegStepOne email={email} password={password} updateData={updateData} key={0} setBtnEnabled={setBtnEnabled} />,
-    <RegStepTwo
-      firstName={firstName}
-      lastName={lastName}
-      birthDate={birthDate}
-      updateData={updateData}
-      setBtnEnabled={setBtnEnabled}
-      key={1}
-    />,
-    <RegStepThree
-      billCountry={billCountry}
-      billCity={billCity}
-      shipCountry={shipCountry}
-      shipCity={shipCity}
-      sameBillShip={sameBillShip}
-      updateData={updateData}
-      setBtnEnabled={setBtnEnabled}
-      key={3}
-    />,
-    <RegStepFour
-      billCountry={billCountry}
-      shipCountry={shipCountry}
-      sameBillShip={sameBillShip}
-      billPostalCode={billPostalCode}
-      billStreet={billStreet}
-      shipPostalCode={shipPostalCode}
-      shipStreet={shipStreet}
-      billSetDefault={billSetDefault}
-      shipSetDefault={shipSetDefault}
-      updateData={updateData}
-      setBtnEnabled={setBtnEnabled}
-      key={4}
-    />,
-  ]);
+  const { isFirstStep, isLastStep, formLength, reStartForm, currentStepIndex, currForm, back, next } = useMultistepForm(
+    [
+      <RegStepOne
+        email={email}
+        password={password}
+        updateData={updateData}
+        key={0}
+        setIsNextEnabled={setIsNextEnabled}
+      />,
+      <RegStepTwo
+        firstName={firstName}
+        lastName={lastName}
+        birthDate={birthDate}
+        updateData={updateData}
+        setIsNextEnabled={setIsNextEnabled}
+        key={1}
+      />,
+      <RegStepThree
+        billCountry={billCountry}
+        billCity={billCity}
+        shipCountry={shipCountry}
+        shipCity={shipCity}
+        sameBillShip={sameBillShip}
+        updateData={updateData}
+        setIsNextEnabled={setIsNextEnabled}
+        key={3}
+      />,
+      <RegStepFour
+        billCountry={billCountry}
+        shipCountry={shipCountry}
+        sameBillShip={sameBillShip}
+        billPostalCode={billPostalCode}
+        billStreet={billStreet}
+        shipPostalCode={shipPostalCode}
+        shipStreet={shipStreet}
+        billSetDefault={billSetDefault}
+        shipSetDefault={shipSetDefault}
+        updateData={updateData}
+        setIsNextEnabled={setIsNextEnabled}
+        key={4}
+      />,
+    ],
+  );
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
@@ -121,10 +129,11 @@ export default function RegPage() {
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
           <div className="flex w-full justify-center">{currForm}</div>
           <NavBlock
-            isBackBtn
             backFunc={back}
+            isFirstStep={isFirstStep}
+            isNextEnabled={isNextEnabled}
             nextFunc={() => {
-              if (btnEnabled) {
+              if (isNextEnabled) {
                 next();
                 if (isLastStep) {
                   setIsFormSubmitted(true);

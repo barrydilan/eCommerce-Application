@@ -8,8 +8,6 @@ import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
-import CustomForm from '../../entities/form/ui/CustomForm';
-import FormWrapper from '../../entities/form/ui/FormWrapper';
 
 function LoginPage() {
   const formik = useFormik({
@@ -24,8 +22,33 @@ function LoginPage() {
   const passwordInput = useRef(null);
 
   return (
-    <FormWrapper>
-      <CustomForm onSubmit={formik.handleSubmit}>
+    <div
+      className="
+        flex 
+        h-full 
+        w-full 
+        items-center 
+        justify-center 
+        font-poppins 
+      "
+    >
+      <form
+        onSubmit={formik.handleSubmit}
+        className="
+          ml-3 
+          mr-3 
+          box-border 
+          w-128 
+          rounded-3xl 
+          border-2 
+          border-separation-line 
+          pb-2 
+          pl-4 
+          pr-4 
+          pt-2
+          font-medium
+          text-text-grey"
+      >
         <h5
           className="
             text-2xl 
@@ -67,6 +90,7 @@ function LoginPage() {
             id="passLogInput"
             type="password"
             name="password"
+            autoComplete="myFancyPassword"
             placeholder="Password"
             className={`loginRegInput ${
               formik.touched.password && formik.errors.password ? 'border-shop-cart-red' : ''
@@ -166,8 +190,8 @@ function LoginPage() {
             Sing up
           </Link>
         </p>
-      </CustomForm>
-    </FormWrapper>
+      </form>
+    </div>
   );
 }
 

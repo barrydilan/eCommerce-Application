@@ -7,7 +7,7 @@ import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
 import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
-import CustomForm from '../../../entities/form/ui/CustomForm';
+import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
 
 type UserData = {
   billPostalCode: string;
@@ -20,7 +20,7 @@ type UserData = {
 
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
-  setBtnEnabled: (arg: boolean) => void;
+  setIsNextEnabled: (arg: boolean) => void;
   billCountry: string;
   shipCountry: string;
   sameBillShip: boolean;
@@ -38,7 +38,7 @@ export default function RegStepFour(props: UserFormProps) {
     billSetDefault,
     shipSetDefault,
     updateData,
-    setBtnEnabled,
+    setIsNextEnabled,
   } = props;
 
   const validationSchema = validSchemaStepFour(billCountry, shipCountry);
@@ -53,19 +53,10 @@ export default function RegStepFour(props: UserFormProps) {
       shipSetDefault,
     },
     validationSchema,
-    onSubmit: (values) => {
-      updateData({
-        billPostalCode: values.billPostalCode,
-        billStreet: values.billStreet,
-        shipPostalCode: values.shipPostalCode,
-        shipStreet: values.shipStreet,
-        billSetDefault: values.billSetDefault,
-        shipSetDefault: values.shipSetDefault,
-      });
-    },
+    onSubmit: () => {},
   });
 
-  const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
+  const { handleChange, handleBlur, errors, touched, values } = formik;
   const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
   useEffect(() => {
@@ -73,6 +64,10 @@ export default function RegStepFour(props: UserFormProps) {
       values.shipPostalCode = values.billPostalCode;
       values.shipStreet = values.billStreet;
       values.shipSetDefault = values.billSetDefault;
+      errors.shipPostalCode = undefined;
+      errors.shipStreet = undefined;
+      touched.shipPostalCode = true;
+      touched.shipStreet = true;
     }
     updateData({
       billPostalCode: values.billPostalCode,
@@ -89,18 +84,18 @@ export default function RegStepFour(props: UserFormProps) {
       (touched.shipPostalCode === undefined && values.shipPostalCode === '') ||
       (touched.shipStreet === undefined && values.shipStreet === '')
     ) {
-      setBtnEnabled(false);
+      setIsNextEnabled(false);
       return;
     }
     if (errors.billPostalCode || errors.billStreet || errors.shipPostalCode || errors.shipStreet) {
-      setBtnEnabled(false);
+      setIsNextEnabled(false);
       return;
     }
-    setBtnEnabled(true);
+    setIsNextEnabled(true);
   }, [values, errors, touched]);
 
   return (
-    <CustomForm onSubmit={handleSubmit}>
+    <CustomRegForm>
       <label
         htmlFor="billPostalCodeInput"
         className={`
@@ -243,6 +238,6 @@ export default function RegStepFour(props: UserFormProps) {
           </label>
         </div>
       </div>
-    </CustomForm>
+    </CustomRegForm>
   );
 }
