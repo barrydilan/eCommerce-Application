@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
@@ -6,16 +6,18 @@ import { describe, it, vi } from 'vitest';
 
 import { App } from '../app/App.tsx';
 import { setupStore } from '../app/store';
+import { userSlice } from '../entities/user';
 import LoginPage from '../pages/LoginPage/LoginPage.tsx';
-// import { userSlice } from '../entities/user';
-// import * as helpers from '../shared/lib/helpers';
+import * as helpers from '../shared/lib/helpers';
 
 let store = setupStore();
 
-// TODO - when tokens will be added to the code base, uncomment spies below
+const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
+const setCookieSpy = vi.spyOn(helpers, 'setCookie');
+const setLocalStorageSpy = vi.spyOn(helpers, 'setLocalStorage');
 
-// const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
-// const setCookieSpy = vi.spyOn(helpers, 'setCookie');
+const testAccountEmail = 'MyEmail@gmail.com';
+const testAccountPassword = '5i3wryMh@';
 
 describe('LoginPage', () => {
   afterEach(() => {
@@ -147,8 +149,8 @@ describe('LoginPage', () => {
       </Provider>,
     );
 
-    await userEvent.type(screen.getByPlaceholderText('Email'), 'MyEmail@gmail.com');
-    await userEvent.type(screen.getByPlaceholderText('Password'), 'L7UWX7E7@6R3tze');
+    await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
+    await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
@@ -159,22 +161,21 @@ describe('LoginPage', () => {
 
     expect(Object.keys(store.getState().authApi.mutations)).toHaveLength(2);
 
-    /*
-    TODO - when tokens will be added to the code base, uncomment tests below
+    await waitFor(() => {
+      expect(loggedInSpy).toBeCalledTimes(1);
+      expect(setCookieSpy).toBeCalledTimes(1);
+      expect(setLocalStorageSpy).toBeCalledTimes(1);
+    });
 
     const logoutBtn = await screen.findByText(/Log out/i);
     expect(logoutBtn).toBeInTheDocument();
 
-    expect(loggedInSpy).toBeCalled();
-    expect(setCookieSpy).toBeCalled();
     expect(store.getState().userReducer.isLogged).toBeTruthy();
     expect(store.getState().userReducer.accessToken.length).toBeGreaterThan(0);
     expect(screen.queryByText('Log in')).toBeNull();
     expect(window.location.pathname).toBe('/');
-    */
   });
 
-  /*
   it('Route to the main page and not to send new request on the second login', async () => {
     render(
       <Provider store={store}>
@@ -184,8 +185,8 @@ describe('LoginPage', () => {
       </Provider>,
     );
 
-    await userEvent.type(screen.getByPlaceholderText('Email'), 'MyEmail@gmail.com');
-    await userEvent.type(screen.getByPlaceholderText('Password'), 'L7UWX7E7@6R3tze');
+    await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
+    await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
@@ -207,7 +208,6 @@ describe('LoginPage', () => {
       expect(window.location.pathname).toBe('/');
     };
   });
-   */
 
   // TODO - Add test for routing to the registration page
 });
