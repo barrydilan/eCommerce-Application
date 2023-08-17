@@ -191,6 +191,10 @@ describe('LoginPage', () => {
       </Provider>,
     );
 
+    await waitFor(() => {
+      expect(updateAccessTokenSpy).toBeCalled();
+    });
+
     await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
     await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
 
