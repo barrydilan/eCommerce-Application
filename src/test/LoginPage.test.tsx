@@ -21,7 +21,9 @@ const testAccountPassword = '5i3wryMh@';
 
 describe('LoginPage', () => {
   afterEach(() => {
-    vi.clearAllMocks();
+    loggedInSpy.mockClear();
+    setCookieSpy.mockClear();
+    setLocalStorageSpy.mockClear();
     store = setupStore();
   });
 
