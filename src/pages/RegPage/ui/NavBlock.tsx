@@ -13,7 +13,7 @@ export default function NavBlock(props: PropsType) {
     <div
       className="
         mb-6 
-        mt-6
+        mt-12
         flex 
         w-full
         items-center 
@@ -27,7 +27,7 @@ export default function NavBlock(props: PropsType) {
     >
       <button
         type="button"
-        className="h-10 rounded-lg p-2 disabled:bg-separation-line"
+        className="h-10 rounded-lg p-2 disabled:opacity-20"
         onClick={backFunc}
         disabled={isFirstStep}
       >
