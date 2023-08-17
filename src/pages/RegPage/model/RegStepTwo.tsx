@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useFormik } from 'formik';
 
@@ -7,8 +7,6 @@ import calendarIcon from '../../../assets/icons/CalendarIcon.svg';
 import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
-import CustomForm from '../../../entities/form/ui/CustomForm';
-import NavBlock from '../ui/NavBlock';
 
 const validationSchema = validSchemaStepTwo();
 
@@ -20,12 +18,12 @@ type UserData = {
 
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
+  setBtnEnabled: (arg: boolean) => void;
   next: () => void;
-  back: () => void;
 };
 
 export default function RegStepTwo(props: UserFormProps) {
-  const { firstName, lastName, birthDate, updateData, back, next } = props;
+  const { firstName, lastName, birthDate, updateData, next, setBtnEnabled } = props;
   const formik = useFormik({
     initialValues: {
       firstName,
@@ -40,17 +38,45 @@ export default function RegStepTwo(props: UserFormProps) {
   });
   const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
   const [dateInputType, setDateInputType] = useState('text');
-  function blurHandler() {
-    formik.handleBlur;
+  function blurHandler(e: React.FocusEvent<HTMLInputElement, Element>) {
+    formik.handleBlur(e);
     setDateInputType('text');
   }
-  function focusHandler() {
-    formik.handleChange;
+  function focusHandler(e: React.FocusEvent<HTMLInputElement, Element>) {
+    formik.handleChange(e);
     setDateInputType('date');
   }
 
+  useEffect(() => {
+    updateData({ firstName: values.firstName, lastName: values.lastName, birthDate: values.birthDate });
+
+    if (
+      (touched.firstName === undefined && values.firstName === '') ||
+      (touched.lastName === undefined && values.lastName === '') ||
+      (touched.birthDate === undefined && values.birthDate === '')
+    ) {
+      setBtnEnabled(false);
+      return;
+    }
+    if (errors.firstName || errors.lastName || errors.birthDate) {
+      setBtnEnabled(false);
+      return;
+    }
+    setBtnEnabled(true);
+  }, [values, errors, touched]);
+
   return (
-    <CustomForm onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="
+        ml-3 
+        mr-3 
+        box-border 
+        w-full
+        font-medium
+        text-text-grey
+      "
+    >
       <label htmlFor="firstNameInput" className="loginRegLabel">
         <input
           id="firstNameInput"
@@ -85,10 +111,10 @@ export default function RegStepTwo(props: UserFormProps) {
           type={dateInputType}
           name="birthDate"
           placeholder="Birth date"
-          onFocus={focusHandler}
+          onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
           className={`loginRegInput ${touched.birthDate && errors.birthDate ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
-          onBlur={blurHandler}
+          onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
           value={values.birthDate}
         />
         <img
@@ -98,7 +124,6 @@ export default function RegStepTwo(props: UserFormProps) {
         />
         {touched.birthDate && errors.birthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
       </label>
-      <NavBlock isBackBtn backFunc={back} nextFunc={undefined} />
-    </CustomForm>
+    </form>
   );
 }

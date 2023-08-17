@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useFormik } from 'formik';
 
 import { validSchemaStepOne } from './validationSchemas';
@@ -5,8 +7,6 @@ import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
-import CustomForm from '../../../entities/form/ui/CustomForm';
-import NavBlock from '../ui/NavBlock';
 
 const validationSchema = validSchemaStepOne();
 
@@ -17,11 +17,11 @@ type UserData = {
 
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
-  next: () => void;
+  setBtnEnabled: (arg: boolean) => void;
 };
 
 export default function RegStepOne(props: UserFormProps) {
-  const { email, password, updateData, next } = props;
+  const { email, password, updateData, setBtnEnabled } = props;
   const formik = useFormik({
     initialValues: {
       email,
@@ -30,14 +30,39 @@ export default function RegStepOne(props: UserFormProps) {
     validationSchema,
     onSubmit: (values) => {
       updateData({ password: values.password, email: values.email });
-      next();
     },
   });
 
   const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
 
+  useEffect(() => {
+    updateData({ email: values.email, password: values.password });
+    if (
+      (touched.email === undefined && values.email === '') ||
+      (touched.password === undefined && values.password === '')
+    ) {
+      setBtnEnabled(false);
+      return;
+    }
+    if (errors.email || errors.password) {
+      setBtnEnabled(false);
+      return;
+    }
+    setBtnEnabled(true);
+  }, [values, errors, touched]);
+
   return (
-    <CustomForm onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className=" 
+        ml-3 
+        mr-3 
+        box-border 
+        w-full
+        font-medium
+        text-text-grey
+      "
+    >
       <label htmlFor="emailRegInput" className="loginRegLabel">
         <input
           id="emailRegInput"
@@ -66,7 +91,6 @@ export default function RegStepOne(props: UserFormProps) {
         <img className="invalidInputIcon" src={touched.password && errors.password ? lockIconRed : lockIcon} alt="" />
         {touched.password && errors.password ? <p className="invalidInputMsg">{errors.password}</p> : null}
       </label>
-      <NavBlock isBackBtn={false} backFunc={undefined} nextFunc={undefined} />
-    </CustomForm>
+    </form>
   );
 }

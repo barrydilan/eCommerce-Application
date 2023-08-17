@@ -7,6 +7,7 @@ import RegStepOne from './model/RegStepOne';
 import RegStepThree from './model/RegStepThree';
 import RegStepTwo from './model/RegStepTwo';
 import CirclesWrapper from './ui/CirclesWrapper';
+import NavBlock from './ui/NavBlock';
 
 type FormDataType = {
   email: string;
@@ -47,6 +48,7 @@ const initVals = {
 
 export default function RegPage() {
   const [formData, setFormData] = useState(initVals);
+  const [btnEnabled, setBtnEnabled] = useState(false);
 
   function updateData(fields: Partial<FormDataType>) {
     setFormData((prev) => {
@@ -74,14 +76,14 @@ export default function RegPage() {
   } = formData;
 
   const { reStart, length, currentStepIndex, currForm, back, next } = useMultistepForm([
-    <RegStepOne email={email} password={password} updateData={updateData} next={nextStep} key={0} />,
+    <RegStepOne email={email} password={password} updateData={updateData} key={0} setBtnEnabled={setBtnEnabled} />,
     <RegStepTwo
       firstName={firstName}
       lastName={lastName}
       birthDate={birthDate}
       updateData={updateData}
-      back={prevStep}
       next={nextStep}
+      setBtnEnabled={setBtnEnabled}
       key={1}
     />,
     <RegStepThree
@@ -110,7 +112,7 @@ export default function RegPage() {
       next={nextStep}
       key={4}
     />,
-    <RegFinal isSuccess={false} key={5} returnStepOne={returnStepOne} />,
+    <RegFinal isSuccess key={5} returnStepOne={returnStepOne} />,
   ]);
 
   function nextStep() {
@@ -124,10 +126,22 @@ export default function RegPage() {
   function returnStepOne() {
     reStart();
   }
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <CirclesWrapper currStep={currentStepIndex} quantity={length} />
-      <div className="flex w-full justify-center">{currForm}</div>
+      <div className="m-2 flex h-auto flex-col items-center justify-center rounded-2xl border-2 border-separation-line">
+        <CirclesWrapper currStep={currentStepIndex} quantity={length} />
+        <div className="flex w-full justify-center">{currForm}</div>
+        <NavBlock
+          isBackBtn
+          backFunc={back}
+          nextFunc={() => {
+            if (btnEnabled) {
+              next();
+            }
+          }}
+        />
+      </div>
     </div>
   );
 }
