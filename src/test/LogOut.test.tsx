@@ -37,10 +37,11 @@ describe('LogOut', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
-    const logoutBtn = await screen.findByRole('button', { name: 'Log out' });
-    expect(logoutBtn).toBeInTheDocument();
-
-    await userEvent.click(logoutBtn);
+    await waitFor(async () => {
+      const logoutBtn = await screen.findByRole('button', { name: 'Log out' });
+      expect(logoutBtn).toBeInTheDocument();
+      await userEvent.click(logoutBtn);
+    });
 
     await waitFor(() => {
       expect(loggedOutSpy).toBeCalledTimes(1);
