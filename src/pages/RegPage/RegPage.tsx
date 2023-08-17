@@ -75,14 +75,13 @@ export default function RegPage() {
     shipSetDefault,
   } = formData;
 
-  const { reStart, length, currentStepIndex, currForm, back, next } = useMultistepForm([
+  const { length, currentStepIndex, currForm, back, next } = useMultistepForm([
     <RegStepOne email={email} password={password} updateData={updateData} key={0} setBtnEnabled={setBtnEnabled} />,
     <RegStepTwo
       firstName={firstName}
       lastName={lastName}
       birthDate={birthDate}
       updateData={updateData}
-      next={nextStep}
       setBtnEnabled={setBtnEnabled}
       key={1}
     />,
@@ -93,8 +92,7 @@ export default function RegPage() {
       shipCity={shipCity}
       sameBillShip={sameBillShip}
       updateData={updateData}
-      back={prevStep}
-      next={nextStep}
+      setBtnEnabled={setBtnEnabled}
       key={3}
     />,
     <RegStepFour
@@ -108,24 +106,11 @@ export default function RegPage() {
       billSetDefault={billSetDefault}
       shipSetDefault={shipSetDefault}
       updateData={updateData}
-      back={prevStep}
-      next={nextStep}
+      setBtnEnabled={setBtnEnabled}
       key={4}
     />,
-    <RegFinal isSuccess key={5} returnStepOne={returnStepOne} />,
+    <RegFinal isSuccess key={5} />,
   ]);
-
-  function nextStep() {
-    next();
-  }
-
-  function prevStep() {
-    back();
-  }
-
-  function returnStepOne() {
-    reStart();
-  }
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
@@ -138,6 +123,7 @@ export default function RegPage() {
           nextFunc={() => {
             if (btnEnabled) {
               next();
+              console.log(formData);
             }
           }}
         />

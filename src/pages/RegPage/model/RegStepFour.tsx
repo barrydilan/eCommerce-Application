@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useFormik } from 'formik';
 
 import { validSchemaStepFour } from './validationSchemas';
@@ -6,7 +8,6 @@ import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomForm from '../../../entities/form/ui/CustomForm';
-import NavBlock from '../ui/NavBlock';
 
 type UserData = {
   billPostalCode: string;
@@ -19,11 +20,10 @@ type UserData = {
 
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
+  setBtnEnabled: (arg: boolean) => void;
   billCountry: string;
   shipCountry: string;
   sameBillShip: boolean;
-  next: () => void;
-  back: () => void;
 };
 
 export default function RegStepFour(props: UserFormProps) {
@@ -38,8 +38,7 @@ export default function RegStepFour(props: UserFormProps) {
     billSetDefault,
     shipSetDefault,
     updateData,
-    back,
-    next,
+    setBtnEnabled,
   } = props;
 
   const validationSchema = validSchemaStepFour(billCountry, shipCountry);
@@ -63,12 +62,42 @@ export default function RegStepFour(props: UserFormProps) {
         billSetDefault: values.billSetDefault,
         shipSetDefault: values.shipSetDefault,
       });
-      next();
     },
   });
 
   const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
   const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
+
+  useEffect(() => {
+    if (sameBillShip === true) {
+      values.shipPostalCode = values.billPostalCode;
+      values.shipStreet = values.billStreet;
+      values.shipSetDefault = values.billSetDefault;
+    }
+    updateData({
+      billPostalCode: values.billPostalCode,
+      billStreet: values.billStreet,
+      shipPostalCode: values.shipPostalCode,
+      shipStreet: values.shipStreet,
+      billSetDefault: values.billSetDefault,
+      shipSetDefault: values.shipSetDefault,
+    });
+
+    if (
+      (touched.billPostalCode === undefined && values.billPostalCode === '') ||
+      (touched.billStreet === undefined && values.billStreet === '') ||
+      (touched.shipPostalCode === undefined && values.shipPostalCode === '') ||
+      (touched.shipStreet === undefined && values.shipStreet === '')
+    ) {
+      setBtnEnabled(false);
+      return;
+    }
+    if (errors.billPostalCode || errors.billStreet || errors.shipPostalCode || errors.shipStreet) {
+      setBtnEnabled(false);
+      return;
+    }
+    setBtnEnabled(true);
+  }, [values, errors, touched]);
 
   return (
     <CustomForm onSubmit={handleSubmit}>
@@ -214,17 +243,6 @@ export default function RegStepFour(props: UserFormProps) {
           </label>
         </div>
       </div>
-      <NavBlock
-        isBackBtn
-        backFunc={back}
-        nextFunc={() => {
-          if (sameBillShip) {
-            values.shipPostalCode = values.billPostalCode;
-            values.shipStreet = values.billStreet;
-            values.shipSetDefault = values.billSetDefault;
-          }
-        }}
-      />
     </CustomForm>
   );
 }

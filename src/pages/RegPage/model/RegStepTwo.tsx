@@ -19,11 +19,10 @@ type UserData = {
 type UserFormProps = UserData & {
   updateData: (fields: UserData) => void;
   setBtnEnabled: (arg: boolean) => void;
-  next: () => void;
 };
 
 export default function RegStepTwo(props: UserFormProps) {
-  const { firstName, lastName, birthDate, updateData, next, setBtnEnabled } = props;
+  const { firstName, lastName, birthDate, updateData, setBtnEnabled } = props;
   const formik = useFormik({
     initialValues: {
       firstName,
@@ -33,7 +32,6 @@ export default function RegStepTwo(props: UserFormProps) {
     validationSchema,
     onSubmit: (values) => {
       updateData({ firstName: values.firstName, lastName: values.lastName, birthDate: values.birthDate });
-      next();
     },
   });
   const { handleSubmit, handleChange, handleBlur, errors, touched, values } = formik;
