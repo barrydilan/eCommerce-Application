@@ -15,12 +15,14 @@ let store = setupStore();
 const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
 const setCookieSpy = vi.spyOn(helpers, 'setCookie');
 const setLocalStorageSpy = vi.spyOn(helpers, 'setLocalStorage');
+const updateAccessTokenSpy = vi.spyOn(userSlice.actions, 'updateAccessToken');
 
 const testAccountEmail = 'MyEmail@gmail.com';
 const testAccountPassword = '5i3wryMh@';
 
 describe('LoginPage', () => {
   afterEach(() => {
+    vi.clearAllTimers();
     vi.clearAllMocks();
     store = setupStore();
   });
@@ -149,6 +151,10 @@ describe('LoginPage', () => {
       </Provider>,
     );
 
+    await waitFor(() => {
+      expect(updateAccessTokenSpy).toBeCalled();
+    });
+
     await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
     await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
 
@@ -162,21 +168,17 @@ describe('LoginPage', () => {
     expect(Object.keys(store.getState().authApi.mutations)).toHaveLength(2);
 
     await waitFor(() => {
-      expect(screen.getByText('Log out')).toBeInTheDocument();
+      expect(loggedInSpy).toBeCalledTimes(1);
+      expect(setCookieSpy).toBeCalledTimes(1);
+      expect(setLocalStorageSpy).toBeCalledTimes(1);
     });
 
-    await waitFor(
-      () => {
-        expect(loggedInSpy).toBeCalledTimes(1);
-        expect(setCookieSpy).toBeCalledTimes(1);
-        expect(setLocalStorageSpy).toBeCalledTimes(1);
-      },
-      { timeout: 3000 },
-    );
+    expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
+    expect(screen.queryByText('Log in')).toBeNull();
 
     expect(store.getState().userReducer.isLogged).toBeTruthy();
     expect(store.getState().userReducer.accessToken.length).toBeGreaterThan(0);
-    expect(screen.queryByText('Log in')).toBeNull();
+
     expect(window.location.pathname).toBe('/');
   });
 
@@ -194,8 +196,9 @@ describe('LoginPage', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
-    const logoutBtn = await screen.findByText(/Log out/i);
-    expect(logoutBtn).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
+    });
 
     expect(loggedInSpy).toBeCalledTimes(1);
     expect(setCookieSpy).toBeCalledTimes(1);

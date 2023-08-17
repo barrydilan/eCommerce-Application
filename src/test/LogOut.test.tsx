@@ -14,12 +14,15 @@ let store = setupStore();
 const deleteCookieSpy = vi.spyOn(helpers, 'deleteCookie');
 const clearLocalStorageSpy = vi.spyOn(helpers, 'clearLocalStorage');
 const loggedOutSpy = vi.spyOn(userSlice.actions, 'loggedOut');
+const updateAccessTokenSpy = vi.spyOn(userSlice.actions, 'updateAccessToken');
 
 const testAccountEmail = 'MyEmail@gmail.com';
 const testAccountPassword = '5i3wryMh@';
 
 describe('LogOut', () => {
   afterEach(() => {
+    vi.clearAllTimers();
+    vi.clearAllMocks();
     store = setupStore();
   });
 
@@ -32,24 +35,25 @@ describe('LogOut', () => {
       </Provider>,
     );
 
+    await waitFor(() => {
+      expect(updateAccessTokenSpy).toBeCalled();
+    });
+
     await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
     await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
     await waitFor(async () => {
-      expect(screen.getByText('Log out')).toBeInTheDocument();
-      await userEvent.click(screen.getByText('Log out'));
+      expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
+      await userEvent.click(screen.getByText(/log out/i));
     });
 
-    await waitFor(
-      () => {
-        expect(loggedOutSpy).toBeCalledTimes(1);
-        expect(clearLocalStorageSpy).toBeCalledTimes(1);
-        expect(deleteCookieSpy).toBeCalledTimes(1);
-      },
-      { timeout: 3000 },
-    );
+    await waitFor(() => {
+      expect(loggedOutSpy).toBeCalledTimes(1);
+      expect(clearLocalStorageSpy).toBeCalledTimes(1);
+      expect(deleteCookieSpy).toBeCalledTimes(1);
+    });
 
     expect(screen.queryByRole('button', { name: 'Log out' })).toBeNull();
   });
