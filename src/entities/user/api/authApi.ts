@@ -16,7 +16,7 @@ export const authApi = createApi({
 	reducerPath: 'authApi',
 	baseQuery: basicBaseQuery,
 	endpoints: (build) => ({
-		getLoginToken: build.mutation<IAuthResponse, ILoginUserParams>({
+		loginToken: build.mutation<IAuthResponse, ILoginUserParams>({
 			query: ({ password, email, scope = DEFAULT_CUSTOMER_SCOPE }) => ({
 				url: `/oauth/${PROJECT_KEY}/customers/token`,
 				method: 'POST',
@@ -44,4 +44,4 @@ export const authApi = createApi({
 	}),
 });
 
-export const { useGetLoginTokenMutation, useAnonymousSessionMutation } = authApi;
+export const { useLoginTokenMutation, useAnonymousSessionMutation } = authApi;

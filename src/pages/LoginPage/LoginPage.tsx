@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
 import {
   COOKIE_ACCESS_TOKEN_NAME,
-  useGetLoginTokenMutation,
+  useLoginTokenMutation,
   useLoginUserDataMutation,
   USER_LOGGED_IN_DATA_KEY,
   userSlice,
@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
 
 function LoginPage() {
-  const [loginUser, { isLoading }] = useGetLoginTokenMutation();
+  const [loginUser, { isLoading }] = useLoginTokenMutation();
   const [getLoginUserData] = useLoginUserDataMutation();
   const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.userReducer);
