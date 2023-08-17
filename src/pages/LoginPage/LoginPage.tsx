@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
 import {
-  COOKIE_ACCESS_TOKEN_NAME,
+  COOKIE_ACCESS_TOKEN,
   useLoginTokenMutation,
   useLoginUserDataMutation,
   USER_LOGGED_IN_DATA_KEY,
@@ -42,7 +42,7 @@ function LoginPage() {
       dispatch(loggedIn({ accessToken, userLoggedInData }));
       navigate('/');
 
-      setCookie(accessToken, COOKIE_ACCESS_TOKEN_NAME, expiresIn);
+      setCookie(accessToken, COOKIE_ACCESS_TOKEN, expiresIn);
       setLocalStorage(USER_LOGGED_IN_DATA_KEY, userLoggedInData);
     } catch (e) {
       // TODO - implement error message

@@ -2,12 +2,7 @@ import { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import {
-  COOKIE_ACCESS_TOKEN_NAME,
-  useAnonymousSessionMutation,
-  USER_LOGGED_IN_DATA_KEY,
-  userSlice,
-} from '../entities/user';
+import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, USER_LOGGED_IN_DATA_KEY, userSlice } from '../entities/user';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
@@ -23,7 +18,7 @@ export function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const storedToken = getCookie(COOKIE_ACCESS_TOKEN_NAME);
+      const storedToken = getCookie(COOKIE_ACCESS_TOKEN);
 
       if (storedToken) {
         const userLoggedInData = getLocalStorage<ILoginUserDataResponse>(USER_LOGGED_IN_DATA_KEY);

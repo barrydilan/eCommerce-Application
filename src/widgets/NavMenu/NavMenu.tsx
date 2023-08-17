@@ -6,7 +6,7 @@ import logOutIcon from '../../assets/icons/log-out.svg';
 import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
-import { COOKIE_ACCESS_TOKEN_NAME, userSlice } from '../../entities/user';
+import { COOKIE_ACCESS_TOKEN, userSlice } from '../../entities/user';
 import { clearLocalStorage, deleteCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 
@@ -17,7 +17,7 @@ function NavMenu() {
 
   function handleLogout() {
     dispatch(loggedOut());
-    deleteCookie(COOKIE_ACCESS_TOKEN_NAME);
+    deleteCookie(COOKIE_ACCESS_TOKEN);
     clearLocalStorage();
   }
 
