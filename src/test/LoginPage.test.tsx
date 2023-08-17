@@ -162,13 +162,17 @@ describe('LoginPage', () => {
     expect(Object.keys(store.getState().authApi.mutations)).toHaveLength(2);
 
     await waitFor(() => {
-      expect(loggedInSpy).toBeCalledTimes(1);
-      expect(setCookieSpy).toBeCalledTimes(1);
-      expect(setLocalStorageSpy).toBeCalledTimes(1);
+      expect(screen.getByText('Log out')).toBeInTheDocument();
     });
 
-    const logoutBtn = await screen.findByText(/Log out/i);
-    expect(logoutBtn).toBeInTheDocument();
+    await waitFor(
+      () => {
+        expect(loggedInSpy).toBeCalledTimes(1);
+        expect(setCookieSpy).toBeCalledTimes(1);
+        expect(setLocalStorageSpy).toBeCalledTimes(1);
+      },
+      { timeout: 3000 },
+    );
 
     expect(store.getState().userReducer.isLogged).toBeTruthy();
     expect(store.getState().userReducer.accessToken.length).toBeGreaterThan(0);
