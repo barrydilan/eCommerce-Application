@@ -168,77 +168,78 @@ export default function RegStepFour(props: UserFormProps) {
           {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
         </label>
       </div>
-      <div className={sameBillShip ? 'hidden' : 'block'}>
-        <label
-          htmlFor="shipPostalCodeInput"
-          className={`
+      {!sameBillShip ? (
+        <div>
+          <label
+            htmlFor="shipPostalCodeInput"
+            className={`
             loginRegLabel
             after:content-['Shipping']
             ${shipBillCluesStyles}
           `}
-        >
-          <motion.input
-            initial={inputAnimation.initial}
-            animate={inputAnimation.animate}
-            transition={inputAnimation.transition}
-            id="shipPostCodeInput"
-            type="text"
-            name="shipPostalCode"
-            placeholder="Postal code"
-            className={`
+          >
+            <motion.input
+              initial={inputAnimation.initial}
+              animate={inputAnimation.animate}
+              transition={inputAnimation.transition}
+              id="shipPostCodeInput"
+              type="text"
+              name="shipPostalCode"
+              placeholder="Postal code"
+              className={`
               loginRegInput   
               ${touchedAndErrorShipPostalCode ? 'border-shop-cart-red' : ''}
             `}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.shipPostalCode}
-          />
-          <motion.img
-            initial={svgAnimation.initial}
-            animate={svgAnimation.animate}
-            transition={svgAnimation.transition}
-            className="invalidInputIcon"
-            src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
-            alt=""
-          />
-          {touchedAndErrorShipPostalCode && <p className="invalidInputMsg">{errors.shipPostalCode}</p>}
-        </label>
-        <label htmlFor="shipStreetInput" className="loginRegLabel">
-          <motion.input
-            initial={inputAnimation.initial}
-            animate={inputAnimation.animate}
-            transition={inputAnimation.transition}
-            id="shipStreetInput"
-            type="text"
-            name="shipStreet"
-            placeholder="Street"
-            className={`loginRegInput ${touchedAndErrorShipStreet ? 'border-shop-cart-red' : ''}`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.shipStreet}
-          />
-          <motion.img
-            initial={svgAnimation.initial}
-            animate={svgAnimation.animate}
-            transition={svgAnimation.transition}
-            className="invalidInputIcon"
-            src={touchedAndErrorShipStreet ? streetIconRed : streetIcon}
-            alt=""
-          />
-          {touchedAndErrorShipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
-        </label>
-        <div className="mt-6 flex items-center text-text-grey">
-          <input
-            id="shipSetDefInput"
-            type="checkbox"
-            name="shipSetDefault"
-            checked={values.shipSetDefault}
-            onChange={handleChange}
-            className="peer/expand hiddenCheckBox"
-          />
-          <label
-            htmlFor="shipSetDefInput"
-            className="
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.shipPostalCode}
+            />
+            <motion.img
+              initial={svgAnimation.initial}
+              animate={svgAnimation.animate}
+              transition={svgAnimation.transition}
+              className="invalidInputIcon"
+              src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
+              alt=""
+            />
+            {touchedAndErrorShipPostalCode && <p className="invalidInputMsg">{errors.shipPostalCode}</p>}
+          </label>
+          <label htmlFor="shipStreetInput" className="loginRegLabel">
+            <motion.input
+              initial={inputAnimation.initial}
+              animate={inputAnimation.animate}
+              transition={inputAnimation.transition}
+              id="shipStreetInput"
+              type="text"
+              name="shipStreet"
+              placeholder="Street"
+              className={`loginRegInput ${touchedAndErrorShipStreet ? 'border-shop-cart-red' : ''}`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.shipStreet}
+            />
+            <motion.img
+              initial={svgAnimation.initial}
+              animate={svgAnimation.animate}
+              transition={svgAnimation.transition}
+              className="invalidInputIcon"
+              src={touchedAndErrorShipStreet ? streetIconRed : streetIcon}
+              alt=""
+            />
+            {touchedAndErrorShipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
+          </label>
+          <div className="mt-6 flex items-center text-text-grey">
+            <input
+              id="shipSetDefInput"
+              type="checkbox"
+              name="shipSetDefault"
+              checked={values.shipSetDefault}
+              onChange={handleChange}
+              className="peer/expand hiddenCheckBox"
+            />
+            <label
+              htmlFor="shipSetDefInput"
+              className="
             regFormCheckGulp
             relative
             text-3xs
@@ -246,11 +247,12 @@ export default function RegStepFour(props: UserFormProps) {
             before:top-0.5
             peer-checked/expand:before:block
           "
-          >
-            {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
-          </label>
+            >
+              {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
+            </label>
+          </div>
         </div>
-      </div>
+      ) : null}
     </CustomRegForm>
   );
 }

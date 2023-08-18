@@ -142,7 +142,7 @@ export default function RegStepThree(props: UserFormProps) {
           as a billing and a shipping
         </label>
       </div>
-      {values.sameBillShip ? (
+      {!values.sameBillShip ? (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 150 }}
