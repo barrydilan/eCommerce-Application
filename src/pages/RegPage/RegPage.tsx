@@ -141,9 +141,9 @@ export default function RegPage() {
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: 200 }}
+            animate={{ height: 300 }}
             transition={{ duration: 0.2 }}
-            className="relative flex w-full justify-center transition ease-in-out"
+            className="relative mt-8 flex w-full justify-center transition ease-in-out"
           >
             {currForm}
           </motion.div>
