@@ -9,6 +9,8 @@ export default function CustomRegForm(props: { children: React.ReactNode }) {
       w-full
       font-medium
       text-text-grey
+      sm:ml-0
+      sm:mr-0
       "
     >
       {children}

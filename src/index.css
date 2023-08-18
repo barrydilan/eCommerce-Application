@@ -17,10 +17,10 @@
     @apply block relative w-full h-11 mt-6 rounded-md 
   }
   .loginRegInput {
-    @apply text-base pl-11 w-full h-full border-2 border-separation-line outline-none focus:border-text-grey rounded-md 
+    @apply text-base font-medium pl-11 w-full h-full border-2 border-separation-line outline-none focus:border-text-grey rounded-md focus:text-text-dark
   }
   .invalidInputIcon {
-    @apply absolute top-3.5 left-4  bg-contain  bg-no-repeat  w-5  h-5
+    @apply absolute top-3.5 left-4 bg-contain  bg-no-repeat w-5 h-5
   }
   .invalidInputMsg {
     @apply absolute  -top-5  left-2  text-shop-cart-red  text-xs peer-invalid:block

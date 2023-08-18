@@ -135,9 +135,9 @@ export default function RegPage() {
       {isFormSubmitted ? (
         <RegFinal isSuccess reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
       ) : (
-        <div className="m-2 flex h-auto flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
+        <div className="ml-3 mr-3 flex h-auto flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
-          <div className="flex w-full justify-center">{currForm}</div>
+          <div className="flex w-full justify-center transition ease-in-out ">{currForm}</div>
           <NavBlock
             backFunc={back}
             isFirstStep={isFirstStep}

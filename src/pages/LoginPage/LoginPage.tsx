@@ -37,8 +37,8 @@ function LoginPage() {
         className="
           ml-3 
           mr-3 
-          box-border 
-          w-128 
+          box-content 
+          w-128
           rounded-3xl 
           border-2 
           border-separation-line 
@@ -47,7 +47,10 @@ function LoginPage() {
           pr-4 
           pt-2
           font-medium
-          text-text-grey"
+          text-text-grey
+          sm:pl-10
+          sm:pr-10
+          "
       >
         <h5
           className="
