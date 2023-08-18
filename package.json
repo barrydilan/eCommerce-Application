@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "test": "vitest",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
