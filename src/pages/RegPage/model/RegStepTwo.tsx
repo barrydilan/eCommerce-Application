@@ -13,7 +13,7 @@ import { UserFormProps } from '../RegPage';
 const validationSchema = validSchemaStepTwo();
 
 export default function RegStepTwo(props: UserFormProps) {
-  const { firstName, lastName, birthDate, updateData, setIsNextEnabled } = props;
+  const { firstName, lastName, birthDate, updateData, enableNext } = props;
   const formik = useFormik({
     initialValues: {
       firstName,
@@ -42,15 +42,15 @@ export default function RegStepTwo(props: UserFormProps) {
       (touched.lastName === undefined && values.lastName === '') ||
       (touched.birthDate === undefined && values.birthDate === '')
     ) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
     if (errors.firstName || errors.lastName || errors.birthDate) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
-    setIsNextEnabled(true);
-  }, [values, errors, touched]);
+    enableNext(true);
+  }, [values, errors, touched, updateData, enableNext]);
 
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;

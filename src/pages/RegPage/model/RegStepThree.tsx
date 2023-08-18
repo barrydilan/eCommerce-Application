@@ -14,7 +14,7 @@ const validationSchema = validSchemaStepThree();
 const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
 export default function RegStepThree(props: UserFormProps) {
-  const { shipCountry, shipCity, billCountry, billCity, sameBillShip, updateData, setIsNextEnabled } = props;
+  const { shipCountry, shipCity, billCountry, billCity, sameBillShip, updateData, enableNext } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -53,15 +53,15 @@ export default function RegStepThree(props: UserFormProps) {
       (touched.billCountry === undefined && values.billCountry === '') ||
       (touched.billCity === undefined && values.billCity === '')
     ) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
     if (errors.shipCountry || errors.shipCity || errors.billCountry || errors.billCity) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
-    setIsNextEnabled(true);
-  }, [values, errors, touched]);
+    enableNext(true);
+  }, [values, errors, touched, updateData, enableNext]);
 
   const touchedAndErrorBillCity = touched.billCity && errors.billCity;
   const touchedAndErrorShipCity = touched.shipCity && errors.shipCity;

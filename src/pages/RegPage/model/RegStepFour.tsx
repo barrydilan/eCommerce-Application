@@ -22,7 +22,7 @@ export default function RegStepFour(props: UserFormProps) {
     billSetDefault,
     shipSetDefault,
     updateData,
-    setIsNextEnabled,
+    enableNext,
   } = props;
 
   const validationSchema = validSchemaStepFour(billCountry, shipCountry);
@@ -68,15 +68,15 @@ export default function RegStepFour(props: UserFormProps) {
       (touched.shipPostalCode === undefined && values.shipPostalCode === '') ||
       (touched.shipStreet === undefined && values.shipStreet === '')
     ) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
     if (errors.billPostalCode || errors.billStreet || errors.shipPostalCode || errors.shipStreet) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
-    setIsNextEnabled(true);
-  }, [values, errors, touched]);
+    enableNext(true);
+  }, [values, errors, touched, updateData, enableNext, sameBillShip]);
 
   const touchedAndErrorBillPostalCode = touched.billPostalCode && errors.billPostalCode;
   const touchedAndErrorBillStreet = touched.billStreet && errors.billStreet;

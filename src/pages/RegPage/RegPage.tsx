@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import useMultistepForm from './model/Multiform';
 import RegFinal from './model/RegFinal';
@@ -30,7 +30,7 @@ type FormDataType = {
 
 export type UserFormProps = Partial<FormDataType> & {
   updateData: (fields: Partial<FormDataType>) => void;
-  setIsNextEnabled: (arg: boolean) => void;
+  enableNext: (arg: boolean) => void;
 };
 
 const initVals = {
@@ -57,11 +57,21 @@ export default function RegPage() {
   const [isNextEnabled, setIsNextEnabled] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-  function updateData(fields: Partial<FormDataType>) {
-    setFormData((prev) => {
-      return { ...prev, ...fields };
-    });
-  }
+  const enableNext = useCallback(
+    (arg: boolean) => {
+      setIsNextEnabled(arg);
+    },
+    [setIsNextEnabled],
+  );
+
+  const updateData = useCallback(
+    (fields: Partial<UserFormProps>) => {
+      setFormData((prev) => {
+        return { ...prev, ...fields };
+      });
+    },
+    [setFormData],
+  );
 
   const {
     email,
@@ -84,19 +94,13 @@ export default function RegPage() {
 
   const { isFirstStep, isLastStep, formLength, reStartForm, currentStepIndex, currForm, back, next } = useMultistepForm(
     [
-      <RegStepOne
-        email={email}
-        password={password}
-        updateData={updateData}
-        key={0}
-        setIsNextEnabled={setIsNextEnabled}
-      />,
+      <RegStepOne email={email} password={password} updateData={updateData} key={0} enableNext={enableNext} />,
       <RegStepTwo
         firstName={firstName}
         lastName={lastName}
         birthDate={birthDate}
         updateData={updateData}
-        setIsNextEnabled={setIsNextEnabled}
+        enableNext={enableNext}
         key={1}
       />,
       <RegStepThree
@@ -106,7 +110,7 @@ export default function RegPage() {
         shipCity={shipCity}
         sameBillShip={sameBillShip}
         updateData={updateData}
-        setIsNextEnabled={setIsNextEnabled}
+        enableNext={enableNext}
         key={3}
       />,
       <RegStepFour
@@ -120,7 +124,7 @@ export default function RegPage() {
         billSetDefault={billSetDefault}
         shipSetDefault={shipSetDefault}
         updateData={updateData}
-        setIsNextEnabled={setIsNextEnabled}
+        enableNext={enableNext}
         key={4}
       />,
     ],

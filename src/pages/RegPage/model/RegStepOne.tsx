@@ -13,7 +13,7 @@ import { UserFormProps } from '../RegPage';
 const validationSchema = validSchemaStepOne();
 
 export default function RegStepOne(props: UserFormProps) {
-  const { email, password, updateData, setIsNextEnabled } = props;
+  const { email, password, updateData, enableNext } = props;
   const formik = useFormik({
     initialValues: {
       email,
@@ -31,15 +31,15 @@ export default function RegStepOne(props: UserFormProps) {
       (touched.email === undefined && values.email === '') ||
       (touched.password === undefined && values.password === '')
     ) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
     if (errors.email || errors.password) {
-      setIsNextEnabled(false);
+      enableNext(false);
       return;
     }
-    setIsNextEnabled(true);
-  }, [values, errors, touched]);
+    enableNext(true);
+  }, [values, errors, touched, enableNext, updateData]);
 
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorPassword = touched.password && errors.password;
