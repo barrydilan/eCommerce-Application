@@ -8,7 +8,7 @@ import { COOKIE_ACCESS_TOKEN, useLoginTokenMutation, useLoginUserDataMutation, u
 import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { setCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import { ILoginUserParams } from '../../shared/types';
+import { CookieTuple, ILoginUserParams } from '../../shared/types';
 
 function LoginPage() {
   const [loginUser, { isLoading }] = useLoginTokenMutation();
@@ -39,8 +39,10 @@ function LoginPage() {
       dispatch(loggedIn({ accessToken, userId: id }));
       navigate('/');
 
-      setCookie(accessToken, COOKIE_ACCESS_TOKEN, expiresIn);
-      setCookie(id, COOKIE_USER_ID, expiresIn);
+      const accessTokenCookie: CookieTuple = [accessToken, COOKIE_ACCESS_TOKEN, expiresIn];
+      const idCookie: CookieTuple = [id, COOKIE_USER_ID, expiresIn];
+
+      setCookie(accessTokenCookie, idCookie);
     } catch (e) {
       // TODO - implement error message
       // console.error(`Error occurred while logging the user! (${e.status})`);

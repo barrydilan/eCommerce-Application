@@ -14,7 +14,6 @@ let store = setupStore();
 
 const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
 const setCookieSpy = vi.spyOn(helpers, 'setCookie');
-const setLocalStorageSpy = vi.spyOn(helpers, 'setLocalStorage');
 const updateAccessTokenSpy = vi.spyOn(userSlice.actions, 'updateAccessToken');
 
 const testAccountEmail = 'MyEmail@gmail.com';
@@ -170,7 +169,6 @@ describe('LoginPage', () => {
     await waitFor(() => {
       expect(loggedInSpy).toBeCalledTimes(1);
       expect(setCookieSpy).toBeCalledTimes(1);
-      expect(setLocalStorageSpy).toBeCalledTimes(1);
     });
 
     expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();

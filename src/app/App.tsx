@@ -22,6 +22,7 @@ export function App() {
 
       if (token && userId) {
         dispatch(loggedIn({ accessToken: token, userId }));
+        return;
       }
 
       try {

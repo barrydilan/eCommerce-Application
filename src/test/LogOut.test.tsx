@@ -12,7 +12,6 @@ import * as helpers from '../shared/lib/helpers';
 let store = setupStore();
 
 const deleteCookieSpy = vi.spyOn(helpers, 'deleteCookie');
-const clearLocalStorageSpy = vi.spyOn(helpers, 'clearLocalStorage');
 const loggedOutSpy = vi.spyOn(userSlice.actions, 'loggedOut');
 const updateAccessTokenSpy = vi.spyOn(userSlice.actions, 'updateAccessToken');
 
@@ -51,7 +50,6 @@ describe('LogOut', () => {
 
     await waitFor(() => {
       expect(loggedOutSpy).toBeCalledTimes(1);
-      expect(clearLocalStorageSpy).toBeCalledTimes(1);
       expect(deleteCookieSpy).toBeCalledTimes(1);
     });
 

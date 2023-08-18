@@ -1,18 +1,22 @@
+import { CookieTuple } from '../../types';
+
 /**
  * Saving the data in the cookies
  *
- * @param {string} value - The data that is needed to be saved in the cookies
- * @param {string} name - The key that is used to access the data in the future
- * @param {number} expires - The expiration date/time for the cookie (in seconds)
+ * @param {CookieTuple[]} cookies - array of tuples
  * @return {void} - This method does not return a value
+ *
+ * [value, name, expires] - accepted tuple
  */
-function setCookie(value: string, name: string, expires: number) {
+function setCookie(...cookies: CookieTuple[]) {
 	const expireDate = new Date();
-	const expiresMilliseconds = expires * 1000;
 
-	expireDate.setTime(expireDate.getTime() + expiresMilliseconds);
+	cookies.forEach(([value, name, expires]) => {
+		const expiresMilliseconds = expires * 1000;
+		expireDate.setTime(expireDate.getTime() + expiresMilliseconds);
 
-	document.cookie = `${name}=${value}; expires=${expireDate}; path=/; secure`;
+		document.cookie = `${name}=${value}; expires=${expireDate}; path=/; secure`;
+	});
 }
 
 export default setCookie;
