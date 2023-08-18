@@ -4,11 +4,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../entities/user';
 import { COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
+import { getCookie } from '../shared/lib/helpers';
+import { useAppDispatch } from '../shared/lib/hooks';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
-import { getCookie } from '../shared/lib/helpers';
-import { useAppDispatch } from '../shared/lib/hooks';
+import RegPage from '../pages/RegPage/RegPage';
 import Header from '../widgets/Header/Header';
 
 export function App() {
@@ -62,7 +63,7 @@ export function App() {
       >
         <Routes>
           <Route index element={<p>Here will be main content</p>} />
-          <Route path="registration" element={<p>Registration</p>} />
+          <Route path="registration" element={<RegPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="profile" element={<p>User profile</p>} />
           <Route path="cart" element={<p>Shopping cart</p>} />

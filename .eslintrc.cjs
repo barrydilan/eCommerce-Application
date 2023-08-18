@@ -31,6 +31,8 @@ module.exports = {
     'no-param-reassign': 0,
     "jsx-a11y/label-has-associated-control":  0,
     "jsx-a11y/label-has-for": 0,
+    "react/jsx-no-bind": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
     'sort-imports': ['error', {ignoreCase: true, ignoreDeclarationSort: true}],
     'import/order': [
       'error',

@@ -9,6 +9,10 @@ import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { setCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { CookieTuple, ILoginUserParams } from '../../shared/types';
+import emailIcon from '../../assets/icons/emailIcon.svg';
+import emailIconRed from '../../assets/icons/emailIconRed.svg';
+import lockIcon from '../../assets/icons/LockIcon.svg';
+import lockIconRed from '../../assets/icons/LockIconRed.svg';
 
 function LoginPage() {
   const [loginUser, { isLoading }] = useLoginTokenMutation();
@@ -58,6 +62,8 @@ function LoginPage() {
     onSubmit: handleSubmit,
   });
 
+  const passwordInput = useRef(null);
+
   return (
     <div
       className={`
@@ -72,19 +78,22 @@ function LoginPage() {
       <form
         onSubmit={formik.handleSubmit}
         className="
-          min-w-78
-          ml-3
-          mr-3
-          box-border
+          ml-3 
+          mr-3 
+          box-content 
           w-128
-          rounded-3xl
-          border-2
-          border-separation-line
-          pb-2
-          pl-4
-          pr-4
+          rounded-3xl 
+          border-2 
+          border-separation-line 
+          pb-2 
+          pl-4 
+          pr-4 
           pt-2
-        "
+          font-medium
+          text-text-grey
+          sm:pl-10
+          sm:pr-10
+          "
       >
         <h5
           className="
@@ -113,11 +122,10 @@ function LoginPage() {
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-          <div
-            className={`
-              invalidInputIcon
-              ${formik.touched.email && formik.errors.email ? 'bg-emailIconRed' : 'bg-emailIcon'}
-            `}
+          <img
+            className="invalidInputIcon"
+            src={formik.touched.email && formik.errors.email ? emailIconRed : emailIcon}
+            alt=""
           />
           {formik.touched.email && formik.errors.email ? (
             <p className="invalidInputMsg">{formik.errors.email}</p>
@@ -129,6 +137,7 @@ function LoginPage() {
             id="passLogInput"
             type="password"
             name="password"
+            autoComplete="myFancyPassword"
             placeholder="Password"
             className={`loginRegInput ${
               formik.touched.password && formik.errors.password ? 'border-shop-cart-red' : ''
@@ -136,12 +145,12 @@ function LoginPage() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
+            ref={passwordInput}
           />
-          <div
-            className={`
-              invalidInputIcon
-              ${formik.touched.password && formik.errors.password ? 'bg-lockIconRed' : 'bg-lockIcon'}
-            `}
+          <img
+            className="invalidInputIcon"
+            src={formik.touched.password && formik.errors.password ? lockIconRed : lockIcon}
+            alt=""
           />
           {formik.touched.password && formik.errors.password ? (
             <p className="invalidInputMsg">{formik.errors.password}</p>
