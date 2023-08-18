@@ -50,7 +50,7 @@ export default function RegFinal(props: {
       </div>
       <Link
         onClick={() => {
-          reStartForm;
+          reStartForm();
           setIsFormSubmitted(false);
         }}
         to={isSuccess ? '/' : '/registration'}

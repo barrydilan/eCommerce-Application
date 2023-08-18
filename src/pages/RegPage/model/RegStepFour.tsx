@@ -8,23 +8,24 @@ import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import { UserFormProps } from '../RegPage';
 
-type UserData = {
-  billPostalCode: string;
-  billStreet: string;
-  shipPostalCode: string;
-  shipStreet: string;
-  billSetDefault: boolean;
-  shipSetDefault: boolean;
-};
+// type UserData = {
+//   billPostalCode: string;
+//   billStreet: string;
+//   shipPostalCode: string;
+//   shipStreet: string;
+//   billSetDefault: boolean;
+//   shipSetDefault: boolean;
+// };
 
-type UserFormProps = UserData & {
-  updateData: (fields: UserData) => void;
-  setIsNextEnabled: (arg: boolean) => void;
-  billCountry: string;
-  shipCountry: string;
-  sameBillShip: boolean;
-};
+// type UserFormProps = UserData & {
+//   updateData: (fields: UserData) => void;
+//   setIsNextEnabled: (arg: boolean) => void;
+//   billCountry: string;
+//   shipCountry: string;
+//   sameBillShip: boolean;
+// };
 
 export default function RegStepFour(props: UserFormProps) {
   const {
@@ -60,7 +61,7 @@ export default function RegStepFour(props: UserFormProps) {
   const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
   useEffect(() => {
-    if (sameBillShip === true) {
+    if (sameBillShip) {
       values.shipPostalCode = values.billPostalCode;
       values.shipStreet = values.billStreet;
       values.shipSetDefault = values.billSetDefault;

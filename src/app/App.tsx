@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
+import RegPage from '../pages/RegPage/RegPage';
 import Header from '../widgets/Header/Header';
 
 const isLogged = false;
@@ -33,7 +34,7 @@ export function App() {
       >
         <Routes>
           <Route index element={<p>Here will be main content</p>} />
-          <Route path="registration" element={<p>Registration</p>} />
+          <Route path="registration" element={<RegPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="profile" element={<p>User profile</p>} />
           <Route path="cart" element={<p>Shopping cart</p>} />

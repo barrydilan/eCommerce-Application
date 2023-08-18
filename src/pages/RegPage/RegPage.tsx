@@ -15,6 +15,7 @@ type FormDataType = {
   firstName: string;
   lastName: string;
   birthDate: string;
+  sameBillShip: boolean;
   billCountry: string;
   billCity: string;
   billStreet: string;
@@ -25,6 +26,11 @@ type FormDataType = {
   shipPostalCode: string;
   shipStreet: string;
   shipSetDefault: boolean;
+};
+
+export type UserFormProps = Partial<FormDataType> & {
+  updateData: (fields: Partial<FormDataType>) => void;
+  setIsNextEnabled: (arg: boolean) => void;
 };
 
 const initVals = {
@@ -49,7 +55,7 @@ const initVals = {
 export default function RegPage() {
   const [formData, setFormData] = useState(initVals);
   const [isNextEnabled, setIsNextEnabled] = useState(false);
-  const [isformSubmitted, setIsFormSubmitted] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   function updateData(fields: Partial<FormDataType>) {
     setFormData((prev) => {
@@ -122,8 +128,8 @@ export default function RegPage() {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      {isformSubmitted ? (
-        <RegFinal isSuccess reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
+      {isFormSubmitted ? (
+        <RegFinal isSuccess={false} reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
       ) : (
         <div className="m-2 flex h-auto flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
@@ -134,10 +140,8 @@ export default function RegPage() {
             isNextEnabled={isNextEnabled}
             nextFunc={() => {
               if (isNextEnabled) {
-                next();
-                if (isLastStep) {
-                  setIsFormSubmitted(true);
-                }
+                isNextEnabled && next();
+                isLastStep && setIsFormSubmitted(true);
               }
             }}
           />

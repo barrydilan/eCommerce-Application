@@ -7,21 +7,22 @@ import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import { UserFormProps } from '../RegPage';
 
 const validationSchema = validSchemaStepThree();
 
-type UserData = {
-  billCountry: string;
-  billCity: string;
-  shipCountry: string;
-  shipCity: string;
-  sameBillShip: boolean;
-};
+// type UserData = {
+//   billCountry: string;
+//   billCity: string;
+//   shipCountry: string;
+//   shipCity: string;
+//   sameBillShip: boolean;
+// };
 
-type UserFormProps = UserData & {
-  updateData: (fields: UserData) => void;
-  setIsNextEnabled: (arg: boolean) => void;
-};
+// type UserFormProps = UserData & {
+//   updateData: (fields: UserData) => void;
+//   setIsNextEnabled: (arg: boolean) => void;
+// };
 
 const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 

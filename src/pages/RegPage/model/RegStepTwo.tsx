@@ -8,19 +8,20 @@ import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import { UserFormProps } from '../RegPage';
 
 const validationSchema = validSchemaStepTwo();
 
-type UserData = {
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-};
+// type UserData = {
+//   firstName: string;
+//   lastName: string;
+//   birthDate: string;
+// };
 
-type UserFormProps = UserData & {
-  updateData: (fields: UserData) => void;
-  setIsNextEnabled: (arg: boolean) => void;
-};
+// type UserFormProps = UserData & {
+//   updateData: (fields: UserData) => void;
+//   setIsNextEnabled: (arg: boolean) => void;
+// };
 
 export default function RegStepTwo(props: UserFormProps) {
   const { firstName, lastName, birthDate, updateData, setIsNextEnabled } = props;

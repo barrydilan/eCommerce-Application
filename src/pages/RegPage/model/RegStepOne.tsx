@@ -8,18 +8,19 @@ import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import { UserFormProps } from '../RegPage';
 
 const validationSchema = validSchemaStepOne();
 
-type UserData = {
-  email: string;
-  password: string;
-};
+// type UserData = {
+//   email: string;
+//   password: string;
+// };
 
-type UserFormProps = UserData & {
-  updateData: (fields: UserData) => void;
-  setIsNextEnabled: (arg: boolean) => void;
-};
+// type UserFormProps = UserData & {
+//   updateData: (fields: UserData) => void;
+//   setIsNextEnabled: (arg: boolean) => void;
+// };
 
 export default function RegStepOne(props: UserFormProps) {
   const { email, password, updateData, setIsNextEnabled } = props;
