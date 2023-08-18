@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
@@ -142,67 +142,71 @@ export default function RegStepThree(props: UserFormProps) {
           as a billing and a shipping
         </label>
       </div>
-      {!values.sameBillShip ? (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 150 }}
-          transition={{ duration: 0.2 }}
-        >
-          <label
-            htmlFor="billCountryInput"
-            className={`loginRegLabel ${`${shipBillCluesStyles} after:content-['Shipping']`}
-        `}
+      <AnimatePresence>
+        {!values.sameBillShip ? (
+          <motion.div
+            key="secondInputGroup"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
           >
-            <motion.select
-              initial={inputAnimation.initial}
-              animate={inputAnimation.animate}
-              transition={inputAnimation.transition}
-              id="shipCountryInput"
-              name="shipCountry"
-              className="loginRegInput"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.shipCountry}
+            <label
+              htmlFor="billCountryInput"
+              className={`loginRegLabel ${`${shipBillCluesStyles} after:content-['Shipping']`}
+        `}
             >
-              <option value="usa">USA</option>
-              <option value="ukraine">Ukraine</option>
-              <option value="germany">Germany</option>
-            </motion.select>
-            <motion.img
-              initial={svgAnimation.initial}
-              animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
-              className="invalidInputIcon"
-              src={countryIcon}
-              alt=""
-            />
-          </label>
-          <label htmlFor="shipCityInput" className="loginRegLabel">
-            <motion.input
-              initial={inputAnimation.initial}
-              animate={inputAnimation.animate}
-              transition={inputAnimation.transition}
-              id="shipCityInput"
-              type="text"
-              name="shipCity"
-              placeholder="City"
-              className={`loginRegInput ${touchedAndErrorShipCity ? 'border-shop-cart-red' : ''}`}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.shipCity}
-            />
-            <motion.img
-              initial={svgAnimation.initial}
-              animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
-              className="invalidInputIcon"
-              src={touchedAndErrorShipCity ? cityIconRed : cityIcon}
-              alt=""
-            />
-            {touchedAndErrorShipCity && <p className="invalidInputMsg">{errors.shipCity}</p>}
-          </label>
-        </motion.div>
-      ) : null}
+              <motion.select
+                initial={inputAnimation.initial}
+                animate={inputAnimation.animate}
+                transition={inputAnimation.transition}
+                id="shipCountryInput"
+                name="shipCountry"
+                className="loginRegInput"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.shipCountry}
+              >
+                <option value="usa">USA</option>
+                <option value="ukraine">Ukraine</option>
+                <option value="germany">Germany</option>
+              </motion.select>
+              <motion.img
+                initial={svgAnimation.initial}
+                animate={svgAnimation.animate}
+                transition={svgAnimation.transition}
+                className="invalidInputIcon"
+                src={countryIcon}
+                alt=""
+              />
+            </label>
+            <label htmlFor="shipCityInput" className="loginRegLabel">
+              <motion.input
+                initial={inputAnimation.initial}
+                animate={inputAnimation.animate}
+                transition={inputAnimation.transition}
+                id="shipCityInput"
+                type="text"
+                name="shipCity"
+                placeholder="City"
+                className={`loginRegInput ${touchedAndErrorShipCity ? 'border-shop-cart-red' : ''}`}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.shipCity}
+              />
+              <motion.img
+                initial={svgAnimation.initial}
+                animate={svgAnimation.animate}
+                transition={svgAnimation.transition}
+                className="invalidInputIcon"
+                src={touchedAndErrorShipCity ? cityIconRed : cityIcon}
+                alt=""
+              />
+              {touchedAndErrorShipCity && <p className="invalidInputMsg">{errors.shipCity}</p>}
+            </label>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </CustomRegForm>
   );
 }

@@ -248,7 +248,7 @@ export default function RegStepFour(props: UserFormProps) {
             peer-checked/expand:before:block
           "
             >
-              {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
+              {sameBillShip ? `Set as default billing & shipping address` : 'Set as default shipping address'}
             </label>
           </div>
         </div>
