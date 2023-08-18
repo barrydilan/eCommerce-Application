@@ -11,7 +11,7 @@ function ErrorPage() {
       <h5 className="mt-3 text-2xl font-bold text-text-grey">404 error</h5>
       <p className="mt-3 text-center text-text-grey">
         Sorry, there is no such page for now, or it has never existed... <br />
-        Maybe, you want to checkout our main page?
+        Maybe, you want to check out our main page?
       </p>
       <Link to="/" className="mt-2 text-xl font-bold text-accent">
         Main page
