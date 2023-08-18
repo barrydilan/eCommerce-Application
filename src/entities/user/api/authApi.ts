@@ -30,14 +30,14 @@ export const authApi = createApi({
 			}),
 		}),
 
-		anonymousSession: build.mutation<IAuthResponse, string>({
-			query: (scope) => ({
+		anonymousSession: build.mutation<IAuthResponse, void>({
+			query: () => ({
 				url: `/oauth/${PROJECT_KEY}/anonymous/token`,
 				method: 'POST',
 				body: {},
 				params: {
 					grant_type: 'client_credentials',
-					scope: scope || DEFAULT_CUSTOMER_SCOPE,
+					scope: DEFAULT_CUSTOMER_SCOPE,
 				},
 			}),
 		}),

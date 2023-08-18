@@ -12,7 +12,7 @@ import { ILoginUserDataResponse } from '../shared/types';
 import Header from '../widgets/Header/Header';
 
 export function App() {
-  const [createAnonymousSession] = useAnonymousSessionMutation();
+  const [getAnonToken] = useAnonymousSessionMutation();
   const dispatch = useAppDispatch();
   const { updateAccessToken, loggedIn } = userSlice.actions;
 
@@ -23,11 +23,10 @@ export function App() {
       if (storedToken) {
         const userLoggedInData = getLocalStorage<ILoginUserDataResponse>(USER_LOGGED_IN_DATA_KEY);
         dispatch(loggedIn({ accessToken: storedToken, userLoggedInData }));
-        return;
       }
 
       try {
-        const { access_token: accessToken } = await createAnonymousSession('').unwrap();
+        const { access_token: accessToken } = await getAnonToken().unwrap();
 
         dispatch(updateAccessToken(accessToken));
       } catch (e) {
@@ -36,7 +35,7 @@ export function App() {
     }
 
     fetchData();
-  }, [createAnonymousSession, dispatch, loggedIn, updateAccessToken]);
+  }, [getAnonToken, dispatch, loggedIn, updateAccessToken]);
 
   return (
     <main

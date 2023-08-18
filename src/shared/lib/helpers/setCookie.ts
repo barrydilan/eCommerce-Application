@@ -12,7 +12,7 @@ function setCookie(value: string, name: string, expires: number) {
 
 	expireDate.setTime(expireDate.getTime() + expiresMilliseconds);
 
-	document.cookie = `${name}=${value}; expires=${expireDate}; path=/; Secure`;
+	document.cookie = `${name}=${value}; expires=${expireDate}; path=/; secure`;
 }
 
 export default setCookie;

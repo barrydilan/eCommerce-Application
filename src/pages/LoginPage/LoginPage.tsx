@@ -74,23 +74,23 @@ function LoginPage() {
       <form
         onSubmit={formik.handleSubmit}
         className="
-          min-w-78 
-          ml-3 
-          mr-3 
-          box-border 
-          w-128 
-          rounded-3xl 
-          border-2 
-          border-separation-line 
-          pb-2 
-          pl-4 
-          pr-4 
+          min-w-78
+          ml-3
+          mr-3
+          box-border
+          w-128
+          rounded-3xl
+          border-2
+          border-separation-line
+          pb-2
+          pl-4
+          pr-4
           pt-2
         "
       >
         <h5
           className="
-            text-2xl 
+            text-2xl
             text-text-dark
             "
         >
@@ -98,7 +98,7 @@ function LoginPage() {
         </h5>
         <h6
           className="
-            text-base 
+            text-base
             text-text-grey
             "
         >
@@ -200,12 +200,12 @@ function LoginPage() {
           disabled={isLoading}
           type="submit"
           className="
-            mt-3 
-            h-8 
-            w-full 
-            rounded-md 
-            bg-accent 
-            text-base 
+            mt-3
+            h-8
+            w-full
+            rounded-md
+            bg-accent
+            text-base
             text-primary
             "
         >
@@ -213,10 +213,10 @@ function LoginPage() {
         </button>
         <p
           className="
-            mb-6 
-            mt-6 
-            w-full 
-            text-center 
+            mb-6
+            mt-6
+            w-full
+            text-center
             text-xs
             "
         >

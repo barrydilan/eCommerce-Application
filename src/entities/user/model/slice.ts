@@ -24,7 +24,7 @@ export const userSlice = createSlice({
 			state.userData = userLoggedInData;
 		},
 
-		loggedOut: () => initialState,
+		loggedOut: (_, action: PayloadAction<string>) => ({ ...initialState, accessToken: action.payload }),
 	},
 });
 

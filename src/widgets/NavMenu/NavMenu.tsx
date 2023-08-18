@@ -6,17 +6,20 @@ import logOutIcon from '../../assets/icons/log-out.svg';
 import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
-import { COOKIE_ACCESS_TOKEN, userSlice } from '../../entities/user';
+import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../../entities/user';
 import { clearLocalStorage, deleteCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 
 function NavMenu() {
   const { isLogged } = useAppSelector((state) => state.userReducer);
+  const [getAnonToken, { isLoading }] = useAnonymousSessionMutation();
   const dispatch = useAppDispatch();
   const { loggedOut } = userSlice.actions;
 
-  function handleLogout() {
-    dispatch(loggedOut());
+  async function handleLogout() {
+    const { access_token: accessToken } = await getAnonToken().unwrap();
+
+    dispatch(loggedOut(accessToken));
     deleteCookie(COOKIE_ACCESS_TOKEN);
     clearLocalStorage();
   }
@@ -24,9 +27,9 @@ function NavMenu() {
   return (
     <ul
       className="
-        mt-2 
-        flex 
-        w-full 
+        mt-2
+        flex
+        w-full
         justify-between
         md:mt-8
         md:max-h-full
@@ -68,8 +71,8 @@ function NavMenu() {
         </Link>
       </li>
       {isLogged && (
-        <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">
-          <button onClick={handleLogout} type="button" className="navMenuLink text-text-dark">
+        <li className={`navMenuItem hidden md:absolute md:bottom-6 md:block ${isLoading && 'opacity-70'}`}>
+          <button disabled={isLoading} onClick={handleLogout} type="button" className="navMenuLink text-text-dark">
             <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
             Log out
           </button>
