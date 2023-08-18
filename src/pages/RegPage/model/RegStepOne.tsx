@@ -9,8 +9,8 @@ import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../RegPage';
-import { inputAnimation, svgAnimation } from '../ui/animations';
 
 const validationSchema = validSchemaStepOne();
 

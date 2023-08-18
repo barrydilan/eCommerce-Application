@@ -8,8 +8,8 @@ import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../RegPage';
-import { inputAnimation, svgAnimation } from '../ui/animations';
 
 const validationSchema = validSchemaStepThree();
 

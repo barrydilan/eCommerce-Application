@@ -10,7 +10,7 @@ import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
 import { UserFormProps } from '../RegPage';
-import { inputAnimation, svgAnimation } from '../ui/animations';
+import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 
 export default function RegStepFour(props: UserFormProps) {
   const {
