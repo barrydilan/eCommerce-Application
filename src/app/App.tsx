@@ -4,12 +4,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../entities/user';
 import { COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
-import { getCookie } from '../shared/lib/helpers';
-import { useAppDispatch } from '../shared/lib/hooks';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import RegPage from '../pages/RegPage/RegPage';
+import { getCookie } from '../shared/lib/helpers';
+import { useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
 
 export function App() {

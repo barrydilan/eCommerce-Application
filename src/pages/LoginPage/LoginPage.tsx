@@ -4,15 +4,15 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
+import emailIcon from '../../assets/icons/emailIcon.svg';
+import emailIconRed from '../../assets/icons/emailIconRed.svg';
+import lockIcon from '../../assets/icons/LockIcon.svg';
+import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { COOKIE_ACCESS_TOKEN, useLoginTokenMutation, useLoginUserDataMutation, userSlice } from '../../entities/user';
 import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { setCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { CookieTuple, ILoginUserParams } from '../../shared/types';
-import emailIcon from '../../assets/icons/emailIcon.svg';
-import emailIconRed from '../../assets/icons/emailIconRed.svg';
-import lockIcon from '../../assets/icons/LockIcon.svg';
-import lockIconRed from '../../assets/icons/LockIconRed.svg';
 
 function LoginPage() {
   const [loginUser, { isLoading }] = useLoginTokenMutation();
@@ -20,8 +20,9 @@ function LoginPage() {
   const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
-  const passwordInput = useRef<HTMLInputElement>(null);
   const { loggedIn } = userSlice.actions;
+
+  const passwordInput = useRef(null);
 
   async function handleSubmit(userData: ILoginUserParams) {
     if (isLogged) {
@@ -61,8 +62,6 @@ function LoginPage() {
     validationSchema,
     onSubmit: handleSubmit,
   });
-
-  const passwordInput = useRef(null);
 
   return (
     <div
@@ -133,7 +132,6 @@ function LoginPage() {
         </label>
         <label htmlFor="passLogInput" className="loginRegLabel">
           <input
-            ref={passwordInput}
             id="passLogInput"
             type="password"
             name="password"

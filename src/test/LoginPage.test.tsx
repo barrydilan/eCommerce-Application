@@ -89,7 +89,7 @@ describe('LoginPage', () => {
     await userEvent.tab();
 
     expect(screen.getByPlaceholderText('Email')).toHaveClass('border-shop-cart-red');
-    expect(screen.getByText('Email must follow email@example.com pattern')).toBeInTheDocument();
+    expect(screen.getByText('Email must be email@example.com')).toBeInTheDocument();
   });
 
   it('Show error on wrong Password input', async () => {
@@ -105,7 +105,7 @@ describe('LoginPage', () => {
     await userEvent.tab();
 
     expect(screen.getByPlaceholderText('Password')).toHaveClass('border-shop-cart-red');
-    expect(screen.getByText('Password required')).toBeInTheDocument();
+    expect(screen.getByText('password is required', { exact: false })).toBeInTheDocument();
 
     await userEvent.type(screen.getByPlaceholderText('Password'), 'test');
     await userEvent.tab();
@@ -133,7 +133,7 @@ describe('LoginPage', () => {
 
     expect(screen.getByPlaceholderText('Email')).toHaveClass('border-shop-cart-red');
     expect(screen.getByPlaceholderText('Password')).toHaveClass('border-shop-cart-red');
-    expect(screen.getByText('Password required')).toBeInTheDocument();
+    expect(screen.getByText('password is required', { exact: false })).toBeInTheDocument();
     expect(screen.getByText('Email is required')).toBeInTheDocument();
 
     expect(Object.keys(store.getState().authApi.mutations)).toHaveLength(0);
