@@ -5,7 +5,7 @@
  * @param {string} lastName - The last name.
  * @return {string} The full name.
  */
-function getFullName(firstName: string, lastName: string) {
+function getFullName(firstName: string = '', lastName: string = '') {
 	return `${firstName} ${lastName}`;
 }
 

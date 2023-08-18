@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import initialState from './initialState.ts';
-import { ILoginUserDataResponse } from '../../../shared/types';
 
 interface ILoggedInPayload {
 	accessToken: string;
-	userLoggedInData: ILoginUserDataResponse;
+	userId: string;
 }
 
 export const userSlice = createSlice({
@@ -17,11 +16,11 @@ export const userSlice = createSlice({
 		},
 
 		loggedIn: (state, action: PayloadAction<ILoggedInPayload>) => {
-			const { accessToken, userLoggedInData } = action.payload;
+			const { accessToken, userId } = action.payload;
 
 			state.isLogged = true;
 			state.accessToken = accessToken;
-			state.userData = userLoggedInData;
+			state.userId = userId;
 		},
 
 		loggedOut: (_, action: PayloadAction<string>) => ({ ...initialState, accessToken: action.payload }),

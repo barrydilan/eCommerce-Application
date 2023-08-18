@@ -1,12 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { productApi } from '../../entities/product';
-import { authApi, signUpApi, userReducer } from '../../entities/user';
+import { authApi, signUpApi, userDataApi, userReducer } from '../../entities/user';
 
 const rootReducer = combineReducers({
 	[authApi.reducerPath]: authApi.reducer,
 	[productApi.reducerPath]: productApi.reducer,
 	[signUpApi.reducerPath]: signUpApi.reducer,
+	[userDataApi.reducerPath]: userDataApi.reducer,
 	userReducer,
 });
 
@@ -17,7 +18,8 @@ export const setupStore = () =>
 			return getDefaultMiddleware()
 				.concat(productApi.middleware)
 				.concat(authApi.middleware)
-				.concat(signUpApi.middleware);
+				.concat(signUpApi.middleware)
+				.concat(userDataApi.middleware);
 		},
 	});
 

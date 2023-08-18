@@ -1,1 +1,1 @@
-export type { ILoginUserParams, ILoginUserDataResponse } from './interfaces.ts';
+export type { ILoginUserParams, ILoginUserDataResponse, IUserAddress, IUser } from './interfaces.ts';

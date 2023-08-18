@@ -7,7 +7,8 @@ import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
 import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../../entities/user';
-import { clearLocalStorage, deleteCookie } from '../../shared/lib/helpers';
+import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
+import { deleteCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 
 function NavMenu() {
@@ -20,8 +21,7 @@ function NavMenu() {
     const { access_token: accessToken } = await getAnonToken().unwrap();
 
     dispatch(loggedOut(accessToken));
-    deleteCookie(COOKIE_ACCESS_TOKEN);
-    clearLocalStorage();
+    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
   }
 
   return (
@@ -71,7 +71,7 @@ function NavMenu() {
         </Link>
       </li>
       {isLogged && (
-        <li className={`navMenuItem hidden md:absolute md:bottom-6 md:block ${isLoading && 'opacity-70'}`}>
+        <li className={`navMenuItem hidden md:absolute md:bottom-6 md:block ${isLoading ? 'animate-pulse' : ''}`}>
           <button disabled={isLoading} onClick={handleLogout} type="button" className="navMenuLink text-text-dark">
             <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
             Log out

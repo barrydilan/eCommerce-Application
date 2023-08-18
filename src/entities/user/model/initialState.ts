@@ -1,15 +1,13 @@
-import { ILoginUserDataResponse } from '../../../shared/types';
-
 interface IInitialState {
 	accessToken: string;
 	isLogged: boolean;
-	userData: ILoginUserDataResponse;
+	userId: string;
 }
 
 const initialState: IInitialState = {
 	accessToken: '',
 	isLogged: false,
-	userData: {} as ILoginUserDataResponse,
+	userId: '',
 };
 
 export default initialState;

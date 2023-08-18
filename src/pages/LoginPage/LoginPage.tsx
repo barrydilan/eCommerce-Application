@@ -4,14 +4,9 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
-import {
-  COOKIE_ACCESS_TOKEN,
-  useLoginTokenMutation,
-  useLoginUserDataMutation,
-  USER_LOGGED_IN_DATA_KEY,
-  userSlice,
-} from '../../entities/user';
-import { setCookie, setLocalStorage } from '../../shared/lib/helpers';
+import { COOKIE_ACCESS_TOKEN, useLoginTokenMutation, useLoginUserDataMutation, userSlice } from '../../entities/user';
+import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
+import { setCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
 
@@ -34,16 +29,18 @@ function LoginPage() {
       const waitLoginUser = loginUser(userData).unwrap();
       const waitLoginUserData = getLoginUserData(userData).unwrap();
 
-      const [{ access_token: accessToken, expires_in: expiresIn }, userLoggedInData] = await Promise.all([
-        waitLoginUser,
-        waitLoginUserData,
-      ]);
+      const [
+        { access_token: accessToken, expires_in: expiresIn },
+        {
+          customer: { id },
+        },
+      ] = await Promise.all([waitLoginUser, waitLoginUserData]);
 
-      dispatch(loggedIn({ accessToken, userLoggedInData }));
+      dispatch(loggedIn({ accessToken, userId: id }));
       navigate('/');
 
       setCookie(accessToken, COOKIE_ACCESS_TOKEN, expiresIn);
-      setLocalStorage(USER_LOGGED_IN_DATA_KEY, userLoggedInData);
+      setCookie(id, COOKIE_USER_ID, expiresIn);
     } catch (e) {
       // TODO - implement error message
       // console.error(`Error occurred while logging the user! (${e.status})`);
@@ -68,7 +65,6 @@ function LoginPage() {
         items-center
         justify-center
         font-poppins
-        ${isLoading ? 'opacity-70' : ''}
         `}
     >
       <form
@@ -199,15 +195,16 @@ function LoginPage() {
         <button
           disabled={isLoading}
           type="submit"
-          className="
-            mt-3
-            h-8
-            w-full
-            rounded-md
-            bg-accent
-            text-base
-            text-primary
-            "
+          className={`
+              mt-3
+              h-8
+              w-full
+              rounded-md
+              bg-accent
+              text-base
+              text-primary
+              ${isLoading ? 'animate-pulse' : ''}
+              `}
         >
           Log in
         </button>

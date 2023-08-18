@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, USER_LOGGED_IN_DATA_KEY, userSlice } from '../entities/user';
+import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../entities/user';
+import { COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
-import { getCookie, getLocalStorage } from '../shared/lib/helpers';
+import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
-import { ILoginUserDataResponse } from '../shared/types';
 import Header from '../widgets/Header/Header';
 
 export function App() {
@@ -18,11 +18,10 @@ export function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const storedToken = getCookie(COOKIE_ACCESS_TOKEN);
+      const [token, userId] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
 
-      if (storedToken) {
-        const userLoggedInData = getLocalStorage<ILoginUserDataResponse>(USER_LOGGED_IN_DATA_KEY);
-        dispatch(loggedIn({ accessToken: storedToken, userLoggedInData }));
+      if (token && userId) {
+        dispatch(loggedIn({ accessToken: token, userId }));
       }
 
       try {
