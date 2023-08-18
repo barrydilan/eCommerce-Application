@@ -11,19 +11,6 @@ import { UserFormProps } from '../RegPage';
 
 const validationSchema = validSchemaStepThree();
 
-// type UserData = {
-//   billCountry: string;
-//   billCity: string;
-//   shipCountry: string;
-//   shipCity: string;
-//   sameBillShip: boolean;
-// };
-
-// type UserFormProps = UserData & {
-//   updateData: (fields: UserData) => void;
-//   setIsNextEnabled: (arg: boolean) => void;
-// };
-
 const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
 export default function RegStepThree(props: UserFormProps) {
@@ -76,6 +63,9 @@ export default function RegStepThree(props: UserFormProps) {
     setIsNextEnabled(true);
   }, [values, errors, touched]);
 
+  const touchedAndErrorBillCity = touched.billCity && errors.billCity;
+  const touchedAndErrorShipCity = touched.shipCity && errors.shipCity;
+
   return (
     <CustomRegForm>
       <label
@@ -88,7 +78,7 @@ export default function RegStepThree(props: UserFormProps) {
         <select
           id="billCountryInput"
           name="billCountry"
-          className={`loginRegInput ${touched.billCountry && errors.billCountry ? 'border-shop-cart-red' : ''}`}
+          className="loginRegInput"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.billCountry}
@@ -105,13 +95,13 @@ export default function RegStepThree(props: UserFormProps) {
           type="text"
           name="billCity"
           placeholder="City"
-          className={`loginRegInput ${touched.billCity && errors.billCity ? 'border-shop-cart-red' : ''}`}
+          className={`loginRegInput ${touchedAndErrorBillCity ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.billCity}
         />
-        <img className="invalidInputIcon" src={touched.billCity && errors.billCity ? cityIconRed : cityIcon} alt="" />
-        {touched.billCity && errors.billCity && <p className="invalidInputMsg">{errors.billCity}</p>}
+        <img className="invalidInputIcon" src={touchedAndErrorBillCity ? cityIconRed : cityIcon} alt="" />
+        {touchedAndErrorBillCity && <p className="invalidInputMsg">{errors.billCity}</p>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
         <input
@@ -139,7 +129,7 @@ export default function RegStepThree(props: UserFormProps) {
           <select
             id="shipCountryInput"
             name="shipCountry"
-            className={`loginRegInput ${touched.shipCountry && errors.shipCountry ? 'border-shop-cart-red' : ''}`}
+            className="loginRegInput"
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.shipCountry}
@@ -156,13 +146,13 @@ export default function RegStepThree(props: UserFormProps) {
             type="text"
             name="shipCity"
             placeholder="City"
-            className={`loginRegInput ${touched.shipCity && errors.shipCity ? 'border-shop-cart-red' : ''}`}
+            className={`loginRegInput ${touchedAndErrorShipCity ? 'border-shop-cart-red' : ''}`}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.shipCity}
           />
-          <img className="invalidInputIcon" src={touched.shipCity && errors.shipCity ? cityIconRed : cityIcon} alt="" />
-          {touched.shipCity && errors.shipCity ? <p className="invalidInputMsg">{errors.shipCity}</p> : null}
+          <img className="invalidInputIcon" src={touchedAndErrorShipCity ? cityIconRed : cityIcon} alt="" />
+          {touchedAndErrorShipCity && <p className="invalidInputMsg">{errors.shipCity}</p>}
         </label>
       </div>
     </CustomRegForm>

@@ -12,16 +12,6 @@ import { UserFormProps } from '../RegPage';
 
 const validationSchema = validSchemaStepOne();
 
-// type UserData = {
-//   email: string;
-//   password: string;
-// };
-
-// type UserFormProps = UserData & {
-//   updateData: (fields: UserData) => void;
-//   setIsNextEnabled: (arg: boolean) => void;
-// };
-
 export default function RegStepOne(props: UserFormProps) {
   const { email, password, updateData, setIsNextEnabled } = props;
   const formik = useFormik({
@@ -51,6 +41,9 @@ export default function RegStepOne(props: UserFormProps) {
     setIsNextEnabled(true);
   }, [values, errors, touched]);
 
+  const touchedAndErrorEmail = touched.email && errors.email;
+  const touchedAndErrorPassword = touched.password && errors.password;
+
   return (
     <CustomRegForm>
       <label htmlFor="emailRegInput" className="loginRegLabel">
@@ -59,13 +52,13 @@ export default function RegStepOne(props: UserFormProps) {
           type="email"
           name="email"
           placeholder="Email"
-          className={`loginRegInput ${touched.email && errors.email ? 'border-shop-cart-red' : ''}`}
+          className={`loginRegInput ${touchedAndErrorEmail ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.email}
         />
-        <img className="invalidInputIcon" src={touched.email && errors.email ? emailIconRed : emailIcon} alt="" />
-        {touched.email && errors.email && <p className="invalidInputMsg">{errors.email}</p>}
+        <img className="invalidInputIcon" src={touchedAndErrorEmail ? emailIconRed : emailIcon} alt="" />
+        {touchedAndErrorEmail && <p className="invalidInputMsg">{errors.email}</p>}
       </label>
       <label htmlFor="passRegInput" className="loginRegLabel">
         <input
@@ -73,13 +66,13 @@ export default function RegStepOne(props: UserFormProps) {
           type="text"
           name="password"
           placeholder="Password"
-          className={`loginRegInput ${touched.password && errors.password ? 'border-shop-cart-red' : ''}`}
+          className={`loginRegInput ${touchedAndErrorPassword ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.password}
         />
         <img className="invalidInputIcon" src={touched.password && errors.password ? lockIconRed : lockIcon} alt="" />
-        {touched.password && errors.password ? <p className="invalidInputMsg">{errors.password}</p> : null}
+        {touchedAndErrorPassword ? <p className="invalidInputMsg">{errors.password}</p> : null}
       </label>
     </CustomRegForm>
   );

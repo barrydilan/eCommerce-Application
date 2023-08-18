@@ -12,17 +12,6 @@ import { UserFormProps } from '../RegPage';
 
 const validationSchema = validSchemaStepTwo();
 
-// type UserData = {
-//   firstName: string;
-//   lastName: string;
-//   birthDate: string;
-// };
-
-// type UserFormProps = UserData & {
-//   updateData: (fields: UserData) => void;
-//   setIsNextEnabled: (arg: boolean) => void;
-// };
-
 export default function RegStepTwo(props: UserFormProps) {
   const { firstName, lastName, birthDate, updateData, setIsNextEnabled } = props;
   const formik = useFormik({
@@ -63,6 +52,10 @@ export default function RegStepTwo(props: UserFormProps) {
     setIsNextEnabled(true);
   }, [values, errors, touched]);
 
+  const touchedAndErrorFirstName = touched.firstName && errors.firstName;
+  const touchedAndErrorLastName = touched.lastName && errors.lastName;
+  const touchedAndErrorBirthDate = touched.birthDate && errors.birthDate;
+
   return (
     <CustomRegForm>
       <label htmlFor="firstNameInput" className="loginRegLabel">
@@ -71,13 +64,13 @@ export default function RegStepTwo(props: UserFormProps) {
           type="text"
           name="firstName"
           placeholder="First name"
-          className={`loginRegInput ${touched.firstName && errors.firstName ? 'border-shop-cart-red' : ''}`}
+          className={`loginRegInput ${touchedAndErrorFirstName ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.firstName}
         />
-        <img className="invalidInputIcon" src={touched.firstName && errors.firstName ? userIconRed : userIcon} alt="" />
-        {touched.firstName && errors.firstName && <p className="invalidInputMsg">{errors.firstName}</p>}
+        <img className="invalidInputIcon" src={touchedAndErrorFirstName ? userIconRed : userIcon} alt="" />
+        {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
       </label>
       <label htmlFor="lastNameInput" className="loginRegLabel">
         <input
@@ -85,13 +78,13 @@ export default function RegStepTwo(props: UserFormProps) {
           type="text"
           name="lastName"
           placeholder="Last name"
-          className={`loginRegInput ${touched.lastName && errors.lastName ? 'border-shop-cart-red' : ''}`}
+          className={`loginRegInput ${touchedAndErrorLastName ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.lastName}
         />
-        <img className="invalidInputIcon" src={touched.lastName && errors.lastName ? userIconRed : userIcon} alt="" />
-        {touched.lastName && errors.lastName && <p className="invalidInputMsg">{errors.lastName}</p>}
+        <img className="invalidInputIcon" src={touchedAndErrorLastName ? userIconRed : userIcon} alt="" />
+        {touchedAndErrorLastName && <p className="invalidInputMsg">{errors.lastName}</p>}
       </label>
       <label htmlFor="birthDateInput" className="loginRegLabel">
         <input
@@ -100,17 +93,13 @@ export default function RegStepTwo(props: UserFormProps) {
           name="birthDate"
           placeholder="Birth date"
           onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
-          className={`loginRegInput ${touched.birthDate && errors.birthDate ? 'border-shop-cart-red' : ''}`}
+          className={`loginRegInput ${touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
           onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
           value={values.birthDate}
         />
-        <img
-          className="invalidInputIcon"
-          src={touched.birthDate && errors.birthDate ? calendarIconRed : calendarIcon}
-          alt=""
-        />
-        {touched.birthDate && errors.birthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
+        <img className="invalidInputIcon" src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon} alt="" />
+        {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
       </label>
     </CustomRegForm>
   );

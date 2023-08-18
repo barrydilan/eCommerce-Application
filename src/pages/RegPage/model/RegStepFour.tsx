@@ -10,23 +10,6 @@ import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
 import { UserFormProps } from '../RegPage';
 
-// type UserData = {
-//   billPostalCode: string;
-//   billStreet: string;
-//   shipPostalCode: string;
-//   shipStreet: string;
-//   billSetDefault: boolean;
-//   shipSetDefault: boolean;
-// };
-
-// type UserFormProps = UserData & {
-//   updateData: (fields: UserData) => void;
-//   setIsNextEnabled: (arg: boolean) => void;
-//   billCountry: string;
-//   shipCountry: string;
-//   sameBillShip: boolean;
-// };
-
 export default function RegStepFour(props: UserFormProps) {
   const {
     shipCountry,
@@ -95,6 +78,11 @@ export default function RegStepFour(props: UserFormProps) {
     setIsNextEnabled(true);
   }, [values, errors, touched]);
 
+  const touchedAndErrorBillPostalCode = touched.billPostalCode && errors.billPostalCode;
+  const touchedAndErrorBillStreet = touched.billStreet && errors.billStreet;
+  const touchedAndErrorShipPostalCode = touched.shipPostalCode && errors.shipPostalCode;
+  const touchedAndErrorShipStreet = touched.shipStreet && errors.shipStreet;
+
   return (
     <CustomRegForm>
       <label
@@ -112,7 +100,7 @@ export default function RegStepFour(props: UserFormProps) {
           className={`
             loginRegInput 
             relative
-            ${touched.billPostalCode && errors.billPostalCode ? 'border-shop-cart-red' : ''}
+            ${touchedAndErrorBillPostalCode ? 'border-shop-cart-red' : ''}
           `}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -120,10 +108,10 @@ export default function RegStepFour(props: UserFormProps) {
         />
         <img
           className="invalidInputIcon"
-          src={touched.billPostalCode && errors.billPostalCode ? postalCodeIconRed : postalCodeIcon}
+          src={touchedAndErrorBillPostalCode ? postalCodeIconRed : postalCodeIcon}
           alt=""
         />
-        {touched.billPostalCode && errors.billPostalCode && <p className="invalidInputMsg">{errors.billPostalCode}</p>}
+        {touchedAndErrorBillPostalCode && <p className="invalidInputMsg">{errors.billPostalCode}</p>}
       </label>
       <label htmlFor="billStreetInput" className="loginRegLabel">
         <input
@@ -131,17 +119,13 @@ export default function RegStepFour(props: UserFormProps) {
           type="text"
           name="billStreet"
           placeholder="Street"
-          className={`loginRegInput ${touched.billStreet && errors.billStreet ? 'border-shop-cart-red' : ''}`}
+          className={`loginRegInput ${touchedAndErrorBillStreet ? 'border-shop-cart-red' : ''}`}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.billStreet}
         />
-        <img
-          className="invalidInputIcon"
-          src={touched.billStreet && errors.billStreet ? streetIconRed : streetIcon}
-          alt=""
-        />
-        {touched.billStreet && errors.billStreet && <p className="invalidInputMsg">{errors.billStreet}</p>}
+        <img className="invalidInputIcon" src={touchedAndErrorBillStreet ? streetIconRed : streetIcon} alt="" />
+        {touchedAndErrorBillStreet && <p className="invalidInputMsg">{errors.billStreet}</p>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
         <input
@@ -182,7 +166,7 @@ export default function RegStepFour(props: UserFormProps) {
             placeholder="Postal code"
             className={`
               loginRegInput   
-              ${touched.shipPostalCode && errors.shipPostalCode ? 'border-shop-cart-red' : ''}
+              ${touchedAndErrorShipPostalCode ? 'border-shop-cart-red' : ''}
             `}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -190,12 +174,10 @@ export default function RegStepFour(props: UserFormProps) {
           />
           <img
             className="invalidInputIcon"
-            src={touched.shipPostalCode && errors.shipPostalCode ? postalCodeIconRed : postalCodeIcon}
+            src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
             alt=""
           />
-          {touched.shipPostalCode && errors.shipPostalCode && (
-            <p className="invalidInputMsg">{errors.shipPostalCode}</p>
-          )}
+          {touchedAndErrorShipPostalCode && <p className="invalidInputMsg">{errors.shipPostalCode}</p>}
         </label>
         <label htmlFor="shipStreetInput" className="loginRegLabel">
           <input
@@ -203,17 +185,13 @@ export default function RegStepFour(props: UserFormProps) {
             type="text"
             name="shipStreet"
             placeholder="Street"
-            className={`loginRegInput ${touched.shipStreet && errors.shipStreet ? 'border-shop-cart-red' : ''}`}
+            className={`loginRegInput ${touchedAndErrorShipStreet ? 'border-shop-cart-red' : ''}`}
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.shipStreet}
           />
-          <img
-            className="invalidInputIcon"
-            src={touched.shipStreet && errors.shipStreet ? streetIconRed : streetIcon}
-            alt=""
-          />
-          {touched.shipStreet && errors.shipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
+          <img className="invalidInputIcon" src={touchedAndErrorShipStreet ? streetIconRed : streetIcon} alt="" />
+          {touchedAndErrorShipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
         </label>
         <div className="mt-6 flex items-center text-text-grey">
           <input

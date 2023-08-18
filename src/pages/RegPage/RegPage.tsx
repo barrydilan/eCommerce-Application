@@ -129,7 +129,7 @@ export default function RegPage() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       {isFormSubmitted ? (
-        <RegFinal isSuccess={false} reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
+        <RegFinal isSuccess reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
       ) : (
         <div className="m-2 flex h-auto flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
