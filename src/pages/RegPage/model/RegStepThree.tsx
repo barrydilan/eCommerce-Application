@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
@@ -146,10 +146,13 @@ export default function RegStepThree(props: UserFormProps) {
         {!values.sameBillShip ? (
           <motion.div
             key="secondInputGroup"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 100 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{
+              ease: 'linear',
+              delay: 0.1,
+            }}
           >
             <label
               htmlFor="billCountryInput"

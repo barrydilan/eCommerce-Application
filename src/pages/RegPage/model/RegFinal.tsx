@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import accentGulp from '../../../assets/icons/AccentGulp.svg';
@@ -10,8 +11,12 @@ export default function RegFinal(props: {
 }) {
   const { isSuccess, reStartForm, setIsFormSubmitted } = props;
   return (
-    <div
-      className=" 
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+        className=" 
       ml-3
       mr-3
       box-border
@@ -28,13 +33,13 @@ export default function RegFinal(props: {
       pt-2
       sm:w-128
     "
-    >
-      <h3 className="text-5xl font-medium text-text-dark">{isSuccess ? 'Success!' : 'Oh snap!'}</h3>
-      <p className="text-base text-text-grey">
-        {isSuccess ? 'Your account has been created' : 'Change a few things up and try submitting again'}
-      </p>
-      <div
-        className={`
+      >
+        <h3 className="text-5xl font-medium text-text-dark">{isSuccess ? 'Success!' : 'Oh snap!'}</h3>
+        <p className="text-base text-text-grey">
+          {isSuccess ? 'Your account has been created' : 'Change a few things up and try submitting again'}
+        </p>
+        <div
+          className={`
         relative
         mt-8
         h-30 
@@ -45,16 +50,16 @@ export default function RegFinal(props: {
         flex
         justify-center
       `}
-      >
-        <img src={isSuccess ? accentGulp : redCross} alt="" />
-      </div>
-      <Link
-        onClick={() => {
-          reStartForm();
-          setIsFormSubmitted(false);
-        }}
-        to={isSuccess ? '/' : '/registration'}
-        className="
+        >
+          <img src={isSuccess ? accentGulp : redCross} alt="" />
+        </div>
+        <Link
+          onClick={() => {
+            reStartForm();
+            setIsFormSubmitted(false);
+          }}
+          to={isSuccess ? '/' : '/registration'}
+          className="
           mb-9 
           mt-9 
           h-10 
@@ -63,9 +68,10 @@ export default function RegFinal(props: {
           p-2 
           text-primary
         "
-      >
-        Continue
-      </Link>
-    </div>
+        >
+          Continue
+        </Link>
+      </motion.div>
+    </AnimatePresence>
   );
 }
