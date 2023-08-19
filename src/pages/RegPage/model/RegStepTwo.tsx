@@ -60,30 +60,57 @@ export default function RegStepTwo(props: UserFormProps) {
 
   return (
     <CustomRegForm>
-      <label htmlFor="firstNameInput" className="loginRegLabel">
-        <motion.input
-          initial={inputAnimation.initial}
-          animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
-          id="firstNameInput"
-          type="text"
-          name="firstName"
-          placeholder="First name"
-          className={`loginRegInput ${touchedAndErrorFirstName ? 'border-shop-cart-red' : ''}`}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.firstName}
-        />
-        <motion.img
-          initial={svgAnimation.initial}
-          animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
-          className="invalidInputIcon"
-          src={touchedAndErrorFirstName ? userIconRed : userIcon}
-          alt=""
-        />
-        {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
-      </label>
+      <div className="flex gap-5">
+        <label htmlFor="firstNameInput" className="loginRegLabel">
+          <motion.input
+            initial={inputAnimation.initial}
+            animate={inputAnimation.animate}
+            transition={inputAnimation.transition}
+            id="firstNameInput"
+            type="text"
+            name="firstName"
+            placeholder="First name"
+            className={`loginRegInput ${touchedAndErrorFirstName ? 'border-shop-cart-red' : ''}`}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.firstName}
+          />
+          <motion.img
+            initial={svgAnimation.initial}
+            animate={svgAnimation.animate}
+            transition={svgAnimation.transition}
+            className="invalidInputIcon"
+            src={touchedAndErrorFirstName ? userIconRed : userIcon}
+            alt=""
+          />
+          {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
+        </label>
+        <label htmlFor="birthDateInput" className="loginRegLabel w-5/6">
+          <motion.input
+            initial={inputAnimation.initial}
+            animate={inputAnimation.animate}
+            transition={inputAnimation.transition}
+            id="birthDateInput"
+            type={dateInputType}
+            name="birthDate"
+            placeholder="Birth date"
+            onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
+            className={`loginRegInput ${touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''}`}
+            onChange={handleChange}
+            onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
+            value={values.birthDate}
+          />
+          <motion.img
+            initial={svgAnimation.initial}
+            animate={svgAnimation.animate}
+            transition={svgAnimation.transition}
+            className="invalidInputIcon"
+            src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
+            alt=""
+          />
+          {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
+        </label>
+      </div>
       <label htmlFor="lastNameInput" className="loginRegLabel">
         <motion.input
           initial={inputAnimation.initial}
@@ -107,31 +134,6 @@ export default function RegStepTwo(props: UserFormProps) {
           alt=""
         />
         {touchedAndErrorLastName && <p className="invalidInputMsg">{errors.lastName}</p>}
-      </label>
-      <label htmlFor="birthDateInput" className="loginRegLabel">
-        <motion.input
-          initial={inputAnimation.initial}
-          animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
-          id="birthDateInput"
-          type={dateInputType}
-          name="birthDate"
-          placeholder="Birth date"
-          onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
-          className={`loginRegInput ${touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''}`}
-          onChange={handleChange}
-          onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
-          value={values.birthDate}
-        />
-        <motion.img
-          initial={svgAnimation.initial}
-          animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
-          className="invalidInputIcon"
-          src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
-          alt=""
-        />
-        {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
       </label>
     </CustomRegForm>
   );

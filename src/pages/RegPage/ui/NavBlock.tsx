@@ -12,15 +12,13 @@ export default function NavBlock(props: PropsType) {
   return (
     <div
       className="
-        mb-6 
-        mt-12
+        mb-6
+        mt-4
         flex 
         w-full
-        items-center 
+        items-center
         justify-between
-        gap-4 
-        pl-4
-        pr-4
+        gap-4
         font-poppins
         text-text-grey
       "

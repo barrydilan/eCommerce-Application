@@ -125,29 +125,12 @@ export default function RegStepThree(props: UserFormProps) {
         />
         {touchedAndErrorBillCity && <p className="invalidInputMsg">{errors.billCity}</p>}
       </label>
-      <div className="mt-6 flex items-center text-text-grey">
-        <input
-          id="expand"
-          type="checkbox"
-          name="sameBillShip"
-          checked={values.sameBillShip}
-          onChange={handleChange}
-          className="hiddenCheckBox peer/expand"
-        />
-        <label
-          htmlFor="expand"
-          className="regFormCheckGulp relative text-3xs leading-3 peer-checked/expand:before:block"
-        >
-          Use the same address <br />
-          as a billing and a shipping
-        </label>
-      </div>
       <AnimatePresence>
         {!values.sameBillShip ? (
           <motion.div
             key="secondInputGroup"
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 100 }}
+            animate={{ opacity: 1, height: 113 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{
               ease: 'linear',
@@ -156,8 +139,7 @@ export default function RegStepThree(props: UserFormProps) {
           >
             <label
               htmlFor="billCountryInput"
-              className={`loginRegLabel ${`${shipBillCluesStyles} after:content-['Shipping']`}
-        `}
+              className={`loginRegLabel ${shipBillCluesStyles} mt-10 after:content-['Shipping']`}
             >
               <motion.select
                 initial={inputAnimation.initial}
@@ -210,6 +192,23 @@ export default function RegStepThree(props: UserFormProps) {
           </motion.div>
         ) : null}
       </AnimatePresence>
+      <div className="mt-6 flex items-center text-text-grey">
+        <input
+          id="expand"
+          type="checkbox"
+          name="sameBillShip"
+          checked={values.sameBillShip}
+          onChange={handleChange}
+          className="hiddenCheckBox peer/expand"
+        />
+        <label
+          htmlFor="expand"
+          className="regFormCheckGulp relative text-3xs leading-3 peer-checked/expand:before:block"
+        >
+          Use the same address <br />
+          as a billing and a shipping
+        </label>
+      </div>
     </CustomRegForm>
   );
 }
