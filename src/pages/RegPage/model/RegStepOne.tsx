@@ -9,6 +9,7 @@ import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { UserFormProps } from '../types';
+import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 
 const validationSchema = validSchemaStepOne();
 
@@ -47,7 +48,10 @@ export default function RegStepOne(props: UserFormProps) {
   return (
     <CustomRegForm>
       <label htmlFor="emailRegInput" className="loginRegLabel">
-        <input
+        <motion.input
+          initial={inputAnimation.initial}
+          animate={inputAnimation.animate}
+          transition={inputAnimation.transition}
           id="emailRegInput"
           type="email"
           name="email"
@@ -57,11 +61,21 @@ export default function RegStepOne(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.email}
         />
-        <img className="invalidInputIcon" src={touchedAndErrorEmail ? emailIconRed : emailIcon} alt="" />
+        <motion.img
+          initial={svgAnimation.initial}
+          animate={svgAnimation.animate}
+          transition={svgAnimation.transition}
+          className="invalidInputIcon"
+          src={touchedAndErrorEmail ? emailIconRed : emailIcon}
+          alt=""
+        />
         {touchedAndErrorEmail && <p className="invalidInputMsg">{errors.email}</p>}
       </label>
       <label htmlFor="passRegInput" className="loginRegLabel">
-        <input
+        <motion.input
+          initial={inputAnimation.initial}
+          animate={inputAnimation.animate}
+          transition={inputAnimation.transition}
           id="passRegInput"
           type="text"
           name="password"
@@ -71,7 +85,14 @@ export default function RegStepOne(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.password}
         />
-        <img className="invalidInputIcon" src={touched.password && errors.password ? lockIconRed : lockIcon} alt="" />
+        <motion.img
+          initial={svgAnimation.initial}
+          animate={svgAnimation.animate}
+          transition={svgAnimation.transition}
+          className="invalidInputIcon"
+          src={touched.password && errors.password ? lockIconRed : lockIcon}
+          alt=""
+        />
         {touchedAndErrorPassword ? <p className="invalidInputMsg">{errors.password}</p> : null}
       </label>
     </CustomRegForm>

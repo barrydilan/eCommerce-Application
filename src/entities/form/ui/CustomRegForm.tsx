@@ -3,10 +3,13 @@ export default function CustomRegForm(props: { children: React.ReactNode }) {
   return (
     <form
       className=" 
-      ml-3 
+      absolute
+      top-1/2
+      ml-3
       mr-3 
       box-border 
-      w-full
+      w-full 
+      -translate-y-1/2
       font-medium
       text-text-grey
       sm:ml-0

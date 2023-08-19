@@ -1,8 +1,14 @@
 import { useRef } from 'react';
 
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { togglePassVisibility, validationSchema } from './model/loginPageModel';
+import emailIcon from '../../assets/icons/emailIcon.svg';
+import emailIconRed from '../../assets/icons/emailIconRed.svg';
+import lockIcon from '../../assets/icons/LockIcon.svg';
+import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
 import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
@@ -11,6 +17,7 @@ import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
+import { inputAnimation, svgAnimation } from '../../shared/ui/animations';
 
 function LoginPage() {
   const [loginUser, { isLoading }] = useLoginUser();
@@ -82,6 +89,7 @@ function LoginPage() {
       >
         <h5
           className="
+            pt-4
             text-2xl
             text-text-dark
             "
@@ -97,7 +105,10 @@ function LoginPage() {
           Welcome back!
         </h6>
         <label htmlFor="emailLogInput" className="loginRegLabel">
-          <input
+          <motion.input
+            initial={inputAnimation.initial}
+            animate={inputAnimation.animate}
+            transition={inputAnimation.transition}
             id="emailLogInput"
             type="email"
             name="email"
@@ -107,17 +118,23 @@ function LoginPage() {
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-          <img
+          <motion.img
+            initial={svgAnimation.initial}
+            animate={svgAnimation.animate}
+            transition={svgAnimation.transition}
             className="invalidInputIcon"
             src={formik.touched.email && formik.errors.email ? emailIconRed : emailIcon}
-            alt=""
+            alt="invalidInputIcon"
           />
           {formik.touched.email && formik.errors.email ? (
             <p className="invalidInputMsg">{formik.errors.email}</p>
           ) : null}
         </label>
         <label htmlFor="passLogInput" className="loginRegLabel">
-          <input
+          <motion.input
+            initial={inputAnimation.initial}
+            animate={inputAnimation.animate}
+            transition={inputAnimation.transition}
             id="passLogInput"
             type="password"
             name="password"
@@ -131,7 +148,10 @@ function LoginPage() {
             value={formik.values.password}
             ref={passwordInput}
           />
-          <img
+          <motion.img
+            initial={svgAnimation.initial}
+            animate={svgAnimation.animate}
+            transition={svgAnimation.transition}
             className="invalidInputIcon"
             src={formik.touched.password && formik.errors.password ? lockIconRed : lockIcon}
             alt=""

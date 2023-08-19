@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import accentGulp from '../../../assets/icons/AccentGulp.svg';
 import redCross from '../../../assets/icons/RedCross.svg';
 import { ErrorCodeStatus } from '../../../shared/types';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function RegFinal(props: {
   isSuccess: boolean;
@@ -20,21 +21,25 @@ export default function RegFinal(props: {
   }
 
   return (
-    <div
-      className="
+ <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+        className=" 
       ml-3
       mr-3
       box-border
-      flex
-      w-10/12
-      flex-col
-      items-center
-      rounded-3xl
-      border-2
-      border-separation-line
-      pb-2
-      pl-4
-      pr-4
+      flex 
+      w-10/12 
+      flex-col 
+      items-center 
+      rounded-3xl 
+      border-2 
+      border-separation-line 
+      pb-2 
+      pl-4 
+      pr-4 
       pt-2
       sm:w-128
     "
@@ -62,16 +67,16 @@ export default function RegFinal(props: {
         flex
         justify-center
       `}
-      >
-        <img src={isSuccess ? accentGulp : redCross} alt="" />
-      </div>
-      <Link
-        onClick={() => {
-          reStartForm();
-          setIsFormSubmitted(false);
-        }}
-        to={isSuccess ? '/' : '/registration'}
-        className="
+        >
+          <img src={isSuccess ? accentGulp : redCross} alt="" />
+        </div>
+        <Link
+          onClick={() => {
+            reStartForm();
+            setIsFormSubmitted(false);
+          }}
+          to={isSuccess ? '/' : '/registration'}
+          className="
           mb-9 
           mt-9 
           h-10 
@@ -80,9 +85,10 @@ export default function RegFinal(props: {
           p-2 
           text-primary
         "
-      >
-        Continue
-      </Link>
-    </div>
+        >
+          Continue
+        </Link>
+      </motion.div>
+    </AnimatePresence>
   );
 }

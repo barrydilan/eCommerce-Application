@@ -9,6 +9,7 @@ import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { UserFormProps } from '../types';
+import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 
 const validationSchema = validSchemaStepTwo();
 
@@ -59,7 +60,10 @@ export default function RegStepTwo(props: UserFormProps) {
   return (
     <CustomRegForm>
       <label htmlFor="firstNameInput" className="loginRegLabel">
-        <input
+        <motion.input
+          initial={inputAnimation.initial}
+          animate={inputAnimation.animate}
+          transition={inputAnimation.transition}
           id="firstNameInput"
           type="text"
           name="firstName"
@@ -69,11 +73,21 @@ export default function RegStepTwo(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.firstName}
         />
-        <img className="invalidInputIcon" src={touchedAndErrorFirstName ? userIconRed : userIcon} alt="" />
+        <motion.img
+          initial={svgAnimation.initial}
+          animate={svgAnimation.animate}
+          transition={svgAnimation.transition}
+          className="invalidInputIcon"
+          src={touchedAndErrorFirstName ? userIconRed : userIcon}
+          alt=""
+        />
         {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
       </label>
       <label htmlFor="lastNameInput" className="loginRegLabel">
-        <input
+        <motion.input
+          initial={inputAnimation.initial}
+          animate={inputAnimation.animate}
+          transition={inputAnimation.transition}
           id="lastNameInput"
           type="text"
           name="lastName"
@@ -83,11 +97,21 @@ export default function RegStepTwo(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.lastName}
         />
-        <img className="invalidInputIcon" src={touchedAndErrorLastName ? userIconRed : userIcon} alt="" />
+        <motion.img
+          initial={svgAnimation.initial}
+          animate={svgAnimation.animate}
+          transition={svgAnimation.transition}
+          className="invalidInputIcon"
+          src={touchedAndErrorLastName ? userIconRed : userIcon}
+          alt=""
+        />
         {touchedAndErrorLastName && <p className="invalidInputMsg">{errors.lastName}</p>}
       </label>
       <label htmlFor="birthDateInput" className="loginRegLabel">
-        <input
+        <motion.input
+          initial={inputAnimation.initial}
+          animate={inputAnimation.animate}
+          transition={inputAnimation.transition}
           id="birthDateInput"
           type={dateInputType}
           name="birthDate"
@@ -98,7 +122,14 @@ export default function RegStepTwo(props: UserFormProps) {
           onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
           value={values.birthDate}
         />
-        <img className="invalidInputIcon" src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon} alt="" />
+        <motion.img
+          initial={svgAnimation.initial}
+          animate={svgAnimation.animate}
+          transition={svgAnimation.transition}
+          className="invalidInputIcon"
+          src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
+          alt=""
+        />
         {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
       </label>
     </CustomRegForm>
