@@ -9,12 +9,12 @@ import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
-import { inputAnimation, svgAnimation } from '../../shared/ui/animations';
 import { COOKIE_ACCESS_TOKEN, useLoginTokenMutation, useLoginUserDataMutation, userSlice } from '../../entities/user';
 import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { setCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { CookieTuple, ILoginUserParams } from '../../shared/types';
+import { inputAnimation, svgAnimation } from '../../shared/ui/animations';
 
 function LoginPage() {
   const [loginUser, { isLoading }] = useLoginTokenMutation();
