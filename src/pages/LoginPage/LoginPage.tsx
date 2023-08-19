@@ -8,11 +8,15 @@ import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
-import { COOKIE_ACCESS_TOKEN, useLoginTokenMutation, useLoginUserDataMutation, userSlice } from '../../entities/user';
-import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
+import {
+  prepareLoginCookieData,
+  useLoginTokenMutation,
+  useLoginUserDataMutation,
+  userSlice,
+} from '../../entities/user';
 import { setCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import { CookieTuple, ILoginUserParams } from '../../shared/types';
+import { ILoginUserParams } from '../../shared/types';
 
 function LoginPage() {
   const [loginUser, { isLoading }] = useLoginTokenMutation();
@@ -44,8 +48,7 @@ function LoginPage() {
       dispatch(loggedIn({ accessToken, userId: id }));
       navigate('/');
 
-      const accessTokenCookie: CookieTuple = [accessToken, COOKIE_ACCESS_TOKEN, expiresIn];
-      const idCookie: CookieTuple = [id, COOKIE_USER_ID, expiresIn];
+      const [accessTokenCookie, idCookie] = prepareLoginCookieData(accessToken, expiresIn, id);
 
       setCookie(accessTokenCookie, idCookie);
     } catch (e) {

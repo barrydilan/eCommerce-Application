@@ -53,3 +53,23 @@ export interface IUser {
 export type ILoginUserDataResponse = Readonly<{
 	customer: IUser;
 }>;
+
+export interface ISignUpAddress {
+	streetName: string;
+	city: string;
+	postalCode: string;
+	country: string;
+}
+
+export interface ISignUpParams {
+	email: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	birthDate: string;
+	addresses: ISignUpAddress[];
+	billingAddresses: number[];
+	shippingAddresses: number[];
+	defaultShippingAddress?: number;
+	defaultBillingAddress?: number;
+}

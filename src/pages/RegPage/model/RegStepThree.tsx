@@ -83,9 +83,9 @@ export default function RegStepThree(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.billCountry}
         >
-          <option value="usa">USA</option>
-          <option value="ukraine">Ukraine</option>
-          <option value="germany">Germany</option>
+          <option value="US">USA</option>
+          <option value="UA">Ukraine</option>
+          <option value="DE">Germany</option>
         </select>
         <img className="invalidInputIcon" src={countryIcon} alt="" />
       </label>
@@ -121,11 +121,7 @@ export default function RegStepThree(props: UserFormProps) {
         </label>
       </div>
       <div className={values.sameBillShip ? 'hidden' : 'block'}>
-        <label
-          htmlFor="billCountryInput"
-          className={`loginRegLabel ${`${shipBillCluesStyles} after:content-['Shipping']`}
-        `}
-        >
+        <label htmlFor="billCountryInput" className={`loginRegLabel ${shipBillCluesStyles} after:content-['Shipping']`}>
           <select
             id="shipCountryInput"
             name="shipCountry"
@@ -134,9 +130,9 @@ export default function RegStepThree(props: UserFormProps) {
             onBlur={handleBlur}
             value={values.shipCountry}
           >
-            <option value="usa">USA</option>
-            <option value="ukraine">Ukraine</option>
-            <option value="germany">Germany</option>
+            <option value="US">USA</option>
+            <option value="UA">Ukraine</option>
+            <option value="DE">Germany</option>
           </select>
           <img className="invalidInputIcon" src={countryIcon} alt="" />
         </label>
