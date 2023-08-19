@@ -1,14 +1,43 @@
+import { useEffect } from 'react';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../entities/user';
+import { COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import RegPage from '../pages/RegPage/RegPage';
+import { getCookie } from '../shared/lib/helpers';
+import { useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
 
-const isLogged = false;
-
 export function App() {
+  const [getAnonToken] = useAnonymousSessionMutation();
+  const dispatch = useAppDispatch();
+  const { updateAccessToken, loggedIn } = userSlice.actions;
+
+  useEffect(() => {
+    async function fetchData() {
+      const [token, userId] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
+
+      if (token && userId) {
+        dispatch(loggedIn({ accessToken: token, userId }));
+        return;
+      }
+
+      try {
+        const { access_token: accessToken } = await getAnonToken().unwrap();
+
+        dispatch(updateAccessToken(accessToken));
+      } catch (e) {
+        // console.error(`Error occurred while getting anonymous token! (${e.status})`);
+      }
+    }
+
+    fetchData();
+  }, [getAnonToken, dispatch, loggedIn, updateAccessToken]);
+
   return (
     <main
       className="
@@ -23,7 +52,7 @@ export function App() {
           lg:grid-cols-deskGridCols
           "
     >
-      <Header isLogged={isLogged} />
+      <Header />
       <div
         className="
             md:col-start-2
@@ -44,7 +73,7 @@ export function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-      <NavBlock isLogged={isLogged} />
+      <NavBlock />
     </main>
   );
 }

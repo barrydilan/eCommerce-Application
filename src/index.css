@@ -14,28 +14,27 @@
     @apply m-auto w-5 md:mr-2 md:w-6 lg:mr-4;
   }
   .loginRegLabel {
-    @apply block relative w-full h-11 mt-6 rounded-md 
+    @apply relative mt-6 block h-11 w-full rounded-md;
   }
   .loginRegInput {
-    @apply text-base font-medium pl-11 pr-2 w-full h-full border-2 border-separation-line outline-none focus:border-text-grey rounded-md focus:text-text-dark
+    @apply h-full w-full rounded-md border-2 border-separation-line pl-11 text-base font-medium outline-none focus:border-text-grey focus:text-text-dark;
   }
   .invalidInputIcon {
-    @apply absolute top-3.5 left-4 bg-contain  bg-no-repeat w-5 h-5
+    @apply absolute left-4 top-3.5 h-5  w-5 bg-contain bg-no-repeat;
   }
   .invalidInputMsg {
-    @apply absolute  -top-5  left-2  text-shop-cart-red  text-xs peer-invalid:block
+    @apply absolute  -top-5  left-2  text-xs  text-shop-cart-red peer-invalid:block;
   }
 }
 
 @layer components {
   .hiddenCheckBox {
-    @apply mr-2 h-4 w-4 appearance-none rounded-sm border-1 border-accent bg-primary
+    @apply mr-2 h-4 w-4 appearance-none rounded-sm border-1 border-accent bg-primary;
   }
 }
 
 @layer utilities {
   .regFormCheckGulp {
-    @apply before:absolute before:-left-5 before:top-2 before:hidden before:h-1.5 before:w-2.5 before:-rotate-45 before:border-b-3 before:border-l-3 before:border-b-accent before:border-l-accent
+    @apply before:absolute before:-left-5 before:top-2 before:hidden before:h-1.5 before:w-2.5 before:-rotate-45 before:border-b-3 before:border-l-3 before:border-b-accent before:border-l-accent;
   }
 }
-

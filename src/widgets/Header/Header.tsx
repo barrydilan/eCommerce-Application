@@ -1,8 +1,7 @@
 import logoIcon from '../../assets/icons/logo.svg';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 
-function Header(props: { isLogged: boolean }) {
-  const { isLogged } = props;
+function Header() {
   return (
     <header
       className="
@@ -86,7 +85,7 @@ function Header(props: { isLogged: boolean }) {
             "
         />
       </label>
-      <UserProfileLink isHeader isLogged={isLogged} />
+      <UserProfileLink isHeader />
     </header>
   );
 }

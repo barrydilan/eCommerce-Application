@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
 import emailIcon from '../../assets/icons/emailIcon.svg';
@@ -10,29 +10,71 @@ import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { inputAnimation, svgAnimation } from '../../shared/ui/animations';
+import { COOKIE_ACCESS_TOKEN, useLoginTokenMutation, useLoginUserDataMutation, userSlice } from '../../entities/user';
+import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
+import { setCookie } from '../../shared/lib/helpers';
+import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import { CookieTuple, ILoginUserParams } from '../../shared/types';
 
 function LoginPage() {
+  const [loginUser, { isLoading }] = useLoginTokenMutation();
+  const [getLoginUserData] = useLoginUserDataMutation();
+  const dispatch = useAppDispatch();
+  const { isLogged } = useAppSelector((state) => state.userReducer);
+  const navigate = useNavigate();
+  const { loggedIn } = userSlice.actions;
+
+  const passwordInput = useRef(null);
+
+  async function handleSubmit(userData: ILoginUserParams) {
+    if (isLogged) {
+      navigate('/');
+      return;
+    }
+
+    try {
+      const waitLoginUser = loginUser(userData).unwrap();
+      const waitLoginUserData = getLoginUserData(userData).unwrap();
+
+      const [
+        { access_token: accessToken, expires_in: expiresIn },
+        {
+          customer: { id },
+        },
+      ] = await Promise.all([waitLoginUser, waitLoginUserData]);
+
+      dispatch(loggedIn({ accessToken, userId: id }));
+      navigate('/');
+
+      const accessTokenCookie: CookieTuple = [accessToken, COOKIE_ACCESS_TOKEN, expiresIn];
+      const idCookie: CookieTuple = [id, COOKIE_USER_ID, expiresIn];
+
+      setCookie(accessTokenCookie, idCookie);
+    } catch (e) {
+      // TODO - implement error message
+      // console.error(`Error occurred while logging the user! (${e.status})`);
+    }
+  }
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema,
-    onSubmit: () => {},
+    onSubmit: handleSubmit,
   });
-
-  const passwordInput = useRef(null);
 
   return (
     <div
-      className="
-        flex 
-        h-full 
-        w-full 
-        items-center 
-        justify-center 
-        font-poppins 
-      "
+      className={`
+        flex
+        h-full
+        w-full
+        items-center
+        justify-center
+        font-poppins
+        `}
     >
       <form
         onSubmit={formik.handleSubmit}
@@ -57,7 +99,7 @@ function LoginPage() {
         <h5
           className="
             pt-4
-            text-2xl 
+            text-2xl
             text-text-dark
             "
         >
@@ -65,7 +107,7 @@ function LoginPage() {
         </h5>
         <h6
           className="
-            text-base 
+            text-base
             text-text-grey
             "
         >
@@ -175,25 +217,27 @@ function LoginPage() {
           </label>
         </div>
         <button
+          disabled={isLoading}
           type="submit"
-          className="
-            mt-3 
-            h-8 
-            w-full 
-            rounded-md 
-            bg-accent 
-            text-base 
-            text-primary
-            "
+          className={`
+              mt-3
+              h-8
+              w-full
+              rounded-md
+              bg-accent
+              text-base
+              text-primary
+              ${isLoading ? 'animate-pulse' : ''}
+              `}
         >
           Log in
         </button>
         <p
           className="
-            mb-6 
-            mt-6 
-            w-full 
-            text-center 
+            mb-6
+            mt-6
+            w-full
+            text-center
             text-xs
             "
         >
@@ -205,7 +249,7 @@ function LoginPage() {
             "
             to="/registration"
           >
-            Sing up
+            Sign up
           </Link>
         </p>
       </form>
