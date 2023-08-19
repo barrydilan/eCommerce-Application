@@ -1,4 +1,5 @@
-import logoIcon from '../../assets/icons/logo.svg';
+// import logoIcon from '../../assets/icons/logo.svg';
+import Logo from '../../assets/icons/Logo';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 
 function Header() {
@@ -34,14 +35,15 @@ function Header() {
           lg:pl-8
         "
       >
-        <img
+        {/* <img
           src={logoIcon}
           alt="company logo"
           className="
             mr-2
             w-8
           "
-        />
+        /> */}
+        <Logo />
         <h1
           className="
             text-2xl 
