@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import { motion } from 'framer-motion';
+
 import useMultistepForm from './model/Multiform';
 import RegFinal from './model/RegFinal';
 import RegStepFour from './model/RegStepFour';
@@ -137,7 +139,14 @@ export default function RegPage() {
       ) : (
         <div className="ml-3 mr-3 flex h-auto flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
-          <div className="flex w-full justify-center transition ease-in-out ">{currForm}</div>
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: sameBillShip ? 150 : 300 }}
+            transition={{ duration: 0.2 }}
+            className="relative mt-8 flex w-full justify-center transition ease-in-out"
+          >
+            {currForm}
+          </motion.div>
           <NavBlock
             backFunc={back}
             isFirstStep={isFirstStep}

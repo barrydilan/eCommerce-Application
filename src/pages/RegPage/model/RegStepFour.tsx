@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 
 import { validSchemaStepFour } from './validationSchemas';
 import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
@@ -8,6 +9,7 @@ import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../RegPage';
 
 export default function RegStepFour(props: UserFormProps) {
@@ -92,7 +94,10 @@ export default function RegStepFour(props: UserFormProps) {
           ${sameBillShip ? '' : `${shipBillCluesStyles} after:content-["Billing"]`}
         `}
       >
-        <input
+        <motion.input
+          initial={inputAnimation.initial}
+          animate={inputAnimation.animate}
+          transition={inputAnimation.transition}
           id="billPostCodeInput"
           type="text"
           name="billPostalCode"
@@ -106,7 +111,10 @@ export default function RegStepFour(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.billPostalCode}
         />
-        <img
+        <motion.img
+          initial={svgAnimation.initial}
+          animate={svgAnimation.animate}
+          transition={svgAnimation.transition}
           className="invalidInputIcon"
           src={touchedAndErrorBillPostalCode ? postalCodeIconRed : postalCodeIcon}
           alt=""
@@ -114,7 +122,10 @@ export default function RegStepFour(props: UserFormProps) {
         {touchedAndErrorBillPostalCode && <p className="invalidInputMsg">{errors.billPostalCode}</p>}
       </label>
       <label htmlFor="billStreetInput" className="loginRegLabel">
-        <input
+        <motion.input
+          initial={inputAnimation.initial}
+          animate={inputAnimation.animate}
+          transition={inputAnimation.transition}
           id="billStreetInput"
           type="text"
           name="billStreet"
@@ -124,7 +135,14 @@ export default function RegStepFour(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.billStreet}
         />
-        <img className="invalidInputIcon" src={touchedAndErrorBillStreet ? streetIconRed : streetIcon} alt="" />
+        <motion.img
+          initial={svgAnimation.initial}
+          animate={svgAnimation.animate}
+          transition={svgAnimation.transition}
+          className="invalidInputIcon"
+          src={touchedAndErrorBillStreet ? streetIconRed : streetIcon}
+          alt=""
+        />
         {touchedAndErrorBillStreet && <p className="invalidInputMsg">{errors.billStreet}</p>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
@@ -150,61 +168,78 @@ export default function RegStepFour(props: UserFormProps) {
           {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
         </label>
       </div>
-      <div className={sameBillShip ? 'hidden' : 'block'}>
-        <label
-          htmlFor="shipPostalCodeInput"
-          className={`
+      {!sameBillShip ? (
+        <div>
+          <label
+            htmlFor="shipPostalCodeInput"
+            className={`
             loginRegLabel
             after:content-['Shipping']
             ${shipBillCluesStyles}
           `}
-        >
-          <input
-            id="shipPostCodeInput"
-            type="text"
-            name="shipPostalCode"
-            placeholder="Postal code"
-            className={`
+          >
+            <motion.input
+              initial={inputAnimation.initial}
+              animate={inputAnimation.animate}
+              transition={inputAnimation.transition}
+              id="shipPostCodeInput"
+              type="text"
+              name="shipPostalCode"
+              placeholder="Postal code"
+              className={`
               loginRegInput   
               ${touchedAndErrorShipPostalCode ? 'border-shop-cart-red' : ''}
             `}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.shipPostalCode}
-          />
-          <img
-            className="invalidInputIcon"
-            src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
-            alt=""
-          />
-          {touchedAndErrorShipPostalCode && <p className="invalidInputMsg">{errors.shipPostalCode}</p>}
-        </label>
-        <label htmlFor="shipStreetInput" className="loginRegLabel">
-          <input
-            id="shipStreetInput"
-            type="text"
-            name="shipStreet"
-            placeholder="Street"
-            className={`loginRegInput ${touchedAndErrorShipStreet ? 'border-shop-cart-red' : ''}`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.shipStreet}
-          />
-          <img className="invalidInputIcon" src={touchedAndErrorShipStreet ? streetIconRed : streetIcon} alt="" />
-          {touchedAndErrorShipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
-        </label>
-        <div className="mt-6 flex items-center text-text-grey">
-          <input
-            id="shipSetDefInput"
-            type="checkbox"
-            name="shipSetDefault"
-            checked={values.shipSetDefault}
-            onChange={handleChange}
-            className="peer/expand hiddenCheckBox"
-          />
-          <label
-            htmlFor="shipSetDefInput"
-            className="
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.shipPostalCode}
+            />
+            <motion.img
+              initial={svgAnimation.initial}
+              animate={svgAnimation.animate}
+              transition={svgAnimation.transition}
+              className="invalidInputIcon"
+              src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
+              alt=""
+            />
+            {touchedAndErrorShipPostalCode && <p className="invalidInputMsg">{errors.shipPostalCode}</p>}
+          </label>
+          <label htmlFor="shipStreetInput" className="loginRegLabel">
+            <motion.input
+              initial={inputAnimation.initial}
+              animate={inputAnimation.animate}
+              transition={inputAnimation.transition}
+              id="shipStreetInput"
+              type="text"
+              name="shipStreet"
+              placeholder="Street"
+              className={`loginRegInput ${touchedAndErrorShipStreet ? 'border-shop-cart-red' : ''}`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.shipStreet}
+            />
+            <motion.img
+              initial={svgAnimation.initial}
+              animate={svgAnimation.animate}
+              transition={svgAnimation.transition}
+              className="invalidInputIcon"
+              src={touchedAndErrorShipStreet ? streetIconRed : streetIcon}
+              alt=""
+            />
+            {touchedAndErrorShipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
+          </label>
+          <div className="mt-6 flex items-center text-text-grey">
+            <input
+              id="shipSetDefInput"
+              type="checkbox"
+              name="shipSetDefault"
+              checked={values.shipSetDefault}
+              onChange={handleChange}
+              className="peer/expand hiddenCheckBox"
+            />
+            <label
+              htmlFor="shipSetDefInput"
+              className="
             regFormCheckGulp
             relative
             text-3xs
@@ -212,11 +247,12 @@ export default function RegStepFour(props: UserFormProps) {
             before:top-0.5
             peer-checked/expand:before:block
           "
-          >
-            {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
-          </label>
+            >
+              {sameBillShip ? `Set as default billing & shipping address` : 'Set as default shipping address'}
+            </label>
+          </div>
         </div>
-      </div>
+      ) : null}
     </CustomRegForm>
   );
 }
