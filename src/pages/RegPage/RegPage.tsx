@@ -59,7 +59,7 @@ export default function RegPage() {
   const [isNextEnabled, setIsNextEnabled] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [signUpUser, { isSuccess }] = useSignUpMutation();
-  const loginUser = useLoginUser();
+  const [loginUser] = useLoginUser();
 
   const enableNext = useCallback(
     (arg: boolean) => {
@@ -187,7 +187,7 @@ export default function RegPage() {
           customer: { id },
         } = await signUpUser(signUpData).unwrap();
 
-        await loginUser({ email, password, id });
+        await loginUser(email, password, id);
       } catch (e) {
         console.log(e);
       } finally {

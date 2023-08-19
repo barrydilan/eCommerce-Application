@@ -8,23 +8,15 @@ import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
-import {
-  prepareLoginCookieData,
-  useLoginTokenMutation,
-  useLoginUserDataMutation,
-  userSlice,
-} from '../../entities/user';
-import { setCookie } from '../../shared/lib/helpers';
-import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
+import { useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
 
 function LoginPage() {
-  const [loginUser, { isLoading }] = useLoginTokenMutation();
+  const [loginUser, { isLoading }] = useLoginUser();
   const [getLoginUserData] = useLoginUserDataMutation();
-  const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
-  const { loggedIn } = userSlice.actions;
 
   const passwordInput = useRef(null);
 
@@ -35,22 +27,11 @@ function LoginPage() {
     }
 
     try {
-      const waitLoginUser = loginUser(userData).unwrap();
-      const waitLoginUserData = getLoginUserData(userData).unwrap();
+      const {
+        customer: { id },
+      } = await getLoginUserData(userData).unwrap();
 
-      const [
-        { access_token: accessToken, expires_in: expiresIn },
-        {
-          customer: { id },
-        },
-      ] = await Promise.all([waitLoginUser, waitLoginUserData]);
-
-      dispatch(loggedIn({ accessToken, userId: id }));
-      navigate('/');
-
-      const [accessTokenCookie, idCookie] = prepareLoginCookieData(accessToken, expiresIn, id);
-
-      setCookie(accessTokenCookie, idCookie);
+      await loginUser(userData.email, userData.password, id);
     } catch (e) {
       // TODO - implement error message
       // console.error(`Error occurred while logging the user! (${e.status})`);
