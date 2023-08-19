@@ -1,17 +1,27 @@
 import { Link } from 'react-router-dom';
 
 import userPic from '../../assets/img/UserImg.jpg';
+import { getFullName, useGetUserQuery } from '../../entities/user';
+import { useAppSelector } from '../../shared/lib/hooks';
 
-function UserProfileLink(props: { isHeader: boolean; isLogged: boolean }) {
-  const { isHeader, isLogged } = props;
+function UserProfileLink(props: { isHeader: boolean }) {
+  const { isLogged, userId } = useAppSelector((state) => state.userReducer);
+  const { data, isLoading } = useGetUserQuery(userId, { skip: !userId });
+
+  const { isHeader } = props;
 
   const headerLoggedClass = 'block md:hidden';
   const menuLoggedClass =
     'hidden w-full justify-center gap-3 text-text-grey md:mt-6 md:flex md:flex-col md:items-center lg:mt-12 lg:flex-row';
 
+  const userFullName = getFullName(data?.firstName, data?.lastName);
+
   if (isLogged) {
     return (
-      <Link to="/profile" className={isHeader ? headerLoggedClass : menuLoggedClass}>
+      <Link
+        to="/profile"
+        className={`${isHeader ? headerLoggedClass : menuLoggedClass} ${isLoading ? 'animate-pulse' : ''}`}
+      >
         <img src={userPic} alt="user avatar" className={isHeader ? 'mr-2 w-8 rounded-full' : 'w-12 rounded-xl'} />
         <div className={isHeader ? 'hidden' : ''}>
           <h5
@@ -26,7 +36,7 @@ function UserProfileLink(props: { isHeader: boolean; isLogged: boolean }) {
                 lg:w-full 
                 lg:text-start"
           >
-            Vasisualii Lokhankin
+            {userFullName}
           </h5>
           <h6
             className="

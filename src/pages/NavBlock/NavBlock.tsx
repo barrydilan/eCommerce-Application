@@ -1,8 +1,7 @@
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 import NavMenu from '../../widgets/NavMenu/NavMenu';
 
-function NavBlock(props: { isLogged: boolean }) {
-  const { isLogged } = props;
+function NavBlock() {
   return (
     <div
       className="
@@ -20,8 +19,8 @@ function NavBlock(props: { isLogged: boolean }) {
         md:bg-opacity-0
       "
     >
-      <UserProfileLink isHeader={false} isLogged={isLogged} />
-      <NavMenu isLogged={isLogged} />
+      <UserProfileLink isHeader={false} />
+      <NavMenu />
     </div>
   );
 }

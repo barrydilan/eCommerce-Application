@@ -2,12 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import basicBaseQuery from '../../../shared/api/basicBaseQuery.ts';
 import { DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../../../shared/const';
-
-interface ILoginUserParams {
-	password: string;
-	email: string;
-	scope?: string;
-}
+import { ILoginUserParams } from '../../../shared/types';
 
 type IAuthResponse = Readonly<{
 	access_token: string;
@@ -18,10 +13,10 @@ type IAuthResponse = Readonly<{
 }>;
 
 export const authApi = createApi({
-	reducerPath: 'productAPI',
+	reducerPath: 'authApi',
 	baseQuery: basicBaseQuery,
 	endpoints: (build) => ({
-		loginUser: build.mutation<IAuthResponse, ILoginUserParams>({
+		loginToken: build.mutation<IAuthResponse, ILoginUserParams>({
 			query: ({ password, email, scope = DEFAULT_CUSTOMER_SCOPE }) => ({
 				url: `/oauth/${PROJECT_KEY}/customers/token`,
 				method: 'POST',
@@ -35,18 +30,18 @@ export const authApi = createApi({
 			}),
 		}),
 
-		anonymousSession: build.mutation<IAuthResponse, string>({
-			query: (scope) => ({
+		anonymousSession: build.mutation<IAuthResponse, void>({
+			query: () => ({
 				url: `/oauth/${PROJECT_KEY}/anonymous/token`,
 				method: 'POST',
 				body: {},
 				params: {
 					grant_type: 'client_credentials',
-					scope: scope || DEFAULT_CUSTOMER_SCOPE,
+					scope: DEFAULT_CUSTOMER_SCOPE,
 				},
 			}),
 		}),
 	}),
 });
 
-export const { useLoginUserMutation, useAnonymousSessionMutation } = authApi;
+export const { useLoginTokenMutation, useAnonymousSessionMutation } = authApi;

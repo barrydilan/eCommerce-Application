@@ -1,14 +1,21 @@
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, it } from 'vitest';
 
 import { App, WrappedApp } from '../app/App.tsx';
+import { setupStore } from '../app/store';
 
+const store = setupStore();
 const nonExistedRoutes = ['/test-for-not-found-route'];
 
 describe('App', () => {
   it('Renders the main logo', () => {
-    render(<WrappedApp />);
+    render(
+      <Provider store={store}>
+        <WrappedApp />
+      </Provider>,
+    );
 
     expect(
       screen.getByRole('heading', {
@@ -18,9 +25,11 @@ describe('App', () => {
   });
   it('Renders the not found page if invalid path', () => {
     render(
-      <MemoryRouter initialEntries={nonExistedRoutes}>
-        <App />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries={nonExistedRoutes}>
+          <App />
+        </MemoryRouter>
+      </Provider>,
     );
 
     expect(

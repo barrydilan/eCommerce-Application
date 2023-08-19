@@ -25,7 +25,7 @@ export default function RegStepFour(props: UserFormProps) {
     enableNext,
   } = props;
 
-  const validationSchema = validSchemaStepFour(billCountry, shipCountry);
+  const validationSchema = validSchemaStepFour(billCountry as string, shipCountry as string);
 
   const formik = useFormik({
     initialValues: {

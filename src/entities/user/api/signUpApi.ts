@@ -40,7 +40,7 @@ type ISignUpResponse = Readonly<{
 }>;
 
 export const signUpApi = createApi({
-	reducerPath: 'productAPI',
+	reducerPath: 'signUpApi',
 	baseQuery: bearerBaseQuery,
 	endpoints: (build) => ({
 		signUp: build.mutation<ISignUpResponse, ISignUpParams>({
