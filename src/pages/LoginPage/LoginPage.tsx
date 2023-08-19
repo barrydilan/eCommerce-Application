@@ -32,6 +32,8 @@ function LoginPage() {
       } = await getLoginUserData(userData).unwrap();
 
       await loginUser(userData.email, userData.password, id);
+
+      navigate('/');
     } catch (e) {
       // TODO - implement error message
       // console.error(`Error occurred while logging the user! (${e.status})`);

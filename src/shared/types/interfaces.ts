@@ -1,3 +1,5 @@
+import { SignUpAddresses } from './types.ts';
+
 export interface ILoginUserParams {
 	password: string;
 	email: string;
@@ -67,7 +69,7 @@ export interface ISignUpParams {
 	firstName: string;
 	lastName: string;
 	birthDate: string;
-	addresses: ISignUpAddress[];
+	addresses: SignUpAddresses;
 	billingAddresses: number[];
 	shippingAddresses: number[];
 	defaultShippingAddress?: number;

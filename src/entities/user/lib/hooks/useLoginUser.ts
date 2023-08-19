@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-
 import { setCookie } from '../../../../shared/lib/helpers';
 import { useAppDispatch } from '../../../../shared/lib/hooks';
 import { prepareLoginCookieData, useLoginTokenMutation, userSlice } from '../../index.ts';
@@ -23,7 +21,6 @@ function useLoginUser(): [LoginUser, IUserLoginReturnParams] {
 	const [getLoginToken, { isLoading }] = useLoginTokenMutation();
 	const dispatch = useAppDispatch();
 	const { loggedIn } = userSlice.actions;
-	const navigate = useNavigate();
 
 	/**
 	 * Logs in a user using the provided email, password, and id.
@@ -39,7 +36,6 @@ function useLoginUser(): [LoginUser, IUserLoginReturnParams] {
 			const { access_token: accessToken, expires_in: expiresIn } = await getLoginToken({ email, password }).unwrap();
 
 			dispatch(loggedIn({ accessToken, userId: id }));
-			navigate('/');
 
 			const [accessTokenCookie, idCookie] = prepareLoginCookieData(accessToken, expiresIn, id);
 			setCookie(accessTokenCookie, idCookie);

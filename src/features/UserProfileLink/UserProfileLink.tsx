@@ -4,16 +4,15 @@ import userPic from '../../assets/img/UserImg.jpg';
 import { getFullName, useGetUserQuery } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
 
+const headerLoggedClass = 'block md:hidden';
+const menuLoggedClass =
+  'hidden w-full justify-center gap-3 text-text-grey md:mt-6 md:flex md:flex-col md:items-center lg:mt-12 lg:flex-row';
+
 function UserProfileLink(props: { isHeader: boolean }) {
   const { isLogged, userId } = useAppSelector((state) => state.userReducer);
   const { data, isLoading } = useGetUserQuery(userId, { skip: !userId });
 
   const { isHeader } = props;
-
-  const headerLoggedClass = 'block md:hidden';
-  const menuLoggedClass =
-    'hidden w-full justify-center gap-3 text-text-grey md:mt-6 md:flex md:flex-col md:items-center lg:mt-12 lg:flex-row';
-
   const userFullName = getFullName(data?.firstName, data?.lastName);
 
   if (isLogged) {

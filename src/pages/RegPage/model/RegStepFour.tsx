@@ -7,18 +7,17 @@ import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
 import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
-import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
-import { UserFormProps } from '../RegPage';
+import CustomRegForm from '../../../entities/form/ui';
+import { ISignUpAddress } from '../../../shared/types';
+import { UserFormProps } from '../types';
 
 export default function RegStepFour(props: UserFormProps) {
   const {
-    shipCountry,
-    billCountry,
+    addresses: [
+      { country: billCountry = '', postalCode: billPostalCode = '', streetName: billStreet = '' } = {},
+      { country: shipCountry = '', postalCode: shipPostalCode = '', streetName: shipStreet = '' } = {},
+    ] = [],
     sameBillShip,
-    billPostalCode,
-    billStreet,
-    shipPostalCode,
-    shipStreet,
     billSetDefault,
     shipSetDefault,
     updateData,
@@ -53,14 +52,24 @@ export default function RegStepFour(props: UserFormProps) {
       touched.shipPostalCode = true;
       touched.shipStreet = true;
     }
-    updateData({
-      billPostalCode: values.billPostalCode,
-      billStreet: values.billStreet,
-      shipPostalCode: values.shipPostalCode,
-      shipStreet: values.shipStreet,
-      billSetDefault: values.billSetDefault,
-      shipSetDefault: values.shipSetDefault,
-    });
+
+    updateData((prevState) => ({
+      ...prevState,
+      billSetDefault: values.billSetDefault as boolean,
+      shipSetDefault: values.shipSetDefault as boolean,
+      addresses: [
+        {
+          ...prevState.addresses[0],
+          streetName: values.billStreet as string,
+          postalCode: values.billPostalCode as string,
+        },
+        {
+          ...(prevState.addresses[1] as ISignUpAddress),
+          streetName: values.shipStreet as string,
+          postalCode: values.shipPostalCode as string,
+        },
+      ],
+    }));
 
     if (
       (touched.billPostalCode === undefined && values.billPostalCode === '') ||
