@@ -1,11 +1,11 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import accentGulp from '../../../assets/icons/AccentGulp.svg';
 import redCross from '../../../assets/icons/RedCross.svg';
 import { ErrorCodeStatus } from '../../../shared/types';
-import { AnimatePresence, motion } from 'framer-motion';
 
 export default function RegFinal(props: {
   isSuccess: boolean;
@@ -21,7 +21,7 @@ export default function RegFinal(props: {
   }
 
   return (
- <AnimatePresence>
+    <AnimatePresence>
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -43,20 +43,20 @@ export default function RegFinal(props: {
       pt-2
       sm:w-128
     "
-    >
-      <h3 className="text-5xl font-medium tracking-widest text-text-dark">{isSuccess ? 'Success!' : 'Oh snap!'}</h3>
-      <p className="text-center text-base text-text-grey">
-        {isSuccess ? (
-          'Your account has been created'
-        ) : (
-          <>
-            <span className="text-text-dark">{error && errorMessage}</span> <br />
-            <span>Change a few things up and try submitting again</span>
-          </>
-        )}
-      </p>
-      <div
-        className={`
+      >
+        <h3 className="text-5xl font-medium tracking-widest text-text-dark">{isSuccess ? 'Success!' : 'Oh snap!'}</h3>
+        <p className="text-center text-base text-text-grey">
+          {isSuccess ? (
+            'Your account has been created'
+          ) : (
+            <>
+              <span className="text-text-dark">{error && errorMessage}</span> <br />
+              <span>Change a few things up and try submitting again</span>
+            </>
+          )}
+        </p>
+        <div
+          className={`
         relative
         mt-8
         h-30 

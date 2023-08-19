@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
@@ -8,8 +9,8 @@ import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
-import { UserFormProps } from '../types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
+import { UserFormProps } from '../types';
 
 const validationSchema = validSchemaStepThree();
 
@@ -110,8 +111,6 @@ export default function RegStepThree(props: UserFormProps) {
           <option value="US">USA</option>
           <option value="UA">Ukraine</option>
           <option value="DE">Germany</option>
-        </select>
-        <img className="invalidInputIcon" src={countryIcon} alt="" />
         </motion.select>
         <motion.img
           initial={svgAnimation.initial}
@@ -177,8 +176,7 @@ export default function RegStepThree(props: UserFormProps) {
           >
             <label
               htmlFor="billCountryInput"
-              className={`loginRegLabel ${`${shipBillCluesStyles} after:content-['Shipping']`}
-        `}
+              className={`loginRegLabel ${shipBillCluesStyles} after:content-['Shipping']`}
             >
               <motion.select
                 initial={inputAnimation.initial}

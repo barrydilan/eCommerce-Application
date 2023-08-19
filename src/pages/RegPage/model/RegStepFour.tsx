@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 
 import { validSchemaStepFour } from './validationSchemas';
 import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
@@ -9,8 +10,8 @@ import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
-import { UserFormProps } from '../types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
+import { UserFormProps } from '../types';
 
 export default function RegStepFour(props: UserFormProps) {
   const {

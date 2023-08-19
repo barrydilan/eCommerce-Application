@@ -44,7 +44,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
                 md:text-center 
                 lg:text-start"
           >
-            Good morning !
+            Good morning!
           </h6>
         </div>
       </Link>

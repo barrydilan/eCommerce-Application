@@ -51,7 +51,7 @@ function Header() {
             md:pt-2
           "
         >
-          Good&nbsp;food
+          GoodFood
         </h1>
       </div>
       <label

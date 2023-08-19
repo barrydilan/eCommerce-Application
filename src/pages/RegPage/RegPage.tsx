@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 import prepareDataForUpload from './lib/helpers';
 import useMultistepForm from './lib/hooks';
