@@ -2,26 +2,7 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
 import bearerBaseQuery from '../../../shared/api/bearerBaseQuery.ts';
 import { PROJECT_KEY } from '../../../shared/const';
-
-interface ISignUpAddress {
-	streetName: string;
-	city: string;
-	postalCode: string;
-	country: string;
-}
-
-interface ISignUpParams {
-	email: string;
-	password: string;
-	firstName: string;
-	lastName: string;
-	dateOfBirth: string;
-	addresses: ISignUpAddress[];
-	billingAddresses: number[];
-	shippingAddresses: number[];
-	defaultShippingAddress?: number;
-	defaultBillingAddress?: number;
-}
+import { ISignUpParams } from '../../../shared/types';
 
 type ISignUpResponse = Readonly<{
 	customer: {

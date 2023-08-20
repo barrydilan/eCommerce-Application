@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom';
 
-type PropsType = {
-  backFunc: () => void;
-  nextFunc: () => void;
-  isNextEnabled: boolean;
-  isFirstStep: boolean;
-};
+import { PropsType } from '../types';
 
 export default function NavBlock(props: PropsType) {
-  const { backFunc, nextFunc, isNextEnabled, isFirstStep } = props;
+  const { backFunc, nextFunc, isNextEnabled, isFirstStep, isLoading } = props;
+
   return (
     <div
       className="
@@ -38,9 +34,11 @@ export default function NavBlock(props: PropsType) {
       </p>
       <button
         type="submit"
-        className="h-10 rounded-lg bg-accent p-2 text-primary disabled:bg-separation-line disabled:text-text-grey"
+        className={`h-10 rounded-lg bg-accent p-2 text-primary disabled:bg-separation-line disabled:text-text-grey ${
+          isLoading ? 'animate-pulse' : ''
+        }`}
         onClick={nextFunc}
-        disabled={!isNextEnabled}
+        disabled={!isNextEnabled || isLoading}
       >
         Continue
       </button>

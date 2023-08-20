@@ -7,16 +7,25 @@ import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
-import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import CustomRegForm from '../../../entities/form/ui';
+import { ISignUpAddress } from '../../../shared/types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
-import { UserFormProps } from '../RegPage';
+import { UserFormProps } from '../types';
 
 const validationSchema = validSchemaStepThree();
 
 const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
 export default function RegStepThree(props: UserFormProps) {
-  const { shipCountry, shipCity, billCountry, billCity, sameBillShip, updateData, enableNext } = props;
+  const {
+    addresses: [
+      { country: billCountry = '', city: billCity = '' } = {},
+      { country: shipCountry = '', city: shipCity = '' } = {},
+    ] = [],
+    sameBillShip,
+    updateData,
+    enableNext,
+  } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -41,12 +50,23 @@ export default function RegStepThree(props: UserFormProps) {
       touched.shipCity = true;
     }
 
+    const shipAddress: ISignUpAddress = {
+      city: values.shipCity!,
+      country: values.shipCountry!,
+      streetName: '',
+      postalCode: '',
+    };
+
+    const billAddress: ISignUpAddress = {
+      city: values.billCity!,
+      country: values.billCountry!,
+      streetName: '',
+      postalCode: '',
+    };
+
     updateData({
-      shipCountry: values.shipCountry,
-      shipCity: values.shipCity,
-      billCountry: values.billCountry,
-      billCity: values.billCity,
       sameBillShip: values.sameBillShip,
+      addresses: [billAddress, shipAddress],
     });
 
     if (
@@ -88,9 +108,9 @@ export default function RegStepThree(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.billCountry}
         >
-          <option value="usa">USA</option>
-          <option value="ukraine">Ukraine</option>
-          <option value="germany">Germany</option>
+          <option value="US">USA</option>
+          <option value="UA">Ukraine</option>
+          <option value="DE">Germany</option>
         </motion.select>
         <motion.img
           initial={svgAnimation.initial}
@@ -152,9 +172,9 @@ export default function RegStepThree(props: UserFormProps) {
                 onBlur={handleBlur}
                 value={values.shipCountry}
               >
-                <option value="usa">USA</option>
-                <option value="ukraine">Ukraine</option>
-                <option value="germany">Germany</option>
+                <option value="US">USA</option>
+                <option value="UA">Ukraine</option>
+                <option value="DE">Germany</option>
               </motion.select>
               <motion.img
                 initial={svgAnimation.initial}
