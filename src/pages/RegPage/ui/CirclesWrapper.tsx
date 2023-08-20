@@ -1,8 +1,8 @@
 import CheckCircle from './CheckCircle';
 
-export default function CirclesWrapper(props: { currStep: number; quantity: number }) {
-  const titles = ['Email & Password', 'Name & Birth', 'Country & City', 'PC & Street'];
+const titles = ['Email & Password', 'Name & Birth', 'Country & City', 'PC & Street'];
 
+export default function CirclesWrapper(props: { currStep: number; quantity: number }) {
   const { currStep, quantity } = props;
   const circles = Array.from({ length: quantity }, (_, i) => (
     <CheckCircle numb={i} title={titles[i]} currStep={currStep} key={titles[i]} />

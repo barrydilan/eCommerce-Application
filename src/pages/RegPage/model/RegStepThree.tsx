@@ -192,7 +192,7 @@ export default function RegStepThree(props: UserFormProps) {
           </motion.div>
         ) : null}
       </AnimatePresence>
-      <div className="mt-6 flex items-center text-text-grey">
+      <div className="mt-4 flex items-center text-text-grey">
         <input
           id="expand"
           type="checkbox"

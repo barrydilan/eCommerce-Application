@@ -8,7 +8,8 @@ export default function CustomRegForm(props: { children: React.ReactNode }) {
       ml-3
       mr-3 
       box-border 
-      w-full 
+      min-h-[184px]
+      w-full
       -translate-y-1/2
       font-medium
       text-text-grey

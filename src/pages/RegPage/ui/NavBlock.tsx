@@ -13,7 +13,6 @@ export default function NavBlock(props: PropsType) {
     <div
       className="
         mb-6
-        mt-4
         flex 
         w-full
         items-center
