@@ -25,7 +25,12 @@ export default function RegFinal(props: {
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
+        transition={{
+          type: 'spring',
+          stiffness: 360,
+          damping: 24,
+          duration: 0.4,
+        }}
         className=" 
       ml-3
       mr-3
