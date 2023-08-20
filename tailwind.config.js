@@ -25,10 +25,10 @@ export default {
         bounce: 'cubic-bezier(.25,1.55,.65,.97)',
       },
       content: {
-        searchIcon: "url('./src/assets/icons/search.svg')",
-        lockIcon: "url('./src/assets/icons/lockIcon.svg')",
-        emailIcon: "url('./src/assets/icons/emailIcon.svg')",
-        emailIconRed: "url('./src/assets/icons/emailIconRed.svg')",
+        searchIcon: "url('$icons/search.svg')",
+        lockIcon: "url('$icons/lockIcon.svg')",
+        emailIcon: "url('$icons/emailIcon.svg')",
+        emailIconRed: "url('$icons/emailIconRed.svg')",
       },
       gridTemplateColumns: {
         tabGridCols: '11rem 1fr',
