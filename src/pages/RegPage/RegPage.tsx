@@ -137,7 +137,7 @@ export default function RegPage() {
       {isFormSubmitted ? (
         <RegFinal isSuccess reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
       ) : (
-        <div className="ml-3 mr-3 flex h-fit w-[34rem] flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
+        <div className="mx-3 my-10 flex h-fit w-fit flex-col items-center justify-center rounded-3xl border-2 border-separation-line px-4 sm:px-10 md:h-fit">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
           <motion.div
             initial={{ height: 0 }}

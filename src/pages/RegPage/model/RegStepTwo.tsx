@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
@@ -27,13 +27,19 @@ export default function RegStepTwo(props: UserFormProps) {
   });
   const { handleChange, handleBlur, errors, touched, values } = formik;
   const [dateInputType, setDateInputType] = useState('text');
+  const [isDateFocus, setIsDateFocus] = useState(false);
+
+  function handleTransitionEnd() {
+    setDateInputType(document.activeElement?.id === 'birthDateInput' ? 'date' : 'text');
+  }
+
   function blurHandler(e: React.FocusEvent<HTMLInputElement, Element>) {
     formik.handleBlur(e);
-    setDateInputType('text');
+    setIsDateFocus((currVal) => !currVal);
   }
   function focusHandler(e: React.FocusEvent<HTMLInputElement, Element>) {
     formik.handleChange(e);
-    setDateInputType('date');
+    setIsDateFocus((currVal) => !currVal);
   }
 
   useEffect(() => {
@@ -85,31 +91,33 @@ export default function RegStepTwo(props: UserFormProps) {
           />
           {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
         </label>
-        <label htmlFor="birthDateInput" className="loginRegLabel w-5/6">
-          <motion.input
-            initial={inputAnimation.initial}
-            animate={inputAnimation.animate}
-            transition={inputAnimation.transition}
-            id="birthDateInput"
-            type={dateInputType}
-            name="birthDate"
-            placeholder="Birth date"
-            onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
-            className={`loginRegInput ${touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''}`}
-            onChange={handleChange}
-            onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
-            value={values.birthDate}
-          />
-          <motion.img
-            initial={svgAnimation.initial}
-            animate={svgAnimation.animate}
-            transition={svgAnimation.transition}
-            className="invalidInputIcon"
-            src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
-            alt=""
-          />
-          {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
-        </label>
+        <div className={`w-2/4 overflow-hidden transition-all duration-500 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
+          <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDateInput" className="loginRegLabel">
+            <motion.input
+              initial={inputAnimation.initial}
+              animate={inputAnimation.animate}
+              transition={inputAnimation.transition}
+              id="birthDateInput"
+              type={dateInputType}
+              name="birthDate"
+              placeholder="Birth date"
+              onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
+              className={`loginRegInput ${touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''}`}
+              onChange={handleChange}
+              onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
+              value={values.birthDate}
+            />
+            <motion.img
+              initial={svgAnimation.initial}
+              animate={svgAnimation.animate}
+              transition={svgAnimation.transition}
+              className="invalidInputIcon"
+              src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
+              alt=""
+            />
+            {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
+          </label>
+        </div>
       </div>
       <label htmlFor="lastNameInput" className="loginRegLabel">
         <motion.input

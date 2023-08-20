@@ -30,8 +30,8 @@ export default function NavBlock(props: PropsType) {
       >
         Back
       </button>
-      <p className="text-center text-xs sm:leading-10">
-        Already have an account?{' '}
+      <p className="lg:text- text-center text-xs sm:leading-10 xl:text-xs">
+        <span className="hidden sm:inline">Already have an account? </span>
         <Link className="font-bold text-accent" to="/login">
           Log in
         </Link>

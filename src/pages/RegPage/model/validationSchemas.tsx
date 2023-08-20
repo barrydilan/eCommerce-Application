@@ -31,9 +31,7 @@ export function validSchemaStepTwo() {
       .matches(nameRegEx, { message: 'Last name must contain A, a letters', excludeEmptyString: true })
       .max(20, 'Too long name')
       .required('Last name is required'),
-    birthDate: Yup.date()
-      .max(ageLimit, 'You can`t use service if under 13 years old')
-      .required('Birth date is required'),
+    birthDate: Yup.date().max(ageLimit, 'Age restriction: 13+').required('Birth date is required'),
   });
 }
 
