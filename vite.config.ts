@@ -17,5 +17,5 @@ export default defineConfig({
 			$icons: resolve('src/assets/icons'),
 		},
 	},
-	base: '/'
+	base: './'
 });
