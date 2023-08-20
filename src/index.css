@@ -17,7 +17,7 @@
     @apply relative mt-6 block h-11 w-full rounded-md;
   }
   .loginRegInput {
-    @apply h-full w-full rounded-md border-2 border-separation-line pl-11 text-base font-medium outline-none focus:border-text-grey text-text-dark transition-colors;
+    @apply h-full w-full rounded-lg border-2 border-separation-line pl-11 text-base font-medium outline-none focus:border-text-grey text-text-dark transition-colors;
   }
   .invalidInputIcon {
     @apply absolute left-4 top-3.5 h-5  w-5 bg-contain bg-no-repeat;
