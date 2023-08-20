@@ -46,6 +46,7 @@ export function App() {
           min-h-screen
           grid-cols-1
           grid-rows-mobGridRows
+          font-poppins
           2xl:container
           md:grid-cols-tabGridCols
           md:grid-rows-tabGridRows

@@ -124,13 +124,13 @@ export default function RegPage() {
           error={error}
         />
       ) : (
-        <div className="ml-3 mr-3 flex h-auto flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
+        <div className="mx-3 my-10 flex h-fit w-fit flex-col items-center justify-center rounded-3xl border-2 border-separation-line px-4 sm:px-10 md:h-fit">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: sameBillShip ? 150 : 300 }}
+            animate={{ height: sameBillShip || currentStepIndex < 2 ? 150 : 300 }}
             transition={{ duration: 0.2 }}
-            className="relative mt-8 flex w-full justify-center transition ease-in-out"
+            className="relative mb-6 mt-8 flex w-full justify-center"
           >
             {currForm}
           </motion.div>

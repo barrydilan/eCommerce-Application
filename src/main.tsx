@@ -11,9 +11,9 @@ import { setupStore } from './app/store';
 const store = setupStore();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <Provider store={store}>
-    <React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
       <WrappedApp />
-    </React.StrictMode>
-  </Provider>,
+    </Provider>
+  </React.StrictMode>,
 );

@@ -65,17 +65,17 @@ function LoginPage() {
       <form
         onSubmit={formik.handleSubmit}
         className="
-          ml-3 
-          mr-3 
-          box-content 
-          w-128
-          rounded-3xl 
+          mx-3
+          my-10
+          box-content
+          max-h-[21.5rem]
+          w-full
+          max-w-[29.9rem]
+          rounded-3xl
           border-2 
           border-separation-line 
-          pb-2 
-          pl-4 
-          pr-4 
-          pt-2
+          px-4
+          py-4
           font-medium
           text-text-grey
           sm:pl-10
@@ -207,7 +207,7 @@ function LoginPage() {
           type="submit"
           className={`
               mt-3
-              h-8
+              h-10
               w-full
               rounded-md
               bg-accent
@@ -230,7 +230,6 @@ function LoginPage() {
           Don&apos;t have an account yet?{' '}
           <Link
             className="
-              font-bold
               text-accent
             "
             to="/registration"
