@@ -18,13 +18,13 @@ export default function CheckCircle(props: { numb: number; currStep: number; tit
       return 'bg-accent border-accent text-accent';
     }
     if (status === 'pending') {
-      return 'bg-primary border-text-grey text-text-grey';
+      return 'bg-primary border-inactive-icons-grey text-inactive-icons-grey';
     }
     return 'bg-primary border-accent text-accent';
   };
   const addClasses = getClasses();
   return (
-    <div className="flex w-1/4 flex-col items-center justify-start">
+    <div className="flex w-fit flex-col items-center justify-start">
       <div
         className={`
         relative

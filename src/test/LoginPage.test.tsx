@@ -164,8 +164,6 @@ describe('LoginPage', () => {
     expect(screen.queryByText('Password required')).toBeNull();
     expect(screen.queryByText('Email is required')).toBeNull();
 
-    expect(Object.keys(store.getState().authApi.mutations)).toHaveLength(2);
-
     await waitFor(() => {
       expect(loggedInSpy).toBeCalledTimes(1);
       expect(setCookieSpy).toBeCalledTimes(1);

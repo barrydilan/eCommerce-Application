@@ -9,20 +9,16 @@ import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
-import { COOKIE_ACCESS_TOKEN, useLoginTokenMutation, useLoginUserDataMutation, userSlice } from '../../entities/user';
-import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
-import { setCookie } from '../../shared/lib/helpers';
-import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import { CookieTuple, ILoginUserParams } from '../../shared/types';
+import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
+import { useAppSelector } from '../../shared/lib/hooks';
+import { ILoginUserParams } from '../../shared/types';
 import { inputAnimation, svgAnimation } from '../../shared/ui/animations';
 
 function LoginPage() {
-  const [loginUser, { isLoading }] = useLoginTokenMutation();
+  const [loginUser, { isLoading }] = useLoginUser();
   const [getLoginUserData] = useLoginUserDataMutation();
-  const dispatch = useAppDispatch();
   const { isLogged } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
-  const { loggedIn } = userSlice.actions;
 
   const passwordInput = useRef(null);
 
@@ -33,23 +29,13 @@ function LoginPage() {
     }
 
     try {
-      const waitLoginUser = loginUser(userData).unwrap();
-      const waitLoginUserData = getLoginUserData(userData).unwrap();
+      const {
+        customer: { id },
+      } = await getLoginUserData(userData).unwrap();
 
-      const [
-        { access_token: accessToken, expires_in: expiresIn },
-        {
-          customer: { id },
-        },
-      ] = await Promise.all([waitLoginUser, waitLoginUserData]);
+      await loginUser(userData.email, userData.password, id);
 
-      dispatch(loggedIn({ accessToken, userId: id }));
       navigate('/');
-
-      const accessTokenCookie: CookieTuple = [accessToken, COOKIE_ACCESS_TOKEN, expiresIn];
-      const idCookie: CookieTuple = [id, COOKIE_USER_ID, expiresIn];
-
-      setCookie(accessTokenCookie, idCookie);
     } catch (e) {
       // TODO - implement error message
       // console.error(`Error occurred while logging the user! (${e.status})`);
@@ -79,17 +65,17 @@ function LoginPage() {
       <form
         onSubmit={formik.handleSubmit}
         className="
-          ml-3 
-          mr-3 
-          box-content 
-          w-128
-          rounded-3xl 
+          mx-3
+          my-10
+          box-content
+          max-h-[21.5rem]
+          w-full
+          max-w-[29.9rem]
+          rounded-3xl
           border-2 
           border-separation-line 
-          pb-2 
-          pl-4 
-          pr-4 
-          pt-2
+          px-4
+          py-4
           font-medium
           text-text-grey
           sm:pl-10
@@ -221,7 +207,7 @@ function LoginPage() {
           type="submit"
           className={`
               mt-3
-              h-8
+              h-10
               w-full
               rounded-md
               bg-accent
@@ -244,7 +230,6 @@ function LoginPage() {
           Don&apos;t have an account yet?{' '}
           <Link
             className="
-              font-bold
               text-accent
             "
             to="/registration"

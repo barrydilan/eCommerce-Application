@@ -7,16 +7,25 @@ import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
-import CustomRegForm from '../../../entities/form/ui/CustomRegForm';
+import CustomRegForm from '../../../entities/form/ui';
+import { ISignUpAddress } from '../../../shared/types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
-import { UserFormProps } from '../RegPage';
+import { UserFormProps } from '../types';
 
 const validationSchema = validSchemaStepThree();
 
 const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
 export default function RegStepThree(props: UserFormProps) {
-  const { shipCountry, shipCity, billCountry, billCity, sameBillShip, updateData, enableNext } = props;
+  const {
+    addresses: [
+      { country: billCountry = '', city: billCity = '' } = {},
+      { country: shipCountry = '', city: shipCity = '' } = {},
+    ] = [],
+    sameBillShip,
+    updateData,
+    enableNext,
+  } = props;
 
   const formik = useFormik({
     initialValues: {
@@ -41,12 +50,23 @@ export default function RegStepThree(props: UserFormProps) {
       touched.shipCity = true;
     }
 
+    const shipAddress: ISignUpAddress = {
+      city: values.shipCity!,
+      country: values.shipCountry!,
+      streetName: '',
+      postalCode: '',
+    };
+
+    const billAddress: ISignUpAddress = {
+      city: values.billCity!,
+      country: values.billCountry!,
+      streetName: '',
+      postalCode: '',
+    };
+
     updateData({
-      shipCountry: values.shipCountry,
-      shipCity: values.shipCity,
-      billCountry: values.billCountry,
-      billCity: values.billCity,
       sameBillShip: values.sameBillShip,
+      addresses: [billAddress, shipAddress],
     });
 
     if (
@@ -88,9 +108,9 @@ export default function RegStepThree(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.billCountry}
         >
-          <option value="usa">USA</option>
-          <option value="ukraine">Ukraine</option>
-          <option value="germany">Germany</option>
+          <option value="US">USA</option>
+          <option value="UA">Ukraine</option>
+          <option value="DE">Germany</option>
         </motion.select>
         <motion.img
           initial={svgAnimation.initial}
@@ -125,29 +145,12 @@ export default function RegStepThree(props: UserFormProps) {
         />
         {touchedAndErrorBillCity && <p className="invalidInputMsg">{errors.billCity}</p>}
       </label>
-      <div className="mt-6 flex items-center text-text-grey">
-        <input
-          id="expand"
-          type="checkbox"
-          name="sameBillShip"
-          checked={values.sameBillShip}
-          onChange={handleChange}
-          className="hiddenCheckBox peer/expand"
-        />
-        <label
-          htmlFor="expand"
-          className="regFormCheckGulp relative text-3xs leading-3 peer-checked/expand:before:block"
-        >
-          Use the same address <br />
-          as a billing and a shipping
-        </label>
-      </div>
       <AnimatePresence>
         {!values.sameBillShip ? (
           <motion.div
             key="secondInputGroup"
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 100 }}
+            animate={{ opacity: 1, height: 113 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{
               ease: 'linear',
@@ -156,8 +159,7 @@ export default function RegStepThree(props: UserFormProps) {
           >
             <label
               htmlFor="billCountryInput"
-              className={`loginRegLabel ${`${shipBillCluesStyles} after:content-['Shipping']`}
-        `}
+              className={`loginRegLabel ${shipBillCluesStyles} mt-10 after:content-['Shipping']`}
             >
               <motion.select
                 initial={inputAnimation.initial}
@@ -170,9 +172,9 @@ export default function RegStepThree(props: UserFormProps) {
                 onBlur={handleBlur}
                 value={values.shipCountry}
               >
-                <option value="usa">USA</option>
-                <option value="ukraine">Ukraine</option>
-                <option value="germany">Germany</option>
+                <option value="US">USA</option>
+                <option value="UA">Ukraine</option>
+                <option value="DE">Germany</option>
               </motion.select>
               <motion.img
                 initial={svgAnimation.initial}
@@ -210,6 +212,23 @@ export default function RegStepThree(props: UserFormProps) {
           </motion.div>
         ) : null}
       </AnimatePresence>
+      <div className="mt-4 flex items-center text-text-grey">
+        <input
+          id="expand"
+          type="checkbox"
+          name="sameBillShip"
+          checked={values.sameBillShip}
+          onChange={handleChange}
+          className="hiddenCheckBox peer/expand"
+        />
+        <label
+          htmlFor="expand"
+          className="regFormCheckGulp relative text-3xs leading-3 peer-checked/expand:before:block"
+        >
+          Use the same address <br />
+          as a billing and a shipping
+        </label>
+      </div>
     </CustomRegForm>
   );
 }

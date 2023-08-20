@@ -21,41 +21,44 @@ export default {
       poppins: ['Poppins', 'sans-serif'],
     },
     extend: {
+      transitionTimingFunction: {
+        bounce: 'cubic-bezier(.25,1.55,.65,.97)',
+      },
       content: {
-        'searchIcon': "url('./src/assets/icons/search.svg')",
-        'lockIcon': "url('./src/assets/icons/lockIcon.svg')",
-        'emailIcon': "url('./src/assets/icons/emailIcon.svg')",
-        'emailIconRed': "url('./src/assets/icons/emailIconRed.svg')",
+        searchIcon: "url('./src/assets/icons/search.svg')",
+        lockIcon: "url('./src/assets/icons/lockIcon.svg')",
+        emailIcon: "url('./src/assets/icons/emailIcon.svg')",
+        emailIconRed: "url('./src/assets/icons/emailIconRed.svg')",
       },
       gridTemplateColumns: {
-        'tabGridCols': '11rem 1fr',
-        'deskGridCols': '22rem 1fr'
+        tabGridCols: '11rem 1fr',
+        deskGridCols: '22rem 1fr',
       },
       gridTemplateRows: {
-        'mobGridRows': 'auto 1fr auto',
-        'tabGridRows': 'auto 1fr',
+        mobGridRows: 'auto 1fr auto',
+        tabGridRows: 'auto 1fr',
       },
       spacing: {
-        '30': '7.5rem',
-        '78': '20rem',
-        '89': '22rem',
-        '128': '32rem',
-        '2px': '2px'
+        30: '7.5rem',
+        78: '20rem',
+        89: '22rem',
+        128: '32rem',
+        '2px': '2px',
       },
       borderWidth: {
-        '1': '1px',
-        '3': '3px',
-        '6': '6px',
-        '12': '12px',
+        1: '1px',
+        3: '3px',
+        6: '6px',
+        12: '12px',
       },
       fontSize: {
         '2xs': '10px',
         '3xs': '8px',
-        '5xl': '38px'
+        '5xl': '38px',
       },
     },
     maxHeight: {
-      '0': '0',
+      0: '0',
       '1/4': '25%',
       '1/2': '50%',
       '3/4': '75%',
