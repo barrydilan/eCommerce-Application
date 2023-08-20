@@ -151,10 +151,12 @@ export default function RegStepThree(props: UserFormProps) {
             key="secondInputGroup"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 113 }}
-            exit={{ height: 0, opacity: 0 }}
+            exit={{ height: 0, opacity: 0, position: 'absolute' }}
             transition={{
-              ease: 'linear',
-              delay: 0.1,
+              type: 'spring',
+              stiffness: 360,
+              damping: 15,
+              duration: 0.2,
             }}
           >
             <label
@@ -162,9 +164,6 @@ export default function RegStepThree(props: UserFormProps) {
               className={`loginRegLabel ${shipBillCluesStyles} mt-10 after:content-['Shipping']`}
             >
               <motion.select
-                initial={inputAnimation.initial}
-                animate={inputAnimation.animate}
-                transition={inputAnimation.transition}
                 id="shipCountryInput"
                 name="shipCountry"
                 className="loginRegInput"
@@ -187,9 +186,6 @@ export default function RegStepThree(props: UserFormProps) {
             </label>
             <label htmlFor="shipCityInput" className="loginRegLabel">
               <motion.input
-                initial={inputAnimation.initial}
-                animate={inputAnimation.animate}
-                transition={inputAnimation.transition}
                 id="shipCityInput"
                 type="text"
                 name="shipCity"

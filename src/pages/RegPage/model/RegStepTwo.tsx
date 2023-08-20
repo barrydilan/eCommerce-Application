@@ -91,7 +91,7 @@ export default function RegStepTwo(props: UserFormProps) {
           />
           {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
         </label>
-        <div className={`w-2/4 overflow-hidden transition-all duration-500 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
+        <div className={`w-2/4 overflow-hidden transition-all duration-300 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
           <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDateInput" className="loginRegLabel">
             <motion.input
               initial={inputAnimation.initial}

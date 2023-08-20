@@ -129,7 +129,12 @@ export default function RegPage() {
           <motion.div
             initial={{ height: 0 }}
             animate={{ height: sameBillShip || currentStepIndex < 2 ? 150 : 300 }}
-            transition={{ duration: 0.2 }}
+            transition={{
+              type: 'spring',
+              stiffness: 360,
+              damping: 24,
+              duration: 0.2,
+            }}
             className="relative mb-6 mt-8 flex w-full justify-center"
           >
             {currForm}
