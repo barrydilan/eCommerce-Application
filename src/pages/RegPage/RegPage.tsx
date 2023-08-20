@@ -1,63 +1,40 @@
 import { useCallback, useState } from 'react';
 
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-import useMultistepForm from './model/Multiform';
-import RegFinal from './model/RegFinal';
-import RegStepFour from './model/RegStepFour';
-import RegStepOne from './model/RegStepOne';
-import RegStepThree from './model/RegStepThree';
-import RegStepTwo from './model/RegStepTwo';
-import CirclesWrapper from './ui/CirclesWrapper';
-import NavBlock from './ui/NavBlock';
+import prepareDataForUpload from './lib/helpers';
+import useMultistepForm from './lib/hooks';
+import { RegFinal, RegStepFour, RegStepOne, RegStepThree, RegStepTwo } from './model';
+import { IFormData, UpdateDataParams } from './types';
+import CirclesWrapper from './ui/CirclesWrapper.tsx';
+import NavBlock from './ui/NavBlock.tsx';
+import { useLoginUser, useSignUpMutation } from '../../entities/user';
+import { useAppSelector } from '../../shared/lib/hooks';
+import { ISignUpAddress } from '../../shared/types';
 
-type FormDataType = {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  sameBillShip: boolean;
-  billCountry: string;
-  billCity: string;
-  billStreet: string;
-  billPostalCode: string;
-  billSetDefault: boolean;
-  shipCountry: string;
-  shipCity: string;
-  shipPostalCode: string;
-  shipStreet: string;
-  shipSetDefault: boolean;
-};
-
-export type UserFormProps = Partial<FormDataType> & {
-  updateData: (fields: Partial<FormDataType>) => void;
-  enableNext: (arg: boolean) => void;
-};
-
-const initVals = {
+const initVals: IFormData = {
   email: '',
   password: '',
   firstName: '',
   lastName: '',
   birthDate: '',
   sameBillShip: true,
-  billCountry: 'usa',
-  billCity: '',
-  billPostalCode: '',
-  billStreet: '',
   billSetDefault: true,
-  shipCountry: 'usa',
-  shipCity: '',
-  shipPostalCode: '',
-  shipStreet: '',
   shipSetDefault: true,
+  addresses: [{} as ISignUpAddress, {} as ISignUpAddress],
+  billingAddresses: [0],
+  shippingAddresses: [0],
 };
 
 export default function RegPage() {
   const [formData, setFormData] = useState(initVals);
   const [isNextEnabled, setIsNextEnabled] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [loginUser, { isLoading }] = useLoginUser();
+  const [signUpUser, { isSuccess, error }] = useSignUpMutation();
+  const navigate = useNavigate();
+  const { isLogged } = useAppSelector((state) => state.userReducer);
 
   const enableNext = useCallback(
     (arg: boolean) => {
@@ -67,32 +44,20 @@ export default function RegPage() {
   );
 
   const updateData = useCallback(
-    (fields: Partial<UserFormProps>) => {
-      setFormData((prev) => {
-        return { ...prev, ...fields };
+    (fieldsOrCallback: UpdateDataParams) => {
+      setFormData((prevState) => {
+        if (typeof fieldsOrCallback === 'function') {
+          return fieldsOrCallback(prevState);
+        }
+
+        return { ...prevState, ...fieldsOrCallback };
       });
     },
     [setFormData],
   );
 
-  const {
-    email,
-    password,
-    firstName,
-    lastName,
-    birthDate,
-    sameBillShip,
-    billCountry,
-    billCity,
-    billPostalCode,
-    billStreet,
-    billSetDefault,
-    shipCountry,
-    shipCity,
-    shipPostalCode,
-    shipStreet,
-    shipSetDefault,
-  } = formData;
+  const { email, password, firstName, lastName, birthDate, sameBillShip, addresses, billSetDefault, shipSetDefault } =
+    formData;
 
   const { isFirstStep, isLastStep, formLength, reStartForm, currentStepIndex, currForm, back, next } = useMultistepForm(
     [
@@ -106,23 +71,15 @@ export default function RegPage() {
         key={1}
       />,
       <RegStepThree
-        billCountry={billCountry}
-        billCity={billCity}
-        shipCountry={shipCountry}
-        shipCity={shipCity}
+        addresses={addresses}
         sameBillShip={sameBillShip}
         updateData={updateData}
         enableNext={enableNext}
         key={3}
       />,
       <RegStepFour
-        billCountry={billCountry}
-        shipCountry={shipCountry}
+        addresses={addresses}
         sameBillShip={sameBillShip}
-        billPostalCode={billPostalCode}
-        billStreet={billStreet}
-        shipPostalCode={shipPostalCode}
-        shipStreet={shipStreet}
         billSetDefault={billSetDefault}
         shipSetDefault={shipSetDefault}
         updateData={updateData}
@@ -132,10 +89,40 @@ export default function RegPage() {
     ],
   );
 
+  async function nextFunc() {
+    isNextEnabled && next();
+
+    if (!isLastStep || !isNextEnabled) return;
+
+    if (isLogged) {
+      navigate('/');
+      return;
+    }
+
+    const signUpData = prepareDataForUpload(formData);
+
+    try {
+      const {
+        customer: { id },
+      } = await signUpUser(signUpData).unwrap();
+
+      await loginUser(email, password, id);
+    } catch (e) {
+      // console.error();
+    } finally {
+      setIsFormSubmitted(true);
+    }
+  }
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       {isFormSubmitted ? (
-        <RegFinal isSuccess reStartForm={reStartForm} setIsFormSubmitted={setIsFormSubmitted} />
+        <RegFinal
+          isSuccess={isSuccess}
+          reStartForm={reStartForm}
+          setIsFormSubmitted={setIsFormSubmitted}
+          error={error}
+        />
       ) : (
         <div className="ml-3 mr-3 flex h-auto flex-col items-center justify-center rounded-3xl border-2 border-separation-line sm:pl-10 sm:pr-10">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
@@ -151,12 +138,8 @@ export default function RegPage() {
             backFunc={back}
             isFirstStep={isFirstStep}
             isNextEnabled={isNextEnabled}
-            nextFunc={() => {
-              if (isNextEnabled) {
-                isNextEnabled && next();
-                isLastStep && setIsFormSubmitted(true);
-              }
-            }}
+            nextFunc={nextFunc}
+            isLoading={isLoading}
           />
         </div>
       )}
