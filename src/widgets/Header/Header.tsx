@@ -1,7 +1,18 @@
-import logoIcon from '../../assets/icons/logo.svg';
+import { stagger, useAnimate } from 'framer-motion';
+import { Link } from 'react-router-dom';
+
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
+import Logo from '../ui/Logo';
 
 function Header() {
+  const [scope, animate] = useAnimate();
+  const logoName = 'SushiSushi'.split('');
+  const animationEndHandler = () => {
+    if (scope.current) {
+      animate([['.letter', { y: 5, opacity: 1 }, { duration: 0.3, delay: stagger(0.1) }]]);
+    }
+  };
+
   return (
     <header
       className="
@@ -22,8 +33,9 @@ function Header() {
           flex
           w-40
           select-none
+          items-center
           pb-2
-          pl-2
+          pl-1
           pt-2
           md:h-16
           md:w-44
@@ -34,24 +46,35 @@ function Header() {
           lg:pl-8
         "
       >
-        <img
-          src={logoIcon}
-          alt="company logo"
-          className="
-            mr-2
-            w-8
-          "
-        />
+        <Link to="/">
+          <Logo
+            onAnimationEnd={() => {
+              animationEndHandler();
+            }}
+          />
+        </Link>
         <h1
+          ref={scope}
           className="
-            text-2xl 
+            relative
+            -translate-y-1
+            text-lg
             font-light
             tracking-tight 
             text-text-dark
             md:pt-2
+            md:text-xl
+            lg:text-2xl
           "
         >
-          GoodFood
+          {logoName.map((letter, index) => {
+            return (
+              // eslint-disable-next-line react/no-array-index-key
+              <span className="letter opacity-3 inline-block translate-y-6 opacity-0" key={`${letter}-${index}`}>
+                {letter}
+              </span>
+            );
+          })}
         </h1>
       </div>
       <label

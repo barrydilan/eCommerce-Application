@@ -43,7 +43,7 @@ export function App() {
       className="
           mx-auto
           grid
-          min-h-screen
+          min-h-[100dvh]
           grid-cols-1
           grid-rows-mobGridRows
           font-poppins
