@@ -7,7 +7,9 @@ export default function PrimaryGulp() {
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
         transition={{
-          duration: 0.4,
+          type: 'spring',
+          stiffness: 307,
+          damping: 18,
         }}
         style={{
           fill: 'none',
