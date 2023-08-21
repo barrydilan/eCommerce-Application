@@ -97,7 +97,7 @@ export default function RegStepTwo(props: UserFormProps) {
             <motion.input
               initial={inputAnimation.initial}
               animate={inputAnimation.animate}
-              transition={inputAnimation.transition}
+              transition={{ ...inputAnimation.transition, delay: 0.15 }}
               id="birthDateInput"
               type={dateInputType}
               name="birthDate"
@@ -111,7 +111,7 @@ export default function RegStepTwo(props: UserFormProps) {
             <motion.img
               initial={svgAnimation.initial}
               animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
+              transition={{ ...svgAnimation.transition, delay: 0.25 }}
               className="invalidInputIcon"
               src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
               alt=""
@@ -124,7 +124,7 @@ export default function RegStepTwo(props: UserFormProps) {
         <motion.input
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
+          transition={{ ...inputAnimation.transition, delay: 0.1 }}
           id="lastNameInput"
           type="text"
           name="lastName"
@@ -137,7 +137,7 @@ export default function RegStepTwo(props: UserFormProps) {
         <motion.img
           initial={svgAnimation.initial}
           animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
+          transition={{ ...svgAnimation.transition, delay: 0.2 }}
           className="invalidInputIcon"
           src={touchedAndErrorLastName ? userIconRed : userIcon}
           alt=""

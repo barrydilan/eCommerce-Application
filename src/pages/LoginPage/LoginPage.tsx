@@ -128,7 +128,7 @@ function LoginPage() {
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
-            transition={inputAnimation.transition}
+            transition={{ ...inputAnimation.transition, delay: 0.05 }}
             id="passLogInput"
             type="password"
             name="password"
@@ -145,7 +145,7 @@ function LoginPage() {
           <motion.img
             initial={svgAnimation.initial}
             animate={svgAnimation.animate}
-            transition={svgAnimation.transition}
+            transition={{ ...svgAnimation.transition, delay: 0.25 }}
             className="invalidInputIcon"
             src={formik.touched.password && formik.errors.password ? lockIconRed : lockIcon}
             alt=""

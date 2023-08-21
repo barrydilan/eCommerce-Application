@@ -131,9 +131,8 @@ export default function RegPage() {
             animate={{ height: sameBillShip || currentStepIndex < 2 ? 150 : 300 }}
             transition={{
               type: 'spring',
-              stiffness: 360,
-              damping: 24,
-              duration: 0.2,
+              stiffness: 660,
+              damping: 25,
             }}
             className="relative mb-6 mt-8 flex w-full justify-center"
           >

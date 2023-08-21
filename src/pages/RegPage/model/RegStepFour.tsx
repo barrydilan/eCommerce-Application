@@ -148,7 +148,7 @@ export default function RegStepFour(props: UserFormProps) {
         <motion.img
           initial={svgAnimation.initial}
           animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
+          transition={{ ...svgAnimation.transition, delay: 0.25 }}
           className="invalidInputIcon"
           src={touchedAndErrorBillStreet ? streetIconRed : streetIcon}
           alt=""
@@ -207,7 +207,7 @@ export default function RegStepFour(props: UserFormProps) {
             <motion.img
               initial={svgAnimation.initial}
               animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
+              transition={{ ...svgAnimation.transition, delay: 0.3 }}
               className="invalidInputIcon"
               src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
               alt=""
@@ -231,7 +231,7 @@ export default function RegStepFour(props: UserFormProps) {
             <motion.img
               initial={svgAnimation.initial}
               animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
+              transition={{ ...svgAnimation.transition, delay: 0.35 }}
               className="invalidInputIcon"
               src={touchedAndErrorShipStreet ? streetIconRed : streetIcon}
               alt=""

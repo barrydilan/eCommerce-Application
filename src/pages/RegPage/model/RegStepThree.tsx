@@ -12,6 +12,7 @@ import { ISignUpAddress } from '../../../shared/types';
 import { ErrorMessage } from '../../../shared/ui';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
+import { InputIcon } from '../ui';
 
 const validationSchema = validSchemaStepThree();
 
@@ -126,7 +127,7 @@ export default function RegStepThree(props: UserFormProps) {
         <motion.input
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
+          transition={{ ...inputAnimation.transition, delay: 0.05 }}
           id="billCityInput"
           type="text"
           name="billCity"
@@ -139,7 +140,7 @@ export default function RegStepThree(props: UserFormProps) {
         <motion.img
           initial={svgAnimation.initial}
           animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
+          transition={{ ...svgAnimation.transition, delay: 0.25 }}
           className="invalidInputIcon"
           src={touchedAndErrorBillCity ? cityIconRed : cityIcon}
           alt=""
@@ -164,15 +165,14 @@ export default function RegStepThree(props: UserFormProps) {
               className={`loginRegLabel ${shipBillCluesStyles} mt-10 after:content-['Shipping']`}
             >
               <motion.select
-                initial={{ translateY: '-20%' }}
-                animate={{ translateY: '0%' }}
+                initial={{ y: '-30%' }}
+                animate={{ y: '0%' }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{
                   type: 'spring',
-                  stiffness: 360,
+                  stiffness: 560,
                   damping: 10,
-                  duration: 0.2,
-                  delay: 0.2,
+                  delay: 0.1,
                 }}
                 id="shipCountryInput"
                 name="shipCountry"
@@ -185,33 +185,18 @@ export default function RegStepThree(props: UserFormProps) {
                 <option value="UA">Ukraine</option>
                 <option value="DE">Germany</option>
               </motion.select>
-              <motion.img
-                initial={{ translateY: '-20%' }}
-                animate={{ translateY: '0%' }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 360,
-                  damping: 10,
-                  duration: 0.2,
-                  delay: 0.3,
-                }}
-                className="invalidInputIcon"
-                src={countryIcon}
-                alt=""
-              />
+              <InputIcon icon={countryIcon} delay={0.3} />
             </label>
             <label htmlFor="shipCityInput" className="loginRegLabel">
               <motion.input
-                initial={{ translateY: '-20%' }}
-                animate={{ translateY: '0%' }}
+                initial={{ y: '-30%' }}
+                animate={{ y: '0%' }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{
                   type: 'spring',
-                  stiffness: 360,
+                  stiffness: 560,
                   damping: 10,
-                  duration: 0.2,
-                  delay: 0.3,
+                  delay: 0.2,
                 }}
                 id="shipCityInput"
                 type="text"
@@ -222,21 +207,7 @@ export default function RegStepThree(props: UserFormProps) {
                 onBlur={handleBlur}
                 value={values.shipCity}
               />
-              <motion.img
-                initial={{ translateY: '-20%' }}
-                animate={{ translateY: '0%' }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 360,
-                  damping: 10,
-                  duration: 0.2,
-                  delay: 0.4,
-                }}
-                className="invalidInputIcon"
-                src={touchedAndErrorShipCity ? cityIconRed : cityIcon}
-                alt=""
-              />
+              <InputIcon icon={touchedAndErrorShipCity ? cityIconRed : cityIcon} delay={0.35} />
               {touchedAndErrorShipCity && <ErrorMessage>{errors.shipCity}</ErrorMessage>}
             </label>
           </motion.div>

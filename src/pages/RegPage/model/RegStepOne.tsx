@@ -77,7 +77,7 @@ export default function RegStepOne(props: UserFormProps) {
         <motion.input
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
+          transition={{ ...inputAnimation.transition, delay: 0.05 }}
           id="passRegInput"
           type="text"
           name="password"
@@ -90,7 +90,7 @@ export default function RegStepOne(props: UserFormProps) {
         <motion.img
           initial={svgAnimation.initial}
           animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
+          transition={{ ...svgAnimation.transition, delay: 0.25 }}
           className="invalidInputIcon"
           src={touched.password && errors.password ? lockIconRed : lockIcon}
           alt=""
