@@ -11,6 +11,7 @@ import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
+import { ErrorMessage } from '../ui';
 
 const validationSchema = validSchemaStepOne();
 
@@ -70,7 +71,7 @@ export default function RegStepOne(props: UserFormProps) {
           src={touchedAndErrorEmail ? emailIconRed : emailIcon}
           alt=""
         />
-        {touchedAndErrorEmail && <p className="invalidInputMsg">{errors.email}</p>}
+        {touchedAndErrorEmail && <ErrorMessage>{errors.email}</ErrorMessage>}
       </label>
       <label htmlFor="passRegInput" className="loginRegLabel">
         <motion.input
@@ -94,7 +95,7 @@ export default function RegStepOne(props: UserFormProps) {
           src={touched.password && errors.password ? lockIconRed : lockIcon}
           alt=""
         />
-        {touchedAndErrorPassword ? <p className="invalidInputMsg">{errors.password}</p> : null}
+        {touchedAndErrorPassword && <ErrorMessage>{errors.password}</ErrorMessage>}
       </label>
     </CustomRegForm>
   );

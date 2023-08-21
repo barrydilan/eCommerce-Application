@@ -11,6 +11,7 @@ import CustomRegForm from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
+import { ErrorMessage } from '../ui';
 
 const validationSchema = validSchemaStepThree();
 
@@ -143,7 +144,7 @@ export default function RegStepThree(props: UserFormProps) {
           src={touchedAndErrorBillCity ? cityIconRed : cityIcon}
           alt=""
         />
-        {touchedAndErrorBillCity && <p className="invalidInputMsg">{errors.billCity}</p>}
+        {touchedAndErrorBillCity && <ErrorMessage>{errors.billCity}</ErrorMessage>}
       </label>
       <AnimatePresence>
         {!values.sameBillShip ? (
@@ -203,7 +204,7 @@ export default function RegStepThree(props: UserFormProps) {
                 src={touchedAndErrorShipCity ? cityIconRed : cityIcon}
                 alt=""
               />
-              {touchedAndErrorShipCity && <p className="invalidInputMsg">{errors.shipCity}</p>}
+              {touchedAndErrorShipCity && <ErrorMessage>{errors.shipCity}</ErrorMessage>}
             </label>
           </motion.div>
         ) : null}

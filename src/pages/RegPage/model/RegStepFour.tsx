@@ -12,6 +12,7 @@ import CustomRegForm from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
+import { ErrorMessage } from '../ui';
 
 export default function RegStepFour(props: UserFormProps) {
   const {
@@ -128,7 +129,7 @@ export default function RegStepFour(props: UserFormProps) {
           src={touchedAndErrorBillPostalCode ? postalCodeIconRed : postalCodeIcon}
           alt=""
         />
-        {touchedAndErrorBillPostalCode && <p className="invalidInputMsg">{errors.billPostalCode}</p>}
+        {touchedAndErrorBillPostalCode && <ErrorMessage>{errors.billPostalCode}</ErrorMessage>}
       </label>
       <label htmlFor="billStreetInput" className="loginRegLabel">
         <motion.input
@@ -152,7 +153,7 @@ export default function RegStepFour(props: UserFormProps) {
           src={touchedAndErrorBillStreet ? streetIconRed : streetIcon}
           alt=""
         />
-        {touchedAndErrorBillStreet && <p className="invalidInputMsg">{errors.billStreet}</p>}
+        {touchedAndErrorBillStreet && <ErrorMessage>{errors.billStreet}</ErrorMessage>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
         <input
@@ -211,7 +212,7 @@ export default function RegStepFour(props: UserFormProps) {
               src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
               alt=""
             />
-            {touchedAndErrorShipPostalCode && <p className="invalidInputMsg">{errors.shipPostalCode}</p>}
+            {touchedAndErrorShipPostalCode && <ErrorMessage>{errors.shipPostalCode}</ErrorMessage>}
           </label>
           <label htmlFor="shipStreetInput" className="loginRegLabel">
             <motion.input
@@ -235,7 +236,7 @@ export default function RegStepFour(props: UserFormProps) {
               src={touchedAndErrorShipStreet ? streetIconRed : streetIcon}
               alt=""
             />
-            {touchedAndErrorShipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
+            {touchedAndErrorShipStreet && <ErrorMessage>{errors.shipStreet}</ErrorMessage>}
           </label>
           <div className="mt-6 flex items-center text-text-grey">
             <input

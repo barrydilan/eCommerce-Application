@@ -11,6 +11,7 @@ import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
+import { ErrorMessage } from '../ui';
 
 const validationSchema = validSchemaStepTwo();
 
@@ -89,7 +90,7 @@ export default function RegStepTwo(props: UserFormProps) {
             src={touchedAndErrorFirstName ? userIconRed : userIcon}
             alt=""
           />
-          {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
+          {touchedAndErrorFirstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}
         </label>
         <div className={`w-2/4 overflow-hidden transition-all duration-300 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
           <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDateInput" className="loginRegLabel">
@@ -115,7 +116,7 @@ export default function RegStepTwo(props: UserFormProps) {
               src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
               alt=""
             />
-            {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
+            {touchedAndErrorBirthDate && <ErrorMessage>{errors.birthDate}</ErrorMessage>}
           </label>
         </div>
       </div>
@@ -141,7 +142,7 @@ export default function RegStepTwo(props: UserFormProps) {
           src={touchedAndErrorLastName ? userIconRed : userIcon}
           alt=""
         />
-        {touchedAndErrorLastName && <p className="invalidInputMsg">{errors.lastName}</p>}
+        {touchedAndErrorLastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}
       </label>
     </CustomRegForm>
   );
