@@ -1,8 +1,8 @@
 import { stagger, useAnimate } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 import Logo from '../ui/Logo';
-import { Link } from 'react-router-dom';
 
 function Header() {
   const [scope, animate] = useAnimate();
