@@ -9,9 +9,9 @@ import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
+import { ErrorMessage } from '../../../shared/ui';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
-import { ErrorMessage } from '../ui';
 
 const validationSchema = validSchemaStepTwo();
 

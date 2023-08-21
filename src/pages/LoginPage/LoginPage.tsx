@@ -12,6 +12,7 @@ import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
+import { ErrorMessage } from '../../shared/ui';
 import { inputAnimation, svgAnimation } from '../../shared/ui/animations';
 
 function LoginPage() {
@@ -121,9 +122,7 @@ function LoginPage() {
             src={formik.touched.email && formik.errors.email ? emailIconRed : emailIcon}
             alt="invalidInputIcon"
           />
-          {formik.touched.email && formik.errors.email ? (
-            <p className="invalidInputMsg">{formik.errors.email}</p>
-          ) : null}
+          {formik.touched.email && formik.errors.email ? <ErrorMessage>{formik.errors.email}</ErrorMessage> : null}
         </label>
         <label htmlFor="passLogInput" className="loginRegLabel">
           <motion.input
@@ -152,7 +151,7 @@ function LoginPage() {
             alt=""
           />
           {formik.touched.password && formik.errors.password ? (
-            <p className="invalidInputMsg">{formik.errors.password}</p>
+            <ErrorMessage>{formik.errors.password}</ErrorMessage>
           ) : null}
         </label>
         <div
