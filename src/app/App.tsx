@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
+import LocationProvider from './utils/LocationProvider.tsx';
+import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
 import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../entities/user';
 import { COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
-import ErrorPage from '../pages/ErrorPage/ErrorPage';
-import LoginPage from '../pages/LoginPage/LoginPage';
 import NavBlock from '../pages/NavBlock/NavBlock';
-import RegPage from '../pages/RegPage/RegPage';
 import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
@@ -62,17 +61,9 @@ export function App() {
             md:row-end-3
             "
       >
-        <Routes>
-          <Route index element={<p>Here will be main content</p>} />
-          <Route path="registration" element={<RegPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="profile" element={<p>User profile</p>} />
-          <Route path="cart" element={<p>Shopping cart</p>} />
-          <Route path="delivery" element={<p>Delivery</p>} />
-          <Route path="payment" element={<p>Payment</p>} />
-          <Route path="about" element={<p>About us</p>} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+        <LocationProvider>
+          <RoutesWithAnimation />
+        </LocationProvider>
       </div>
       <NavBlock />
     </main>

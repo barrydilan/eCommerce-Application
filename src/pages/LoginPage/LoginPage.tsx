@@ -51,9 +51,37 @@ function LoginPage() {
     validationSchema,
     onSubmit: handleSubmit,
   });
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      rotateY: '-90deg',
+      transition: {
+        type: 'spring',
+        stiffness: 150,
+        duration: 2,
+      },
+    },
+    in: {
+      opacity: 1,
+      rotateY: '0deg',
+      transition: {
+        type: 'spring',
+        stiffness: 150,
+        duration: 2,
+      },
+    },
+    out: {
+      opacity: 0.5,
+    },
+  };
 
   return (
-    <div
+    <motion.div
+      key="modal"
+      variants={pageVariants}
+      initial="initial"
+      animate="in"
+      exit="out"
       className={`
         flex
         h-full
@@ -62,6 +90,7 @@ function LoginPage() {
         justify-center
         font-poppins
         `}
+      style={{ transform: 'rotateY(-90deg)' }}
     >
       <form
         onSubmit={formik.handleSubmit}
@@ -237,7 +266,7 @@ function LoginPage() {
           </Link>
         </p>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

@@ -114,8 +114,37 @@ export default function RegPage() {
     }
   }
 
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      rotateY: '-90deg',
+      transition: {
+        type: 'spring',
+        stiffness: 110,
+      },
+    },
+    in: {
+      opacity: 1,
+      rotateY: '0deg',
+      transition: {
+        type: 'spring',
+        stiffness: 110,
+      },
+    },
+    out: {
+      opacity: 0.5,
+    },
+  };
+
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
+    <motion.div
+      key="modal1"
+      variants={pageVariants}
+      initial="initial"
+      animate="in"
+      exit="out"
+      className="flex h-full w-full flex-col items-center justify-center"
+    >
       {isFormSubmitted ? (
         <RegFinal
           isSuccess={isSuccess}
@@ -147,6 +176,6 @@ export default function RegPage() {
           />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
