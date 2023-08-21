@@ -150,14 +150,13 @@ export default function RegStepThree(props: UserFormProps) {
         {!values.sameBillShip ? (
           <motion.div
             key="secondInputGroup"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 113 }}
+            initial={{ opacity: 0, height: 0, translateY: '10%' }}
+            animate={{ opacity: 1, height: 'auto', translateY: '0%' }}
             exit={{ height: 0, opacity: 0, position: 'absolute' }}
             transition={{
               type: 'spring',
               stiffness: 360,
               damping: 15,
-              duration: 0.2,
             }}
           >
             <label
@@ -165,6 +164,16 @@ export default function RegStepThree(props: UserFormProps) {
               className={`loginRegLabel ${shipBillCluesStyles} mt-10 after:content-['Shipping']`}
             >
               <motion.select
+                initial={{ translateY: '-20%' }}
+                animate={{ translateY: '0%' }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 360,
+                  damping: 10,
+                  duration: 0.2,
+                  delay: 0.2,
+                }}
                 id="shipCountryInput"
                 name="shipCountry"
                 className="loginRegInput"
@@ -177,9 +186,16 @@ export default function RegStepThree(props: UserFormProps) {
                 <option value="DE">Germany</option>
               </motion.select>
               <motion.img
-                initial={svgAnimation.initial}
-                animate={svgAnimation.animate}
-                transition={svgAnimation.transition}
+                initial={{ translateY: '-20%' }}
+                animate={{ translateY: '0%' }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 360,
+                  damping: 10,
+                  duration: 0.2,
+                  delay: 0.3,
+                }}
                 className="invalidInputIcon"
                 src={countryIcon}
                 alt=""
@@ -187,6 +203,16 @@ export default function RegStepThree(props: UserFormProps) {
             </label>
             <label htmlFor="shipCityInput" className="loginRegLabel">
               <motion.input
+                initial={{ translateY: '-20%' }}
+                animate={{ translateY: '0%' }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 360,
+                  damping: 10,
+                  duration: 0.2,
+                  delay: 0.3,
+                }}
                 id="shipCityInput"
                 type="text"
                 name="shipCity"
@@ -197,9 +223,16 @@ export default function RegStepThree(props: UserFormProps) {
                 value={values.shipCity}
               />
               <motion.img
-                initial={svgAnimation.initial}
-                animate={svgAnimation.animate}
-                transition={svgAnimation.transition}
+                initial={{ translateY: '-20%' }}
+                animate={{ translateY: '0%' }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 360,
+                  damping: 10,
+                  duration: 0.2,
+                  delay: 0.4,
+                }}
                 className="invalidInputIcon"
                 src={touchedAndErrorShipCity ? cityIconRed : cityIcon}
                 alt=""

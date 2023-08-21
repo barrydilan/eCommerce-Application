@@ -8,8 +8,8 @@ function ErrorMessage({ children }: IErrorMessageProps) {
   return (
     <motion.p
       key={children}
-      initial={{ translateX: '-20%' }}
-      animate={{ translateX: '0' }}
+      initial={{ translateX: '-20%', opacity: 0 }}
+      animate={{ translateX: '0', opacity: 1 }}
       exit={{ scale: 0 }}
       transition={{
         type: 'spring',
