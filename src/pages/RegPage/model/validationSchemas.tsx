@@ -1,5 +1,9 @@
 import * as Yup from 'yup';
 
+function correctDate(year: number, month: number, day: number) {
+  return new Date(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
+}
+
 export function validSchemaStepOne() {
   const emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&~()_+\-=':"}{/?<>;,.\]\\[*])(?!.*\s).{8,}$/;
@@ -18,8 +22,7 @@ export function validSchemaStepOne() {
 export function validSchemaStepTwo() {
   const nameRegEx = /^[a-zA-Z]+$/;
   const currentDate = new Date();
-  const max = new Date(currentDate.getFullYear() - 13, currentDate.getMonth(), currentDate.getDate());
-  const ageLimit = `${max.getFullYear()} ${max.getMonth()} ${max.getDate()}`;
+  const ageLimit = correctDate(currentDate.getFullYear() - 13, currentDate.getMonth(), currentDate.getDate());
 
   return Yup.object({
     firstName: Yup.string()
