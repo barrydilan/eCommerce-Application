@@ -21,7 +21,7 @@ describe('App', () => {
       screen.getByRole('heading', {
         level: 1,
       }),
-    ).toHaveTextContent('GoodFood');
+    ).toHaveTextContent('SushiSushi');
   });
   it('Renders the not found page if invalid path', () => {
     render(
