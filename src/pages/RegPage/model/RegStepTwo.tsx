@@ -9,6 +9,7 @@ import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
+import { ErrorMessage } from '../../../shared/ui';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
 
@@ -89,14 +90,14 @@ export default function RegStepTwo(props: UserFormProps) {
             src={touchedAndErrorFirstName ? userIconRed : userIcon}
             alt=""
           />
-          {touchedAndErrorFirstName && <p className="invalidInputMsg">{errors.firstName}</p>}
+          {touchedAndErrorFirstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}
         </label>
-        <div className={`w-2/4 overflow-hidden transition-all duration-500 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
+        <div className={`w-2/4 overflow-hidden transition-all duration-300 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
           <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDateInput" className="loginRegLabel">
             <motion.input
               initial={inputAnimation.initial}
               animate={inputAnimation.animate}
-              transition={inputAnimation.transition}
+              transition={{ ...inputAnimation.transition, delay: 0.15 }}
               id="birthDateInput"
               type={dateInputType}
               name="birthDate"
@@ -110,12 +111,12 @@ export default function RegStepTwo(props: UserFormProps) {
             <motion.img
               initial={svgAnimation.initial}
               animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
+              transition={{ ...svgAnimation.transition, delay: 0.25 }}
               className="invalidInputIcon"
               src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
               alt=""
             />
-            {touchedAndErrorBirthDate && <p className="invalidInputMsg">{formik.errors.birthDate}</p>}
+            {touchedAndErrorBirthDate && <ErrorMessage>{errors.birthDate}</ErrorMessage>}
           </label>
         </div>
       </div>
@@ -123,7 +124,7 @@ export default function RegStepTwo(props: UserFormProps) {
         <motion.input
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
+          transition={{ ...inputAnimation.transition, delay: 0.1 }}
           id="lastNameInput"
           type="text"
           name="lastName"
@@ -136,12 +137,12 @@ export default function RegStepTwo(props: UserFormProps) {
         <motion.img
           initial={svgAnimation.initial}
           animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
+          transition={{ ...svgAnimation.transition, delay: 0.2 }}
           className="invalidInputIcon"
           src={touchedAndErrorLastName ? userIconRed : userIcon}
           alt=""
         />
-        {touchedAndErrorLastName && <p className="invalidInputMsg">{errors.lastName}</p>}
+        {touchedAndErrorLastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}
       </label>
     </CustomRegForm>
   );

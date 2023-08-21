@@ -17,4 +17,8 @@ export default defineConfig({
 			$icons: resolve('src/assets/icons'),
 		},
 	},
+	base: './',
+	server: {
+		open: '/eCommerce-Application',
+	},
 });

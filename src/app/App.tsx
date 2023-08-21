@@ -81,7 +81,7 @@ export function App() {
 
 export function WrappedApp() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/eCommerce-Application">
       <App />
     </BrowserRouter>
   );

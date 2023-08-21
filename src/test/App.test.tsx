@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, it } from 'vitest';
 
-import { App, WrappedApp } from '../app/App.tsx';
+import { App } from '../app/App.tsx';
 import { setupStore } from '../app/store';
 
 const store = setupStore();
@@ -13,7 +13,9 @@ describe('App', () => {
   it('Renders the main logo', () => {
     render(
       <Provider store={store}>
-        <WrappedApp />
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>
       </Provider>,
     );
 

@@ -1,11 +1,20 @@
 export const inputAnimation = {
-  initial: { x: -50, opacity: 0 },
+  initial: { x: '-12%', opacity: 0 },
   animate: { x: 0, opacity: 1 },
-  transition: { duration: 0.4 },
+  transition: {
+    type: 'spring',
+    stiffness: 560,
+    damping: 17,
+  },
 };
 
 export const svgAnimation = {
-  initial: { scale: 0 },
-  animate: { scale: 1 },
-  transition: { delay: 0.2, duration: 0.2 },
+  initial: { y: '110%', scale: 0, rotate: '30deg' },
+  animate: { y: '0%', scale: 1, rotate: '0' },
+  transition: {
+    type: 'spring',
+    stiffness: 520,
+    damping: 15,
+    delay: 0.1,
+  },
 };
