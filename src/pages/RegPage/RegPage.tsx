@@ -121,7 +121,7 @@ export default function RegPage() {
       transition: {
         type: 'spring',
         stiffness: 90,
-        duration: 0.8,
+        duration: 0.6,
       },
     },
     in: {
@@ -130,7 +130,7 @@ export default function RegPage() {
       transition: {
         type: 'spring',
         stiffness: 90,
-        duration: 0.8,
+        duration: 0.6,
       },
     },
   };

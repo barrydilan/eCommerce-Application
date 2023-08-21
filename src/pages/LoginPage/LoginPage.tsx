@@ -57,7 +57,7 @@ function LoginPage() {
       transition: {
         type: 'spring',
         stiffness: 90,
-        duration: 0.8,
+        duration: 0.6,
       },
     },
     in: {
@@ -66,7 +66,7 @@ function LoginPage() {
       transition: {
         type: 'spring',
         stiffness: 90,
-        duration: 0.8,
+        duration: 0.6,
       },
     },
   };
