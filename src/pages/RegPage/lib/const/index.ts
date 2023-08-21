@@ -1,1 +1,1 @@
-export { FIRST_ADDRESS, SECOND_ADDRESS } from './constants.ts';
+export { FIRST_ADDRESS, SECOND_ADDRESS, RESTRICTED_AGE } from './constants.ts';

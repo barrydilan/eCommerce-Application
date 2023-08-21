@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 
+import { RESTRICTED_AGE } from '../lib/const';
+
 function correctDate(year: number, month: number, day: number) {
   return new Date(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
 }
@@ -22,7 +24,11 @@ export function validSchemaStepOne() {
 export function validSchemaStepTwo() {
   const nameRegEx = /^[a-zA-Z]+$/;
   const currentDate = new Date();
-  const ageLimit = correctDate(currentDate.getFullYear() - 13, currentDate.getMonth(), currentDate.getDate());
+  const ageLimit = correctDate(
+    currentDate.getFullYear() - RESTRICTED_AGE,
+    currentDate.getMonth(),
+    currentDate.getDate(),
+  );
 
   return Yup.object({
     firstName: Yup.string()
