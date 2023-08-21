@@ -70,9 +70,7 @@ export default function RegStepThree(props: UserFormProps) {
     });
 
     if (
-      (touched.shipCountry === undefined && values.shipCountry === '') ||
       (touched.shipCity === undefined && values.shipCity === '') ||
-      (touched.billCountry === undefined && values.billCountry === '') ||
       (touched.billCity === undefined && values.billCity === '')
     ) {
       enableNext(false);
