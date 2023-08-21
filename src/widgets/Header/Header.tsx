@@ -1,7 +1,8 @@
 import { stagger, useAnimate } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-import Logo from '../../assets/icons/Logo';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
+import Logo from '../ui/Logo';
 
 function Header() {
   const [scope, animate] = useAnimate();
@@ -34,7 +35,7 @@ function Header() {
           select-none
           items-center
           pb-2
-          pl-2
+          pl-1
           pt-2
           md:h-16
           md:w-44
@@ -45,11 +46,13 @@ function Header() {
           lg:pl-8
         "
       >
-        <Logo
-          onAnimationEnd={() => {
-            animationEndHandler();
-          }}
-        />
+        <Link to="/">
+          <Logo
+            onAnimationEnd={() => {
+              animationEndHandler();
+            }}
+          />
+        </Link>
         <h1
           ref={scope}
           className="
@@ -60,7 +63,8 @@ function Header() {
             tracking-tight 
             text-text-dark
             md:pt-2
-            md:text-2xl
+            md:text-xl
+            lg:text-2xl
           "
         >
           {logoName.map((letter, index) => {
