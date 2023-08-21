@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 export function validSchemaStepOne() {
   const emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?!.*\s).{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&~()_+\-=':"}{/?<>;,.\]\\[*])(?!.*\s).{8,}$/;
 
   return Yup.object({
     email: Yup.string()
@@ -17,7 +17,6 @@ export function validSchemaStepOne() {
 
 export function validSchemaStepTwo() {
   const nameRegEx = /^[a-zA-Z]+$/;
-
   const currentDate = new Date();
   const max = new Date(currentDate.getFullYear() - 13, currentDate.getMonth(), currentDate.getDate());
   const ageLimit = `${max.getFullYear()} ${max.getMonth()} ${max.getDate()}`;
@@ -36,15 +35,15 @@ export function validSchemaStepTwo() {
 }
 
 export function validSchemaStepThree() {
-  const nameRegEx = /^[a-zA-Z]+$/;
+  const cityRegEx = /^(?=.*[a-zA-Z])[a-zA-Z ]+$/;
 
   return Yup.object({
     billCity: Yup.string()
-      .matches(nameRegEx, { message: 'City name must contain only letters', excludeEmptyString: true })
+      .matches(cityRegEx, { message: 'City name must contain only letters', excludeEmptyString: true })
       .max(20, 'Too long name')
       .required('City name is required'),
     shipCity: Yup.string()
-      .matches(nameRegEx, { message: 'City name must contain A, a letters', excludeEmptyString: true })
+      .matches(cityRegEx, { message: 'City name must contain A, a letters', excludeEmptyString: true })
       .max(20, 'Too long name')
       .required('City name is required'),
   });
