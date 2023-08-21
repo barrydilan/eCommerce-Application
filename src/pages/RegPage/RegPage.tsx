@@ -114,8 +114,30 @@ export default function RegPage() {
     }
   }
 
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      rotateY: '-90deg',
+      transition: {
+        duration: 0.5,
+      },
+    },
+    in: {
+      opacity: 1,
+      rotateY: '0deg',
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
+    <motion.div
+      variants={pageVariants}
+      initial="initial"
+      animate="in"
+      className="flex h-full w-full flex-col items-center justify-center"
+    >
       {isFormSubmitted ? (
         <RegFinal
           isSuccess={isSuccess}
@@ -143,6 +165,6 @@ export default function RegPage() {
           />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
