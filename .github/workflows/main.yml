@@ -4,9 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-permissions:
-  contents: write
-
 env:
   NODE_VERSION: 18.16.0
 
