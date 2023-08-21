@@ -9,6 +9,7 @@ import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
+import { ErrorMessage } from '../../../shared/ui';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
 
@@ -70,13 +71,13 @@ export default function RegStepOne(props: UserFormProps) {
           src={touchedAndErrorEmail ? emailIconRed : emailIcon}
           alt=""
         />
-        {touchedAndErrorEmail && <p className="invalidInputMsg">{errors.email}</p>}
+        {touchedAndErrorEmail && <ErrorMessage>{errors.email}</ErrorMessage>}
       </label>
       <label htmlFor="passRegInput" className="loginRegLabel">
         <motion.input
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
+          transition={{ ...inputAnimation.transition, delay: 0.05 }}
           id="passRegInput"
           type="text"
           name="password"
@@ -89,12 +90,12 @@ export default function RegStepOne(props: UserFormProps) {
         <motion.img
           initial={svgAnimation.initial}
           animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
+          transition={{ ...svgAnimation.transition, delay: 0.25 }}
           className="invalidInputIcon"
           src={touched.password && errors.password ? lockIconRed : lockIcon}
           alt=""
         />
-        {touchedAndErrorPassword ? <p className="invalidInputMsg">{errors.password}</p> : null}
+        {touchedAndErrorPassword && <ErrorMessage>{errors.password}</ErrorMessage>}
       </label>
     </CustomRegForm>
   );

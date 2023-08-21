@@ -10,6 +10,7 @@ import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
+import { ErrorMessage } from '../../../shared/ui';
 import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
 import { UserFormProps } from '../types';
 
@@ -128,7 +129,7 @@ export default function RegStepFour(props: UserFormProps) {
           src={touchedAndErrorBillPostalCode ? postalCodeIconRed : postalCodeIcon}
           alt=""
         />
-        {touchedAndErrorBillPostalCode && <p className="invalidInputMsg">{errors.billPostalCode}</p>}
+        {touchedAndErrorBillPostalCode && <ErrorMessage>{errors.billPostalCode}</ErrorMessage>}
       </label>
       <label htmlFor="billStreetInput" className="loginRegLabel">
         <motion.input
@@ -147,12 +148,12 @@ export default function RegStepFour(props: UserFormProps) {
         <motion.img
           initial={svgAnimation.initial}
           animate={svgAnimation.animate}
-          transition={svgAnimation.transition}
+          transition={{ ...svgAnimation.transition, delay: 0.25 }}
           className="invalidInputIcon"
           src={touchedAndErrorBillStreet ? streetIconRed : streetIcon}
           alt=""
         />
-        {touchedAndErrorBillStreet && <p className="invalidInputMsg">{errors.billStreet}</p>}
+        {touchedAndErrorBillStreet && <ErrorMessage>{errors.billStreet}</ErrorMessage>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
         <input
@@ -206,12 +207,12 @@ export default function RegStepFour(props: UserFormProps) {
             <motion.img
               initial={svgAnimation.initial}
               animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
+              transition={{ ...svgAnimation.transition, delay: 0.3 }}
               className="invalidInputIcon"
               src={touchedAndErrorShipPostalCode ? postalCodeIconRed : postalCodeIcon}
               alt=""
             />
-            {touchedAndErrorShipPostalCode && <p className="invalidInputMsg">{errors.shipPostalCode}</p>}
+            {touchedAndErrorShipPostalCode && <ErrorMessage>{errors.shipPostalCode}</ErrorMessage>}
           </label>
           <label htmlFor="shipStreetInput" className="loginRegLabel">
             <motion.input
@@ -230,12 +231,12 @@ export default function RegStepFour(props: UserFormProps) {
             <motion.img
               initial={svgAnimation.initial}
               animate={svgAnimation.animate}
-              transition={svgAnimation.transition}
+              transition={{ ...svgAnimation.transition, delay: 0.35 }}
               className="invalidInputIcon"
               src={touchedAndErrorShipStreet ? streetIconRed : streetIcon}
               alt=""
             />
-            {touchedAndErrorShipStreet && <p className="invalidInputMsg">{errors.shipStreet}</p>}
+            {touchedAndErrorShipStreet && <ErrorMessage>{errors.shipStreet}</ErrorMessage>}
           </label>
           <div className="mt-6 flex items-center text-text-grey">
             <input
