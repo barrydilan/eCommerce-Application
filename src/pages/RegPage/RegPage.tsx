@@ -119,14 +119,18 @@ export default function RegPage() {
       opacity: 0,
       rotateY: '-90deg',
       transition: {
-        duration: 0.5,
+        type: 'spring',
+        stiffness: 90,
+        duration: 0.8,
       },
     },
     in: {
       opacity: 1,
       rotateY: '0deg',
       transition: {
-        duration: 0.5,
+        type: 'spring',
+        stiffness: 90,
+        duration: 0.8,
       },
     },
   };
