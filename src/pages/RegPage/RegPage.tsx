@@ -120,8 +120,7 @@ export default function RegPage() {
       rotateY: '-90deg',
       transition: {
         type: 'spring',
-        stiffness: 90,
-        duration: 0.6,
+        stiffness: 110,
       },
     },
     in: {
@@ -129,17 +128,21 @@ export default function RegPage() {
       rotateY: '0deg',
       transition: {
         type: 'spring',
-        stiffness: 90,
-        duration: 0.6,
+        stiffness: 110,
       },
+    },
+    out: {
+      opacity: 0.5,
     },
   };
 
   return (
     <motion.div
+      key="modal1"
       variants={pageVariants}
       initial="initial"
       animate="in"
+      exit="out"
       className="flex h-full w-full flex-col items-center justify-center"
     >
       {isFormSubmitted ? (

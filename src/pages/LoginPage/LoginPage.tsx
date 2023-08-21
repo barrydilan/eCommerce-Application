@@ -56,8 +56,8 @@ function LoginPage() {
       rotateY: '-90deg',
       transition: {
         type: 'spring',
-        stiffness: 90,
-        duration: 0.6,
+        stiffness: 150,
+        duration: 2,
       },
     },
     in: {
@@ -65,9 +65,12 @@ function LoginPage() {
       rotateY: '0deg',
       transition: {
         type: 'spring',
-        stiffness: 90,
-        duration: 0.6,
+        stiffness: 150,
+        duration: 2,
       },
+    },
+    out: {
+      opacity: 0.5,
     },
   };
 
@@ -77,6 +80,7 @@ function LoginPage() {
       variants={pageVariants}
       initial="initial"
       animate="in"
+      exit="out"
       className={`
         flex
         h-full
