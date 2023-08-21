@@ -1,4 +1,4 @@
-import gulp from '../../../assets/icons/PrimaryGulp.svg';
+import PrimaryGulp from '../../../assets/icons/PrimaryGulp';
 
 export default function CheckCircle(props: { numb: number; currStep: number; title: string }) {
   const { numb, title, currStep } = props;
@@ -40,7 +40,7 @@ export default function CheckCircle(props: { numb: number; currStep: number; tit
         ${addClasses}
         `}
       >
-        {status === 'done' ? <img src={gulp} alt="" /> : numb + 1}
+        {status === 'done' ? <PrimaryGulp /> : numb + 1}
       </div>
       <p
         className={`mt-1.5 text-center text-xs font-medium text-text-grey ${
