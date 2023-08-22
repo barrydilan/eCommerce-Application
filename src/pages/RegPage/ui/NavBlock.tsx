@@ -23,7 +23,7 @@ export default function NavBlock(props: Props) {
       className="
         z-10
         mb-6
-        flex 
+        flex
         w-full
         items-center
         justify-between
@@ -48,7 +48,7 @@ export default function NavBlock(props: Props) {
       </p>
       <button
         type="submit"
-        className={`h-10 rounded-lg bg-accent p-2 text-primary disabled:bg-separation-line disabled:text-text-grey ${
+        className={`h-10 w-1/4 rounded-lg bg-accent p-2 text-primary transition-all duration-100 disabled:bg-separation-line disabled:text-text-grey ${
           isLoading ? 'animate-pulse' : ''
         }`}
         onClick={nextFunc}
