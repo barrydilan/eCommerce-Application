@@ -90,7 +90,7 @@ export default function RegStepTwo(props: UserFormProps) {
             src={touchedAndErrorFirstName ? userIconRed : userIcon}
             alt=""
           />
-          {touchedAndErrorFirstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}
+          <span className="text-sm">{touchedAndErrorFirstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}</span>
         </label>
         <div className={`w-2/4 overflow-hidden transition-all duration-300 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
           <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDateInput" className="loginRegLabel">
@@ -103,7 +103,9 @@ export default function RegStepTwo(props: UserFormProps) {
               name="birthDate"
               placeholder="Birth date"
               onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
-              className={`loginRegInput ${touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''}`}
+              className={`loginRegInput placeholder:placeholder-opacity-0 ${
+                touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''
+              }`}
               onChange={handleChange}
               onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
               value={values.birthDate}

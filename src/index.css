@@ -17,13 +17,14 @@
     @apply relative mt-6 block h-11 w-full rounded-md;
   }
   .loginRegInput {
-    @apply h-full w-full rounded-lg border-2 border-separation-line pl-11 text-base font-medium outline-none focus:border-text-grey text-text-dark transition-colors;
+    @apply h-full w-full rounded-lg border-2 border-separation-line pl-11 text-xs font-medium text-text-dark outline-none transition-colors
+    placeholder:text-sm focus:border-text-grey md:text-base md:placeholder:text-lg;
   }
   .invalidInputIcon {
     @apply absolute left-4 top-3.5 h-5  w-5 bg-contain bg-no-repeat;
   }
   .invalidInputMsg {
-    @apply absolute  -top-5  left-2  text-xs  text-shop-cart-red peer-invalid:block;
+    @apply absolute  -top-[1.15rem] left-2  text-[0.5rem]  leading-[0.5rem] text-shop-cart-red peer-invalid:block md:-top-5 md:text-xs;
   }
 }
 
