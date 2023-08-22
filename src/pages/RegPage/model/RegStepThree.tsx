@@ -21,8 +21,8 @@ const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 
 export default function RegStepThree(props: UserFormProps) {
   const {
     addresses: [
-      { country: billCountry = '', city: billCity = '' } = {},
-      { country: shipCountry = '', city: shipCity = '' } = {},
+      { country: billCountry = 'US', city: billCity = '' } = {},
+      { country: shipCountry = 'US', city: shipCity = '' } = {},
     ] = [],
     sameBillShip,
     updateData,
