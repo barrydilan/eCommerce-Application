@@ -1,13 +1,27 @@
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import { PropsType } from '../types';
 
-export default function NavBlock(props: PropsType) {
-  const { backFunc, nextFunc, isNextEnabled, isFirstStep, isLoading } = props;
+interface Props extends PropsType {
+  sameBillShip: boolean;
+  currentStepIndex: number;
+}
+
+export default function NavBlock(props: Props) {
+  const { backFunc, nextFunc, isNextEnabled, isFirstStep, isLoading, sameBillShip, currentStepIndex } = props;
 
   return (
-    <div
+    <motion.div
+      initial={{ y: 0 }}
+      animate={{ y: sameBillShip || currentStepIndex < 2 ? 0 : '210%' }}
+      transition={{
+        type: 'spring',
+        stiffness: 660,
+        damping: 25,
+      }}
       className="
+        z-10
         mb-6
         flex 
         w-full
@@ -42,6 +56,6 @@ export default function NavBlock(props: PropsType) {
       >
         Continue
       </button>
-    </div>
+    </motion.div>
   );
 }

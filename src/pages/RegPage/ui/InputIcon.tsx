@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import { svgAnimation } from '../../../shared/ui/animations.tsx';
+import { svgAnimation } from '../../../shared/ui';
 
 interface IInputIconProps {
   icon: string;
@@ -12,7 +12,7 @@ function InputIcon({ icon, delay = 0.15 }: IInputIconProps) {
     <motion.img
       initial={svgAnimation.initial}
       animate={svgAnimation.animate}
-      exit={{ height: 0, opacity: 0 }}
+      exit={{ scale: 0, opacity: 0 }}
       transition={{ ...svgAnimation.transition, damping: 14, delay }}
       className="invalidInputIcon"
       src={icon}

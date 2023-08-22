@@ -12,8 +12,7 @@ import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
-import { ErrorMessage } from '../../shared/ui';
-import { inputAnimation, svgAnimation } from '../../shared/ui/animations';
+import { ErrorMessage, inputAnimation, svgAnimation } from '../../shared/ui';
 
 function LoginPage() {
   const [loginUser, { isLoading }] = useLoginUser();
@@ -53,21 +52,17 @@ function LoginPage() {
   });
   const pageVariants = {
     initial: {
-      opacity: 0,
       rotateY: '-90deg',
       transition: {
         type: 'spring',
-        stiffness: 150,
-        duration: 2,
+        stiffness: 140,
       },
     },
     in: {
-      opacity: 1,
       rotateY: '0deg',
       transition: {
         type: 'spring',
-        stiffness: 150,
-        duration: 2,
+        stiffness: 140,
       },
     },
     out: {
