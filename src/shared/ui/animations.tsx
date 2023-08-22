@@ -18,3 +18,25 @@ export const svgAnimation = {
     delay: 0.1,
   },
 };
+
+export const pageVariants = {
+  initial: {
+    opacity: 0,
+    rotateY: '-90deg',
+    transition: {
+      type: 'spring',
+      stiffness: 110,
+    },
+  },
+  in: {
+    opacity: 1,
+    rotateY: '0deg',
+    transition: {
+      type: 'spring',
+      stiffness: 110,
+    },
+  },
+  out: {
+    opacity: 0.5,
+  },
+};

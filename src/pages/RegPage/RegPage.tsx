@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 import prepareDataForUpload from './lib/helpers';
 import useMultistepForm from './lib/hooks';
-import { RegFinal, RegStepFour, RegStepOne, RegStepThree, RegStepTwo } from './model';
+import { FinalModal, RegStepFour, RegStepOne, RegStepThree, RegStepTwo } from './model';
 import { IFormData, UpdateDataParams } from './types';
 import CirclesWrapper from './ui/CirclesWrapper.tsx';
 import NavBlock from './ui/NavBlock.tsx';
 import { useLoginUser, useSignUpMutation } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
 import { ISignUpAddress } from '../../shared/types';
+import { pageVariants } from '../../shared/ui';
 
 const initVals: IFormData = {
   email: '',
@@ -114,28 +115,6 @@ export default function RegPage() {
     }
   }
 
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      rotateY: '-90deg',
-      transition: {
-        type: 'spring',
-        stiffness: 110,
-      },
-    },
-    in: {
-      opacity: 1,
-      rotateY: '0deg',
-      transition: {
-        type: 'spring',
-        stiffness: 110,
-      },
-    },
-    out: {
-      opacity: 0.5,
-    },
-  };
-
   return (
     <motion.div
       key="modal1"
@@ -146,7 +125,7 @@ export default function RegPage() {
       className="flex h-full w-full flex-col items-center justify-center"
     >
       {isFormSubmitted ? (
-        <RegFinal
+        <FinalModal
           isSuccess={isSuccess}
           reStartForm={reStartForm}
           setIsFormSubmitted={setIsFormSubmitted}

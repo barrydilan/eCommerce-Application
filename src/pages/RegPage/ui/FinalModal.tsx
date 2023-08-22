@@ -7,7 +7,7 @@ import accentGulp from '../../../assets/icons/AccentGulp.svg';
 import redCross from '../../../assets/icons/RedCross.svg';
 import { ErrorCodeStatus } from '../../../shared/types';
 
-export default function RegFinal(props: {
+export default function FinalModal(props: {
   isSuccess: boolean;
   reStartForm: () => void;
   setIsFormSubmitted: (arg: boolean) => void;
