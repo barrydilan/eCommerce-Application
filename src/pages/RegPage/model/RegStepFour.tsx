@@ -10,8 +10,7 @@ import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
-import { ErrorMessage } from '../../../shared/ui';
-import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
+import { checkboxAnimation, ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
 
 export default function RegStepFour(props: UserFormProps) {
@@ -156,7 +155,10 @@ export default function RegStepFour(props: UserFormProps) {
         {touchedAndErrorBillStreet && <ErrorMessage>{errors.billStreet}</ErrorMessage>}
       </label>
       <div className="mt-6 flex items-center text-text-grey">
-        <input
+        <motion.input
+          initial={checkboxAnimation.initial}
+          animate={checkboxAnimation.animate}
+          transition={checkboxAnimation.transitionInput}
           id="billSetDefInput"
           type="checkbox"
           name="billSetDefault"
@@ -164,7 +166,10 @@ export default function RegStepFour(props: UserFormProps) {
           onChange={handleChange}
           className="hiddenCheckBox peer/expand"
         />
-        <label
+        <motion.label
+          initial={checkboxAnimation.initial}
+          animate={checkboxAnimation.animate}
+          transition={checkboxAnimation.transitionLabel}
           htmlFor="billSetDefInput"
           className="
           regFormCheckGulp
@@ -176,7 +181,7 @@ export default function RegStepFour(props: UserFormProps) {
         "
         >
           {sameBillShip ? `Set as default billing & shipping address` : 'Set as default billing address'}
-        </label>
+        </motion.label>
       </div>
       {!sameBillShip ? (
         <div>
@@ -239,7 +244,10 @@ export default function RegStepFour(props: UserFormProps) {
             {touchedAndErrorShipStreet && <ErrorMessage>{errors.shipStreet}</ErrorMessage>}
           </label>
           <div className="mt-6 flex items-center text-text-grey">
-            <input
+            <motion.input
+              initial={checkboxAnimation.initial}
+              animate={checkboxAnimation.animate}
+              transition={{ ...checkboxAnimation.transitionInput, delay: 0.4 }}
               id="shipSetDefInput"
               type="checkbox"
               name="shipSetDefault"
@@ -247,7 +255,10 @@ export default function RegStepFour(props: UserFormProps) {
               onChange={handleChange}
               className="peer/expand hiddenCheckBox"
             />
-            <label
+            <motion.label
+              initial={checkboxAnimation.initial}
+              animate={checkboxAnimation.animate}
+              transition={{ ...checkboxAnimation.transitionLabel, delay: 0.5 }}
               htmlFor="shipSetDefInput"
               className="
             regFormCheckGulp
@@ -259,7 +270,7 @@ export default function RegStepFour(props: UserFormProps) {
           "
             >
               {sameBillShip ? `Set as default billing & shipping address` : 'Set as default shipping address'}
-            </label>
+            </motion.label>
           </div>
         </div>
       ) : null}
