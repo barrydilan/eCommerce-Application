@@ -23,7 +23,7 @@
     @apply absolute left-4 top-3.5 h-5  w-5 bg-contain bg-no-repeat;
   }
   .invalidInputMsg {
-    @apply absolute  -top-5  left-2  text-xs  text-shop-cart-red peer-invalid:block;
+    @apply absolute  -top-[1.15rem] md:-top-5  left-2  md:text-xs text-[0.5rem] leading-[0.5rem] text-shop-cart-red peer-invalid:block;
   }
 }
 
