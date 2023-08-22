@@ -8,7 +8,7 @@ import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
 import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
-import CustomRegForm from '../../../entities/form/ui';
+import { CustomRegForm } from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
 import { checkboxAnimation, ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';

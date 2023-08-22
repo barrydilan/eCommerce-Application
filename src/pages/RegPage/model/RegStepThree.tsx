@@ -7,7 +7,7 @@ import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
-import CustomRegForm from '../../../entities/form/ui';
+import { CustomRegForm } from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
 import { checkboxAnimation, ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
