@@ -39,8 +39,8 @@ export const pageVariants = {
   out: {
     opacity: 0.5,
   },
-}
-      
+};
+
 export const checkboxAnimation = {
   initial: { scale: 0 },
   animate: { scale: 1 },
