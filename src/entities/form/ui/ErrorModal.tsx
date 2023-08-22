@@ -19,8 +19,7 @@ export default function ErrorModal({ reStartForm, errorMessage, navigateTo }: IE
       animate="in"
       exit="out"
       className="
-      ml-3
-      mr-3
+      mx-3
       box-border
       flex
       w-10/12
@@ -29,10 +28,7 @@ export default function ErrorModal({ reStartForm, errorMessage, navigateTo }: IE
       rounded-3xl
       border-2
       border-separation-line
-      pb-2
-      pl-4
-      pr-4
-      pt-2
+      p-6
       sm:w-128
     "
     >
@@ -62,12 +58,14 @@ export default function ErrorModal({ reStartForm, errorMessage, navigateTo }: IE
         }}
         to={navigateTo}
         className="
-          mb-9 
-          mt-9 
-          h-10 
-          rounded-lg 
-          bg-accent 
-          p-2 
+          mb-4
+          mt-8
+          h-10
+          w-1/4
+          rounded-lg
+          bg-accent
+          p-2
+          text-center
           text-primary
         "
       >
