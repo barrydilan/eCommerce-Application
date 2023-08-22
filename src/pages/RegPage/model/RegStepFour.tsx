@@ -134,7 +134,7 @@ export default function RegStepFour(props: UserFormProps) {
         <motion.input
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
-          transition={inputAnimation.transition}
+          transition={{ ...inputAnimation.transition, delay: 0.05 }}
           id="billStreetInput"
           type="text"
           name="billStreet"
@@ -196,7 +196,7 @@ export default function RegStepFour(props: UserFormProps) {
             <motion.input
               initial={inputAnimation.initial}
               animate={inputAnimation.animate}
-              transition={inputAnimation.transition}
+              transition={{ ...inputAnimation.transition, delay: 0.1 }}
               id="shipPostCodeInput"
               type="text"
               name="shipPostalCode"
@@ -223,7 +223,7 @@ export default function RegStepFour(props: UserFormProps) {
             <motion.input
               initial={inputAnimation.initial}
               animate={inputAnimation.animate}
-              transition={inputAnimation.transition}
+              transition={{ ...inputAnimation.transition, delay: 0.15 }}
               id="shipStreetInput"
               type="text"
               name="shipStreet"
