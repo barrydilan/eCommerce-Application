@@ -31,8 +31,8 @@ export default function RegPage() {
   const [formData, setFormData] = useState(initVals);
   const [isNextEnabled, setIsNextEnabled] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const [loginUser, { isLoading }] = useLoginUser();
-  const [signUpUser, { isSuccess, error }] = useSignUpMutation();
+  const [loginUser] = useLoginUser();
+  const [signUpUser, { isSuccess, error, isLoading }] = useSignUpMutation();
   const navigate = useNavigate();
   const { isLogged } = useAppSelector((state) => state.userReducer);
 
@@ -116,19 +116,17 @@ export default function RegPage() {
 
   const pageVariants = {
     initial: {
-      opacity: 0,
       rotateY: '-90deg',
       transition: {
         type: 'spring',
-        stiffness: 110,
+        stiffness: 140,
       },
     },
     in: {
-      opacity: 1,
       rotateY: '0deg',
       transition: {
         type: 'spring',
-        stiffness: 110,
+        stiffness: 140,
       },
     },
     out: {
@@ -156,7 +154,7 @@ export default function RegPage() {
         <div className="mx-3 my-10 flex h-fit w-fit flex-col items-center justify-center rounded-3xl border-2 border-separation-line px-4 sm:px-10 md:h-fit">
           <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
           <motion.div
-            initial={{ height: 0 }}
+            initial={{ height: 150 }}
             animate={{ height: sameBillShip || currentStepIndex < 2 ? 150 : 300 }}
             transition={{
               type: 'spring',

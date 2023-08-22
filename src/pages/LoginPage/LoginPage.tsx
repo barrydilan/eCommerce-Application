@@ -53,21 +53,17 @@ function LoginPage() {
   });
   const pageVariants = {
     initial: {
-      opacity: 0,
       rotateY: '-90deg',
       transition: {
         type: 'spring',
-        stiffness: 150,
-        duration: 2,
+        stiffness: 140,
       },
     },
     in: {
-      opacity: 1,
       rotateY: '0deg',
       transition: {
         type: 'spring',
-        stiffness: 150,
-        duration: 2,
+        stiffness: 140,
       },
     },
     out: {
