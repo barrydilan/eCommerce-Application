@@ -103,7 +103,9 @@ export default function RegStepTwo(props: UserFormProps) {
               name="birthDate"
               placeholder="Birth date"
               onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
-              className={`loginRegInput ${touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''}`}
+              className={`loginRegInput placeholder:placeholder-opacity-0 ${
+                touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''
+              }`}
               onChange={handleChange}
               onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
               value={values.birthDate}
