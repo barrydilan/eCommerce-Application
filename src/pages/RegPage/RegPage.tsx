@@ -32,8 +32,8 @@ export default function RegPage() {
   const [formData, setFormData] = useState(initVals);
   const [isNextEnabled, setIsNextEnabled] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const [loginUser, { isLoading }] = useLoginUser();
-  const [signUpUser, { isSuccess, error }] = useSignUpMutation();
+  const [loginUser] = useLoginUser();
+  const [signUpUser, { isSuccess, error, isLoading }] = useSignUpMutation();
   const navigate = useNavigate();
   const { isLogged } = useAppSelector((state) => state.userReducer);
 
@@ -132,26 +132,36 @@ export default function RegPage() {
           error={error}
         />
       ) : (
-        <div className="mx-3 my-10 flex h-fit w-fit flex-col items-center justify-center rounded-3xl border-2 border-separation-line px-4 sm:px-10 md:h-fit">
-          <CirclesWrapper currStep={currentStepIndex} quantity={formLength} />
+        <div
+          className={`relative mx-3 my-10 flex w-fit flex-col items-center justify-center rounded-3xl px-4 sm:px-10 ${
+            sameBillShip || currentStepIndex < 2 ? 'h-[379.2px]' : 'h-[529.72px]'
+          }`}
+        >
           <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: sameBillShip || currentStepIndex < 2 ? 150 : 300 }}
+            initial={{ scaleY: 1 }}
+            animate={{ scaleY: sameBillShip || currentStepIndex < 2 ? 1 : 1.05 }}
             transition={{
               type: 'spring',
               stiffness: 660,
-              damping: 25,
+              damping: 15,
             }}
-            className="relative mb-6 mt-8 flex w-full justify-center"
-          >
-            {currForm}
-          </motion.div>
+            className="absolute inset-0 m-auto h-full w-full rounded-3xl border-2 border-separation-line"
+          />
+          <CirclesWrapper
+            sameBillShip={sameBillShip}
+            currentStepIndex={currentStepIndex}
+            currStep={currentStepIndex}
+            quantity={formLength}
+          />
+          <div className="relative mb-6 mt-8 flex h-fit min-h-[150px] w-full justify-center">{currForm}</div>
           <NavBlock
             backFunc={back}
             isFirstStep={isFirstStep}
             isNextEnabled={isNextEnabled}
             nextFunc={nextFunc}
             isLoading={isLoading}
+            sameBillShip={sameBillShip}
+            currentStepIndex={currentStepIndex}
           />
         </div>
       )}

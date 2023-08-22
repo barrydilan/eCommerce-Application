@@ -39,4 +39,21 @@ export const pageVariants = {
   out: {
     opacity: 0.5,
   },
+}
+      
+export const checkboxAnimation = {
+  initial: { scale: 0 },
+  animate: { scale: 1 },
+  transitionLabel: {
+    type: 'spring',
+    stiffness: 660,
+    damping: 38,
+    delay: 0.4,
+  },
+  transitionInput: {
+    type: 'spring',
+    stiffness: 660,
+    damping: 23,
+    delay: 0.3,
+  },
 };

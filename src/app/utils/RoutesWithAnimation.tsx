@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
+import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import RegPage from '../../pages/RegPage/RegPage';
 
 export default function RoutesWithAnimation() {
@@ -11,7 +12,7 @@ export default function RoutesWithAnimation() {
       <Route index element={<p>Here will be main content</p>} />
       <Route path="registration" element={<RegPage />} />
       <Route path="login" element={<LoginPage />} />
-      <Route path="profile" element={<p>User profile</p>} />
+      <Route path="profile" element={<ProfilePage />} />
       <Route path="cart" element={<p>Shopping cart</p>} />
       <Route path="delivery" element={<p>Delivery</p>} />
       <Route path="payment" element={<p>Payment</p>} />

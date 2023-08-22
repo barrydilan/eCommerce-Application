@@ -9,8 +9,7 @@ import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
 import CustomRegForm from '../../../entities/form/ui';
 import { ISignUpAddress } from '../../../shared/types';
-import { ErrorMessage } from '../../../shared/ui';
-import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
+import { checkboxAnimation, ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
 import { InputIcon } from '../ui';
 
@@ -21,8 +20,8 @@ const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 
 export default function RegStepThree(props: UserFormProps) {
   const {
     addresses: [
-      { country: billCountry = '', city: billCity = '' } = {},
-      { country: shipCountry = '', city: shipCity = '' } = {},
+      { country: billCountry = 'US', city: billCity = '' } = {},
+      { country: shipCountry = 'US', city: shipCity = '' } = {},
     ] = [],
     sameBillShip,
     updateData,
@@ -149,9 +148,9 @@ export default function RegStepThree(props: UserFormProps) {
         {!values.sameBillShip ? (
           <motion.div
             key="secondInputGroup"
-            initial={{ opacity: 0, height: 0, translateY: '10%' }}
-            animate={{ opacity: 1, height: 'auto', translateY: '0%' }}
-            exit={{ height: 0, opacity: 0, position: 'absolute' }}
+            initial={{ opacity: 0, scaleY: 0, translateY: '20%' }}
+            animate={{ opacity: 1, scaleY: 1, translateY: '0%' }}
+            exit={{ scaleY: 0, opacity: 0, position: 'absolute' }}
             transition={{
               type: 'spring',
               stiffness: 360,
@@ -165,7 +164,7 @@ export default function RegStepThree(props: UserFormProps) {
               <motion.select
                 initial={{ y: '-30%' }}
                 animate={{ y: '0%' }}
-                exit={{ height: 0, opacity: 0 }}
+                exit={{ scaleY: 0, opacity: 0 }}
                 transition={{
                   type: 'spring',
                   stiffness: 560,
@@ -189,12 +188,11 @@ export default function RegStepThree(props: UserFormProps) {
               <motion.input
                 initial={{ y: '-30%' }}
                 animate={{ y: '0%' }}
-                exit={{ height: 0, opacity: 0 }}
+                exit={{ scaleY: 0, opacity: 0 }}
                 transition={{
                   type: 'spring',
                   stiffness: 560,
                   damping: 10,
-                  delay: 0.2,
                 }}
                 id="shipCityInput"
                 type="text"
@@ -211,8 +209,20 @@ export default function RegStepThree(props: UserFormProps) {
           </motion.div>
         ) : null}
       </AnimatePresence>
-      <div className="mt-4 flex items-center text-text-grey">
-        <input
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: sameBillShip ? 0 : '20%' }}
+        transition={{
+          type: 'spring',
+          stiffness: 960,
+          damping: 15,
+        }}
+        className="mt-4 flex items-center text-text-grey"
+      >
+        <motion.input
+          initial={checkboxAnimation.initial}
+          animate={checkboxAnimation.animate}
+          transition={checkboxAnimation.transitionInput}
           id="expand"
           type="checkbox"
           name="sameBillShip"
@@ -220,14 +230,17 @@ export default function RegStepThree(props: UserFormProps) {
           onChange={handleChange}
           className="hiddenCheckBox peer/expand"
         />
-        <label
+        <motion.label
+          initial={checkboxAnimation.initial}
+          animate={checkboxAnimation.animate}
+          transition={checkboxAnimation.transitionLabel}
           htmlFor="expand"
           className="regFormCheckGulp relative text-3xs leading-3 peer-checked/expand:before:block"
         >
           Use the same address <br />
           as a billing and a shipping
-        </label>
-      </div>
+        </motion.label>
+      </motion.div>
     </CustomRegForm>
   );
 }
