@@ -2,11 +2,6 @@ import { setCookie } from '../../../../shared/lib/helpers';
 import { useAppDispatch } from '../../../../shared/lib/hooks';
 import { prepareLoginCookieData, useLoginTokenMutation, userSlice } from '../../index.ts';
 
-type LoginUser = (email: string, password: string, id: string) => Promise<void>;
-interface IUserLoginReturnParams {
-	isLoading: boolean;
-}
-
 /**
  * Logs in user and stores the access token in cookies.
  * @typedef {string} email - The email of the user
@@ -17,8 +12,8 @@ interface IUserLoginReturnParams {
  * @typedef {[loginUser, paramsObj]} ParamsTuple
  * @returns {ParamsTuple} The tuple of loginUser function and object of parameters such as isLoading.
  */
-function useLoginUser(): [LoginUser, IUserLoginReturnParams] {
-	const [getLoginToken, { isLoading }] = useLoginTokenMutation();
+function useLoginUser() {
+	const [getLoginToken, params] = useLoginTokenMutation();
 	const dispatch = useAppDispatch();
 	const { loggedIn } = userSlice.actions;
 
@@ -46,7 +41,7 @@ function useLoginUser(): [LoginUser, IUserLoginReturnParams] {
 		}
 	}
 
-	return [loginUser, { isLoading }];
+	return [loginUser, params] as [typeof loginUser, typeof params];
 }
 
 export default useLoginUser;
