@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { RESTRICTED_AGE } from '../lib/const';
 
 function correctDate(year: number, month: number, day: number) {
-  return new Date(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
+  return new Date(`${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
 }
 
 export function validSchemaStepOne() {
