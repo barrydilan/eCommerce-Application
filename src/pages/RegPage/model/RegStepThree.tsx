@@ -39,18 +39,17 @@ export default function RegStepThree(props: UserFormProps) {
     validationSchema,
     onSubmit: () => {},
   });
-  const { handleChange, handleBlur, errors, touched, values } = formik;
+  const { handleChange, handleBlur, errors, touched, values, setValues } = formik;
 
   useEffect(() => {
-    if (values.sameBillShip === true) {
-      values.shipCountry = values.billCountry;
-      values.shipCity = values.billCity;
-      errors.shipCountry = undefined;
-      errors.shipCity = undefined;
-      touched.shipCountry = true;
-      touched.shipCity = true;
+    if (values.sameBillShip) {
+      setValues({ ...values, shipCountry: values.billCountry, shipCity: values.billCity });
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.sameBillShip, values.billCity, values.billCountry]);
+
+  useEffect(() => {
     const shipAddress: ISignUpAddress = {
       city: values.shipCity!,
       country: values.shipCountry!,
