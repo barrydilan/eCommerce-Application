@@ -41,20 +41,25 @@ export default function RegStepFour(props: UserFormProps) {
     onSubmit: () => {},
   });
 
-  const { handleChange, handleBlur, errors, touched, values } = formik;
+  const { handleChange, handleBlur, errors, touched, values, setValues, setTouched } = formik;
   const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
   useEffect(() => {
-    if (sameBillShip) {
-      values.shipPostalCode = values.billPostalCode;
-      values.shipStreet = values.billStreet;
-      values.shipSetDefault = values.billSetDefault;
-      errors.shipPostalCode = undefined;
-      errors.shipStreet = undefined;
-      touched.shipPostalCode = true;
-      touched.shipStreet = true;
-    }
+    if (!sameBillShip) return;
 
+    setTouched({ shipPostalCode: true, shipStreet: true });
+
+    setValues({
+      ...values,
+      shipPostalCode: values.billPostalCode,
+      shipStreet: values.billStreet,
+      shipSetDefault: billSetDefault,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sameBillShip, values.billStreet, values.billPostalCode, billSetDefault]);
+
+  useEffect(() => {
     updateData((prevState) => ({
       ...prevState,
       billSetDefault: values.billSetDefault as boolean,

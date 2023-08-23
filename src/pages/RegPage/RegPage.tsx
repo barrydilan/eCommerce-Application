@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 
 import prepareDataForUpload from './lib/helpers';
 import useMultistepForm from './lib/hooks';
@@ -12,7 +11,6 @@ import NavBlock from './ui/NavBlock.tsx';
 import { ErrorModal, SuccessModal } from '../../entities/form/ui';
 import { useLoginUser, useSignUpMutation } from '../../entities/user';
 import { getErrorMessage } from '../../shared/lib/helpers';
-import { useAppSelector } from '../../shared/lib/hooks';
 import { ISignUpAddress } from '../../shared/types';
 import { pageVariants } from '../../shared/ui';
 
@@ -36,8 +34,6 @@ export default function RegPage() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [loginUser] = useLoginUser();
   const [signUpUser, { isSuccess, error, isLoading }] = useSignUpMutation();
-  const navigate = useNavigate();
-  const { isLogged } = useAppSelector((state) => state.userReducer);
 
   const errorMessage = getErrorMessage(error);
 
@@ -103,11 +99,6 @@ export default function RegPage() {
     isNextEnabled && next();
 
     if (!isLastStep || !isNextEnabled) return;
-
-    if (isLogged) {
-      navigate('/');
-      return;
-    }
 
     const signUpData = prepareDataForUpload(formData);
 
