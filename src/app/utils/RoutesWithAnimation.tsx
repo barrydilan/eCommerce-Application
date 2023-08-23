@@ -4,6 +4,7 @@ import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import RegPage from '../../pages/RegPage/RegPage';
+import { LoginRequired } from '../../shared/ui';
 
 export default function RoutesWithAnimation() {
   const location = useLocation();
@@ -11,7 +12,14 @@ export default function RoutesWithAnimation() {
     <Routes location={location} key={location.key}>
       <Route index element={<p>Here will be main content</p>} />
       <Route path="registration" element={<RegPage />} />
-      <Route path="login" element={<LoginPage />} />
+      <Route
+        path="login"
+        element={
+          <LoginRequired>
+            <LoginPage />
+          </LoginRequired>
+        }
+      />
       <Route path="profile" element={<ProfilePage />} />
       <Route path="cart" element={<p>Shopping cart</p>} />
       <Route path="delivery" element={<p>Delivery</p>} />
