@@ -12,14 +12,12 @@ import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { ErrorModal } from '../../entities/form/ui';
 import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
 import { getErrorMessage } from '../../shared/lib/helpers';
-import { useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
 import { ErrorMessage, inputAnimation, pageVariants, svgAnimation } from '../../shared/ui';
 
 function LoginPage() {
   const [loginUser, { error: loginError, isLoading: loginIsLoading }] = useLoginUser();
   const [getLoginUserData, { error: loginDataError, isLoading: loginDataIsLoading }] = useLoginUserDataMutation();
-  const { isLogged } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
 
   const passwordInput = useRef(null);
@@ -32,11 +30,6 @@ function LoginPage() {
   }
 
   async function handleSubmit(userData: ILoginUserParams) {
-    if (isLogged) {
-      navigate('/');
-      return;
-    }
-
     try {
       const {
         customer: { id },

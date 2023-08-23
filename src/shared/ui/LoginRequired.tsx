@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { useAppSelector } from '../lib/hooks';
 
@@ -10,10 +10,9 @@ interface ILoginRequiredProps {
 
 function LoginRequired({ children }: ILoginRequiredProps) {
   const { isLogged } = useAppSelector((state) => state.userReducer);
-  const navigate = useNavigate();
 
   if (isLogged) {
-    navigate('/');
+    return <Navigate to="/" replace />;
   }
 
   return children;

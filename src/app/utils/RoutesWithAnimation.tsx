@@ -11,7 +11,14 @@ export default function RoutesWithAnimation() {
   return (
     <Routes location={location} key={location.key}>
       <Route index element={<p>Here will be main content</p>} />
-      <Route path="registration" element={<RegPage />} />
+      <Route
+        path="registration"
+        element={
+          <LoginRequired>
+            <RegPage />
+          </LoginRequired>
+        }
+      />
       <Route
         path="login"
         element={
