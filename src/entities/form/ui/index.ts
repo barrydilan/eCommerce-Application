@@ -1,3 +1,5 @@
 import CustomRegForm from './CustomRegForm.tsx';
+import ErrorModal from './ErrorModal.tsx';
+import SuccessModal from './SuccessModal.tsx';
 
-export default CustomRegForm;
+export { CustomRegForm, SuccessModal, ErrorModal };

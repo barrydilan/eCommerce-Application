@@ -37,6 +37,7 @@ export const pageVariants = {
     },
   },
   out: {
+    scale: 5,
     opacity: 0.5,
   },
 };

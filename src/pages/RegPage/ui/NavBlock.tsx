@@ -23,7 +23,7 @@ export default function NavBlock(props: Props) {
       className="
         z-10
         mb-6
-        flex 
+        flex
         w-full
         items-center
         justify-between
@@ -40,15 +40,15 @@ export default function NavBlock(props: Props) {
       >
         Back
       </button>
-      <p className="lg:text- text-center text-xs sm:leading-10 xl:text-xs">
+      <p className="text-center text-xs sm:leading-10">
         <span className="hidden sm:inline">Already have an account? </span>
-        <Link className="font-bold text-accent" to="/login">
+        <Link className="text-accent" to="/login">
           Log in
         </Link>
       </p>
       <button
         type="submit"
-        className={`h-10 rounded-lg bg-accent p-2 text-primary disabled:bg-separation-line disabled:text-text-grey ${
+        className={`h-10 w-1/4 rounded-lg bg-accent p-2 text-primary transition-all duration-100 disabled:bg-separation-line disabled:text-text-grey ${
           isLoading ? 'animate-pulse' : ''
         }`}
         onClick={nextFunc}

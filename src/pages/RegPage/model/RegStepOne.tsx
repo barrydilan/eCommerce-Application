@@ -8,9 +8,8 @@ import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
-import CustomRegForm from '../../../entities/form/ui';
-import { ErrorMessage } from '../../../shared/ui';
-import { inputAnimation, svgAnimation } from '../../../shared/ui/animations';
+import { CustomRegForm } from '../../../entities/form/ui';
+import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
 
 const validationSchema = validSchemaStepOne();

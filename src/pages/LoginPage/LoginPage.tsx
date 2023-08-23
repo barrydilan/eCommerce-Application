@@ -1,17 +1,17 @@
 import { useRef } from 'react';
 
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { togglePassVisibility, validationSchema } from './model/loginPageModel';
-import ErrorModal from './ui/ErrorModal.tsx';
 import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
+import { ErrorModal } from '../../entities/form/ui';
 import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
+import { getErrorMessage } from '../../shared/lib/helpers';
 import { useAppSelector } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
 import { ErrorMessage, inputAnimation, pageVariants, svgAnimation } from '../../shared/ui';
@@ -24,18 +24,8 @@ function LoginPage() {
 
   const passwordInput = useRef(null);
 
-  const logErrObj = (loginError as FetchBaseQueryError)?.data;
-  const logDataErrObj = (loginDataError as FetchBaseQueryError)?.data;
-  let loginErrorMessage = '';
-  let loginDataErrorMessage = '';
-
-  if (logErrObj instanceof Object && 'message' in logErrObj) {
-    loginErrorMessage = logErrObj.message as string;
-  }
-
-  if (logDataErrObj instanceof Object && 'message' in logDataErrObj) {
-    loginDataErrorMessage = logDataErrObj.message as string;
-  }
+  const loginErrorMessage = getErrorMessage(loginError);
+  const loginDataErrorMessage = getErrorMessage(loginDataError);
 
   function handleNavigateBackToLogin() {
     navigate('/login');
@@ -251,18 +241,18 @@ function LoginPage() {
                 "
           >
             Don&apos;t have an account yet?{' '}
-            <Link
-              className="
-                  text-accent
-                "
-              to="/registration"
-            >
+            <Link className="text-accent" to="/registration">
               Sign up
             </Link>
           </p>
         </form>
       ) : (
-        <ErrorModal reStartForm={handleNavigateBackToLogin} errorMessage={loginErrorMessage || loginDataErrorMessage} />
+        <ErrorModal
+          key="error"
+          reStartForm={handleNavigateBackToLogin}
+          errorMessage={loginErrorMessage || loginDataErrorMessage}
+          navigateTo="/login"
+        />
       )}
     </motion.div>
   );

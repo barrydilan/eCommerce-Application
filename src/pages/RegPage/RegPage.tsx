@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 import prepareDataForUpload from './lib/helpers';
 import useMultistepForm from './lib/hooks';
-import { FinalModal, RegStepFour, RegStepOne, RegStepThree, RegStepTwo } from './model';
+import { RegStepFour, RegStepOne, RegStepThree, RegStepTwo } from './model';
 import { IFormData, UpdateDataParams } from './types';
 import CirclesWrapper from './ui/CirclesWrapper.tsx';
 import NavBlock from './ui/NavBlock.tsx';
+import { ErrorModal, SuccessModal } from '../../entities/form/ui';
 import { useLoginUser, useSignUpMutation } from '../../entities/user';
+import { getErrorMessage } from '../../shared/lib/helpers';
 import { useAppSelector } from '../../shared/lib/hooks';
 import { ISignUpAddress } from '../../shared/types';
 import { pageVariants } from '../../shared/ui';
@@ -36,6 +38,8 @@ export default function RegPage() {
   const [signUpUser, { isSuccess, error, isLoading }] = useSignUpMutation();
   const navigate = useNavigate();
   const { isLogged } = useAppSelector((state) => state.userReducer);
+
+  const errorMessage = getErrorMessage(error);
 
   const enableNext = useCallback(
     (arg: boolean) => {
@@ -90,6 +94,11 @@ export default function RegPage() {
     ],
   );
 
+  function handleResetForm() {
+    reStartForm();
+    setIsFormSubmitted(false);
+  }
+
   async function nextFunc() {
     isNextEnabled && next();
 
@@ -124,13 +133,13 @@ export default function RegPage() {
       exit="out"
       className="flex h-full w-full flex-col items-center justify-center"
     >
+      {/* eslint-disable-next-line no-nested-ternary */}
       {isFormSubmitted ? (
-        <FinalModal
-          isSuccess={isSuccess}
-          reStartForm={reStartForm}
-          setIsFormSubmitted={setIsFormSubmitted}
-          error={error}
-        />
+        isSuccess ? (
+          <SuccessModal />
+        ) : (
+          <ErrorModal reStartForm={handleResetForm} errorMessage={errorMessage} navigateTo="/registration" />
+        )
       ) : (
         <div
           className={`relative mx-3 my-10 flex w-fit flex-col items-center justify-center rounded-3xl px-4 sm:px-10 ${
