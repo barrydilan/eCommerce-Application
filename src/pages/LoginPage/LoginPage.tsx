@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
@@ -51,6 +51,33 @@ function LoginPage() {
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  const { handleChange, handleBlur, errors, touched, values, setFieldError } = formik;
+
+  const touchedAndErrorEmail = touched.email && errors.email;
+  const touchedAndErrorPassword = touched.password && errors.password;
+
+  const [enableLogin, setEnableLogin] = useState(false);
+
+  useEffect(() => {
+    if (
+      (touched.email === undefined && values.email === '') ||
+      (touched.password === undefined && values.password === '')
+    ) {
+      setEnableLogin(false);
+      return;
+    }
+    if (errors.email || errors.password) {
+      setEnableLogin(false);
+      return;
+    }
+    if (/\s/.test(values.password as string)) {
+      setFieldError('password', "Password can't contain spaces");
+    } else {
+      setFieldError('password', undefined);
+    }
+    setEnableLogin(true);
+  }, [values, errors, touched, setFieldError]);
 
   return (
     <motion.div
@@ -116,20 +143,20 @@ function LoginPage() {
               type="email"
               name="email"
               placeholder="Email"
-              className={`loginRegInput ${formik.touched.email && formik.errors.email ? 'border-shop-cart-red' : ''}`}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
+              className={`loginRegInput ${touchedAndErrorEmail ? 'border-shop-cart-red' : ''}`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
             />
             <motion.img
               initial={svgAnimation.initial}
               animate={svgAnimation.animate}
               transition={svgAnimation.transition}
               className="invalidInputIcon"
-              src={formik.touched.email && formik.errors.email ? emailIconRed : emailIcon}
+              src={touchedAndErrorEmail ? emailIconRed : emailIcon}
               alt="invalidInputIcon"
             />
-            {formik.touched.email && formik.errors.email ? <ErrorMessage>{formik.errors.email}</ErrorMessage> : null}
+            {touchedAndErrorEmail ? <ErrorMessage>{errors.email}</ErrorMessage> : null}
           </label>
           <label htmlFor="passLogInput" className="loginRegLabel">
             <motion.input
@@ -141,12 +168,10 @@ function LoginPage() {
               name="password"
               autoComplete="myFancyPassword"
               placeholder="Password"
-              className={`loginRegInput ${
-                formik.touched.password && formik.errors.password ? 'border-shop-cart-red' : ''
-              }`}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
+              className={`loginRegInput ${touchedAndErrorPassword ? 'border-shop-cart-red' : ''}`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.password}
               ref={passwordInput}
             />
             <motion.img
@@ -154,12 +179,10 @@ function LoginPage() {
               animate={svgAnimation.animate}
               transition={{ ...svgAnimation.transition, delay: 0.25 }}
               className="invalidInputIcon"
-              src={formik.touched.password && formik.errors.password ? lockIconRed : lockIcon}
+              src={touchedAndErrorPassword ? lockIconRed : lockIcon}
               alt=""
             />
-            {formik.touched.password && formik.errors.password ? (
-              <ErrorMessage>{formik.errors.password}</ErrorMessage>
-            ) : null}
+            {touchedAndErrorPassword ? <ErrorMessage>{errors.password}</ErrorMessage> : null}
           </label>
           <div
             className="
@@ -209,7 +232,7 @@ function LoginPage() {
             </label>
           </div>
           <button
-            disabled={loginIsLoading || loginDataIsLoading}
+            disabled={!enableLogin || loginIsLoading || loginDataIsLoading}
             type="submit"
             className={`
                   mt-3
@@ -219,6 +242,8 @@ function LoginPage() {
                   bg-accent
                   text-base
                   text-primary
+                  disabled:bg-separation-line 
+                  disabled:text-text-grey
                   ${loginIsLoading || loginDataIsLoading ? 'animate-pulse' : ''}
                   `}
           >

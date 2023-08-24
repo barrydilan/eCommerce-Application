@@ -25,7 +25,7 @@ export default function RegStepOne(props: UserFormProps) {
     onSubmit: () => {},
   });
 
-  const { handleChange, handleBlur, errors, touched, values } = formik;
+  const { handleChange, handleBlur, errors, touched, values, setFieldError } = formik;
 
   useEffect(() => {
     updateData({ email: values.email, password: values.password });
@@ -40,8 +40,16 @@ export default function RegStepOne(props: UserFormProps) {
       enableNext(false);
       return;
     }
+
+    if (/\s/.test(values.password as string)) {
+      setFieldError('password', "Password can't contain spaces");
+      enableNext(false);
+      return;
+    }
+    setFieldError('password', undefined);
+
     enableNext(true);
-  }, [values, errors, touched, enableNext, updateData]);
+  }, [values, errors, touched, enableNext, updateData, setFieldError]);
 
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorPassword = touched.password && errors.password;
