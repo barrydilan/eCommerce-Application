@@ -8,7 +8,7 @@ function correctDate(year: number, month: number, day: number) {
 
 export function validSchemaStepOne() {
   const emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&~()_+\-=':"}{/?<>;,.\]\\[*])(?!.*\s).{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&~()_+\-=':"}{/?<>;,.\]\\[*]).{8,}$/;
 
   return Yup.object({
     email: Yup.string()
@@ -65,8 +65,8 @@ export function validSchemaStepFour(billCountry: string, shipCountry: string) {
 
   function getRegEx(country: string) {
     switch (country) {
-      case 'ukraine':
-      case 'germany':
+      case 'UA':
+      case 'DE':
         return ukrGerPostCode;
       default:
         return usaPostCode;
