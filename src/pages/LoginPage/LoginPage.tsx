@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
@@ -57,8 +57,18 @@ function LoginPage() {
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorPassword = touched.password && errors.password;
 
+  const [enableLogin, setEnableLogin] = useState(false);
+
   useEffect(() => {
+    if (
+      (touched.email === undefined && values.email === '') ||
+      (touched.password === undefined && values.password === '')
+    ) {
+      setEnableLogin(false);
+      return;
+    }
     if (errors.email || errors.password) {
+      setEnableLogin(false);
       return;
     }
     if (/\s/.test(values.password as string)) {
@@ -66,6 +76,7 @@ function LoginPage() {
     } else {
       setFieldError('password', undefined);
     }
+    setEnableLogin(true);
   }, [values, errors, touched, setFieldError]);
 
   return (
@@ -87,7 +98,7 @@ function LoginPage() {
     >
       {!loginError && !loginDataError ? (
         <form
-          onSubmit={handleSubmit}
+          onSubmit={formik.handleSubmit}
           className="
               mx-3
               my-10
@@ -221,7 +232,7 @@ function LoginPage() {
             </label>
           </div>
           <button
-            disabled={errors.email || errors.password || loginIsLoading || loginDataIsLoading}
+            disabled={!enableLogin || loginIsLoading || loginDataIsLoading}
             type="submit"
             className={`
                   mt-3

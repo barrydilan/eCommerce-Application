@@ -117,7 +117,7 @@ describe('LoginPage', () => {
     await userEvent.tab();
 
     expect(screen.getByPlaceholderText('Password')).toHaveClass('border-shop-cart-red');
-    expect(screen.getByText('Password must have A, a, 1, ! symbols')).toBeInTheDocument();
+    expect(screen.getByText('Password must have A, a, 1 and special symbols')).toBeInTheDocument();
   });
 
   it('Show errors on wrong submit', async () => {
