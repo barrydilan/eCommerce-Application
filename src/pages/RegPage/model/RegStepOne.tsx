@@ -49,7 +49,7 @@ export default function RegStepOne(props: UserFormProps) {
     setFieldError('password', undefined);
 
     enableNext(true);
-  }, [values, errors, touched, enableNext, updateData]);
+  }, [values, errors, touched, enableNext, updateData, setFieldError]);
 
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorPassword = touched.password && errors.password;

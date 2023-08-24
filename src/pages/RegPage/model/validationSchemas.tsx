@@ -16,7 +16,7 @@ export function validSchemaStepOne() {
       .required('Email is required'),
     password: Yup.string()
       .min(8, 'Minimum 8 symbols required')
-      .matches(passwordRegex, { message: 'Password must have A, a, 1, ! symbols', excludeEmptyString: true })
+      .matches(passwordRegex, { message: 'Password must have A, a, 1 and special symbols', excludeEmptyString: true })
       .required('Password is required'),
   });
 }
