@@ -10,6 +10,7 @@ export default {
       secondary: 'hsl(0deg, 0%, 96%)',
       'text-dark': 'hsl(126deg, 0%, 20%)',
       'text-grey': 'hsl(0deg, 0%, 57%)',
+      'border-black': 'hsl(0deg, 0%, 0%)',
       'inactive-icons-grey': 'hsl(199deg, 13%, 66%)',
       'shop-cart-red': 'hsl(0deg, 88%, 65%)',
       'separation-line': 'hsl(0deg, 0%, 95%)',

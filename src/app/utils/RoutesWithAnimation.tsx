@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
+import MenuPage from '../../pages/MenuPage/MenuPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import RegPage from '../../pages/RegPage/RegPage';
 import { LoginRequired } from '../../shared/ui';
@@ -10,7 +11,7 @@ export default function RoutesWithAnimation() {
   const location = useLocation();
   return (
     <Routes location={location} key={location.key}>
-      <Route index element={<p>Here will be main content</p>} />
+      <Route index element={<MenuPage />} />
       <Route
         path="registration"
         element={

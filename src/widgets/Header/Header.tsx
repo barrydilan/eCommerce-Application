@@ -58,7 +58,7 @@ function Header() {
           className="
             relative
             -translate-y-1
-            text-lg
+            text-sm
             font-light
             tracking-tight 
             text-text-dark
