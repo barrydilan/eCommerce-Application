@@ -1,27 +1,34 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     colors: {
-      accent: 'hsl(126deg, 55%, 47%)',
-      'accent-light': 'hsl(0deg, 0%, 97%)',
-      'accent-lightest': 'hsl(134deg, 73%, 90%)',
-      primary: 'hsl(0deg, 0%, 100%)',
-      secondary: 'hsl(0deg, 0%, 96%)',
-      'text-dark': 'hsl(126deg, 0%, 20%)',
-      'text-grey': 'hsl(0deg, 0%, 57%)',
-      'border-black': 'hsl(0deg, 0%, 0%)',
-      'inactive-icons-grey': 'hsl(199deg, 13%, 66%)',
-      'shop-cart-red': 'hsl(0deg, 88%, 65%)',
-      'separation-line': 'hsl(0deg, 0%, 95%)',
-      'rating-star': 'hsl(50deg, 96%, 63%)',
-      'modal-overlay': 'hsl(0deg, 0%, 0%)',
-      'modal-bg': 'hsl(0deg, 0%, 100%)',
+      accent: 'hsl(126, 55%, 47%)',
+      'accent-light': 'hsl(0, 0%, 97%)',
+      'accent-lightest': 'hsl(134, 73%, 90%)',
+      primary: 'hsl(0, 0%, 100%)',
+      secondary: 'hsl(0, 0%, 96%)',
+      'text-dark': 'hsl(126, 0%, 20%)',
+      'text-grey': 'hsl(0, 0%, 57%)',
+      'border-black': 'hsl(0, 0%, 0%)',
+      'inactive-icons-grey': 'hsl(199, 13%, 66%)',
+      'shop-cart-red': 'hsl(0, 88%, 65%)',
+      'separation-line': 'hsl(0, 0%, 95%)',
+      'rating-star': 'hsl(50, 96%, 63%)',
+      'rating-star-empty': 'hsl(100, 100%, 100%)',
+      'modal-overlay': 'hsl(0, 0%, 0%)',
+      'modal-bg': 'hsl(0, 0%, 100%)',
     },
     fontFamily: {
       poppins: ['Poppins', 'sans-serif'],
     },
     extend: {
+      screens: {
+        xs: '420px',
+        ...defaultTheme.screens,
+      },
       transitionTimingFunction: {
         bounce: 'cubic-bezier(.25,1.55,.65,.97)',
       },
