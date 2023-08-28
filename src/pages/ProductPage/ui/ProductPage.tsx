@@ -1,8 +1,19 @@
+import { useState } from 'react';
+
+import { Rating, ThinStar } from '@smastrom/react-rating';
+
+const customStyles = {
+  itemShapes: ThinStar,
+  activeFillColor: '#FCDE44',
+  inactiveFillColor: '#F1F1F1',
+};
+
 export default function ProductPage() {
+  const [rating, setRating] = useState(4.3);
   return (
     <div className="relative max-w-[800px]">
       <button
-        className="absolute top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border-1 border-white/30 backdrop-blur-md sm:h-14 sm:w-14 md:bottom-6 md:left-5 md:top-auto md:h-10 md:w-10 md:border-accent"
+        className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border-1 border-white/30 backdrop-blur-md sm:h-14 sm:w-14 md:bottom-6 md:left-5 md:right-auto md:top-auto md:h-10 md:w-10 md:border-accent"
         type="button"
       >
         <img className="md:hidden" src="src/assets/icons/heart.svg" alt="" />
@@ -17,14 +28,12 @@ export default function ProductPage() {
             <h3 className="text-sm font-light text-text-grey md:text-white">340 g</h3>
           </div>
         </div>
-        {/* <div className="absolute top-4 flex w-full justify-between px-3"> */}
         <button
           className="absolute left-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border-1 border-white/30 backdrop-blur-md sm:h-14 sm:w-14"
           type="button"
         >
           <img src="src/assets/icons/arrowLeft.svg" alt="" />
         </button>
-        {/* </div> */}
       </div>
       <div className="flex flex-col px-4 pt-7 sm:px-8">
         <div className="md:hidden">
@@ -32,8 +41,18 @@ export default function ProductPage() {
           <h3 className="mt-5 text-sm font-light text-text-grey md:text-white">622 kcal</h3>
           <h3 className="text-sm font-light text-text-grey md:text-white">340 g</h3>
         </div>
-        <div className="flex justify-between pt-2">
-          <div>*******</div>
+        <div className="flex items-center justify-between pt-2">
+          <div className="flex flex-[50%] items-center">
+            <Rating
+              style={{ maxWidth: 150, width: '60%' }}
+              readOnly
+              halfFillMode="svg"
+              itemStyles={customStyles}
+              value={rating}
+              onChange={setRating}
+            />
+            <span className="self-end">{rating}</span>
+          </div>
           <div className="relative">
             <h2 className="pr-4 text-3xl font-bold text-text-dark">$ 24,25</h2>
             <span className="absolute -top-5 left-[4.7rem] text-sm font-light text-text-grey line-through">
@@ -42,17 +61,17 @@ export default function ProductPage() {
             <p className="mt-1 text-sm font-light text-accent">You save: 50%</p>
           </div>
         </div>
-        <div className="order-last md:flex md:w-1/2 md:items-center md:justify-end md:gap-x-5 md:self-end md:pb-5">
-          <div className="flex gap-x-4">
+        <div className="mt-3 md:order-last md:flex md:w-1/2 md:items-center md:justify-end md:gap-x-5 md:self-end md:pb-5">
+          <div className="flex items-center gap-x-4">
             <button
-              className="flex h-6 w-6 items-center justify-center rounded-full border-1 border-text-dark p-2"
+              className="flex h-6 w-6 items-center justify-center rounded-full border-1 border-text-dark p-2 sm:h-10 sm:w-10 "
               type="button"
             >
               -
             </button>
-            <span>01</span>
+            <span className="sm:text-xl">01</span>
             <button
-              className="flex h-6 w-6 items-center justify-center rounded-full border-1 border-text-dark p-2"
+              className="flex h-6 w-6 items-center justify-center rounded-full border-1 border-text-dark p-2 sm:h-10  sm:w-10 "
               type="button"
             >
               +
