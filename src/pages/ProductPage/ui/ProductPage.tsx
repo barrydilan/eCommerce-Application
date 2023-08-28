@@ -35,7 +35,7 @@ export default function ProductPage() {
           <img src="src/assets/icons/arrowLeft.svg" alt="" />
         </button>
       </div>
-      <div className="flex flex-col px-4 pt-7 sm:px-8">
+      <div className="flex flex-col bg-white px-4 pt-7 sm:px-8">
         <div className="md:hidden">
           <h2 className="text-3xl font-bold text-text-dark md:text-white">Vegan Meal</h2>
           <h3 className="mt-5 text-sm font-light text-text-grey md:text-white">622 kcal</h3>
