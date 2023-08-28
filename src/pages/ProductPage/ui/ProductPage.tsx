@@ -64,6 +64,41 @@ export default function ProductPage() {
             nutrients your body needs.
           </p>
         </div>
+        <div className="mt-5">
+          <h3 className="text-2xl font-normal text-accent">Ingridients</h3>
+          <ul className="mt-3">
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+            <li className="flex items-center gap-x-2 text-[13px] font-light text-text-grey">
+              <img src="src/assets/icons/check-icon.svg" alt="" /> 4 oz cream cheese room temperature
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
