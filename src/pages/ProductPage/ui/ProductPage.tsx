@@ -18,7 +18,7 @@ export default function ProductPage() {
           </button>
         </div>
       </div>
-      <div className="px-4 pt-7">
+      <div className="flex flex-col px-4 pt-7">
         <div className="">
           <h2 className="text-3xl font-bold text-text-dark">Vegan Meal</h2>
           <h3 className="mt-5 text-sm font-light text-text-grey">622 kcal</h3>
@@ -33,6 +33,29 @@ export default function ProductPage() {
             </span>
             <p className="mt-1 text-sm font-light text-accent">You save: 50%</p>
           </div>
+        </div>
+        <div>
+          <div className="flex gap-x-4">
+            <button
+              className="flex h-6 w-6 items-center justify-center rounded-full border-1 border-text-dark p-2"
+              type="button"
+            >
+              -
+            </button>
+            <span>01</span>
+            <button
+              className="flex h-6 w-6 items-center justify-center rounded-full border-1 border-text-dark p-2"
+              type="button"
+            >
+              +
+            </button>
+          </div>
+          <button type="button" className="mt-3 block w-full rounded-md bg-accent-lightest py-3  text-accent">
+            <span className="mx-auto flex w-fit gap-x-2 font-light">
+              <img src="src/assets/icons/shopping-cart-accent.svg" alt="" />
+              <span className="inline-block">Add to Cart</span>
+            </span>
+          </button>
         </div>
       </div>
     </div>
