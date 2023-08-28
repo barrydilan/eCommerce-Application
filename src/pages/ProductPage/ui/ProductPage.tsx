@@ -11,7 +11,7 @@ const customStyles = {
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
   return (
-    <div className="relative max-w-[800px]">
+    <div className="relative mx-auto max-w-[800px] rounded-3xl border-12 border-text-grey/10">
       <button
         className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border-1 border-white/30 backdrop-blur-md sm:h-14 sm:w-14 md:bottom-6 md:left-5 md:right-auto md:top-auto md:h-10 md:w-10 md:border-accent"
         type="button"
@@ -19,9 +19,9 @@ export default function ProductPage() {
         <img className="md:hidden" src="src/assets/icons/heart.svg" alt="" />
         <img className="hidden md:block" src="src/assets/icons/heart-accent.svg" alt="" />
       </button>
-      <div className="relative">
-        <div className="relative">
-          <img className="" src="src/assets/img/sushi.png" alt="" />
+      <div className="relative rounded-3xl">
+        <div className="relative rounded-3xl">
+          <img className="rounded-t-xl" src="src/assets/img/sushi.png" alt="" />
           <div className="hidden md:absolute md:left-[3%] md:top-[73%] md:block md:rounded-2xl md:p-6 md:backdrop-blur-2xl lg:top-[77%]">
             <h2 className="text-3xl font-bold text-text-dark md:text-white">Vegan Meal</h2>
             <h3 className="mt-5 text-sm font-light text-text-grey md:text-white">622 kcal</h3>
@@ -42,7 +42,7 @@ export default function ProductPage() {
           <h3 className="text-sm font-light text-text-grey md:text-white">340 g</h3>
         </div>
         <div className="flex items-center justify-between pt-2">
-          <div className="flex flex-[50%] items-center">
+          <div className="flex flex-[50%] items-center gap-x-2">
             <Rating
               style={{ maxWidth: 150, width: '60%' }}
               readOnly
@@ -51,7 +51,7 @@ export default function ProductPage() {
               value={rating}
               onChange={setRating}
             />
-            <span className="self-end">{rating}</span>
+            <span className="inline-block self-end">{rating}</span>
           </div>
           <div className="relative">
             <h2 className="pr-4 text-3xl font-bold text-text-dark">$ 24,25</h2>
