@@ -13,31 +13,31 @@ export default function ProductPage() {
   return (
     <div className="mx-auto h-full md:max-w-[645px]">
       <div className="relative h-full md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
-        {/* <button
-          className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border-1 border-white/30 backdrop-blur-md sm:h-14 sm:w-14 md:bottom-6 md:left-5 md:right-auto md:top-auto md:h-10 md:w-10 md:border-accent"
+        <button
+          className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border-1 border-white/30 backdrop-blur-md sm:h-14 sm:w-14 md:hidden"
           type="button"
         >
           <img className="md:hidden" src="src/assets/icons/heart.svg" alt="" />
-          <img className="hidden md:block" src="src/assets/icons/heart-accent.svg" alt="" />
-        </button> */}
+        </button>
         <div className="relative h-full">
           <div className="relative">
             <img className="md:rounded-t-2xl" src="src/assets/img/sushi.png" alt="" />
-            {/* <div className="hidden md:absolute md:left-[3%] md:top-[73%] md:block md:rounded-2xl md:p-6 md:backdrop-blur-2xl lg:top-[77%]">
-          <h2 className="text-3xl font-bold text-text-dark md:text-white">Vegan Meal</h2>
-          <h3 className="mt-5 text-sm font-light text-text-grey md:text-white">622 kcal</h3>
-          <h3 className="text-sm font-light text-text-grey md:text-white">340 g</h3>
-        </div> */}
+            <div className="hidden md:absolute md:left-[3%] md:top-[50%] md:block md:rounded-2xl md:p-6 md:backdrop-blur-2xl lg:top-[50%]">
+              <h2 className="text-3xl font-bold text-text-dark md:text-white">Vegan Meal</h2>
+              <h3 className="mt-5 text-sm font-light text-text-grey md:text-white">622 kcal</h3>
+              <h3 className="text-sm font-light text-text-grey md:text-white">340 g</h3>
+            </div>
           </div>
-          {/* <button
+          <button
             className="absolute left-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border-white/30 backdrop-blur-md sm:h-14 sm:w-14"
             type="button"
           >
             <img src="src/assets/icons/arrowLeft.svg" alt="" />
-          </button> */}
+          </button>
           {/* bottom-[calc(100%-900px)] */}
           {/* bottom-[calc(100px-1%)] */}
-          <div className="absolute top-[calc(400px-20%)] flex flex-col rounded-3xl bg-white px-4 pt-7 sm:px-8">
+          {/* top-[calc(400px-20%)] */}
+          <div className="absolute -mt-12 flex flex-col rounded-3xl bg-white px-4 pt-7 sm:px-8">
             <div className="md:hidden">
               <h2 className="text-3xl font-bold text-text-dark md:text-white">Vegan Meal</h2>
               <h3 className="mt-5 text-sm font-light text-text-grey md:text-white">622 kcal</h3>
@@ -66,7 +66,13 @@ export default function ProductPage() {
                 <p className="mt-1 text-sm font-light text-accent">You save: 50%</p>
               </div>
             </div>
-            <div className="mt-5 md:order-last md:flex md:w-1/2 md:items-center md:justify-end md:gap-x-5 md:self-end md:pb-5">
+            <div className="relative mt-5 md:order-last md:flex md:w-[65%] md:items-center md:justify-end md:gap-x-5 md:self-end md:pb-5">
+              <button
+                type="button"
+                className="absolute hidden h-10 w-10 items-center justify-center rounded-full border-1 border-white/30 md:right-[calc(100%+135px)] md:top-auto md:flex md:h-10 md:w-10 md:border-accent"
+              >
+                <img src="src/assets/icons/heart-accent.svg" alt="" />
+              </button>
               <div className="flex items-center gap-x-4">
                 <button
                   className="flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 sm:h-10 sm:w-10 "
@@ -143,11 +149,5 @@ export default function ProductPage() {
         </div>
       </div>
     </div>
-    // <div className="relative h-fit border-4 border-accent">
-    //   <div className="relative h-40">
-    //     <div className="h-1/2 w-full border-4 border-rating-star" />
-    //     <div className="absolute bottom-0 left-0 h-1/2 w-full border-2 border-text-dark" />
-    //   </div>
-    // </div>
   );
 }
