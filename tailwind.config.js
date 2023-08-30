@@ -4,7 +4,7 @@ export default {
   theme: {
     colors: {
       accent: 'hsl(126deg, 55%, 47%)',
-      'accent-light': 'hsl(0deg, 0%, 97%)',
+      'accent-light': 'hsl(134deg, 51%, 55%)',
       'accent-lightest': 'hsl(134deg, 73%, 90%)',
       primary: 'hsl(0deg, 0%, 100%)',
       secondary: 'hsl(0deg, 0%, 96%)',
@@ -37,6 +37,7 @@ export default {
       gridTemplateRows: {
         mobGridRows: 'auto 1fr auto',
         tabGridRows: 'auto 1fr',
+        prodPageMob: 'repeat(3, auto)'
       },
       spacing: {
         30: '7.5rem',
