@@ -39,6 +39,18 @@ export default function ProductPage() {
 
   const greenBorder = 'border-b-2 border-accent';
 
+  const categories = ['all', 'sushi', 'sets', 'main dishes', 'drinks', 'salads', 'soups'];
+  const categoriesListItems = categories.map((item) => {
+    const text = item[0].toUpperCase() + item.slice(1);
+    return (
+      <li className={`px-1 ${activeCat === item ? greenBorder : ''}`} key={item}>
+        <button data-user-select={item} type="button">
+          {text}
+        </button>
+      </li>
+    );
+  });
+
   return (
     <div className="grid grid-cols-1 grid-rows-prodPageMob px-[10px]">
       <div className="text-xl font-light">
@@ -105,41 +117,7 @@ export default function ProductPage() {
           onClick={(e: React.MouseEvent<HTMLUListElement, MouseEvent>) => changeActiveCat(e)}
           className="flex h-6 gap-7 overflow-y-scroll border-b-[2px] border-separation-line"
         >
-          <li className={`px-1 ${activeCat === 'all' ? greenBorder : ''}`}>
-            <button data-user-select="all" type="button">
-              All
-            </button>
-          </li>
-          <li className={`px-1 ${activeCat === 'sushi' ? greenBorder : ''}`}>
-            <button data-user-select="sushi" type="button">
-              Sushi
-            </button>
-          </li>
-          <li className={`px-1 ${activeCat === 'sets' ? greenBorder : ''}`}>
-            <button data-user-select="sets" type="button">
-              Sets
-            </button>
-          </li>
-          <li className={`px-1 ${activeCat === 'dishes' ? greenBorder : ''}`}>
-            <button data-user-select="dishes" type="button">
-              Main&nbsp;dishes
-            </button>
-          </li>
-          <li className={`px-1 ${activeCat === 'drinks' ? greenBorder : ''}`}>
-            <button data-user-select="drinks" type="button">
-              Drinks
-            </button>
-          </li>
-          <li className={`px-1 ${activeCat === 'salads' ? greenBorder : ''}`}>
-            <button data-user-select="salads" type="button">
-              Salads
-            </button>
-          </li>
-          <li className={`px-1 ${activeCat === 'soups' ? greenBorder : ''}`}>
-            <button data-user-select="soups" type="button">
-              Soups
-            </button>
-          </li>
+          {categoriesListItems}
         </ul>
       </div>
       <div onClick={() => setIsFiltersOpen(false)}>
