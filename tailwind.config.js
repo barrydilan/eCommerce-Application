@@ -16,7 +16,6 @@ export default {
       'rating-star': 'hsl(50deg, 96%, 63%)',
       'modal-overlay': 'hsl(0deg, 0%, 0%)',
       'modal-bg': 'hsl(0deg, 0%, 100%)',
-      'white': 'hsl(100, 100%, 100%)'
     },
     fontFamily: {
       poppins: ['Poppins', 'sans-serif'],
