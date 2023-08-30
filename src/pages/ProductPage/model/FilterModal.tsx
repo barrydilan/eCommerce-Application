@@ -1,4 +1,5 @@
 import FilterModalCheckbox from './FilterModalCheckbox';
+import FilterModalNumberInput from './FilterModalNumberInput';
 import { FiltersFields } from '../ProductPage';
 
 export default function FilterModal(props: {
@@ -58,54 +59,24 @@ export default function FilterModal(props: {
         text="Show only promo"
         peer="peer-checked/promo:before:block"
       />
-      <div className="mt-2 flex w-full justify-between text-text-grey">
-        <label className="font-light" htmlFor="priceFilter">
-          Max price:
-        </label>
-        <input
-          className="lg w-16 rounded border-2 border-separation-line pl-1 text-text-dark"
-          id="priceFilter"
-          type="number"
-          value={filtersState.price}
-          onChange={(e) => {
-            setFiltersState((prev) => {
-              return { ...prev, price: e.target.value };
-            });
-          }}
-        />
-      </div>
-      <div className="mt-2 flex w-full justify-between text-text-grey">
-        <label className="font-light" htmlFor="calorFilter">
-          Max calories:
-        </label>
-        <input
-          className="lg w-16 rounded border-2 border-separation-line pl-1 text-text-dark"
-          id="calorFilter"
-          type="number"
-          value={filtersState.calories}
-          onChange={(e) => {
-            setFiltersState((prev) => {
-              return { ...prev, calories: e.target.value };
-            });
-          }}
-        />
-      </div>
-      <div className="mt-2 flex w-full justify-between text-text-grey">
-        <label className="font-light" htmlFor="weightFilter">
-          Max weight:
-        </label>
-        <input
-          className="lg w-16 rounded border-2 border-separation-line pl-1 text-text-dark"
-          id="weightFilter"
-          type="number"
-          value={filtersState.weight}
-          onChange={(e) => {
-            setFiltersState((prev) => {
-              return { ...prev, weight: e.target.value };
-            });
-          }}
-        />
-      </div>
+      <FilterModalNumberInput
+        id="price"
+        value={filtersState.price}
+        setFiltersState={setFiltersState}
+        text="Max price"
+      />
+      <FilterModalNumberInput
+        id="calories"
+        value={filtersState.calories}
+        setFiltersState={setFiltersState}
+        text="Max calories"
+      />
+      <FilterModalNumberInput
+        id="weight"
+        value={filtersState.weight}
+        setFiltersState={setFiltersState}
+        text="Max weight"
+      />
       <div className="my-3 flex w-full justify-around">
         <button
           onClick={() => {
