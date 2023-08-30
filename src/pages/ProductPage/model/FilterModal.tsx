@@ -1,3 +1,4 @@
+import FilterModalCheckbox from './FilterModalCheckbox';
 import { FiltersFields } from '../ProductPage';
 
 export default function FilterModal(props: {
@@ -36,162 +37,27 @@ export default function FilterModal(props: {
       >
         ×
       </button>
-      <div
-        className="
-                mt-2
-                flex
-                h-8
-                items-center
-                justify-center
-              "
-      >
-        <input
-          id="veganCheck"
-          type="checkbox"
-          checked={filtersState.vegan}
-          onChange={() => {
-            setFiltersState((prev) => {
-              return { ...filtersState, vegan: !prev.vegan };
-            });
-          }}
-          className="
-                  peer/veganCheck
-                  mr-2
-                  h-5
-                  w-5
-                  appearance-none
-                  rounded-md
-                  bg-accent
-                "
-        />
-        <label
-          htmlFor="veganCheck"
-          className="
-                relative
-                text-xs
-                text-text-grey
-                before:absolute
-                before:-left-6
-                before:top-0.5
-                before:hidden
-                before:h-2
-                before:w-3
-                before:-rotate-45
-                before:rounded-sm
-                before:border-b-4
-                before:border-l-4
-                before:border-b-primary
-                before:border-l-primary
-                peer-checked/veganCheck:before:block
-              "
-        >
-          Show only vegan
-        </label>
-      </div>
-      <div
-        className="
-                mt-2
-                flex
-                h-8
-                items-center
-                justify-center
-              "
-      >
-        <input
-          id="spicyCheck"
-          type="checkbox"
-          checked={filtersState.spicy}
-          onChange={() => {
-            setFiltersState((prev) => {
-              return { ...filtersState, spicy: !prev.spicy };
-            });
-          }}
-          className="
-                  peer/spicyCheck
-                  mr-2
-                  h-5
-                  w-5
-                  appearance-none
-                  rounded-md
-                  bg-accent
-                "
-        />
-        <label
-          htmlFor="spicyCheck"
-          className="
-                relative
-                text-xs
-                text-text-grey
-                before:absolute
-                before:-left-6
-                before:top-0.5
-                before:hidden
-                before:h-2
-                before:w-3
-                before:-rotate-45
-                before:rounded-sm
-                before:border-b-4
-                before:border-l-4
-                before:border-b-primary
-                before:border-l-primary
-                peer-checked/spicyCheck:before:block
-              "
-        >
-          Show only spicy
-        </label>
-      </div>
-      <div
-        className="
-                mt-2
-                flex
-                h-8
-                items-center
-                justify-center
-              "
-      >
-        <input
-          id="promoCheck"
-          type="checkbox"
-          checked={filtersState.promo}
-          onChange={() => {
-            setFiltersState((prev) => {
-              return { ...filtersState, promo: !prev.promo };
-            });
-          }}
-          className="
-                  peer/promoCheck
-                  mr-2
-                  h-5
-                  w-5
-                  appearance-none
-                  rounded-md
-                  bg-accent
-                "
-        />
-        <label
-          htmlFor="promoCheck"
-          className="
-                relative
-                text-xs
-                text-text-grey
-                before:absolute
-                before:-left-6
-                before:top-0.5
-                before:hidden
-                before:h-2
-                before:w-3
-                before:-rotate-45
-                before:rounded-sm
-                before:border-b-4
-                before:border-l-4
-                before:border-b-primary
-                before:border-l-primary
-                peer-checked/promoCheck:before:block
-              "
-        >
-          Show only promo
-        </label>
-      </div>
+      <FilterModalCheckbox
+        id="vegan"
+        checked={filtersState.vegan}
+        setFiltersState={setFiltersState}
+        text="Show only vegan"
+        peer="peer-checked/vegan:before:block"
+      />
+      <FilterModalCheckbox
+        id="spicy"
+        checked={filtersState.spicy}
+        setFiltersState={setFiltersState}
+        text="Show only spicy"
+        peer="peer-checked/spicy:before:block"
+      />
+      <FilterModalCheckbox
+        id="promo"
+        checked={filtersState.promo}
+        setFiltersState={setFiltersState}
+        text="Show only promo"
+        peer="peer-checked/promo:before:block"
+      />
       <div className="mt-2 flex w-full justify-between text-text-grey">
         <label className="font-light" htmlFor="priceFilter">
           Max price:
