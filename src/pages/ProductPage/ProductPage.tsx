@@ -1,11 +1,32 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
 
+import FilterModal from './model/FilterModal';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
+
+export type FiltersFields = {
+  vegan: boolean;
+  spicy: boolean;
+  promo: boolean;
+  price: string;
+  calories: string;
+  weight: string;
+};
 
 export default function ProductPage() {
   const [activeCat, setActiveCat] = useState('all');
+  const [filtersState, setFiltersState] = useState({
+    vegan: false,
+    spicy: false,
+    promo: false,
+    price: '',
+    calories: '',
+    weight: '',
+  });
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState('rateDesc');
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
     const { target } = e;
@@ -27,6 +48,9 @@ export default function ProductPage() {
       <div className="relative mt-6 flex items-center justify-between">
         <button
           type="button"
+          onClick={() => {
+            setIsFiltersOpen((prev) => !prev);
+          }}
           className="
             flex
             items-center
@@ -41,9 +65,20 @@ export default function ProductPage() {
           <img src={filterIcon} alt="" className="mr-[12px]" />
           Filters
         </button>
+        <FilterModal
+          isFiltersOpen={isFiltersOpen}
+          setIsFiltersOpen={setIsFiltersOpen}
+          filtersState={filtersState}
+          setFiltersState={setFiltersState}
+        />
         <div className="relative text-sm font-light text-text-grey">
           Sort by:
-          <select name="sortSelect" id="" className="appearance-none px-1 text-text-dark">
+          <select
+            name="sortSelect"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="appearance-none px-1 text-text-dark"
+          >
             <option value="rateDesc" className="text-right">
               Rate ▼
             </option>
@@ -107,170 +142,16 @@ export default function ProductPage() {
           </li>
         </ul>
       </div>
-      <div className="flex w-52 flex-col items-start rounded-lg border-2 border-separation-line p-2">
-        <h4 className="w-full text-center">Filters</h4>
-        <div
-          className="
-                mt-2
-                flex
-                h-8
-                items-center
-                justify-center
-              "
+      <div onClick={() => setIsFiltersOpen(false)}>
+        Here will be products <br />
+        <button
+          type="button"
+          onClick={() => {
+            console.log(filtersState);
+          }}
         >
-          <input
-            id="veganCheck"
-            type="checkbox"
-            className="
-                  peer/veganCheck
-                  mr-2
-                  h-5
-                  w-5
-                  appearance-none
-                  rounded-md
-                  bg-accent
-                "
-          />
-          <label
-            htmlFor="veganCheck"
-            className="
-                relative
-                text-xs
-                text-text-grey
-                before:absolute
-                before:-left-6
-                before:top-0.5
-                before:hidden
-                before:h-2
-                before:w-3
-                before:-rotate-45
-                before:rounded-sm
-                before:border-b-4
-                before:border-l-4
-                before:border-b-primary
-                before:border-l-primary
-                peer-checked/veganCheck:before:block
-              "
-          >
-            Show only vegan
-          </label>
-        </div>
-        <div
-          className="
-                mt-2
-                flex
-                h-8
-                items-center
-                justify-center
-              "
-        >
-          <input
-            id="spicyCheck"
-            type="checkbox"
-            className="
-                  peer/spicyCheck
-                  mr-2
-                  h-5
-                  w-5
-                  appearance-none
-                  rounded-md
-                  bg-accent
-                "
-          />
-          <label
-            htmlFor="spicyCheck"
-            className="
-                relative
-                text-xs
-                text-text-grey
-                before:absolute
-                before:-left-6
-                before:top-0.5
-                before:hidden
-                before:h-2
-                before:w-3
-                before:-rotate-45
-                before:rounded-sm
-                before:border-b-4
-                before:border-l-4
-                before:border-b-primary
-                before:border-l-primary
-                peer-checked/spicyCheck:before:block
-              "
-          >
-            Show only spicy
-          </label>
-        </div>
-        <div
-          className="
-                mt-2
-                flex
-                h-8
-                items-center
-                justify-center
-              "
-        >
-          <input
-            id="promoCheck"
-            type="checkbox"
-            className="
-                  peer/promoCheck
-                  mr-2
-                  h-5
-                  w-5
-                  appearance-none
-                  rounded-md
-                  bg-accent
-                "
-          />
-          <label
-            htmlFor="promoCheck"
-            className="
-                relative
-                text-xs
-                text-text-grey
-                before:absolute
-                before:-left-6
-                before:top-0.5
-                before:hidden
-                before:h-2
-                before:w-3
-                before:-rotate-45
-                before:rounded-sm
-                before:border-b-4
-                before:border-l-4
-                before:border-b-primary
-                before:border-l-primary
-                peer-checked/promoCheck:before:block
-              "
-          >
-            Show only promo
-          </label>
-        </div>
-        <div className="mt-2 flex w-full justify-between text-text-grey">
-          <label htmlFor="priceFilter">Max price:</label>
-          <input
-            className="lg w-16 rounded border-2 border-separation-line text-text-dark"
-            id="priceFilter"
-            type="number"
-          />
-        </div>
-        <div className="mt-2 flex w-full justify-between text-text-grey">
-          <label htmlFor="calorFilter">Max calories:</label>
-          <input
-            className="lg w-16 rounded border-2 border-separation-line text-text-dark"
-            id="calorFilter"
-            type="number"
-          />
-        </div>
-        <div className="mt-2 flex w-full justify-between text-text-grey">
-          <label htmlFor="weightFilter">Max weight:</label>
-          <input
-            className="lg w-16 rounded border-2 border-separation-line text-text-dark"
-            id="weightFilter"
-            type="number"
-          />
-        </div>
+          click me
+        </button>
       </div>
     </div>
   );
