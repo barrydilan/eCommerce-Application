@@ -9,8 +9,8 @@ export default function FilterModal(props: {
   setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
 }) {
   const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState } = props;
-  const shownClasses = 'pointer-events-auto translate-x-0 opacity-1';
-  const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0';
+  const shownClasses = 'pointer-events-auto translate-x-0 opacity-1 lg:translate-y-16';
+  const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translate-x-0 lg:-translate-y-52';
   return (
     <div
       className={`
