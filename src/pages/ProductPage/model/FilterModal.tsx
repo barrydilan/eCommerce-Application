@@ -2,6 +2,9 @@ import FilterModalCheckbox from './FilterModalCheckbox';
 import FilterModalNumberInput from './FilterModalNumberInput';
 import { FiltersFields } from '../ProductPage';
 
+const shownClasses = 'pointer-events-auto translate-x-0 opacity-1 lg:translate-y-16';
+const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translate-x-0 lg:-translate-y-52';
+
 export default function FilterModal(props: {
   isFiltersOpen: boolean;
   setIsFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,8 +12,12 @@ export default function FilterModal(props: {
   setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
 }) {
   const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState } = props;
-  const shownClasses = 'pointer-events-auto translate-x-0 opacity-1 lg:translate-y-16';
-  const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translate-x-0 lg:-translate-y-52';
+
+  const universalFilterChanger = (value: string | boolean, field: string) => {
+    setFiltersState((prev) => {
+      return { ...prev, [field]: value };
+    });
+  };
   return (
     <div
       className={`
@@ -41,40 +48,40 @@ export default function FilterModal(props: {
       <FilterModalCheckbox
         id="vegan"
         checked={filtersState.vegan}
-        setFiltersState={setFiltersState}
+        universalFilterChanger={universalFilterChanger}
         text="Show only vegan"
         peer="peer-checked/vegan:before:block"
       />
       <FilterModalCheckbox
         id="spicy"
         checked={filtersState.spicy}
-        setFiltersState={setFiltersState}
+        universalFilterChanger={universalFilterChanger}
         text="Show only spicy"
         peer="peer-checked/spicy:before:block"
       />
       <FilterModalCheckbox
         id="promo"
         checked={filtersState.promo}
-        setFiltersState={setFiltersState}
+        universalFilterChanger={universalFilterChanger}
         text="Show only promo"
         peer="peer-checked/promo:before:block"
       />
       <FilterModalNumberInput
         id="price"
         value={filtersState.price}
-        setFiltersState={setFiltersState}
+        universalFilterChanger={universalFilterChanger}
         text="Max price"
       />
       <FilterModalNumberInput
         id="calories"
         value={filtersState.calories}
-        setFiltersState={setFiltersState}
+        universalFilterChanger={universalFilterChanger}
         text="Max calories"
       />
       <FilterModalNumberInput
         id="weight"
         value={filtersState.weight}
-        setFiltersState={setFiltersState}
+        universalFilterChanger={universalFilterChanger}
         text="Max weight"
       />
       <div className="my-3 flex w-full justify-around">

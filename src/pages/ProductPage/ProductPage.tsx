@@ -4,6 +4,8 @@
 import { useState } from 'react';
 
 import FilterModal from './model/FilterModal';
+import SortingSelector from './model/SortingSelector';
+import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
 
 export type FiltersFields = {
@@ -14,6 +16,9 @@ export type FiltersFields = {
   calories: string;
   weight: string;
 };
+
+const greenBorder = 'border-b-2 border-accent';
+const categories = ['All', 'Sushi', 'Sets', 'Main dishes', 'Drinks', 'Salads', 'Soups'];
 
 export default function ProductPage() {
   const [activeCat, setActiveCat] = useState('all');
@@ -29,23 +34,15 @@ export default function ProductPage() {
   const [sortOrder, setSortOrder] = useState('rateDesc');
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
-    const { target } = e;
-    if (target && (target as HTMLElement).hasAttribute('data-user-select')) {
-      const attr = (target as HTMLElement).getAttribute('data-user-select');
-      if (attr === activeCat) return;
-      if (attr) setActiveCat(attr);
-    }
+    const { userSelect } = (e.target as HTMLElement).dataset;
+    if (userSelect && userSelect !== activeCat) setActiveCat(userSelect);
   }
 
-  const greenBorder = 'border-b-2 border-accent';
-
-  const categories = ['all', 'sushi', 'sets', 'main dishes', 'drinks', 'salads', 'soups'];
   const categoriesListItems = categories.map((item) => {
-    const text = item[0].toUpperCase() + item.slice(1);
     return (
       <li className={`whitespace-nowrap px-1 ${activeCat === item ? greenBorder : ''}`} key={item}>
         <button data-user-select={item} type="button">
-          {text}
+          {item}
         </button>
       </li>
     );
@@ -64,10 +61,7 @@ export default function ProductPage() {
         lg:grid-rows-prodPageDesk
       "
     >
-      <div className="text-xl font-light lg:col-[1/2] lg:text-3xl">
-        <h3>Choose your ideal Meal</h3>
-        <h4 className="mt-1 text-sm text-text-grey lg:text-base">We hope our meals will improve your day :)</h4>
-      </div>
+      <ProductPageHeader />
       <div
         className="
           relative
@@ -109,34 +103,7 @@ export default function ProductPage() {
           filtersState={filtersState}
           setFiltersState={setFiltersState}
         />
-        <div className="relative text-sm font-light text-text-grey lg:h-8 lg:border-b-2 lg:border-separation-line lg:text-base">
-          Sort by:
-          <select
-            name="sortSelect"
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            className="appearance-none px-1 text-text-dark"
-          >
-            <option value="rateDesc" className="text-right">
-              Rate ▼
-            </option>
-            <option value="rateAsc" className="text-right">
-              Rate ▲
-            </option>
-            <option value="priceDesc" className="text-right">
-              Price ▼
-            </option>
-            <option value="priceAsc" className="text-right">
-              Price ▲
-            </option>
-            <option value="alphDesc" className="text-right">
-              ABC ▼
-            </option>
-            <option value="alphAsc" className="text-right">
-              ABC ▲
-            </option>
-          </select>
-        </div>
+        <SortingSelector sortOrder={sortOrder} setSortOrder={setSortOrder} />
       </div>
       <div
         className="
@@ -172,7 +139,9 @@ export default function ProductPage() {
           lg:col-start-1
           lg:col-end-3
         "
-        onClick={() => setIsFiltersOpen(false)}
+        onClick={() => {
+          setIsFiltersOpen(false);
+        }}
       >
         Here will be products
       </div>

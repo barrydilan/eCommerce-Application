@@ -1,13 +1,11 @@
-import { FiltersFields } from '../ProductPage';
-
 export default function FilterModalCheckbox(props: {
   id: string;
   checked: boolean;
-  setFiltersState: (value: React.SetStateAction<FiltersFields>) => void;
+  universalFilterChanger: (value: string | boolean, field: string) => void;
   text: string;
   peer: string;
 }) {
-  const { id, checked, setFiltersState, text, peer } = props;
+  const { id, checked, universalFilterChanger, text, peer } = props;
   return (
     <div
       className="
@@ -22,11 +20,7 @@ export default function FilterModalCheckbox(props: {
         id={id}
         type="checkbox"
         checked={checked}
-        onChange={() => {
-          setFiltersState((prev) => {
-            return { ...prev, [id]: !checked };
-          });
-        }}
+        onChange={() => universalFilterChanger(!checked, id)}
         className={`
                   peer/${id}
                   mr-2

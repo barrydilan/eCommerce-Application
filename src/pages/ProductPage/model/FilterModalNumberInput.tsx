@@ -1,12 +1,10 @@
-import { FiltersFields } from '../ProductPage';
-
 export default function FilterModalNumberInput(props: {
   id: string;
   value: string;
-  setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
+  universalFilterChanger: (value: string | boolean, field: string) => void;
   text: string;
 }) {
-  const { id, value, setFiltersState, text } = props;
+  const { id, value, universalFilterChanger, text } = props;
   return (
     <div className="mt-2 flex w-full justify-between text-text-grey">
       <label className="font-light" htmlFor={id}>
@@ -17,11 +15,7 @@ export default function FilterModalNumberInput(props: {
         id={id}
         type="number"
         value={value}
-        onChange={(e) => {
-          setFiltersState((prev) => {
-            return { ...prev, [id]: e.target.value };
-          });
-        }}
+        onChange={(e) => universalFilterChanger(e.target.value, id)}
       />
     </div>
   );
