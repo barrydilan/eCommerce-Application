@@ -152,4 +152,23 @@ describe('LoginPage', () => {
 
     expect(window.location.pathname).toBe('/');
   });
+
+  it('Route between log in & sign up', async () => {
+    RenderTestApp(<App />, '/login');
+
+    const signUpBtn = screen.getByRole('link', { name: 'Sign up' });
+    expect(signUpBtn).toBeInTheDocument();
+    await userEvent.click(signUpBtn);
+
+    const logIn = screen.getByRole('link', { name: 'Log in' });
+    expect(logIn).toBeInTheDocument();
+    await userEvent.click(logIn);
+
+    const signUpBtn2 = screen.getByRole('link', { name: 'Sign up' });
+    expect(signUpBtn2).toBeInTheDocument();
+    await userEvent.click(signUpBtn2);
+
+    const logIn2 = screen.getByRole('link', { name: 'Log in' });
+    expect(logIn2).toBeInTheDocument();
+  });
 });
