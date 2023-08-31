@@ -1,12 +1,6 @@
 import { useState } from 'react';
 
-import { Rating, ThinStar } from '@smastrom/react-rating';
-
-const customStyles = {
-  itemShapes: ThinStar,
-  activeFillColor: '#FCDE44',
-  inactiveFillColor: '#F1F1F1',
-};
+import StarsRating from 'react-star-rate';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
@@ -43,15 +37,14 @@ export default function ProductPage() {
             <div className="flex items-baseline justify-between pt-6 sm:pt-10">
               <div className="flex flex-[50%] flex-col items-center gap-x-2">
                 <div className="flex items-center gap-x-2 self-start">
-                  <Rating
-                    style={{ maxWidth: 180, width: '70%' }}
-                    readOnly
-                    halfFillMode="svg"
-                    itemStyles={customStyles}
+                  <StarsRating
                     value={rating}
-                    onChange={setRating}
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
+                    onChange={(rating) => {
+                      setRating(rating as number);
+                    }}
                   />
-                  <span className="inline-block self-end text-base font-semibold">{rating}</span>
+                  <span className="inline-block self-center text-base font-semibold">{rating}</span>
                 </div>
                 <p className="self-start pl-1 pt-1 text-sm font-light text-text-grey">2,032 Reviews</p>
               </div>
