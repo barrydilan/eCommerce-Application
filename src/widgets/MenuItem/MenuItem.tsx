@@ -5,19 +5,8 @@ import StarsRating from 'react-star-rate';
 import productImg from '../../assets/img/productImg.png';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
 
-/*
-const customStyles = {
-    itemShapes: ThinStar,
-    activeFillColor: '#FCDE44',
-    inactiveFillColor: '#F1F1F1',
-};
- */
-
 export default function MenuItem() {
   const [rating, setRating] = useState(4.5);
-  // const handleRating = (rate: number) => {
-  //   setRating(rate);
-  // };
 
   return (
     <div className="flex w-full rounded-2xl border-1 border-border-black/10">
