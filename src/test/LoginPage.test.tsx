@@ -91,26 +91,29 @@ describe('LoginPage', () => {
     expect(screen.getByText('Password must have A, a, 1 and special symbols')).toBeInTheDocument();
   });
 
-  // it('Show errors on wrong submit', async () => {
-  //   render(
-  //     <Provider store={store}>
-  //       <BrowserRouter>
-  //         <LoginPage />
-  //       </BrowserRouter>
-  //     </Provider>,
-  //   );
+  it('Show errors on wrong submit', async () => {
+    RenderTestApp(<App />, '/login');
 
-  //   await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    await waitFor(() => {
+      expect(updateAccessTokenSpy).toBeCalled();
+    });
 
-  //   expect(screen.getByPlaceholderText('Email')).toHaveClass('border-shop-cart-red');
-  //   expect(screen.getByPlaceholderText('Password')).toHaveClass('border-shop-cart-red');
-  //   expect(screen.getByText('password is required', { exact: false })).toBeInTheDocument();
-  //   expect(screen.getByText('Email is required')).toBeInTheDocument();
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'testemail@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'dasdasD12#');
 
-  //   expect(Object.keys(store.getState().authApi.mutations)).toHaveLength(0);
-  //   expect(store.getState().userReducer.isLogged).toBeFalsy();
-  //   expect(store.getState().userReducer.accessToken).toHaveLength(0);
-  // });
+    await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
+
+    const error = await screen.findByText('Oh snap!', { exact: false });
+    const continueBtn = await screen.findByText('Continue', { exact: false });
+
+    expect(error).toBeInTheDocument();
+    expect(continueBtn).toBeInTheDocument();
+
+    await userEvent.click(continueBtn);
+
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+  });
 
   it('Success submit', async () => {
     RenderTestApp(<App />, '/login');
