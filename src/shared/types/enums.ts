@@ -1,6 +1,7 @@
 enum ErrorCodeStatus {
 	ACCOUNT_EXIST = 400,
 	NOT_FOUND = 404,
+	UNAUTHORIZED = 401,
 }
 
 enum TokenTypeHints {

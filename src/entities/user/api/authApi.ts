@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import basicBaseQuery from '../../../shared/api/basicBaseQuery.ts';
+import authQueryWithReauth from '../../../shared/api/authQueryWithReauth.ts';
 import { DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../../../shared/const';
 import { ILoginUserParams, TokenTypeHints } from '../../../shared/types';
 
@@ -19,7 +19,7 @@ interface ITokenRevokeParams {
 
 export const authApi = createApi({
 	reducerPath: 'authApi',
-	baseQuery: basicBaseQuery,
+	baseQuery: authQueryWithReauth,
 	endpoints: (build) => ({
 		loginToken: build.mutation<IAuthResponse, ILoginUserParams>({
 			query: ({ password, email, scope = DEFAULT_CUSTOMER_SCOPE }) => ({
