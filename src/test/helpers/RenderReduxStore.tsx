@@ -16,7 +16,7 @@ function renderReduxStore(component: React.ReactElement, initialState?: RootStat
 
   render(<Provider store={store}>{component}</Provider>);
 
-  return store;
+  return store.getState();
 }
 
 export default renderReduxStore;
