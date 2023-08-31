@@ -1,17 +1,18 @@
-import { useState } from 'react';
-
-import { Rating, ThinStar } from '@smastrom/react-rating';
-
 import productImg from '../../assets/img/productImg.png';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
 
-export default function MenuItem() {
-  const [rating, setRating] = useState(4.52);
-  const customStyles = {
+/*
+const customStyles = {
     itemShapes: ThinStar,
     activeFillColor: '#FCDE44',
     inactiveFillColor: '#F1F1F1',
-  };
+};
+ */
+
+export default function MenuItem() {
+  // const [rating, setRating] = useState(4.52);
+  const rating = 4.52;
+
   return (
     <div className="flex w-full rounded-2xl border-1 border-border-black/10">
       <div className="m-h-[120px] flex flex-[80%] gap-x-2">
@@ -27,15 +28,15 @@ export default function MenuItem() {
             <h4 className="text-xs font-extralight text-text-grey sm:text-base">340 g</h4>
           </div>
           <div className="mb-2 flex items-center gap-x-2 text-sm">
-            <Rating
-              className="-mt-1"
-              style={{ maxWidth: 110, width: '70%' }}
-              readOnly
-              halfFillMode="svg"
-              itemStyles={customStyles}
-              value={rating}
-              onChange={setRating}
-            />
+            {/* <Rating */}
+            {/*  className="-mt-1" */}
+            {/*  style={{ maxWidth: 110, width: '70%' }} */}
+            {/*  readOnly */}
+            {/*  halfFillMode="svg" */}
+            {/*  itemStyles={customStyles} */}
+            {/*  value={rating} */}
+            {/*  onChange={setRating} */}
+            {/* /> */}
             <p className="text-xs font-extralight text-text-grey sm:text-base">{rating}</p>
           </div>
         </div>
