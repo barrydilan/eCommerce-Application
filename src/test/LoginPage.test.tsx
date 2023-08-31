@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, vi } from 'vitest';
 
+import { TEST_ACCOUNT_EMAIL, TEST_ACCOUNT_PASSWORD } from './constants';
 import RenderTestApp from './helpers/RenderTestApp.tsx';
 import { App } from '../app/App.tsx';
 import { userSlice } from '../entities/user';
@@ -11,9 +12,6 @@ import * as helpers from '../shared/lib/helpers';
 const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
 const setCookieSpy = vi.spyOn(helpers, 'setCookie');
 const updateAccessTokenSpy = vi.spyOn(userSlice.actions, 'updateAccessToken');
-
-const testAccountEmail = 'MyEmail@gmail.com';
-const testAccountPassword = '5i3wryMh@';
 
 describe('LoginPage', () => {
   afterEach(() => {
@@ -122,8 +120,8 @@ describe('LoginPage', () => {
       expect(updateAccessTokenSpy).toBeCalled();
     });
 
-    await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
-    await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
+    await userEvent.type(screen.getByPlaceholderText('Email'), TEST_ACCOUNT_EMAIL);
+    await userEvent.type(screen.getByPlaceholderText('Password'), TEST_ACCOUNT_PASSWORD);
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
