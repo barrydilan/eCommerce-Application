@@ -25,8 +25,18 @@ function createReauthQuery(
 		if (result.error && result.error.status === ErrorCodeStatus.UNAUTHORIZED) {
 			const refreshResult = await authQuery(authQueryArgs, api, extraOptions);
 
-			if (refreshResult.data && typeof refreshResult.data === 'object' && 'access_token' in refreshResult.data) {
-				api.dispatch(updateAccessToken(refreshResult.data.access_token as string));
+			if (
+				refreshResult.data &&
+				typeof refreshResult.data === 'object' &&
+				'access_token' in refreshResult.data &&
+				'refresh_token' in refreshResult.data
+			) {
+				api.dispatch(
+					updateAccessToken({
+						accessToken: refreshResult.data.access_token as string,
+						refreshToken: refreshResult.data.refresh_token as string,
+					}),
+				);
 				result = await query(args, api, extraOptions);
 			} else {
 				api.dispatch(loggedOut());

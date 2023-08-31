@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../entities/user';
-import { COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
+import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
@@ -16,10 +16,10 @@ export function App() {
   const { loggedIn } = userSlice.actions;
 
   useEffect(() => {
-    const [token, userId] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
+    const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
 
-    if (token && userId) {
-      dispatch(loggedIn({ accessToken: token, userId }));
+    if (token && userId && refreshToken) {
+      dispatch(loggedIn({ accessToken: token, userId, refreshToken }));
     }
   }, [dispatch, loggedIn]);
 

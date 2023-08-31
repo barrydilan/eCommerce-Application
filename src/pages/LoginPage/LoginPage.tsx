@@ -20,7 +20,7 @@ function LoginPage() {
   const [loginUser, { error: loginError, isLoading: loginIsLoading }] = useLoginUser();
   const [getLoginUserData, { error: loginDataError, isLoading: loginDataIsLoading }] = useLoginUserDataMutation();
   const [revokeToken] = useRevokeTokenMutation();
-  const { accessToken: oldAccessToken } = useAppSelector((state) => state.userReducer);
+  const { accessToken: oldAccessToken, refreshToken: oldRefreshToken } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
 
   const passwordInput = useRef(null);
@@ -41,7 +41,9 @@ function LoginPage() {
       await loginUser(userData.email, userData.password, id);
 
       navigate('/');
+
       revokeToken({ token: oldAccessToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
+      revokeToken({ token: oldRefreshToken, tokenTypeHint: TokenTypeHints.REFRESH_TOKEN });
     } catch (e) {
       // console.error(`Error occurred while logging the user! (${e.status})`);
     }
