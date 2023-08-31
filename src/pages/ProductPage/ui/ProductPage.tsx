@@ -39,9 +39,8 @@ export default function ProductPage() {
                 <div className="flex items-center gap-x-2 self-start">
                   <StarsRating
                     value={rating}
-                    // eslint-disable-next-line @typescript-eslint/no-shadow
-                    onChange={(rating) => {
-                      setRating(rating as number);
+                    onChange={(newRating) => {
+                      setRating(newRating as number);
                     }}
                   />
                   <span className="inline-block self-center text-base font-semibold">{rating}</span>
