@@ -2,7 +2,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
-import ProductPage from '../../pages/ProductPage/ui/ProductPage';
+import ProductPage from '../../pages/ProductCatalog/ProductCatalog';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import RegPage from '../../pages/RegPage/RegPage';
 import { LoginRequired } from '../../shared/ui';
