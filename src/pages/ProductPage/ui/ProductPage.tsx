@@ -1,9 +1,44 @@
-import { useState } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useRef, useState } from 'react';
 
 import StarsRating from 'react-star-rate';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
+  const [sliderOpen, setSliderOpen] = useState(false);
+  const productInfoBigScreen = useRef(null);
+  const productInfoSmallScreen = useRef(null);
+
+  const handleSliderOpen = (event: React.MouseEvent) => {
+    const { target } = event;
+    if (target && target instanceof HTMLElement) {
+      if (target.classList.contains('swiper-button-next') || target.classList.contains('swiper-button-prev')) {
+        event.stopPropagation();
+        return;
+      }
+    }
+    setSliderOpen((prevSliderOpen) => {
+      const newSliderOpen = !prevSliderOpen;
+      if (productInfoBigScreen.current) {
+        newSliderOpen
+          ? ((productInfoBigScreen.current as HTMLElement).style.display = 'none')
+          : ((productInfoBigScreen.current as HTMLElement).style.display = 'block');
+      }
+      if (productInfoSmallScreen.current) {
+        newSliderOpen
+          ? ((productInfoSmallScreen.current as HTMLElement).className = 'md:block')
+          : ((productInfoSmallScreen.current as HTMLElement).className = 'md:none');
+      }
+      return newSliderOpen;
+    });
+  };
+
   return (
     <div className="mx-auto h-full md:max-w-[645px]">
       <div className="relative h-full md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
@@ -14,9 +49,22 @@ export default function ProductPage() {
           <img className="md:hidden" src="src/assets/icons/heart.svg" alt="" />
         </button>
         <div className="relative h-full">
-          <div className="relative h-full max-h-[320px] md:max-h-[400px]">
-            <img className="h-full w-full object-cover md:rounded-t-2xl" src="src/assets/img/sushi.png" alt="" />
-            <div className="hidden md:absolute md:left-[3%] md:top-[45%] md:block md:rounded-2xl md:p-6 md:backdrop-blur-2xl">
+          <div onClick={handleSliderOpen} className="relative h-full max-h-[320px] md:max-h-[400px]">
+            <Swiper navigation={sliderOpen} loop modules={[Navigation]} className="h-full w-full">
+              <SwiperSlide>
+                <img className="h-full w-full object-cover md:rounded-t-2xl" src="src/assets/img/sushi.png" alt="" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img className="h-full w-full object-cover md:rounded-t-2xl" src="src/assets/img/sushi.png" alt="" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img className="h-full w-full object-cover md:rounded-t-2xl" src="src/assets/img/sushi.png" alt="" />
+              </SwiperSlide>
+            </Swiper>
+            <div
+              ref={productInfoBigScreen}
+              className="z-20 hidden md:absolute md:left-[3%] md:top-[45%] md:block md:rounded-2xl md:p-6 md:backdrop-blur-2xl"
+            >
               <h2 className="text-3xl font-bold text-text-dark md:text-primary">Vegan Meal</h2>
               <h3 className="mt-5 text-sm font-light text-text-grey md:text-primary">622 kcal</h3>
               <h3 className="text-sm font-light text-text-grey md:text-primary">340 g</h3>
@@ -28,11 +76,11 @@ export default function ProductPage() {
           >
             <img src="src/assets/icons/arrowLeft.svg" alt="" />
           </button>
-          <div className="absolute -mt-12 flex flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
-            <div className="md:hidden">
-              <h2 className="text-3xl font-bold text-text-dark md:text-primary">Vegan Meal</h2>
-              <h3 className="mt-5 text-sm font-light text-text-grey md:text-primary">622 kcal</h3>
-              <h3 className="mt-1 text-sm font-light text-text-grey md:text-primary">340 g</h3>
+          <div className="absolute z-10 -mt-12 flex flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
+            <div ref={productInfoSmallScreen} className="md:hidden">
+              <h2 className="text-3xl font-bold text-text-dark">Vegan Meal</h2>
+              <h3 className="mt-5 text-sm font-light text-text-grey">622 kcal</h3>
+              <h3 className="mt-1 text-sm font-light text-text-grey">340 g</h3>
             </div>
             <div className="flex items-baseline justify-between pt-6 sm:pt-10">
               <div className="flex flex-[50%] flex-col items-center gap-x-2">
