@@ -21,7 +21,7 @@ const greenBorder = 'border-b-2 border-accent';
 const categories = ['All', 'Sushi', 'Sets', 'Main dishes', 'Drinks', 'Salads', 'Soups'];
 
 export default function ProductPage() {
-  const [activeCat, setActiveCat] = useState('all');
+  const [activeCat, setActiveCat] = useState('All');
   const [filtersState, setFiltersState] = useState({
     vegan: false,
     spicy: false,
