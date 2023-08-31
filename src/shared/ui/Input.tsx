@@ -14,7 +14,6 @@ export default function Input({ id, label, disabled, type = 'text' }: InputProps
         placeholder=" "
         type={type}
         className={`
-          bg-white
           peer
           w-full
           rounded-md 
