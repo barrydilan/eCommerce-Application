@@ -1,4 +1,5 @@
 import './index.css';
+import '@smastrom/react-rating/style.css';
 
 import React from 'react';
 
