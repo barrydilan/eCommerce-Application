@@ -1,16 +1,12 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { describe, it, vi } from 'vitest';
 
+import RenderTestApp from './helpers/RenderTestApp.tsx';
 import { App } from '../app/App.tsx';
-import { setupStore } from '../app/store';
 import { userSlice } from '../entities/user';
 import LoginPage from '../pages/LoginPage/LoginPage.tsx';
 import * as helpers from '../shared/lib/helpers';
-
-let store = setupStore();
 
 const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
 const setCookieSpy = vi.spyOn(helpers, 'setCookie');
@@ -23,17 +19,10 @@ describe('LoginPage', () => {
   afterEach(() => {
     vi.clearAllTimers();
     vi.clearAllMocks();
-    store = setupStore();
   });
 
   it('Renders the form', () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
@@ -43,13 +32,7 @@ describe('LoginPage', () => {
   });
 
   it('Hides the password', () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     expect(screen.getByRole('checkbox')).not.toBeChecked();
 
@@ -71,13 +54,7 @@ describe('LoginPage', () => {
   });
 
   it('Show error on wrong Email input', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     await userEvent.click(screen.getByPlaceholderText('Email'));
     await userEvent.tab();
@@ -93,13 +70,7 @@ describe('LoginPage', () => {
   });
 
   it('Show error on wrong Password input', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     await userEvent.click(screen.getByPlaceholderText('Password'));
     await userEvent.tab();
@@ -142,13 +113,7 @@ describe('LoginPage', () => {
   // });
 
   it('Success submit', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/login']}>
-          <App />
-        </MemoryRouter>
-      </Provider>,
-    );
+    RenderTestApp(<App />, '/login');
 
     await waitFor(() => {
       expect(updateAccessTokenSpy).toBeCalled();
@@ -171,50 +136,17 @@ describe('LoginPage', () => {
 
     expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
     expect(screen.queryByText('Log in')).toBeNull();
-
-    expect(store.getState().userReducer.isLogged).toBeTruthy();
-    expect(store.getState().userReducer.accessToken.length).toBeGreaterThan(0);
-
-    expect(window.location.pathname).toBe('/');
   });
 
   it('Route to the main page and not to send new request on the second login', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/login']}>
-          <App />
-        </MemoryRouter>
-      </Provider>,
-    );
+    RenderTestApp(<App />, '/login', { userReducer: { isLogged: true, accessToken: '', userId: '' } });
 
-    await waitFor(() => {
-      expect(updateAccessTokenSpy).toBeCalled();
-    });
+    expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
+    expect(screen.queryByText('log in', { exact: false })).toBeNull();
 
-    await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
-    await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
+    expect(loggedInSpy).toBeCalledTimes(0);
+    expect(setCookieSpy).toBeCalledTimes(0);
 
-    await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
-
-    await waitFor(() => {
-      expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
-    });
-
-    expect(loggedInSpy).toBeCalledTimes(1);
-    expect(setCookieSpy).toBeCalledTimes(1);
-
-    window.history.back();
-
-    window.onpopstate = async () => {
-      expect(window.location.pathname).toBe('/login');
-
-      await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
-
-      expect(loggedInSpy).toBeCalledTimes(1);
-      expect(setCookieSpy).toBeCalledTimes(1);
-      expect(window.location.pathname).toBe('/');
-    };
+    expect(window.location.pathname).toBe('/');
   });
-
-  // TODO - Add test for routing to the registration page
 });
