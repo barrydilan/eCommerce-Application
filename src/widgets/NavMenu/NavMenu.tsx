@@ -6,11 +6,10 @@ import logOutIcon from '../../assets/icons/log-out.svg';
 import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
-import { COOKIE_ACCESS_TOKEN, useRevokeTokenMutation, userSlice } from '../../entities/user';
+import { COOKIE_ACCESS_TOKEN, userSlice } from '../../entities/user';
 import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { deleteCookie } from '../../shared/lib/helpers';
-import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import { TokenTypeHints } from '../../shared/types';
+import { useAppDispatch, useAppSelector, useRevokeAccessRefreshTokens } from '../../shared/lib/hooks';
 
 function NavMenu() {
   const {
@@ -18,16 +17,14 @@ function NavMenu() {
     accessToken: oldAccessToken,
     refreshToken: oldRefreshToken,
   } = useAppSelector((state) => state.userReducer);
-  const [revokeToken] = useRevokeTokenMutation();
+  const revokeTokens = useRevokeAccessRefreshTokens();
   const dispatch = useAppDispatch();
   const { loggedOut } = userSlice.actions;
 
   async function handleLogout() {
     dispatch(loggedOut());
     deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
-
-    revokeToken({ token: oldAccessToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
-    revokeToken({ token: oldRefreshToken, tokenTypeHint: TokenTypeHints.REFRESH_TOKEN });
+    revokeTokens(oldAccessToken, oldRefreshToken);
   }
 
   return (

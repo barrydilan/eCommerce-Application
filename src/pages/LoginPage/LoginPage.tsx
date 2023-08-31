@@ -10,16 +10,16 @@ import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { ErrorModal } from '../../entities/form/ui';
-import { useLoginUser, useLoginUserDataMutation, useRevokeTokenMutation } from '../../entities/user';
+import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
 import { getErrorMessage } from '../../shared/lib/helpers';
-import { useAppSelector } from '../../shared/lib/hooks';
-import { ILoginUserParams, TokenTypeHints } from '../../shared/types';
+import { useAppSelector, useRevokeAccessRefreshTokens } from '../../shared/lib/hooks';
+import { ILoginUserParams } from '../../shared/types';
 import { ErrorMessage, inputAnimation, pageVariants, svgAnimation } from '../../shared/ui';
 
 function LoginPage() {
   const [loginUser, { error: loginError, isLoading: loginIsLoading }] = useLoginUser();
   const [getLoginUserData, { error: loginDataError, isLoading: loginDataIsLoading }] = useLoginUserDataMutation();
-  const [revokeToken] = useRevokeTokenMutation();
+  const revokeTokens = useRevokeAccessRefreshTokens();
   const { accessToken: oldAccessToken, refreshToken: oldRefreshToken } = useAppSelector((state) => state.userReducer);
   const navigate = useNavigate();
 
@@ -41,9 +41,7 @@ function LoginPage() {
       await loginUser(userData.email, userData.password, id);
 
       navigate('/');
-
-      revokeToken({ token: oldAccessToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
-      revokeToken({ token: oldRefreshToken, tokenTypeHint: TokenTypeHints.REFRESH_TOKEN });
+      revokeTokens(oldAccessToken, oldRefreshToken);
     } catch (e) {
       // console.error(`Error occurred while logging the user! (${e.status})`);
     }
