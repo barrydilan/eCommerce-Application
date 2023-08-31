@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import logOutIcon from '../../assets/icons/log-out.svg';
 import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../../entities/user';
 import { COOKIE_USER_ID } from '../../entities/user/consts/constants';
@@ -9,10 +11,14 @@ export default function ProfilePage() {
   const dispatch = useAppDispatch();
   const [getAnonToken, { isLoading }] = useAnonymousSessionMutation();
   const { loggedOut } = userSlice.actions;
+  const navigate = useNavigate();
+
   async function handleLogout() {
     const { access_token: accessToken } = await getAnonToken().unwrap();
+
     dispatch(loggedOut(accessToken));
     deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
+    navigate('/');
   }
 
   return (

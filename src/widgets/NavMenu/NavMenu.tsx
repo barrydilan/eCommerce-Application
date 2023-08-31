@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import paymentIcon from '../../assets/icons/credit-card.svg';
 import deliveryIcon from '../../assets/icons/delivery.svg';
@@ -16,12 +16,14 @@ function NavMenu() {
   const [getAnonToken, { isLoading }] = useAnonymousSessionMutation();
   const dispatch = useAppDispatch();
   const { loggedOut } = userSlice.actions;
+  const navigate = useNavigate();
 
   async function handleLogout() {
     const { access_token: accessToken } = await getAnonToken().unwrap();
 
     dispatch(loggedOut(accessToken));
     deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
+    navigate('/');
   }
 
   return (
