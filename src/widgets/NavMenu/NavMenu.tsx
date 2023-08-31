@@ -6,22 +6,33 @@ import logOutIcon from '../../assets/icons/log-out.svg';
 import menuIcon from '../../assets/icons/menu.svg';
 import contactsIcon from '../../assets/icons/phone.svg';
 import cartIcon from '../../assets/icons/shopping-cart.svg';
-import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../../entities/user';
+import {
+  COOKIE_ACCESS_TOKEN,
+  useAnonymousSessionMutation,
+  useRevokeTokenMutation,
+  userSlice,
+} from '../../entities/user';
 import { COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { deleteCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import { TokenTypeHints } from '../../shared/types';
 
 function NavMenu() {
-  const { isLogged } = useAppSelector((state) => state.userReducer);
+  const { isLogged, accessToken: currentToken } = useAppSelector((state) => state.userReducer);
   const [getAnonToken, { isLoading }] = useAnonymousSessionMutation();
+  const [revokeToken] = useRevokeTokenMutation();
   const dispatch = useAppDispatch();
   const { loggedOut } = userSlice.actions;
 
   async function handleLogout() {
+    const oldToken = currentToken;
+
     const { access_token: accessToken } = await getAnonToken().unwrap();
 
     dispatch(loggedOut(accessToken));
     deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
+
+    revokeToken({ token: oldToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
   }
 
   return (

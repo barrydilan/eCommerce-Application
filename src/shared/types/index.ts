@@ -1,5 +1,3 @@
-import ErrorCodeStatus from './enums.ts';
-
 export type {
 	ILoginUserParams,
 	ILoginUserDataResponse,
@@ -9,4 +7,4 @@ export type {
 	ISignUpAddress,
 } from './interfaces.ts';
 export type { CookieTuple, SignUpAddresses } from './types.ts';
-export { ErrorCodeStatus };
+export { ErrorCodeStatus, TokenTypeHints } from './enums.ts';
