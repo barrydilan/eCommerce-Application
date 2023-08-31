@@ -1,3 +1,7 @@
+import React, { useState } from 'react';
+
+import StarsRating from 'react-star-rate';
+
 import productImg from '../../assets/img/productImg.png';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
 
@@ -10,8 +14,10 @@ const customStyles = {
  */
 
 export default function MenuItem() {
-  // const [rating, setRating] = useState(4.52);
-  const rating = 4.52;
+  const [rating, setRating] = useState(4.5);
+  // const handleRating = (rate: number) => {
+  //   setRating(rate);
+  // };
 
   return (
     <div className="flex w-full rounded-2xl border-1 border-border-black/10">
@@ -28,15 +34,13 @@ export default function MenuItem() {
             <h4 className="text-xs font-extralight text-text-grey sm:text-base">340 g</h4>
           </div>
           <div className="mb-2 flex items-center gap-x-2 text-sm">
-            {/* <Rating */}
-            {/*  className="-mt-1" */}
-            {/*  style={{ maxWidth: 110, width: '70%' }} */}
-            {/*  readOnly */}
-            {/*  halfFillMode="svg" */}
-            {/*  itemStyles={customStyles} */}
-            {/*  value={rating} */}
-            {/*  onChange={setRating} */}
-            {/* /> */}
+            <StarsRating
+              value={rating}
+              allowHalf
+              onChange={() => {
+                setRating(rating);
+              }}
+            />
             <p className="text-xs font-extralight text-text-grey sm:text-base">{rating}</p>
           </div>
         </div>
