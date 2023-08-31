@@ -41,10 +41,13 @@ export default {
       gridTemplateColumns: {
         tabGridCols: '11rem 1fr',
         deskGridCols: '22rem 1fr',
+        prodPageDesk: '1fr 130px'
       },
       gridTemplateRows: {
         mobGridRows: 'auto 1fr auto',
         tabGridRows: 'auto 1fr',
+        prodPageMob: 'repeat(3, auto) 1fr',
+        prodPageDesk: 'repeat(2, auto) 1fr'
       },
       spacing: {
         30: '7.5rem',
