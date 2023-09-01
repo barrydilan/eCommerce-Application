@@ -16,7 +16,7 @@ describe('App', () => {
   });
 
   it('Renders the not found page if invalid path', () => {
-    RenderTestApp(<App />, '/test-for-not-found-route');
+    RenderTestApp(<App />, '/eCommerce-Application/test-for-not-found-route');
 
     expect(
       screen.getByRole('heading', {
