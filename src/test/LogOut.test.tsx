@@ -18,7 +18,7 @@ describe('LogOut', () => {
 
   it('Logout is working', async () => {
     RenderTestApp(<App />, '/login', {
-      userReducer: { isLogged: true },
+      userReducer: { isLogged: true, accessToken: '', refreshToken: '', userId: '' },
     });
 
     expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();

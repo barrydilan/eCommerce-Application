@@ -24,9 +24,9 @@ function NavMenu() {
 
   async function handleLogout() {
     dispatch(loggedOut());
-    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
     navigate('/');
-    revokeToken({ token: oldAccessToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
+    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
+    revokeTokens(oldAccessToken, oldRefreshToken);
   }
 
   return (

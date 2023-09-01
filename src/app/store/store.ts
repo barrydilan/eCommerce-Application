@@ -2,7 +2,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { productApi } from '../../entities/product';
 import { authApi, signUpApi, userDataApi, userReducer } from '../../entities/user';
-import { RecursivePartial } from '../../shared/types';
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
@@ -16,7 +15,7 @@ const rootReducer = combineReducers({
 	userReducer,
 });
 
-export const setupStore = (preloadedState?: RecursivePartial<RootState>) =>
+export const setupStore = (preloadedState?: Partial<RootState>) =>
 	configureStore({
 		preloadedState,
 		reducer: rootReducer,
