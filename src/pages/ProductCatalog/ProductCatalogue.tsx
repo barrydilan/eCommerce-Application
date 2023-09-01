@@ -7,8 +7,9 @@ import FilterModal from './model/FilterModal';
 import SortingSelector from './model/SortingSelector';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
-import { correctPrice, useGetProductListQuery } from '../../entities/product';
+import { correctPrice, ProductAttributeNames, useGetProductListQuery } from '../../entities/product';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
+import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export type FiltersFields = {
   vegan: boolean;
@@ -164,6 +165,8 @@ export default function ProductCatalogue() {
                   name={name.en}
                   price={correctPrice(masterVariant.prices[0].value.centAmount)}
                   image={masterVariant.images[0].url}
+                  weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
+                  calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
                 />
               ),
             )

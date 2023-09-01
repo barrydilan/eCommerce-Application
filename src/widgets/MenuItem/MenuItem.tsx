@@ -10,9 +10,11 @@ interface IMenuItemProps {
   price: string;
   image: string;
   id: string;
+  calories: string | number;
+  weight: string | number;
 }
 
-export default function MenuItem({ name, price, image, id }: IMenuItemProps) {
+export default function MenuItem({ name, price, image, id, calories, weight }: IMenuItemProps) {
   const [rating, setRating] = useState(4.5);
 
   return (
@@ -20,15 +22,15 @@ export default function MenuItem({ name, price, image, id }: IMenuItemProps) {
       <div className="flex w-fit rounded-2xl border-1 border-border-black/10">
         <div className="m-h-[120px] flex flex-[80%] gap-x-2">
           <img
-            className="mr-2 inline-block h-full max-w-[45%] flex-none rounded-2xl xs:max-w-[19.5%]"
+            className="mr-2 inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover xs:max-w-[26%] xl:max-w-[19.5%]"
             src={image}
             alt={name}
           />
           <div className="my-4 flex flex-1 flex-col gap-y-1 xs:gap-y-4 sm:my-4">
             <div className="flex flex-1 flex-col gap-y-1">
               <h2 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">{name}</h2>
-              <h4 className="text-xs font-extralight text-text-grey sm:text-base">622 kcal</h4>
-              <h4 className="text-xs font-extralight text-text-grey sm:text-base">340 g</h4>
+              <h4 className="text-xs font-extralight text-text-grey sm:text-base">{calories} kcal</h4>
+              <h4 className="text-xs font-extralight text-text-grey sm:text-base">{weight} g</h4>
             </div>
             <div className="mb-2 flex items-center gap-x-2 text-sm">
               <StarsRating
