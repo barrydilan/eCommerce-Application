@@ -3,14 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
-import { togglePassVisibility, validationSchema } from './model/loginPageModel';
+import togglePassVisibility from './model/passwordToggler';
 import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { ErrorModal } from '../../entities/form/ui';
 import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
+import { validEmail, validPassword } from '../../shared/const/validationSchemas';
 import { getErrorMessage } from '../../shared/lib/helpers';
 import { ILoginUserParams } from '../../shared/types';
 import { ErrorMessage, inputAnimation, pageVariants, svgAnimation } from '../../shared/ui';
@@ -42,6 +44,11 @@ function LoginPage() {
       // console.error(`Error occurred while logging the user! (${e.status})`);
     }
   }
+
+  const validationSchema = Yup.object({
+    ...validEmail(),
+    ...validPassword(),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -242,6 +249,8 @@ function LoginPage() {
                   bg-accent
                   text-base
                   text-primary
+                  transition-all
+                  duration-300
                   disabled:bg-separation-line 
                   disabled:text-text-grey
                   ${loginIsLoading || loginDataIsLoading ? 'animate-pulse' : ''}

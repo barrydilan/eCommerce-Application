@@ -61,7 +61,7 @@ export default function ErrorModal({ reStartForm, errorMessage, navigateTo }: IE
           mb-4
           mt-8
           h-10
-          w-1/4
+          w-30
           rounded-lg
           bg-accent
           p-2
