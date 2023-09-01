@@ -3,9 +3,15 @@
 // import { COOKIE_USER_ID } from '../../entities/user/consts/constants';
 // import deleteCookie from '../../shared/lib/helpers/deleteCookie';
 // import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import { useState } from 'react';
 
+import AccountSettings from './model/AccountSettings';
+import AddressesSettings from './model/AddressesSettings';
 import BackBtn from './model/BackBtn';
+import TabSelector from './model/TabSelector';
+import UserImage from './model/UserImage';
 import ProfileHeader from './ui/ProfileHeader';
+import userImage from '../../assets/img/UserImg.jpg';
 
 export default function ProfilePage() {
   //   const { isLogged } = useAppSelector((state) => state.userReducer);
@@ -17,11 +23,14 @@ export default function ProfilePage() {
   //     dispatch(loggedOut(accessToken));
   //     deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
   //   }
-
+  const [isAccTabActive, setIsAccTabActive] = useState(true);
   return (
     <div className="p-5">
       <BackBtn />
       <ProfileHeader />
+      <UserImage pic={userImage} fullName="Oleksii Drohachov" email="asdrogachev@gmail.com" />
+      <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
+      <div>{isAccTabActive ? <AccountSettings /> : <AddressesSettings />}</div>
     </div>
   );
 }
