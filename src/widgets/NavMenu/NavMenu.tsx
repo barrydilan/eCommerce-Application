@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import paymentIcon from '../../assets/icons/credit-card.svg';
 import deliveryIcon from '../../assets/icons/delivery.svg';
@@ -19,12 +19,14 @@ function NavMenu() {
   } = useAppSelector((state) => state.userReducer);
   const revokeTokens = useRevokeAccessRefreshTokens();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { loggedOut } = userSlice.actions;
 
   async function handleLogout() {
     dispatch(loggedOut());
     deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
-    revokeTokens(oldAccessToken, oldRefreshToken);
+    navigate('/');
+    revokeToken({ token: oldAccessToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
   }
 
   return (

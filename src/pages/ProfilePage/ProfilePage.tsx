@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 import logOutIcon from '../../assets/icons/log-out.svg';
 import { COOKIE_ACCESS_TOKEN, useRevokeTokenMutation, userSlice } from '../../entities/user';
-import { COOKIE_USER_ID } from '../../entities/user/consts/constants';
+import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../entities/user/consts/constants';
 import deleteCookie from '../../shared/lib/helpers/deleteCookie';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import { TokenTypeHints } from '../../shared/types';
@@ -9,11 +11,13 @@ export default function ProfilePage() {
   const { isLogged, accessToken: oldAccessToken } = useAppSelector((state) => state.userReducer);
   const [revokeToken] = useRevokeTokenMutation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { loggedOut } = userSlice.actions;
 
   async function handleLogout() {
     dispatch(loggedOut());
-    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
+    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
+    navigate('/');
     revokeToken({ token: oldAccessToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
   }
 
