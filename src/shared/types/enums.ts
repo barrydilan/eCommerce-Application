@@ -1,6 +1,12 @@
 enum ErrorCodeStatus {
-	'ACCOUNT_EXIST' = 400,
-	'NOT_FOUND' = 404,
+	ACCOUNT_EXIST = 400,
+	NOT_FOUND = 404,
+	UNAUTHORIZED = 401,
 }
 
-export default ErrorCodeStatus;
+enum TokenTypeHints {
+	ACCESS_TOKEN = 'access_token',
+	REFRESH_TOKEN = 'refresh_token',
+}
+
+export { ErrorCodeStatus, TokenTypeHints };

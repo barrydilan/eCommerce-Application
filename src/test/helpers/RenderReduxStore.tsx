@@ -11,7 +11,7 @@ import { RootState, setupStore } from '../../app/store';
  *
  * @returns {RootState} - The root state of the test app.
  */
-function renderReduxStore(component: React.ReactElement, initialState?: RootState): RootState {
+function renderReduxStore(component: React.ReactElement, initialState?: Partial<RootState>): RootState {
   const store = setupStore(initialState);
 
   render(<Provider store={store}>{component}</Provider>);

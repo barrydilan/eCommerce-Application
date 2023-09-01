@@ -28,12 +28,21 @@ function useLoginUser() {
 	 */
 	async function loginUser(email: string, password: string, id: string) {
 		try {
-			const { access_token: accessToken, expires_in: expiresIn } = await getLoginToken({ email, password }).unwrap();
+			const {
+				access_token: accessToken,
+				expires_in: expiresIn,
+				refresh_token: refreshToken,
+			} = await getLoginToken({ email, password }).unwrap();
 
-			dispatch(loggedIn({ accessToken, userId: id }));
+			dispatch(loggedIn({ accessToken, userId: id, refreshToken }));
 
-			const [accessTokenCookie, idCookie] = prepareLoginCookieData(accessToken, expiresIn, id);
-			setCookie(accessTokenCookie, idCookie);
+			const [accessTokenCookie, idCookie, refreshTokenCookie] = prepareLoginCookieData({
+				accessToken,
+				id,
+				refreshToken,
+				expiresInToken: expiresIn,
+			});
+			setCookie(accessTokenCookie, idCookie, refreshTokenCookie);
 		} catch (e) {
 			if (e && typeof e === 'object' && 'status' in e) {
 				throw new Error(`Error occurred while logged in user ${e.status}`);
