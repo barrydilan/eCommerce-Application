@@ -1,7 +1,7 @@
 interface IHeaderMobileProps {
   name: string;
-  calories: number;
-  weight: number;
+  calories: number | string;
+  weight: number | string;
 }
 
 function HeaderMobile({ name, calories, weight }: IHeaderMobileProps) {

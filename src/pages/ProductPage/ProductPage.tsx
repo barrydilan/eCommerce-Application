@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useLocation } from 'react-router-dom';
 
+import getAttribute from './lib/helpers/getAttribute.ts';
 import AddWishlistMobile from './ui/AddWishlistMobile.tsx';
 import BackButton from './ui/BackButton.tsx';
 import Description from './ui/Description.tsx';
@@ -14,7 +15,7 @@ import Price from './ui/Price.tsx';
 import Rating from './ui/Rating.tsx';
 import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
-import { useGetProductQuery } from '../../entities/product';
+import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
@@ -34,17 +35,14 @@ export default function ProductPage() {
     },
   } = data;
 
-  const ingredients = attributes
-    .find((obj) => obj.name === 'ingredients')
-    ?.value?.toString()
-    ?.split(', ');
-
   const rawPrice = prices[0].value.centAmount;
   const rawOldPrice = 4450;
   const image = images[0].url;
   const name = en;
-  const calories = 340;
-  const weight = 212;
+
+  const ingredients = getAttribute(attributes, ProductAttributeNames.INGREDIENTS)?.toString()?.split(', ');
+  const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
+  const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
   return (
     <div className="mx-auto h-full md:max-w-[645px]">
@@ -55,7 +53,7 @@ export default function ProductPage() {
             <TitleAbout name={name} weight={weight} calories={calories} />
           </Title>
           <BackButton />
-          <div className="absolute -mt-12 flex flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
+          <div className="absolute -mt-12 flex w-full flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
             <HeaderMobile name={name} calories={calories} weight={weight} />
             <Header>
               <>
@@ -64,7 +62,7 @@ export default function ProductPage() {
               </>
             </Header>
             <Footer />
-            <Description />
+            <Description attributes={attributes} />
             {ingredients ? (
               <IngredientList>
                 <>

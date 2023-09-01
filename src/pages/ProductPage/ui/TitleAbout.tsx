@@ -1,7 +1,7 @@
 interface ITitleAboutProps {
   name: string;
-  calories: number;
-  weight: number;
+  calories: number | string;
+  weight: number | string;
 }
 
 function TitleAbout({ name, calories, weight }: ITitleAboutProps) {
