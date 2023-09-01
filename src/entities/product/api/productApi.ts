@@ -1,38 +1,62 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import bearerBaseQuery from '../../../shared/api/baseQuery.ts';
+import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 
-type IProductResponse = Readonly<{
+type ProductAttribute = Readonly<{
+	name: string;
+	value: string | number;
+}>;
+
+type ProductPrice = Readonly<{
+	value: {
+		type: string;
+		fractionDigits: number;
+		centAmount: number;
+		currencyCode: string;
+	};
+	id: string;
+}>;
+
+type ProductImage = Readonly<{
+	dimensions: {
+		h: number;
+		w: number;
+	};
+	url: string;
+}>;
+
+type ProductResult = Readonly<{
+	id: string;
+	masterData: {
+		current: {
+			name: {
+				de: string;
+				en: string;
+				uk: string;
+			};
+			masterVariant: {
+				id: number;
+				attributes: ProductAttribute[];
+				images: ProductImage[];
+				prices: ProductPrice[];
+			};
+		};
+	};
+}>;
+
+type ProductResponse = Readonly<{
 	limit: number;
 	count: number;
 	total: number;
-	results: [
-		{
-			id: string;
-			masterData: {
-				current: {
-					name: {
-						'de-DE': string;
-						'en-US': string;
-						uk: string;
-					};
-					description: {
-						'de-DE': string;
-						'en-US': string;
-						uk: string;
-					};
-				};
-			};
-		},
-	];
+	results: ProductResult[];
 }>;
 
 export const productApi = createApi({
 	reducerPath: 'productApi',
-	baseQuery: bearerBaseQuery,
+	baseQuery: baseQueryWithReauth,
 	endpoints: (build) => ({
-		fetchProducts: build.query<IProductResponse[], number>({
+		getProductList: build.query<ProductResponse, number>({
 			query: (limit = 5) => ({
 				url: `/${PROJECT_KEY}/products`,
 				params: {
@@ -40,7 +64,13 @@ export const productApi = createApi({
 				},
 			}),
 		}),
+
+		getProduct: build.query<ProductResult, string>({
+			query: (id) => ({
+				url: `/${PROJECT_KEY}/products/${id}`,
+			}),
+		}),
 	}),
 });
 
-export const { useFetchProductsQuery } = productApi;
+export const { useGetProductListQuery, useGetProductQuery } = productApi;
