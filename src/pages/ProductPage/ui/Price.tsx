@@ -6,7 +6,7 @@ interface IPriceProps {
 }
 
 function Price({ rawPrice, rawOldPrice }: IPriceProps) {
-  const discountPercentage = calcPriceDiscountPercentage(rawOldPrice / 100, rawPrice);
+  const discountPercentage = calcPriceDiscountPercentage(rawOldPrice / 100, rawPrice / 100);
   const price = correctPrice(rawPrice);
   const oldPrice = correctPrice(rawOldPrice);
 
