@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 
 import { RootState, setupStore } from '../../app/store';
+import { RecursivePartial } from '../../shared/types';
 
 /**
  * Renders a test app with the provided component, initial route, and initial state.
@@ -18,7 +19,7 @@ import { RootState, setupStore } from '../../app/store';
 function RenderTestApp(
   component: ReactElement,
   initialRoute: string = '/',
-  initialState?: Partial<RootState>,
+  initialState?: RecursivePartial<RootState>,
 ): RootState {
   const store = setupStore(initialState);
 

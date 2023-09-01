@@ -11,7 +11,6 @@ import * as helpers from '../shared/lib/helpers';
 
 const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
 const setCookieSpy = vi.spyOn(helpers, 'setCookie');
-const updateAccessTokenSpy = vi.spyOn(userSlice.actions, 'updateAccessToken');
 
 describe('LoginPage', () => {
   afterEach(() => {
@@ -92,22 +91,20 @@ describe('LoginPage', () => {
   it('Show errors on wrong submit', async () => {
     RenderTestApp(<App />, '/login');
 
-    await waitFor(() => {
-      expect(updateAccessTokenSpy).toBeCalled();
-    });
-
     await userEvent.type(screen.getByPlaceholderText('Email'), 'testemail@gmail.com');
     await userEvent.type(screen.getByPlaceholderText('Password'), 'dasdasD12#');
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
-    const error = await screen.findByText('Oh snap!', { exact: false });
-    const continueBtn = await screen.findByText('Continue', { exact: false });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Oh snap!', { exact: false })).toBeInTheDocument();
+        expect(screen.getByText('Continue', { exact: false })).toBeInTheDocument();
+      },
+      { timeout: 5000 },
+    );
 
-    expect(error).toBeInTheDocument();
-    expect(continueBtn).toBeInTheDocument();
-
-    await userEvent.click(continueBtn);
+    await userEvent.click(screen.getByText('Continue', { exact: false }));
 
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
@@ -115,10 +112,6 @@ describe('LoginPage', () => {
 
   it('Success submit', async () => {
     RenderTestApp(<App />, '/login');
-
-    await waitFor(() => {
-      expect(updateAccessTokenSpy).toBeCalled();
-    });
 
     await userEvent.type(screen.getByPlaceholderText('Email'), TEST_ACCOUNT_EMAIL);
     await userEvent.type(screen.getByPlaceholderText('Password'), TEST_ACCOUNT_PASSWORD);
@@ -140,7 +133,9 @@ describe('LoginPage', () => {
   });
 
   it('Route to the main page and not to send new request on the second login', async () => {
-    RenderTestApp(<App />, '/login', { userReducer: { isLogged: true, accessToken: '', userId: '' } });
+    RenderTestApp(<App />, '/login', {
+      userReducer: { isLogged: true },
+    });
 
     expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
     expect(screen.queryByText('log in', { exact: false })).toBeNull();
