@@ -54,5 +54,7 @@ describe('LogOut', () => {
     });
 
     expect(screen.queryByRole('button', { name: 'Log out' })).toBeNull();
+
+    expect(window.location.pathname).toBe('/');
   });
 });
