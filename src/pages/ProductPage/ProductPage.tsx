@@ -25,15 +25,24 @@ export default function ProductPage() {
 
   if (!data) return null;
 
-  const ingredients = data.masterData.current.masterVariant.attributes
+  const {
+    masterData: {
+      current: {
+        masterVariant: { attributes, prices, images },
+        name: { en },
+      },
+    },
+  } = data;
+
+  const ingredients = attributes
     .find((obj) => obj.name === 'ingredients')
     ?.value?.toString()
     ?.split(', ');
 
-  const rawPrice = data.masterData.current.masterVariant.prices[0].value.centAmount;
+  const rawPrice = prices[0].value.centAmount;
   const rawOldPrice = 4450;
-  const image = data.masterData.current.masterVariant.images[0].url;
-  const name = data.masterData.current.name.en;
+  const image = images[0].url;
+  const name = en;
   const calories = 340;
   const weight = 212;
 
