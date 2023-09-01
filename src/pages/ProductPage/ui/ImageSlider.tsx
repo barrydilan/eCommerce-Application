@@ -38,7 +38,7 @@ export default function ImageSlider({ isOpen, onClose }: IImageSlider) {
   );
   return (
     <div className="absolute inset-0 z-50 h-full w-full bg-primary">
-      <div className="bg-white relative h-full w-full rounded-lg p-20">
+      <div className="bg-white relative flex h-full w-full justify-center rounded-lg p-20">
         <div className="flex items-center justify-center">
           <Swiper
             navigation
@@ -47,16 +47,16 @@ export default function ImageSlider({ isOpen, onClose }: IImageSlider) {
             }}
             loop
             modules={[Navigation, Pagination]}
-            className="flex items-center justify-center"
+            className="flex h-full items-center justify-center"
           >
-            <SwiperSlide className="">
-              <img className="mx-auto" src="src/assets/img/sushi.png" alt="" />
+            <SwiperSlide className="mb-10 max-h-3/4">
+              <img className="mx-auto mb-10 h-[70%] w-[70%]" src="src/assets/img/sushi.png" alt="" />
             </SwiperSlide>
             <SwiperSlide>
-              <img className="mx-auto" src="src/assets/img/sushi.png" alt="" />
+              <img className="mx-auto mb-10 h-[70%] w-[70%]" src="src/assets/img/sushi.png" alt="" />
             </SwiperSlide>
             <SwiperSlide>
-              <img className="mx-auto" src="src/assets/img/sushi.png" alt="" />
+              <img className="mx-auto mb-10 h-[70%] w-[70%]" src="src/assets/img/sushi.png" alt="" />
             </SwiperSlide>
           </Swiper>
           <button
