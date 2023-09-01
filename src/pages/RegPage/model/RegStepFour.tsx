@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import * as Yup from 'yup';
 
-import { validSchemaStepFour } from './validationSchemas';
 import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
 import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import { CustomRegForm } from '../../../entities/form/ui';
+import { validPostalCode, validStreet } from '../../../shared/const/validationSchemas';
 import { ISignUpAddress } from '../../../shared/types';
 import { checkboxAnimation, ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
@@ -26,7 +27,12 @@ export default function RegStepFour(props: UserFormProps) {
     enableNext,
   } = props;
 
-  const validationSchema = validSchemaStepFour(billCountry as string, shipCountry as string);
+  const validationSchema = Yup.object({
+    billPostalCode: validPostalCode(billCountry).postalCode,
+    billStreet: validStreet().street,
+    shipPostalCode: validPostalCode(shipCountry).postalCode,
+    shipStreet: validStreet().street,
+  });
 
   const formik = useFormik({
     initialValues: {
