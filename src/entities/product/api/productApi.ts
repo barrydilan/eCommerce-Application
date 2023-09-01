@@ -12,7 +12,7 @@ export const productApi = createApi({
 			query: (limit = 5) => ({
 				url: `/${PROJECT_KEY}/products`,
 				params: {
-					_limit: limit,
+					limit,
 				},
 			}),
 		}),
