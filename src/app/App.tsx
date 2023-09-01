@@ -4,38 +4,24 @@ import { BrowserRouter } from 'react-router-dom';
 
 import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
-import { COOKIE_ACCESS_TOKEN, useAnonymousSessionMutation, userSlice } from '../entities/user';
-import { COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
+import { COOKIE_ACCESS_TOKEN, userSlice } from '../entities/user';
+import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
 
 export function App() {
-  const [getAnonToken] = useAnonymousSessionMutation();
   const dispatch = useAppDispatch();
-  const { updateAccessToken, loggedIn } = userSlice.actions;
+  const { loggedIn } = userSlice.actions;
 
   useEffect(() => {
-    async function fetchData() {
-      const [token, userId] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID);
+    const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
 
-      if (token && userId) {
-        dispatch(loggedIn({ accessToken: token, userId }));
-        return;
-      }
-
-      try {
-        const { access_token: accessToken } = await getAnonToken().unwrap();
-
-        dispatch(updateAccessToken(accessToken));
-      } catch (e) {
-        // console.error(`Error occurred while getting anonymous token! (${e.status})`);
-      }
+    if (token && userId && refreshToken) {
+      dispatch(loggedIn({ accessToken: token, userId, refreshToken }));
     }
-
-    fetchData();
-  }, [getAnonToken, dispatch, loggedIn, updateAccessToken]);
+  }, [dispatch, loggedIn]);
 
   return (
     <main

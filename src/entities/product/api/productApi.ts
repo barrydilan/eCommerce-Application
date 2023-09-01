@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import bearerBaseQuery from '../../../shared/api/bearerBaseQuery.ts';
+import bearerBaseQuery from '../../../shared/api/baseQuery.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 
 type IProductResponse = Readonly<{

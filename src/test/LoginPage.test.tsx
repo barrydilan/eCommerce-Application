@@ -1,39 +1,25 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { describe, it, vi } from 'vitest';
 
+import { TEST_ACCOUNT_EMAIL, TEST_ACCOUNT_PASSWORD } from './constants';
+import RenderTestApp from './helpers/RenderTestApp.tsx';
 import { App } from '../app/App.tsx';
-import { setupStore } from '../app/store';
 import { userSlice } from '../entities/user';
 import LoginPage from '../pages/LoginPage/LoginPage.tsx';
 import * as helpers from '../shared/lib/helpers';
 
-let store = setupStore();
-
 const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
 const setCookieSpy = vi.spyOn(helpers, 'setCookie');
-const updateAccessTokenSpy = vi.spyOn(userSlice.actions, 'updateAccessToken');
-
-const testAccountEmail = 'MyEmail@gmail.com';
-const testAccountPassword = '5i3wryMh@';
 
 describe('LoginPage', () => {
   afterEach(() => {
     vi.clearAllTimers();
     vi.clearAllMocks();
-    store = setupStore();
   });
 
   it('Renders the form', () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
@@ -43,13 +29,7 @@ describe('LoginPage', () => {
   });
 
   it('Hides the password', () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     expect(screen.getByRole('checkbox')).not.toBeChecked();
 
@@ -71,13 +51,7 @@ describe('LoginPage', () => {
   });
 
   it('Show error on wrong Email input', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     await userEvent.click(screen.getByPlaceholderText('Email'));
     await userEvent.tab();
@@ -93,13 +67,7 @@ describe('LoginPage', () => {
   });
 
   it('Show error on wrong Password input', async () => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <LoginPage />
-        </BrowserRouter>
-      </Provider>,
-    );
+    RenderTestApp(<LoginPage />);
 
     await userEvent.click(screen.getByPlaceholderText('Password'));
     await userEvent.tab();
@@ -120,42 +88,33 @@ describe('LoginPage', () => {
     expect(screen.getByText('Password must have A, a, 1 and special symbols')).toBeInTheDocument();
   });
 
-  // it('Show errors on wrong submit', async () => {
-  //   render(
-  //     <Provider store={store}>
-  //       <BrowserRouter>
-  //         <LoginPage />
-  //       </BrowserRouter>
-  //     </Provider>,
-  //   );
+  it('Show errors on wrong submit', async () => {
+    RenderTestApp(<App />, '/login');
 
-  //   await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'testemail@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'dasdasD12#');
 
-  //   expect(screen.getByPlaceholderText('Email')).toHaveClass('border-shop-cart-red');
-  //   expect(screen.getByPlaceholderText('Password')).toHaveClass('border-shop-cart-red');
-  //   expect(screen.getByText('password is required', { exact: false })).toBeInTheDocument();
-  //   expect(screen.getByText('Email is required')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
-  //   expect(Object.keys(store.getState().authApi.mutations)).toHaveLength(0);
-  //   expect(store.getState().userReducer.isLogged).toBeFalsy();
-  //   expect(store.getState().userReducer.accessToken).toHaveLength(0);
-  // });
-
-  it('Success submit', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/login']}>
-          <App />
-        </MemoryRouter>
-      </Provider>,
+    await waitFor(
+      () => {
+        expect(screen.getByText('Oh snap!', { exact: false })).toBeInTheDocument();
+        expect(screen.getByText('Continue', { exact: false })).toBeInTheDocument();
+      },
+      { timeout: 5000 },
     );
 
-    await waitFor(() => {
-      expect(updateAccessTokenSpy).toBeCalled();
-    });
+    await userEvent.click(screen.getByText('Continue', { exact: false }));
 
-    await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
-    await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+  });
+
+  it('Success submit', async () => {
+    RenderTestApp(<App />, '/login');
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), TEST_ACCOUNT_EMAIL);
+    await userEvent.type(screen.getByPlaceholderText('Password'), TEST_ACCOUNT_PASSWORD);
 
     await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
 
@@ -171,50 +130,38 @@ describe('LoginPage', () => {
 
     expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
     expect(screen.queryByText('Log in')).toBeNull();
+  });
 
-    expect(store.getState().userReducer.isLogged).toBeTruthy();
-    expect(store.getState().userReducer.accessToken.length).toBeGreaterThan(0);
+  it('Route to the main page and not to send new request on the second login', async () => {
+    RenderTestApp(<App />, '/login', {
+      userReducer: { isLogged: true, accessToken: '', refreshToken: '', userId: '' },
+    });
+
+    expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
+    expect(screen.queryByText('log in', { exact: false })).toBeNull();
+
+    expect(loggedInSpy).toBeCalledTimes(0);
+    expect(setCookieSpy).toBeCalledTimes(0);
 
     expect(window.location.pathname).toBe('/');
   });
 
-  it('Route to the main page and not to send new request on the second login', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/login']}>
-          <App />
-        </MemoryRouter>
-      </Provider>,
-    );
+  it('Route between log in & sign up', async () => {
+    RenderTestApp(<App />, '/login');
 
-    await waitFor(() => {
-      expect(updateAccessTokenSpy).toBeCalled();
-    });
+    const signUpBtn = screen.getByRole('link', { name: 'Sign up' });
+    expect(signUpBtn).toBeInTheDocument();
+    await userEvent.click(signUpBtn);
 
-    await userEvent.type(screen.getByPlaceholderText('Email'), testAccountEmail);
-    await userEvent.type(screen.getByPlaceholderText('Password'), testAccountPassword);
+    const logIn = screen.getByRole('link', { name: 'Log in' });
+    expect(logIn).toBeInTheDocument();
+    await userEvent.click(logIn);
 
-    await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
+    const signUpBtn2 = screen.getByRole('link', { name: 'Sign up' });
+    expect(signUpBtn2).toBeInTheDocument();
+    await userEvent.click(signUpBtn2);
 
-    await waitFor(() => {
-      expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
-    });
-
-    expect(loggedInSpy).toBeCalledTimes(1);
-    expect(setCookieSpy).toBeCalledTimes(1);
-
-    window.history.back();
-
-    window.onpopstate = async () => {
-      expect(window.location.pathname).toBe('/login');
-
-      await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
-
-      expect(loggedInSpy).toBeCalledTimes(1);
-      expect(setCookieSpy).toBeCalledTimes(1);
-      expect(window.location.pathname).toBe('/');
-    };
+    const logIn2 = screen.getByRole('link', { name: 'Log in' });
+    expect(logIn2).toBeInTheDocument();
   });
-
-  // TODO - Add test for routing to the registration page
 });
