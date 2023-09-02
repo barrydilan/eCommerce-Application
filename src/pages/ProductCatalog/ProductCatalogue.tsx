@@ -8,6 +8,7 @@ import SortingSelector from './model/SortingSelector';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
 import { correctPrice, ProductAttributeNames, useGetProductListQuery } from '../../entities/product';
+import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
@@ -34,9 +35,15 @@ export default function ProductCatalogue() {
     weight: '',
   });
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState('rateDesc');
+  const [sortOrder, setSortOrder] = useState('price desc');
 
-  const { data } = useGetProductListQuery(5);
+  const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
+  const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
+
+  const { data } = useGetProductListQuery({
+    limit: 5,
+    sort: { field, order },
+  });
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
     const { userSelect } = (e.target as HTMLElement).dataset;
@@ -152,24 +159,17 @@ export default function ProductCatalogue() {
         }}
       >
         {data
-          ? data.results.map(
-              ({
-                id,
-                masterData: {
-                  current: { name, masterVariant },
-                },
-              }) => (
-                <MenuItem
-                  key={id}
-                  id={id}
-                  name={name.en}
-                  price={correctPrice(masterVariant.prices[0].value.centAmount)}
-                  image={masterVariant.images[0].url}
-                  weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
-                  calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
-                />
-              ),
-            )
+          ? data.results.map(({ id, name, masterVariant }) => (
+              <MenuItem
+                key={id}
+                id={id}
+                name={name.en}
+                price={correctPrice(masterVariant.prices[0].value.centAmount)}
+                image={masterVariant.images[0].url}
+                weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
+                calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
+              />
+            ))
           : null}
       </div>
     </div>

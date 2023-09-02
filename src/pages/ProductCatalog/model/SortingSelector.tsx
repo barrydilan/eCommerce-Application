@@ -12,22 +12,22 @@ export default function SortingSelector(props: {
         onChange={(e) => setSortOrder(e.target.value)}
         className="appearance-none px-1 text-text-dark"
       >
-        <option value="rateDesc" className="text-right">
-          Rate ▼
-        </option>
-        <option value="rateAsc" className="text-right">
-          Rate ▲
-        </option>
-        <option value="priceDesc" className="text-right">
+        {/* <option value="rate desc" className="text-right"> */}
+        {/*  Rate ▼ */}
+        {/* </option> */}
+        {/* <option value="rate asc" className="text-right"> */}
+        {/*  Rate ▲ */}
+        {/* </option> */}
+        <option value="price desc" className="text-right">
           Price ▼
         </option>
-        <option value="priceAsc" className="text-right">
+        <option value="price asc" className="text-right">
           Price ▲
         </option>
-        <option value="alphDesc" className="text-right">
+        <option value="name desc" className="text-right">
           ABC ▼
         </option>
-        <option value="alphAsc" className="text-right">
+        <option value="name asc" className="text-right">
           ABC ▲
         </option>
       </select>

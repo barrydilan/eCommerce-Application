@@ -1,4 +1,4 @@
-enum ProductAttributeNames {
+export enum ProductAttributeNames {
 	INGREDIENTS = 'ingredients',
 	WEIGHT = 'weight',
 	PROTEINS = 'proteins',
@@ -9,4 +9,12 @@ enum ProductAttributeNames {
 	IS_SPICY = 'isSpicy',
 }
 
-export default ProductAttributeNames;
+export enum ProductSortingFields {
+	name = 'name.en',
+	price = 'price',
+}
+
+export enum ProductSortOrders {
+	asc = 'asc',
+	desc = 'desc',
+}

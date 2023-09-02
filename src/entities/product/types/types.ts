@@ -23,20 +23,16 @@ export type ProductImage = Readonly<{
 
 export type ProductResult = Readonly<{
 	id: string;
-	masterData: {
-		current: {
-			name: {
-				de: string;
-				en: string;
-				uk: string;
-			};
-			masterVariant: {
-				id: number;
-				attributes: ProductAttribute[];
-				images: ProductImage[];
-				prices: ProductPrice[];
-			};
-		};
+	name: {
+		de: string;
+		en: string;
+		uk: string;
+	};
+	masterVariant: {
+		id: number;
+		attributes: ProductAttribute[];
+		images: ProductImage[];
+		prices: ProductPrice[];
 	};
 }>;
 
