@@ -27,12 +27,8 @@ export default function ProductPage() {
   if (!data) return null;
 
   const {
-    masterData: {
-      current: {
-        masterVariant: { attributes, prices, images },
-        name: { en },
-      },
-    },
+    masterVariant: { attributes, prices, images },
+    name: { en },
   } = data;
 
   const rawPrice = prices[0].value.centAmount;

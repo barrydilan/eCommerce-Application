@@ -22,7 +22,7 @@ export const productApi = createApi({
 
 		getProduct: build.query<ProductResult, string>({
 			query: (id) => ({
-				url: `/${PROJECT_KEY}/products/${id}`,
+				url: `/${PROJECT_KEY}/product-projections/${id}`,
 			}),
 		}),
 	}),
