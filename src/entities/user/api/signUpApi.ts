@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
-import bearerBaseQuery from '../../../shared/api/bearerBaseQuery.ts';
+import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 import { ISignUpParams } from '../../../shared/types';
 
@@ -22,7 +22,7 @@ type ISignUpResponse = Readonly<{
 
 export const signUpApi = createApi({
 	reducerPath: 'signUpApi',
-	baseQuery: bearerBaseQuery,
+	baseQuery: baseQueryWithReauth,
 	endpoints: (build) => ({
 		signUp: build.mutation<ISignUpResponse, ISignUpParams>({
 			query: (signUpData) => ({

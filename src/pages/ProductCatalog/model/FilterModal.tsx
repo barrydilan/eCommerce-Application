@@ -1,6 +1,6 @@
 import FilterModalCheckbox from './FilterModalCheckbox';
 import FilterModalNumberInput from './FilterModalNumberInput';
-import { FiltersFields } from '../ProductCatalog';
+import { FiltersFields } from '../ProductCatalogue.tsx';
 
 const shownClasses = 'pointer-events-auto translate-x-0 opacity-1 lg:translate-y-16';
 const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translate-x-0 lg:-translate-y-52';

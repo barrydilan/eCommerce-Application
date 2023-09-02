@@ -7,6 +7,9 @@ import FilterModal from './model/FilterModal';
 import SortingSelector from './model/SortingSelector';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
+import { correctPrice, ProductAttributeNames, useGetProductListQuery } from '../../entities/product';
+import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
+import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export type FiltersFields = {
   vegan: boolean;
@@ -20,7 +23,7 @@ export type FiltersFields = {
 const greenBorder = 'border-b-2 border-accent';
 const categories = ['All', 'Sushi', 'Sets', 'Main dishes', 'Drinks', 'Salads', 'Soups'];
 
-export default function ProductPage() {
+export default function ProductCatalogue() {
   const [activeCat, setActiveCat] = useState('All');
   const [filtersState, setFiltersState] = useState({
     vegan: false,
@@ -32,6 +35,8 @@ export default function ProductPage() {
   });
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('rateDesc');
+
+  const { data } = useGetProductListQuery(5);
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
     const { userSelect } = (e.target as HTMLElement).dataset;
@@ -107,11 +112,11 @@ export default function ProductPage() {
       </div>
       <div
         className="
-          z-0 
-          mt-3 
-          bg-none 
-          text-sm 
-          font-light 
+          z-0
+          mt-3
+          bg-none
+          text-sm
+          font-light
           text-text-grey
           lg:mt-11
         "
@@ -119,11 +124,11 @@ export default function ProductPage() {
         <ul
           onClick={(e: React.MouseEvent<HTMLUListElement, MouseEvent>) => changeActiveCat(e)}
           className="
-            flex 
-            h-6 
-            gap-7 
-            overflow-y-scroll 
-            border-b-[2px] 
+            flex
+            h-6
+            gap-7
+            overflow-y-scroll
+            border-b-[2px]
             border-separation-line
             lg:h-8
             lg:gap-3
@@ -135,7 +140,10 @@ export default function ProductPage() {
       </div>
       <div
         className="
-          lg:rows-[3/4]
+        lg:rows-[3/4]
+          mt-8
+          grid
+          gap-6
           lg:col-start-1
           lg:col-end-3
         "
@@ -143,7 +151,26 @@ export default function ProductPage() {
           setIsFiltersOpen(false);
         }}
       >
-        Here will be products
+        {data
+          ? data.results.map(
+              ({
+                id,
+                masterData: {
+                  current: { name, masterVariant },
+                },
+              }) => (
+                <MenuItem
+                  key={id}
+                  id={id}
+                  name={name.en}
+                  price={correctPrice(masterVariant.prices[0].value.centAmount)}
+                  image={masterVariant.images[0].url}
+                  weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
+                  calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
+                />
+              ),
+            )
+          : null}
       </div>
     </div>
   );
