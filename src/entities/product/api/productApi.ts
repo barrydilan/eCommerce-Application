@@ -4,7 +4,7 @@ import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 import prepareFilterQuery from '../../user/model/prepareFilterQuery.ts';
 import IGetProductListParams from '../types/interfaces.ts';
-import { ProductResponse, ProductResult } from '../types/types.ts';
+import { CategoriesResponse, ProductResponse, ProductResult } from '../types/types.ts';
 
 export const productApi = createApi({
 	reducerPath: 'productApi',
@@ -25,7 +25,14 @@ export const productApi = createApi({
 				url: `/${PROJECT_KEY}/product-projections/${id}`,
 			}),
 		}),
+
+		getCategories: build.query<CategoriesResponse, void>({
+			query: () => ({
+				url: `/${PROJECT_KEY}/categories`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetProductListQuery, useLazyGetProductListQuery, useGetProductQuery } = productApi;
+export const { useGetProductListQuery, useLazyGetProductListQuery, useGetProductQuery, useGetCategoriesQuery } =
+	productApi;

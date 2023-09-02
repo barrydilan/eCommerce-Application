@@ -6,9 +6,11 @@ import React, { useEffect, useState } from 'react';
 
 import FilterModal from './model/FilterModal';
 import SortingSelector from './model/SortingSelector';
+import CategoryItem from './ui/CategoryItem.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
 import { correctPrice, ProductAttributeNames, useLazyGetProductListQuery } from '../../entities/product';
+import { useGetCategoriesQuery } from '../../entities/product/api/productApi.ts';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
@@ -21,9 +23,6 @@ export type FiltersFields = {
   calories: string;
   weight: string;
 };
-
-const greenBorder = 'border-b-2 border-accent';
-const categories = ['All', 'Sushi', 'Sets', 'Main dishes', 'Drinks', 'Salads', 'Soups'];
 
 export default function ProductCatalogue() {
   const [activeCat, setActiveCat] = useState('All');
@@ -38,7 +37,14 @@ export default function ProductCatalogue() {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('price desc');
   const [getProductList, { data: rawData }] = useLazyGetProductListQuery();
+  const { data: categoryData } = useGetCategoriesQuery();
   const data = { ...rawData };
+
+  let categories;
+
+  if (categoryData) {
+    categories = categoryData.results.filter(({ ancestors }) => ancestors.length <= 1);
+  }
 
   if (data && rawData && filtersState.calories !== '' && !isFiltersOpen) {
     data.results = rawData.results.filter(
@@ -66,7 +72,7 @@ export default function ProductCatalogue() {
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
     getProductList({
-      limit: 40,
+      limit: 5,
       sort: {
         field,
         order,
@@ -85,16 +91,6 @@ export default function ProductCatalogue() {
   useEffect(() => {
     fetchProducts();
   }, [sortOrder]);
-
-  const categoriesListItems = categories.map((item) => {
-    return (
-      <li className={`whitespace-nowrap px-1 ${activeCat === item ? greenBorder : ''}`} key={item}>
-        <button data-user-select={item} type="button">
-          {item}
-        </button>
-      </li>
-    );
-  });
 
   return (
     <div
@@ -179,7 +175,9 @@ export default function ProductCatalogue() {
             lg:text-base
           "
         >
-          {categoriesListItems}
+          {categories
+            ? categories.map(({ name: { en } }) => <CategoryItem key={en} item={en} activeCat={activeCat} />)
+            : null}
         </ul>
       </div>
       <div
