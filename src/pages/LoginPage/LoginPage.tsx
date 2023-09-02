@@ -108,7 +108,7 @@ function LoginPage() {
           onSubmit={formik.handleSubmit}
           className="
               mx-3
-              my-10
+              mt-24
               box-content
               max-h-[21.5rem]
               w-full
@@ -122,6 +122,7 @@ function LoginPage() {
               text-text-grey
               sm:pl-10
               sm:pr-10
+              md:mt-10
               "
         >
           <h5

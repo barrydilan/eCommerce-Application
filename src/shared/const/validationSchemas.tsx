@@ -32,7 +32,7 @@ export function validName() {
 
   return {
     name: Yup.string()
-      .matches(nameRegEx, { message: 'Last name must contain A, a letters', excludeEmptyString: true })
+      .matches(nameRegEx, { message: 'Name must contain A, a letters', excludeEmptyString: true })
       .max(20, 'Too long name')
       .required('Last name is required'),
   };
