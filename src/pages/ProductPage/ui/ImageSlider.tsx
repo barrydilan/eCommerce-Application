@@ -79,37 +79,3 @@ export default function ImageSlider({ isOpen, onClose }: IImageSlider) {
     </div>
   );
 }
-
-/* <div className="flex items-center self-center">
-          <Swiper
-            navigation={{
-              nextEl: '.swiper-button-next-unique',
-              prevEl: '.swiper-button-prev-unique',
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            loop
-            modules={[Navigation, Pagination]}
-            className="flex h-full max-h-[900px] max-w-[900px] items-center justify-center p-[100px]"
-          >
-            <SwiperSlide className="mb-10 max-h-3/4">
-              <img className="mx-auto mb-10 h-[90%] w-[90%] " src="src/assets/img/sushi.png" alt="" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img className="mx-auto mb-10 h-[90%] w-[90%]" src="src/assets/img/sushi.png" alt="" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img className="mx-auto mb-10 h-[90%] w-[90%]" src="src/assets/img/sushi.png" alt="" />
-            </SwiperSlide>
-            <div className="swiper-button-prev-unique" />
-            <div className="swiper-button-next-unique" />
-          </Swiper>
-          <button
-            type="button"
-            className="absolute left-[30px] top-[30px] z-[51] flex h-10 w-10 items-center justify-center rounded-full border-text-dark bg-inactive-icons-grey text-3xl"
-            onClick={onClose}
-          >
-            {crossSvg}
-          </button>
-        </div> */
