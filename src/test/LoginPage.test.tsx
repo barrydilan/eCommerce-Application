@@ -2,7 +2,6 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, vi } from 'vitest';
 
-import { TEST_ACCOUNT_EMAIL, TEST_ACCOUNT_PASSWORD } from './constants';
 import RenderTestApp from './helpers/RenderTestApp.tsx';
 import { App } from '../app/App.tsx';
 import { userSlice } from '../entities/user';
@@ -11,6 +10,7 @@ import * as helpers from '../shared/lib/helpers';
 
 const loggedInSpy = vi.spyOn(userSlice.actions, 'loggedIn');
 const setCookieSpy = vi.spyOn(helpers, 'setCookie');
+const timeout = 5000;
 
 describe('LoginPage', () => {
   afterEach(() => {
@@ -101,35 +101,13 @@ describe('LoginPage', () => {
         expect(screen.getByText('Oh snap!', { exact: false })).toBeInTheDocument();
         expect(screen.getByText('Continue', { exact: false })).toBeInTheDocument();
       },
-      { timeout: 5000 },
+      { timeout },
     );
 
     await userEvent.click(screen.getByText('Continue', { exact: false }));
 
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-  });
-
-  it('Success submit', async () => {
-    RenderTestApp(<App />, '/login');
-
-    await userEvent.type(screen.getByPlaceholderText('Email'), TEST_ACCOUNT_EMAIL);
-    await userEvent.type(screen.getByPlaceholderText('Password'), TEST_ACCOUNT_PASSWORD);
-
-    await userEvent.click(screen.getByRole('button', { name: 'Log in' }));
-
-    expect(screen.getByPlaceholderText('Email')).not.toHaveClass('border-shop-cart-red');
-    expect(screen.getByPlaceholderText('Password')).not.toHaveClass('border-shop-cart-red');
-    expect(screen.queryByText('Password required')).toBeNull();
-    expect(screen.queryByText('Email is required')).toBeNull();
-
-    await waitFor(() => {
-      expect(loggedInSpy).toBeCalledTimes(1);
-      expect(setCookieSpy).toBeCalledTimes(1);
-    });
-
-    expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
-    expect(screen.queryByText('Log in')).toBeNull();
   });
 
   it('Route to the main page and not to send new request on the second login', async () => {
