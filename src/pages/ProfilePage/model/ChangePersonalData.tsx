@@ -1,11 +1,11 @@
-// import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import * as Yup from 'yup';
 
-// import calendarIcon from '../../../assets/icons/CalendarIcon.svg';
-// import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
+import calendarIcon from '../../../assets/icons/CalendarIcon.svg';
+import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
@@ -39,11 +39,35 @@ export default function ChangePersonalData(props: {
     onSubmit: () => {},
   });
 
+  const initData = Object.values(props);
+
   const { handleChange, handleBlur, errors, touched, values } = formik;
+  const [dateInputType, setDateInputType] = useState('text');
+  const [isSaveBlocked, setIsSaveBlocked] = useState(true);
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
-  // const touchedAndErrorBirthDate = touched.birthDate && errors.birthDate;
+  const touchedAndErrorBirthDate = touched.birthDate && errors.birthDate;
+
+  function handleTransitionEnd() {
+    setDateInputType(document.activeElement?.id === 'birthDate' ? 'date' : 'text');
+  }
+
+  useEffect(() => {
+    if (
+      initData.every((item) => {
+        return Object.values(values).includes(item);
+      })
+    ) {
+      setIsSaveBlocked(true);
+      return;
+    }
+    if (errors.firstName || errors.lastName || errors.birthDate || errors.email) {
+      setIsSaveBlocked(true);
+      return;
+    }
+    setIsSaveBlocked(false);
+  }, [values, errors, touched, initData]);
 
   return (
     <div>
@@ -129,6 +153,43 @@ export default function ChangePersonalData(props: {
           {touchedAndErrorLastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}
         </label>
       </div>
+      <div>
+        <div className="text-base font-medium">Birth date</div>
+        <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDate" className="loginRegLabel">
+          <motion.input
+            initial={inputAnimation.initial}
+            animate={inputAnimation.animate}
+            transition={{ ...inputAnimation.transition, delay: 0.15 }}
+            id="birthDate"
+            type={dateInputType}
+            name="birthDate"
+            placeholder="Birth date"
+            onFocus={handleChange}
+            className={`loginRegInput placeholder:placeholder-opacity-0 ${
+              touchedAndErrorBirthDate ? 'border-shop-cart-red' : ''
+            }`}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.birthDate}
+          />
+          <motion.img
+            initial={svgAnimation.initial}
+            animate={svgAnimation.animate}
+            transition={{ ...svgAnimation.transition, delay: 0.25 }}
+            className="invalidInputIcon"
+            src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
+            alt=""
+          />
+          {touchedAndErrorBirthDate && <ErrorMessage>{errors.birthDate}</ErrorMessage>}
+        </label>
+      </div>
+      <button
+        className="mt-5 h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line"
+        type="button"
+        disabled={isSaveBlocked}
+      >
+        Save
+      </button>
     </div>
   );
 }

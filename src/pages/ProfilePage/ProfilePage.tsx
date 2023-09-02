@@ -25,7 +25,7 @@ export default function ProfilePage() {
   //   }
   const [isAccTabActive, setIsAccTabActive] = useState(true);
   return (
-    <div className="mt-12 p-5 sm:mt-16">
+    <div className="my-12 p-5 sm:mt-16">
       <BackBtn />
       <ProfileHeader />
       <UserImage pic={userImage} fullName="Oleksii Drohachov" email="asdrogachev@gmail.com" />
