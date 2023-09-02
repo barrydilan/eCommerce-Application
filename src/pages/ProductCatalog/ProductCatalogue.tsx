@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import FilterModal from './model/FilterModal';
 import SortingSelector from './model/SortingSelector';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
-import { correctPrice, ProductAttributeNames, useGetProductListQuery } from '../../entities/product';
+import { correctPrice, ProductAttributeNames, useLazyGetProductListQuery } from '../../entities/product';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
@@ -36,19 +36,54 @@ export default function ProductCatalogue() {
   });
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('price desc');
+  const [getProductList, { data: rawData }] = useLazyGetProductListQuery();
+  const data = { ...rawData };
 
-  const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
-  const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
+  if (data && rawData && filtersState.calories !== '' && !isFiltersOpen) {
+    data.results = rawData.results.filter(
+      (product) =>
+        Number(getAttribute(product.masterVariant.attributes, ProductAttributeNames.CALORIES)) <
+        Number(filtersState.calories),
+    );
+  }
 
-  const { data } = useGetProductListQuery({
-    limit: 5,
-    sort: { field, order },
-  });
+  if (data && rawData && filtersState.weight !== '' && !isFiltersOpen) {
+    data.results = rawData.results.filter(
+      (product) =>
+        Number(getAttribute(product.masterVariant.attributes, ProductAttributeNames.WEIGHT)) <
+        Number(filtersState.weight),
+    );
+  }
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
     const { userSelect } = (e.target as HTMLElement).dataset;
     if (userSelect && userSelect !== activeCat) setActiveCat(userSelect);
   }
+
+  function fetchProducts() {
+    const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
+    const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
+
+    getProductList({
+      limit: 40,
+      sort: {
+        field,
+        order,
+      },
+      filter: {
+        isVegan: filtersState.vegan,
+        isSpicy: filtersState.spicy,
+        isPromo: filtersState.promo,
+        calories: filtersState.calories,
+        weight: filtersState.weight,
+        price: filtersState.price,
+      },
+    });
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, [sortOrder]);
 
   const categoriesListItems = categories.map((item) => {
     return (
@@ -114,6 +149,7 @@ export default function ProductCatalogue() {
           setIsFiltersOpen={setIsFiltersOpen}
           filtersState={filtersState}
           setFiltersState={setFiltersState}
+          fetchProducts={fetchProducts}
         />
         <SortingSelector sortOrder={sortOrder} setSortOrder={setSortOrder} />
       </div>
@@ -159,7 +195,7 @@ export default function ProductCatalogue() {
         }}
       >
         {data
-          ? data.results.map(({ id, name, masterVariant }) => (
+          ? data.results?.map(({ id, name, masterVariant }) => (
               <MenuItem
                 key={id}
                 id={id}

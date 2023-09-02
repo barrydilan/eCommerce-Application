@@ -1,5 +1,7 @@
+import { ProductAttributeNames } from './enums.ts';
+
 export type ProductAttribute = Readonly<{
-	name: string;
+	name: ProductAttributeNames;
 	value: string | number;
 }>;
 
