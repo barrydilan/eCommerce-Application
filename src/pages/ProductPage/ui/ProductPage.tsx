@@ -24,7 +24,7 @@ export default function ProductPage() {
     <>
       <ImageSlider onClose={handleCloseSlider} isOpen={isSliderOpen} />
       <div className="relative mx-auto h-full md:max-w-[645px]">
-        <div className="relative h-full md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
+        <div className="relative h-[1000px] md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
           <button
             className="absolute right-5 top-5 z-10 flex h-10 w-10 items-center justify-center rounded-full border-1 border-primary/30 backdrop-blur-md sm:h-14 sm:w-14 md:hidden"
             type="button"
@@ -32,7 +32,7 @@ export default function ProductPage() {
             <img className="md:hidden" src="src/assets/icons/heart.svg" alt="" />
           </button>
           <div className="relative h-full">
-            <div onClick={handleSliderOpen} className="relative h-full max-h-[320px] md:max-h-[400px]">
+            <div onClick={handleSliderOpen} className="relative h-1/2 max-h-[320px] md:max-h-[400px]">
               <img className="h-full w-full object-cover md:rounded-t-2xl" src="src/assets/img/sushi.png" alt="" />
               <div
                 ref={productInfoBigScreen}
@@ -49,7 +49,7 @@ export default function ProductPage() {
             >
               <img src="src/assets/icons/arrowLeft.svg" alt="" />
             </button>
-            <div className="absolute z-10 -mt-12 flex flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
+            <div className="absolute z-10 -mt-12 flex h-1/2 w-full flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
               <div ref={productInfoSmallScreen} className="md:hidden">
                 <h2 className="text-3xl font-bold text-text-dark">Vegan Meal</h2>
                 <h3 className="mt-5 text-sm font-light text-text-grey">622 kcal</h3>
