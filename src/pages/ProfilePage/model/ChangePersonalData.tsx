@@ -70,11 +70,11 @@ export default function ChangePersonalData(props: {
   }, [values, errors, touched, initData]);
 
   return (
-    <div>
-      <h4 className="mx-auto mt-5 w-full text-center text-base font-medium">Personal data</h4>
-      <div className="my-4">
+    <div className="border-b-2 border-separation-line">
+      <h4 className="mx-auto mt-12 w-full text-center text-base font-medium">Personal data</h4>
+      <div className="profileInputWrapper">
         <div className="text-base font-medium">Email</div>
-        <label htmlFor="emailInput" className="loginRegLabel mt-5">
+        <label htmlFor="emailInput" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
@@ -99,9 +99,9 @@ export default function ChangePersonalData(props: {
           {touchedAndErrorEmail && <ErrorMessage>{errors.email}</ErrorMessage>}
         </label>
       </div>
-      <div className="my-4">
+      <div className="profileInputWrapper">
         <div className="text-base font-medium">Name</div>
-        <label htmlFor="firstName" className="loginRegLabel">
+        <label htmlFor="firstName" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
@@ -126,9 +126,9 @@ export default function ChangePersonalData(props: {
           <span className="text-sm">{touchedAndErrorFirstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}</span>
         </label>
       </div>
-      <div className="my-4">
+      <div className="profileInputWrapper">
         <div className="text-base font-medium">Surname</div>
-        <label htmlFor="lastName" className="loginRegLabel">
+        <label htmlFor="lastName" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
@@ -153,9 +153,13 @@ export default function ChangePersonalData(props: {
           {touchedAndErrorLastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}
         </label>
       </div>
-      <div>
+      <div className="profileInputWrapper">
         <div className="text-base font-medium">Birth date</div>
-        <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDate" className="loginRegLabel">
+        <label
+          onTransitionEnd={handleTransitionEnd}
+          htmlFor="birthDate"
+          className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]"
+        >
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
@@ -184,7 +188,7 @@ export default function ChangePersonalData(props: {
         </label>
       </div>
       <button
-        className="mt-5 h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line"
+        className="mb-12 mt-5  h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line"
         type="button"
         disabled={isSaveBlocked}
       >

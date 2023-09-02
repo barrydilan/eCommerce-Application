@@ -7,7 +7,7 @@ export default function TabSelector(props: {
 }) {
   const { isAccTabActive, setIsAccTabActive } = props;
   return (
-    <div className="mt-4 w-full font-medium">
+    <div className="mt-5 w-full font-medium">
       <button
         onClick={() => setIsAccTabActive(true)}
         className={`${

@@ -10,7 +10,7 @@ export default function AccountSettings() {
         birthDate="01/01/1999"
         email="trololo@kakah.net"
       />
-      <ChangePassword />
+      <ChangePassword currPassword="2023Pa$$word" />
     </div>
   );
 }

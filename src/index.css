@@ -48,6 +48,9 @@
   .invalidInputMsg {
     @apply absolute  -top-[1.15rem] left-2  text-[0.5rem]  leading-[0.5rem] text-shop-cart-red peer-invalid:block md:-top-5 md:text-xs;
   }
+  .profileInputWrapper {
+    @apply my-4 sm:my-0 sm:flex sm:items-center sm:justify-between sm:border-b-2 sm:border-separation-line sm:py-5
+  }
 }
 
 @layer components {
