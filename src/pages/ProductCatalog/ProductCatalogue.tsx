@@ -71,9 +71,9 @@ export default function ProductCatalogue() {
       .then(() => {
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
-        console.error('Error fetching data:', error);
+        // console.error('Error fetching data:', error);
       });
   }
 
