@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 import filterCalories from './model/filterCalories.ts';
 import FilterModal from './model/FilterModal';
+import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
 import CategoryItem from './ui/CategoryItem.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
@@ -54,11 +55,7 @@ export default function ProductCatalogue() {
   }
 
   if (productListData && rawProductListData && filtersState.weight !== '' && !isFiltersOpen) {
-    productListData.results = rawProductListData.results.filter(
-      (product) =>
-        Number(getAttribute(product.masterVariant.attributes, ProductAttributeNames.WEIGHT)) <
-        Number(filtersState.weight),
-    );
+    productListData.results = filterWeight(rawProductListData, Number(filtersState.weight));
   }
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
