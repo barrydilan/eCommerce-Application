@@ -52,7 +52,7 @@
     @apply pt-4 sm:flex sm:items-center sm:justify-between sm:border-b-2 sm:border-separation-line sm:py-5
   }
   .addressProfileWrapper {
-    @apply mt-6 block h-10 w-full rounded-md border-2 border-separation-line pl-4 text-base font-medium leading-[35px] text-text-dark
+    @apply mt-6 block h-10 w-full rounded-md border-2 border-separation-line pl-4 text-base font-medium leading-[35px] text-text-dark md:max-w-[47%]
   }
 }
 

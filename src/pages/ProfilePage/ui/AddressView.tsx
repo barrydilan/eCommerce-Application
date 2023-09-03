@@ -22,7 +22,7 @@ export default function AddressView(props: { address: AddressObj }) {
   const { address } = props;
   const { country, city, street, postalCode } = address;
   return (
-    <div className="mt-6">
+    <div className="mt-6 flex-wrap justify-between gap-6 md:flex">
       <div className="addressProfileWrapper">
         <motion.img
           initial={svgAnimation.initial}

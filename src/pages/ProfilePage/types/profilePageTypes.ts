@@ -4,3 +4,5 @@ export type AddressObj = {
 	street: string;
 	postalCode: string;
 };
+
+export type EditedAddressObj = { address: AddressObj; index?: number };
