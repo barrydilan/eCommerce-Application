@@ -48,6 +48,10 @@
   .invalidInputMsg {
     @apply absolute  -top-[1.15rem] left-2  text-[0.5rem]  leading-[0.5rem] text-shop-cart-red peer-invalid:block md:-top-5 md:text-xs;
   }
+
+  a.active {
+    @apply text-accent
+  }
 }
 
 @layer components {
