@@ -24,16 +24,16 @@ export default function ChangePersonalData(props: {
   email: string;
   firstName: string;
   lastName: string;
-  birthDate: string;
+  dateOfBirth: string;
 }) {
-  const { email, firstName, lastName, birthDate } = props;
+  const { email, firstName, lastName, dateOfBirth } = props;
 
   const formik = useFormik({
     initialValues: {
       email,
       firstName,
       lastName,
-      birthDate,
+      dateOfBirth,
     },
     validationSchema,
     onSubmit: () => {},
@@ -47,7 +47,7 @@ export default function ChangePersonalData(props: {
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
-  const touchedAndErrorBirthDate = touched.birthDate && errors.birthDate;
+  const touchedAndErrorBirthDate = touched.dateOfBirth && errors.dateOfBirth;
 
   function handleTransitionEnd() {
     setDateInputType(document.activeElement?.id === 'birthDate' ? 'date' : 'text');
@@ -62,7 +62,7 @@ export default function ChangePersonalData(props: {
       setIsSaveBlocked(true);
       return;
     }
-    if (errors.firstName || errors.lastName || errors.birthDate || errors.email) {
+    if (errors.firstName || errors.lastName || errors.dateOfBirth || errors.email) {
       setIsSaveBlocked(true);
       return;
     }
@@ -157,16 +157,16 @@ export default function ChangePersonalData(props: {
         <div className="text-base font-medium">Birth date</div>
         <label
           onTransitionEnd={handleTransitionEnd}
-          htmlFor="birthDate"
+          htmlFor="dateOfBirth"
           className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]"
         >
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
             transition={{ ...inputAnimation.transition, delay: 0.15 }}
-            id="birthDate"
+            id="dateOfBirth"
             type={dateInputType}
-            name="birthDate"
+            name="dateOfBirth"
             placeholder="Birth date"
             onFocus={handleChange}
             className={`loginRegInput placeholder:placeholder-opacity-0 ${
@@ -174,7 +174,7 @@ export default function ChangePersonalData(props: {
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.birthDate}
+            value={values.dateOfBirth}
           />
           <motion.img
             initial={svgAnimation.initial}
@@ -184,11 +184,11 @@ export default function ChangePersonalData(props: {
             src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
             alt=""
           />
-          {touchedAndErrorBirthDate && <ErrorMessage>{errors.birthDate}</ErrorMessage>}
+          {touchedAndErrorBirthDate && <ErrorMessage>{errors.dateOfBirth}</ErrorMessage>}
         </label>
       </div>
       <button
-        className="mb-12 mt-5  h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line"
+        className="mb-12 mt-5  h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line disabled:text-text-grey"
         type="button"
         disabled={isSaveBlocked}
       >

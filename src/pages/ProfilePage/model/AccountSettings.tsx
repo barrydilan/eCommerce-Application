@@ -4,17 +4,17 @@ import ChangePersonalData from './ChangePersonalData';
 const userData = {
   firstName: 'Ololontiy',
   lastName: 'Ololoevich',
-  birthDate: '01/01/1999',
+  dateOfBirth: '01/01/1999',
   email: 'trololo@kakah.net',
   currPassword: '2023Pa$$word',
 };
 
-const { firstName, lastName, birthDate, email, currPassword } = userData;
+const { firstName, lastName, dateOfBirth, email, currPassword } = userData;
 
 export default function AccountSettings() {
   return (
     <div className="flex flex-col">
-      <ChangePersonalData firstName={firstName} lastName={lastName} birthDate={birthDate} email={email} />
+      <ChangePersonalData firstName={firstName} lastName={lastName} dateOfBirth={dateOfBirth} email={email} />
       <ChangePassword currPassword={currPassword} />
     </div>
   );
