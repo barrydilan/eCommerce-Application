@@ -26,9 +26,12 @@ export const productApi = createApi({
 			}),
 		}),
 
-		getCategories: build.query<CategoriesResponse, void>({
-			query: () => ({
+		getCategories: build.query<CategoriesResponse, number>({
+			query: (limit) => ({
 				url: `/${PROJECT_KEY}/categories`,
+				params: {
+					limit,
+				},
 			}),
 		}),
 	}),

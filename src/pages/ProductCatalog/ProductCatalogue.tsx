@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 import filterCalories from './model/filterCalories.ts';
 import FilterModal from './model/FilterModal';
+import { filtersInitialState } from './model/filtersInitialState.ts';
 import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
 import CategoryItem from './ui/CategoryItem.tsx';
@@ -17,38 +18,15 @@ import { ProductSortingFields, ProductSortOrders } from '../../entities/product/
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
-export type FiltersFields = {
-  vegan: boolean;
-  spicy: boolean;
-  promo: boolean;
-  price: string;
-  calories: string;
-  weight: string;
-  categoryId: string;
-};
-
 export default function ProductCatalogue() {
   const [activeCat, setActiveCat] = useState('All');
-  const [filtersState, setFiltersState] = useState({
-    vegan: false,
-    spicy: false,
-    promo: false,
-    price: '',
-    calories: '',
-    weight: '',
-    categoryId: '',
-  });
+  const [filtersState, setFiltersState] = useState(filtersInitialState);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('price desc');
   const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
-  const { data: categoryListData } = useGetCategoriesQuery();
+  const { data: categories } = useGetCategoriesQuery(7);
 
   const productListData = { ...rawProductListData };
-  let categories;
-
-  if (categoryListData) {
-    categories = categoryListData.results.filter(({ ancestors }) => ancestors.length <= 1);
-  }
 
   if (productListData && rawProductListData && filtersState.calories !== '' && !isFiltersOpen) {
     productListData.results = filterCalories(rawProductListData, Number(filtersState.calories));
@@ -178,7 +156,7 @@ export default function ProductCatalogue() {
           "
         >
           {categories
-            ? categories.map(({ id, name: { en } }) => (
+            ? categories.results.map(({ id, name: { en } }) => (
                 <CategoryItem key={id} item={en} activeCat={activeCat} id={id} onCategoryClick={onCategoryClick} />
               ))
             : null}
