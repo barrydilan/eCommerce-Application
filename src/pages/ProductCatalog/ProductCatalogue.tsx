@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 
+import { QUERY_ACTIVE_CAT, QUERY_FILTER, QUERY_SORT } from './const/constants.ts';
 import encodeQueryState from './lib/helpers/encodeQueryState.ts';
 import parseQueryState from './lib/helpers/parseQueryState.ts';
 import filterCalories from './model/filterCalories.ts';
@@ -33,20 +34,27 @@ export default function ProductCatalogue() {
   const [query, setQuery] = useSearchParams();
   const [filtersState, setFiltersState] = useState(parseQueryState(query));
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState(query.get('sort') ?? 'price desc');
+  const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery({});
   const { data: categories } = useGetCategoriesQuery(7);
-  const [activeCat, setActiveCat] = useState(query.get('activeCat') ?? 'All');
+  const [activeCat, setActiveCat] = useState(query.get(QUERY_ACTIVE_CAT) ?? 'All');
 
   const productListData = { ...productItems };
 
-  if (productListData && productItems && filtersState.calories !== '' && !isFiltersOpen) {
-    productListData.results = filterCalories(productItems, Number(filtersState.calories));
+  if (productListData && productItems && !isFiltersOpen) {
+    if (filtersState.calories !== '') {
+      productListData.results = filterCalories(productItems, Number(filtersState.calories));
+    }
+
+    if (filtersState.weight !== '') {
+      productListData.results = filterWeight(productItems, Number(filtersState.weight));
+    }
   }
 
-  if (productListData && productItems && filtersState.weight !== '' && !isFiltersOpen) {
-    productListData.results = filterWeight(productItems, Number(filtersState.weight));
+  function pushQuery(...data: string[][]) {
+    data.forEach(([name, state]) => query.set(name, state));
+    setQuery(query);
   }
 
   function fetchProducts(categoryId?: string, offset: number = 0) {
@@ -60,20 +68,12 @@ export default function ProductCatalogue() {
         field,
         order,
       },
-      filters: {
-        isVegan: filtersState.vegan,
-        isSpicy: filtersState.spicy,
-        isPromo: filtersState.promo,
-        calories: filtersState.calories,
-        weight: filtersState.weight,
-        price: filtersState.price,
-        categoryId: categoryId || filtersState.categoryId,
-      },
+      filters: { ...filtersState, categoryId: categoryId || filtersState.categoryId },
       searchQuery: query.get('search'),
     });
   }
 
-  function onCategoryClick(categoryId: string) {
+  function setActiveCategory(categoryId: string) {
     fetchProducts(categoryId);
     setFiltersState((prev) => ({ ...prev, categoryId }));
     setProductItems(undefined);
@@ -86,7 +86,7 @@ export default function ProductCatalogue() {
 
     if (userSelect && userSelect !== activeCat && id) {
       setActiveCat(userSelect);
-      onCategoryClick(id);
+      setActiveCategory(id);
     }
   }
 
@@ -99,23 +99,21 @@ export default function ProductCatalogue() {
     fetchProducts(undefined, (productListData?.offset ?? 0) + 5);
   }
 
-  function handleApplyFilters() {
+  function onApplyFilters() {
     setIsFiltersOpen(false);
     fetchProducts();
     setProductItems(undefined);
 
     const encodedState = encodeQueryState(filtersState);
 
-    if (query.get('filter') !== encodedState) {
-      query.set('filter', encodedState);
-      setQuery(query);
+    if (query.get(QUERY_FILTER) !== encodedState) {
+      pushQuery([QUERY_FILTER, encodedState]);
     }
   }
 
   useEffect(() => {
-    if (query.get('sort') !== sortOrder) {
-      query.set('sort', sortOrder);
-      setQuery(query);
+    if (query.get(QUERY_SORT) !== sortOrder) {
+      pushQuery([QUERY_SORT, sortOrder]);
     }
 
     fetchProducts();
@@ -136,10 +134,8 @@ export default function ProductCatalogue() {
   useEffect(() => {
     const encodedState = encodeQueryState(filtersState);
 
-    if (query.get('filter') !== encodedState) {
-      query.set('activeCat', activeCat);
-      query.set('filter', encodedState);
-      setQuery(query);
+    if (query.get(QUERY_FILTER) !== encodedState) {
+      pushQuery([QUERY_ACTIVE_CAT, activeCat], [QUERY_FILTER, encodedState]);
     }
   }, [filtersState.categoryId]);
 
@@ -197,7 +193,7 @@ export default function ProductCatalogue() {
           filtersState={filtersState}
           setIsFiltersOpen={setIsFiltersOpen}
           setFiltersState={setFiltersState}
-          handleApplyFilters={handleApplyFilters}
+          onApplyFilters={onApplyFilters}
         />
         <SortingSelector sortOrder={sortOrder} onSort={onSort} />
       </div>

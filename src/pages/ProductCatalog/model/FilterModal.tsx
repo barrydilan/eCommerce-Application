@@ -12,9 +12,9 @@ export default function FilterModal(props: {
   filtersState: FiltersFields;
   setIsFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
-  handleApplyFilters: () => void;
+  onApplyFilters: () => void;
 }) {
-  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState, handleApplyFilters } = props;
+  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState, onApplyFilters } = props;
 
   const universalFilterChanger = (value: string | boolean, field: string) => {
     setFiltersState((prev) => {
@@ -50,25 +50,25 @@ export default function FilterModal(props: {
         ×
       </button>
       <FilterModalCheckbox
-        id="vegan"
-        checked={filtersState.vegan}
+        id="isVegan"
+        checked={filtersState.isVegan}
         universalFilterChanger={universalFilterChanger}
         text="Show only vegan"
-        peer="peer-checked/vegan:before:block"
+        peer="peer-checked/isVegan:before:block"
       />
       <FilterModalCheckbox
-        id="spicy"
-        checked={filtersState.spicy}
+        id="isSpicy"
+        checked={filtersState.isSpicy}
         universalFilterChanger={universalFilterChanger}
         text="Show only spicy"
-        peer="peer-checked/spicy:before:block"
+        peer="peer-checked/isSpicy:before:block"
       />
       <FilterModalCheckbox
-        id="promo"
-        checked={filtersState.promo}
+        id="isPromo"
+        checked={filtersState.isPromo}
         universalFilterChanger={universalFilterChanger}
         text="Show only promo"
-        peer="peer-checked/promo:before:block"
+        peer="peer-checked/isPromo:before:block"
       />
       <FilterModalNumberInput
         id="price"
@@ -99,7 +99,7 @@ export default function FilterModal(props: {
           Reset
         </button>
         <button
-          onClick={handleApplyFilters}
+          onClick={onApplyFilters}
           type="button"
           className="xl rounded bg-accent px-1.5 py-1 font-light text-primary"
         >
