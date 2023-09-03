@@ -29,7 +29,7 @@ export default function ProductCatalogue() {
   const [query] = useSearchParams();
   const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
   const { data: categories } = useGetCategoriesQuery(7);
-  const [loading, setLoading] = useState(false); // Step 2: Add loading state
+  const [loading, setLoading] = useState(false);
 
   const productListData = { ...rawProductListData };
 
@@ -47,7 +47,7 @@ export default function ProductCatalogue() {
   }
 
   function fetchProducts(categoryId?: string) {
-    setLoading(true); // Step 3: Set loading state to true before making an API request
+    setLoading(true);
     const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
@@ -69,12 +69,19 @@ export default function ProductCatalogue() {
       searchQuery: query.get('search'),
     })
       .then(() => {
-        setLoading(false); // Step 3: Set loading state to false when the response is received
+        setLoading(false);
       })
       .catch((error) => {
-        setLoading(false); // Handle errors and set loading state to false in case of an error
+        setLoading(false);
         console.error('Error fetching data:', error);
       });
+  }
+
+  function onCategoryClick(categoryId: string) {
+    fetchProducts(categoryId);
+    setFiltersState((prev) => ({ ...prev, categoryId }));
+
+    });
   }
 
   function onCategoryClick(categoryId: string) {
