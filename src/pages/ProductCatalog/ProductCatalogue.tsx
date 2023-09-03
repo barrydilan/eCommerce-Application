@@ -4,6 +4,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 
+import { useSearchParams } from 'react-router-dom';
+
 import filterCalories from './model/filterCalories.ts';
 import FilterModal from './model/FilterModal';
 import { filtersInitialState } from './model/filtersInitialState.ts';
@@ -23,6 +25,7 @@ export default function ProductCatalogue() {
   const [filtersState, setFiltersState] = useState(filtersInitialState);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('price desc');
+  const [query] = useSearchParams();
   const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
   const { data: categories } = useGetCategoriesQuery(7);
 
@@ -60,6 +63,7 @@ export default function ProductCatalogue() {
         price: filtersState.price,
         categoryId: categoryId || filtersState.categoryId,
       },
+      searchQuery: query.get('search'),
     });
   }
 

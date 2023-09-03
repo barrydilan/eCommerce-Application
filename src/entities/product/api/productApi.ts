@@ -11,11 +11,12 @@ export const productApi = createApi({
 	baseQuery: baseQueryWithReauth,
 	endpoints: (build) => ({
 		getProductList: build.query<ProductResponse, IGetProductListParams>({
-			query: ({ limit = 5, sort, filters }) => ({
+			query: ({ limit = 5, sort, filters, searchQuery }) => ({
 				url: prepareFilterQuery(filters),
 				params: {
 					limit,
 					sort: `${sort.field} ${sort.order}`,
+					...(searchQuery && { fuzzy: `true`, 'text.en': searchQuery }),
 				},
 			}),
 		}),

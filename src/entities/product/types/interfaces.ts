@@ -17,6 +17,7 @@ interface IGetProductListParams {
 		order: ProductSortOrders;
 	};
 	filters: IGetProductAttributes;
+	searchQuery: string | null;
 }
 
 export default IGetProductListParams;

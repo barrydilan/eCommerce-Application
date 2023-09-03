@@ -1,17 +1,28 @@
+import React, { useRef } from 'react';
+
 import { stagger, useAnimate } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 import Logo from '../ui/Logo';
 
 function Header() {
   const [scope, animate] = useAnimate();
+  const [, setSearchQuery] = useSearchParams('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
   const logoName = 'SushiSushi'.split('');
+
   const animationEndHandler = () => {
     if (scope.current) {
       animate([['.letter', { y: 5, opacity: 1 }, { duration: 0.3, delay: stagger(0.1) }]]);
     }
   };
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key !== 'Enter') return;
+    searchInputRef?.current?.blur();
+  }
 
   return (
     <header
@@ -97,6 +108,10 @@ function Header() {
         <input
           id="searchInput"
           type="text"
+          placeholder="Search"
+          ref={searchInputRef}
+          onKeyDown={handleKeyDown}
+          onBlur={(e) => setSearchQuery({ search: e.target.value })}
           className="
             w-full 
             rounded 
