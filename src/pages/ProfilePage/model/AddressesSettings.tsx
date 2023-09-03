@@ -19,7 +19,7 @@ export default function AddressesSettings() {
   return (
     <div className="flex flex-col">
       <AddressesDefault addresses={addresses} />
-      <AddressesList />
+      <AddressesList addresses={addresses} />
       <AddressesNavBlock />
     </div>
   );
