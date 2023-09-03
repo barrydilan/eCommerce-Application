@@ -167,6 +167,7 @@ export default function ProductCatalogue() {
         lg:rows-[3/4]
           mt-8
           grid
+          h-full
           gap-6
           lg:col-start-1
           lg:col-end-3
@@ -175,7 +176,11 @@ export default function ProductCatalogue() {
           setIsFiltersOpen(false);
         }}
       >
-        {productListData
+        {!productListData?.results?.length ? (
+          <p className="self-center justify-self-center text-xl text-text-grey">No Products Found :(</p>
+        ) : null}
+
+        {productListData?.results?.length
           ? productListData.results?.map(({ id, name, masterVariant }) => (
               <MenuItem
                 key={id}
