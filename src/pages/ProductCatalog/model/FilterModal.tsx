@@ -9,23 +9,18 @@ const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translat
 
 export default function FilterModal(props: {
   isFiltersOpen: boolean;
-  setIsFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
   filtersState: FiltersFields;
+  setIsFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
-  fetchProducts: () => void;
+  handleApplyFilters: () => void;
 }) {
-  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState, fetchProducts } = props;
+  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState, handleApplyFilters } = props;
 
   const universalFilterChanger = (value: string | boolean, field: string) => {
     setFiltersState((prev) => {
       return { ...prev, [field]: value };
     });
   };
-
-  function handleApplyFilters() {
-    setIsFiltersOpen(false);
-    fetchProducts();
-  }
 
   return (
     <div

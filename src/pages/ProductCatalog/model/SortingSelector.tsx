@@ -1,15 +1,15 @@
 export default function SortingSelector(props: {
   sortOrder: string;
-  setSortOrder: (value: React.SetStateAction<string>) => void;
+  onSort: (value: React.SetStateAction<string>) => void;
 }) {
-  const { sortOrder, setSortOrder } = props;
+  const { sortOrder, onSort } = props;
   return (
     <div className="relative text-sm font-light text-text-grey lg:h-8 lg:border-b-2 lg:border-separation-line lg:text-base">
       Sort by:
       <select
         name="sortSelect"
         value={sortOrder}
-        onChange={(e) => setSortOrder(e.target.value)}
+        onChange={(e) => onSort(e.target.value)}
         className="appearance-none px-1 text-text-dark"
       >
         {/* <option value="rate desc" className="text-right"> */}

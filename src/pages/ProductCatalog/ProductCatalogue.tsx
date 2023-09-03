@@ -2,8 +2,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 
 import filterCalories from './model/filterCalories.ts';
@@ -12,11 +14,13 @@ import { filtersInitialState } from './model/filtersInitialState.ts';
 import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
 import CategoryItem from './ui/CategoryItem.tsx';
+import MenuList from './ui/MenuList.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
 import { correctPrice, ProductAttributeNames, useLazyGetProductListQuery } from '../../entities/product';
 import { useGetCategoriesQuery } from '../../entities/product/api/productApi.ts';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
+import { ProductResponse } from '../../entities/product/types/types.ts';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
@@ -25,18 +29,19 @@ export default function ProductCatalogue() {
   const [filtersState, setFiltersState] = useState(filtersInitialState);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('price desc');
+  const [productItems, setProductItems] = useState<ProductResponse>();
   const [query] = useSearchParams();
   const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
   const { data: categories } = useGetCategoriesQuery(7);
 
-  const productListData = { ...rawProductListData };
+  const productListData = { ...productItems };
 
-  if (productListData && rawProductListData && filtersState.calories !== '' && !isFiltersOpen) {
-    productListData.results = filterCalories(rawProductListData, Number(filtersState.calories));
+  if (productListData && productItems && filtersState.calories !== '' && !isFiltersOpen) {
+    productListData.results = filterCalories(productItems, Number(filtersState.calories));
   }
 
-  if (productListData && rawProductListData && filtersState.weight !== '' && !isFiltersOpen) {
-    productListData.results = filterWeight(rawProductListData, Number(filtersState.weight));
+  if (productListData && productItems && filtersState.weight !== '' && !isFiltersOpen) {
+    productListData.results = filterWeight(productItems, Number(filtersState.weight));
   }
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
@@ -44,12 +49,13 @@ export default function ProductCatalogue() {
     if (userSelect && userSelect !== activeCat) setActiveCat(userSelect);
   }
 
-  function fetchProducts(categoryId?: string) {
+  function fetchProducts(categoryId?: string, offset: number = 0) {
     const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
     getProductList({
       limit: 5,
+      offset,
       sort: {
         field,
         order,
@@ -70,11 +76,39 @@ export default function ProductCatalogue() {
   function onCategoryClick(categoryId: string) {
     fetchProducts(categoryId);
     setFiltersState((prev) => ({ ...prev, categoryId }));
+    setProductItems(undefined);
+  }
+
+  function onSort(value: React.SetStateAction<string>) {
+    setSortOrder(value);
+    setProductItems(undefined);
+  }
+
+  function handleNextPage() {
+    fetchProducts(undefined, (productListData.offset ?? 0) + 5);
+  }
+
+  function handleApplyFilters() {
+    setIsFiltersOpen(false);
+    fetchProducts();
+    setProductItems(undefined);
   }
 
   useEffect(() => {
     fetchProducts();
   }, [sortOrder]);
+
+  useEffect(() => {
+    setProductItems((prev) => {
+      if (!rawProductListData) return prev;
+      if (!prev?.results) return rawProductListData;
+
+      return {
+        ...rawProductListData,
+        results: [...prev.results, ...rawProductListData.results],
+      };
+    });
+  }, [rawProductListData]);
 
   return (
     <div
@@ -127,12 +161,12 @@ export default function ProductCatalogue() {
         </button>
         <FilterModal
           isFiltersOpen={isFiltersOpen}
-          setIsFiltersOpen={setIsFiltersOpen}
           filtersState={filtersState}
+          setIsFiltersOpen={setIsFiltersOpen}
           setFiltersState={setFiltersState}
-          fetchProducts={fetchProducts}
+          handleApplyFilters={handleApplyFilters}
         />
-        <SortingSelector sortOrder={sortOrder} setSortOrder={setSortOrder} />
+        <SortingSelector sortOrder={sortOrder} onSort={onSort} />
       </div>
       <div
         className="
@@ -166,28 +200,23 @@ export default function ProductCatalogue() {
             : null}
         </ul>
       </div>
-      <div
-        className="
-        lg:rows-[3/4]
-          mt-8
-          grid
-          h-full
-          gap-6
-          lg:col-start-1
-          lg:col-end-3
-        "
-        onClick={() => {
-          setIsFiltersOpen(false);
-        }}
-      >
+      <MenuList>
         {!productListData?.results?.length ? (
-          <p className="self-center justify-self-center text-xl text-text-grey">No Products Found :(</p>
+          <p className="self-center justify-self-center text-text-grey">No Products Found :(</p>
         ) : null}
 
-        {productListData?.results?.length
-          ? productListData.results?.map(({ id, name, masterVariant }) => (
+        {productListData?.results?.length && productListData.total && productListData.offset !== undefined ? (
+          <InfiniteScroll
+            dataLength={productListData.results.length}
+            hasMore={productListData.offset < productListData.total}
+            next={handleNextPage}
+            loader={<p className="text-text-grey">Loading...</p>}
+            endMessage={<p className="text-text-grey">You Reached The End!</p>}
+            className="grid items-center gap-6"
+          >
+            {productListData.results?.map(({ id, name, masterVariant }, i) => (
               <MenuItem
-                key={id}
+                key={`${id}-${i}`}
                 id={id}
                 name={name.en}
                 price={correctPrice(masterVariant.prices[0].value.centAmount)}
@@ -195,9 +224,10 @@ export default function ProductCatalogue() {
                 weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
                 calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
               />
-            ))
-          : null}
-      </div>
+            ))}
+          </InfiniteScroll>
+        ) : null}
+      </MenuList>
     </div>
   );
 }

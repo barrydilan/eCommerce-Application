@@ -40,6 +40,7 @@ export type ProductResult = Readonly<{
 
 export type ProductResponse = Readonly<{
 	limit: number;
+	offset: number;
 	count: number;
 	total: number;
 	results: ProductResult[];
