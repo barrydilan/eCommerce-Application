@@ -7,10 +7,11 @@ import 'swiper/css/pagination';
 
 interface IImageSlider {
   isOpen: boolean;
+  imgList: string[];
   onClose: () => void;
 }
 
-export default function ImageSlider({ isOpen, onClose }: IImageSlider) {
+export default function ImageSlider({ isOpen, onClose, imgList }: IImageSlider) {
   if (!isOpen) {
     return null;
   }
@@ -51,20 +52,11 @@ export default function ImageSlider({ isOpen, onClose }: IImageSlider) {
           modules={[Navigation, Pagination]}
           className=""
         >
-          <SwiperSlide className="max-h-3/4">
-            <img
-              className="mx-auto h-[70%] w-[70%] max-w-[1000px] sm:h-[60%] sm:w-[60%] "
-              src="src/assets/img/sushi.png"
-              alt=""
-            />
-          </SwiperSlide>
-          <SwiperSlide className="max-h-3/4">
-            <img
-              className="mx-auto h-[70%] w-[70%] max-w-[1000px] sm:h-[60%] sm:w-[60%] "
-              src="src/assets/img/sushi.png"
-              alt=""
-            />
-          </SwiperSlide>
+          {imgList.map((img) => (
+            <SwiperSlide key={img} className="max-h-3/4">
+              <img className="mx-auto h-[70%] w-[70%] max-w-[1000px] sm:h-[60%] sm:w-[60%] " src={img} alt="" />
+            </SwiperSlide>
+          ))}
           <div className="swiper-button-prev-unique" />
           <div className="swiper-button-next-unique" />
         </Swiper>
