@@ -17,9 +17,9 @@ import filterIcon from '../../assets/icons/FiltersIcon.svg';
 import { correctPrice, ProductAttributeNames, useLazyGetProductListQuery } from '../../entities/product';
 import { useGetCategoriesQuery } from '../../entities/product/api/productApi.ts';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
+import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
-import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 
 export default function ProductCatalogue() {
   const [activeCat, setActiveCat] = useState('All');
@@ -75,13 +75,6 @@ export default function ProductCatalogue() {
         setLoading(false);
         console.error('Error fetching data:', error);
       });
-  }
-
-  function onCategoryClick(categoryId: string) {
-    fetchProducts(categoryId);
-    setFiltersState((prev) => ({ ...prev, categoryId }));
-
-    });
   }
 
   function onCategoryClick(categoryId: string) {

@@ -19,7 +19,7 @@ export default function MenuItem({ name, price, image, id, calories, weight }: I
 
   return (
     <Link to={`/${id}`}>
-      <div className="flex w-fit rounded-2xl border-1 border-border-black/10 transition delay-150 duration-300 ease-in-out hover:bg-accent-light">
+      <div className="flex w-full rounded-2xl border-1 border-border-black/10 transition delay-150 duration-300 ease-in-out hover:bg-accent-light">
         <div className="m-h-[120px] flex flex-[80%] gap-x-2">
           <img
             className="mr-2 inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover xs:max-w-[26%] xl:max-w-[19.5%]"
