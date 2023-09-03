@@ -1,5 +1,4 @@
-import { ProductAttribute } from '../../../../entities/product';
-import ProductAttributeNames from '../../../../entities/product/types/enums.ts';
+import { ProductAttribute, ProductAttributeNames } from '../../../../entities/product';
 
 /**
  * Returns the product attribute object with the specified name 'ingredients'.

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import FilterModalCheckbox from './FilterModalCheckbox';
 import FilterModalNumberInput from './FilterModalNumberInput';
 import { FiltersFields } from '../ProductCatalogue.tsx';
@@ -10,14 +12,21 @@ export default function FilterModal(props: {
   setIsFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
   filtersState: FiltersFields;
   setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
+  fetchProducts: () => void;
 }) {
-  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState } = props;
+  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState, fetchProducts } = props;
 
   const universalFilterChanger = (value: string | boolean, field: string) => {
     setFiltersState((prev) => {
       return { ...prev, [field]: value };
     });
   };
+
+  function handleApplyFilters() {
+    setIsFiltersOpen(false);
+    fetchProducts();
+  }
+
   return (
     <div
       className={`
@@ -102,7 +111,7 @@ export default function FilterModal(props: {
           Reset
         </button>
         <button
-          onClick={() => setIsFiltersOpen(false)}
+          onClick={handleApplyFilters}
           type="button"
           className="xl rounded bg-accent px-1.5 py-1 font-light text-primary"
         >
