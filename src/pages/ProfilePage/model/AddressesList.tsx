@@ -1,5 +1,5 @@
 import AddressesListItem from './AddressesListItem';
-import { AddressObj } from './AddressesSettings';
+import { AddressObj } from '../types/profilePageTypes';
 
 export default function AddressesList(props: { addresses: AddressObj[] }) {
   const { addresses } = props;

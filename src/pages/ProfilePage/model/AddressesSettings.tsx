@@ -2,13 +2,6 @@ import AddressesDefault from './AddressesDefault';
 import AddressesList from './AddressesList';
 import AddressesNavBlock from './AddressesNavBlock';
 
-export type AddressObj = {
-  country: string;
-  city: string;
-  street: string;
-  postalCode: string;
-};
-
 const addresses = [
   { country: 'US', city: 'New York', street: 'Manhatten', postalCode: '11111' },
   { country: 'DE', city: 'Berlin', street: 'Rischtenstrasse', postalCode: '22222' },

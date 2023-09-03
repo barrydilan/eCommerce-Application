@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { motion } from 'framer-motion';
 
-import { AddressObj } from './AddressesSettings';
 import icon from '../../../assets/icons/CityIcon.svg';
 import { inputAnimation, svgAnimation } from '../../../shared/ui';
+import { AddressObj } from '../types/profilePageTypes';
 
 export default function AddressesDefault(props: { addresses: AddressObj[] }) {
   const { addresses } = props;
