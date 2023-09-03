@@ -76,6 +76,8 @@ export default function AddressesEditModal(props: {
     });
     setIsModalOpen(false);
   }
+
+  window.scrollTo(0, 250);
   return (
     <div className={`absolute h-full w-full transition-all duration-300 `}>
       <div className="absolute z-10 h-full w-full rounded-md bg-text-dark opacity-30" />

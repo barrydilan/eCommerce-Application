@@ -22,7 +22,12 @@ export default function AddressesSettings() {
   return (
     <div className="relative flex flex-col">
       <AddressesDefault addresses={myAddresses} />
-      <AddressesList addresses={myAddresses} setEditedAddress={setEditedAddress} setIsModalOpen={setIsModalOpen} />
+      <AddressesList
+        addresses={myAddresses}
+        setEditedAddress={setEditedAddress}
+        setIsModalOpen={setIsModalOpen}
+        setMyAddresses={setMyAddresses}
+      />
       <AddressesNavBlock setIsModalOpen={setIsModalOpen} setEditedAddress={setEditedAddress} />
       {isModalOpen ? (
         <AddressesEditModal
