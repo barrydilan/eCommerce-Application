@@ -103,6 +103,7 @@ export default function FilterModal(props: {
               price: '',
               calories: '',
               weight: '',
+              categoryId: '',
             });
           }}
           type="button"

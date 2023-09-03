@@ -11,8 +11,8 @@ export const productApi = createApi({
 	baseQuery: baseQueryWithReauth,
 	endpoints: (build) => ({
 		getProductList: build.query<ProductResponse, IGetProductListParams>({
-			query: ({ limit = 5, sort, filter }) => ({
-				url: prepareFilterQuery(filter),
+			query: ({ limit = 5, sort, filters }) => ({
+				url: prepareFilterQuery(filters),
 				params: {
 					limit,
 					sort: `${sort.field} ${sort.order}`,

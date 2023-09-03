@@ -4,6 +4,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 
+import filterCalories from './model/filterCalories.ts';
 import FilterModal from './model/FilterModal';
 import SortingSelector from './model/SortingSelector';
 import CategoryItem from './ui/CategoryItem.tsx';
@@ -22,6 +23,7 @@ export type FiltersFields = {
   price: string;
   calories: string;
   weight: string;
+  categoryId: string;
 };
 
 export default function ProductCatalogue() {
@@ -33,29 +35,26 @@ export default function ProductCatalogue() {
     price: '',
     calories: '',
     weight: '',
+    categoryId: '',
   });
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('price desc');
-  const [getProductList, { data: rawData }] = useLazyGetProductListQuery();
-  const { data: categoryData } = useGetCategoriesQuery();
-  const data = { ...rawData };
+  const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
+  const { data: categoryListData } = useGetCategoriesQuery();
 
+  const productListData = { ...rawProductListData };
   let categories;
 
-  if (categoryData) {
-    categories = categoryData.results.filter(({ ancestors }) => ancestors.length <= 1);
+  if (categoryListData) {
+    categories = categoryListData.results.filter(({ ancestors }) => ancestors.length <= 1);
   }
 
-  if (data && rawData && filtersState.calories !== '' && !isFiltersOpen) {
-    data.results = rawData.results.filter(
-      (product) =>
-        Number(getAttribute(product.masterVariant.attributes, ProductAttributeNames.CALORIES)) <
-        Number(filtersState.calories),
-    );
+  if (productListData && rawProductListData && filtersState.calories !== '' && !isFiltersOpen) {
+    productListData.results = filterCalories(rawProductListData, Number(filtersState.calories));
   }
 
-  if (data && rawData && filtersState.weight !== '' && !isFiltersOpen) {
-    data.results = rawData.results.filter(
+  if (productListData && rawProductListData && filtersState.weight !== '' && !isFiltersOpen) {
+    productListData.results = rawProductListData.results.filter(
       (product) =>
         Number(getAttribute(product.masterVariant.attributes, ProductAttributeNames.WEIGHT)) <
         Number(filtersState.weight),
@@ -67,7 +66,7 @@ export default function ProductCatalogue() {
     if (userSelect && userSelect !== activeCat) setActiveCat(userSelect);
   }
 
-  function fetchProducts() {
+  function fetchProducts(categoryId?: string) {
     const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
@@ -77,15 +76,21 @@ export default function ProductCatalogue() {
         field,
         order,
       },
-      filter: {
+      filters: {
         isVegan: filtersState.vegan,
         isSpicy: filtersState.spicy,
         isPromo: filtersState.promo,
         calories: filtersState.calories,
         weight: filtersState.weight,
         price: filtersState.price,
+        categoryId: categoryId || filtersState.categoryId,
       },
     });
+  }
+
+  function onCategoryClick(categoryId: string) {
+    fetchProducts(categoryId);
+    setFiltersState((prev) => ({ ...prev, categoryId }));
   }
 
   useEffect(() => {
@@ -176,7 +181,9 @@ export default function ProductCatalogue() {
           "
         >
           {categories
-            ? categories.map(({ name: { en } }) => <CategoryItem key={en} item={en} activeCat={activeCat} />)
+            ? categories.map(({ id, name: { en } }) => (
+                <CategoryItem key={id} item={en} activeCat={activeCat} id={id} onCategoryClick={onCategoryClick} />
+              ))
             : null}
         </ul>
       </div>
@@ -193,8 +200,8 @@ export default function ProductCatalogue() {
           setIsFiltersOpen(false);
         }}
       >
-        {data
-          ? data.results?.map(({ id, name, masterVariant }) => (
+        {productListData
+          ? productListData.results?.map(({ id, name, masterVariant }) => (
               <MenuItem
                 key={id}
                 id={id}
