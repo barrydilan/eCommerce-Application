@@ -44,3 +44,26 @@ export type ProductResponse = Readonly<{
 	total: number;
 	results: ProductResult[];
 }>;
+
+export type CategoryResult = Readonly<{
+	id: string;
+	name: {
+		en: string;
+		de: string;
+		ua: string;
+	};
+	ancestors: [
+		{
+			typeId: string;
+			id: string;
+		},
+	];
+}>;
+
+export type CategoriesResponse = Readonly<{
+	limit: number;
+	offset: number;
+	count: number;
+	total: number;
+	results: CategoryResult[];
+}>;
