@@ -4,56 +4,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 
+import { useSearchParams } from 'react-router-dom';
+
+import filterCalories from './model/filterCalories.ts';
 import FilterModal from './model/FilterModal';
+import { filtersInitialState } from './model/filtersInitialState.ts';
+import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
+import CategoryItem from './ui/CategoryItem.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
 import { correctPrice, ProductAttributeNames, useLazyGetProductListQuery } from '../../entities/product';
+import { useGetCategoriesQuery } from '../../entities/product/api/productApi.ts';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
-
-export type FiltersFields = {
-  vegan: boolean;
-  spicy: boolean;
-  promo: boolean;
-  price: string;
-  calories: string;
-  weight: string;
-};
-
-const greenBorder = 'border-b-2 border-accent';
-const categories = ['All', 'Sushi', 'Sets', 'Main dishes', 'Drinks', 'Salads', 'Soups'];
+import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 
 export default function ProductCatalogue() {
   const [activeCat, setActiveCat] = useState('All');
-  const [filtersState, setFiltersState] = useState({
-    vegan: false,
-    spicy: false,
-    promo: false,
-    price: '',
-    calories: '',
-    weight: '',
-  });
+  const [filtersState, setFiltersState] = useState(filtersInitialState);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('price desc');
-  const [getProductList, { data: rawData }] = useLazyGetProductListQuery();
-  const data = { ...rawData };
+  const [query] = useSearchParams();
+  const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
+  const { data: categories } = useGetCategoriesQuery(7);
+  const [loading, setLoading] = useState(false); // Step 2: Add loading state
 
-  if (data && rawData && filtersState.calories !== '' && !isFiltersOpen) {
-    data.results = rawData.results.filter(
-      (product) =>
-        Number(getAttribute(product.masterVariant.attributes, ProductAttributeNames.CALORIES)) <
-        Number(filtersState.calories),
-    );
+  const productListData = { ...rawProductListData };
+
+  if (productListData && rawProductListData && filtersState.calories !== '' && !isFiltersOpen) {
+    productListData.results = filterCalories(rawProductListData, Number(filtersState.calories));
   }
 
-  if (data && rawData && filtersState.weight !== '' && !isFiltersOpen) {
-    data.results = rawData.results.filter(
-      (product) =>
-        Number(getAttribute(product.masterVariant.attributes, ProductAttributeNames.WEIGHT)) <
-        Number(filtersState.weight),
-    );
+  if (productListData && rawProductListData && filtersState.weight !== '' && !isFiltersOpen) {
+    productListData.results = filterWeight(rawProductListData, Number(filtersState.weight));
   }
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
@@ -61,40 +46,45 @@ export default function ProductCatalogue() {
     if (userSelect && userSelect !== activeCat) setActiveCat(userSelect);
   }
 
-  function fetchProducts() {
+  function fetchProducts(categoryId?: string) {
+    setLoading(true); // Step 3: Set loading state to true before making an API request
     const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
     getProductList({
-      limit: 40,
+      limit: 5,
       sort: {
         field,
         order,
       },
-      filter: {
+      filters: {
         isVegan: filtersState.vegan,
         isSpicy: filtersState.spicy,
         isPromo: filtersState.promo,
         calories: filtersState.calories,
         weight: filtersState.weight,
         price: filtersState.price,
+        categoryId: categoryId || filtersState.categoryId,
       },
-    });
+      searchQuery: query.get('search'),
+    })
+      .then(() => {
+        setLoading(false); // Step 3: Set loading state to false when the response is received
+      })
+      .catch((error) => {
+        setLoading(false); // Handle errors and set loading state to false in case of an error
+        console.error('Error fetching data:', error);
+      });
+  }
+
+  function onCategoryClick(categoryId: string) {
+    fetchProducts(categoryId);
+    setFiltersState((prev) => ({ ...prev, categoryId }));
   }
 
   useEffect(() => {
     fetchProducts();
   }, [sortOrder]);
-
-  const categoriesListItems = categories.map((item) => {
-    return (
-      <li className={`whitespace-nowrap px-1 ${activeCat === item ? greenBorder : ''}`} key={item}>
-        <button data-user-select={item} type="button">
-          {item}
-        </button>
-      </li>
-    );
-  });
 
   return (
     <div
@@ -179,7 +169,11 @@ export default function ProductCatalogue() {
             lg:text-base
           "
         >
-          {categoriesListItems}
+          {categories
+            ? categories.results.map(({ id, name: { en } }) => (
+                <CategoryItem key={id} item={en} activeCat={activeCat} id={id} onCategoryClick={onCategoryClick} />
+              ))
+            : null}
         </ul>
       </div>
       <div
@@ -187,6 +181,7 @@ export default function ProductCatalogue() {
         lg:rows-[3/4]
           mt-8
           grid
+          h-full
           gap-6
           lg:col-start-1
           lg:col-end-3
@@ -195,19 +190,23 @@ export default function ProductCatalogue() {
           setIsFiltersOpen(false);
         }}
       >
-        {data
-          ? data.results?.map(({ id, name, masterVariant }) => (
-              <MenuItem
-                key={id}
-                id={id}
-                name={name.en}
-                price={correctPrice(masterVariant.prices[0].value.centAmount)}
-                image={masterVariant.images[0].url}
-                weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
-                calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
-              />
-            ))
-          : null}
+        {loading ? (
+          <div className="flex h-full items-center justify-center">
+            <LoadingAnimation />
+          </div>
+        ) : (
+          productListData.results?.map(({ id, name, masterVariant }) => (
+            <MenuItem
+              key={id}
+              id={id}
+              name={name.en}
+              price={correctPrice(masterVariant.prices[0].value.centAmount)}
+              image={masterVariant.images[0].url}
+              weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
+              calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
+            />
+          ))
+        )}
       </div>
     </div>
   );

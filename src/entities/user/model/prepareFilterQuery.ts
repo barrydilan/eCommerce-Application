@@ -1,9 +1,15 @@
 import { PROJECT_KEY } from '../../../shared/const';
 import IGetProductListParams from '../../product/types/interfaces.ts';
 
-function prepareFilterQuery(filter: IGetProductListParams['filter']) {
-	const queries = Object.entries(filter)
+function prepareFilterQuery(filters: IGetProductListParams['filters']) {
+	if (!Object.values(filters).filter(Boolean).length) return `/${PROJECT_KEY}/product-projections/search`;
+
+	const queries = Object.entries(filters)
 		.map(([name, value]) => {
+			if (name === 'categoryId') {
+				return value ? `categories.id:"${value}"` : null;
+			}
+
 			if (name === 'price') {
 				const dollarPrice = value * 100;
 				return value ? `variants.price.centAmount:range (0 to ${dollarPrice})` : null;
@@ -22,11 +28,7 @@ function prepareFilterQuery(filter: IGetProductListParams['filter']) {
 		.filter(Boolean)
 		.join('&filter=');
 
-	const url = Object.values(filter).filter(Boolean).length
-		? `/${PROJECT_KEY}/product-projections/search?filter=${queries}`
-		: `/${PROJECT_KEY}/product-projections/search`;
-
-	return url;
+	return `/${PROJECT_KEY}/product-projections/search?filter=${queries}`;
 }
 
 export default prepareFilterQuery;

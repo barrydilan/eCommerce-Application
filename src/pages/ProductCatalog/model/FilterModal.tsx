@@ -2,7 +2,7 @@ import React from 'react';
 
 import FilterModalCheckbox from './FilterModalCheckbox';
 import FilterModalNumberInput from './FilterModalNumberInput';
-import { FiltersFields } from '../ProductCatalogue.tsx';
+import { FiltersFields, filtersInitialState } from './filtersInitialState.ts';
 
 const shownClasses = 'pointer-events-auto translate-x-0 opacity-1 lg:translate-y-16';
 const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translate-x-0 lg:-translate-y-52';
@@ -96,14 +96,7 @@ export default function FilterModal(props: {
       <div className="my-3 flex w-full justify-around">
         <button
           onClick={() => {
-            setFiltersState({
-              vegan: false,
-              spicy: false,
-              promo: false,
-              price: '',
-              calories: '',
-              weight: '',
-            });
+            setFiltersState(filtersInitialState);
           }}
           type="button"
           className="xl rounded bg-accent px-1.5 py-1 font-light text-primary"
