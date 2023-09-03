@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { stagger, useAnimate } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -8,7 +8,8 @@ import Logo from '../ui/Logo';
 
 function Header() {
   const [scope, animate] = useAnimate();
-  const [, setSearchQuery] = useSearchParams('');
+  const [query, setQuery] = useSearchParams('');
+  const [searchValue, setSearchValue] = useState(query.get('search') ?? '');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const logoName = 'SushiSushi'.split('');
@@ -111,7 +112,12 @@ function Header() {
           placeholder="Search"
           ref={searchInputRef}
           onKeyDown={handleKeyDown}
-          onBlur={(e) => setSearchQuery({ search: e.target.value })}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onBlur={(e) => {
+            query.set('search', e.target.value);
+            setQuery(query);
+          }}
           className="
             w-full 
             rounded 

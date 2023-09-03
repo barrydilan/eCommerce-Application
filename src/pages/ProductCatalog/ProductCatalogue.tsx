@@ -8,31 +8,36 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 
+import encodeQueryState from './lib/helpers/encodeQueryState.ts';
+import parseQueryState from './lib/helpers/parseQueryState.ts';
 import filterCalories from './model/filterCalories.ts';
 import FilterModal from './model/FilterModal';
-import { filtersInitialState } from './model/filtersInitialState.ts';
 import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
 import CategoryItem from './ui/CategoryItem.tsx';
 import MenuList from './ui/MenuList.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import filterIcon from '../../assets/icons/FiltersIcon.svg';
-import { correctPrice, ProductAttributeNames, useLazyGetProductListQuery } from '../../entities/product';
-import { useGetCategoriesQuery } from '../../entities/product/api/productApi.ts';
+import {
+  correctPrice,
+  ProductAttributeNames,
+  useGetCategoriesQuery,
+  useLazyGetProductListQuery,
+} from '../../entities/product';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import { ProductResponse } from '../../entities/product/types/types.ts';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export default function ProductCatalogue() {
-  const [activeCat, setActiveCat] = useState('All');
-  const [filtersState, setFiltersState] = useState(filtersInitialState);
+  const [query, setQuery] = useSearchParams();
+  const [filtersState, setFiltersState] = useState(parseQueryState(query));
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState('price desc');
+  const [sortOrder, setSortOrder] = useState(query.get('sort') ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
-  const [query] = useSearchParams();
-  const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
+  const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery({});
   const { data: categories } = useGetCategoriesQuery(7);
+  const [activeCat, setActiveCat] = useState(query.get('activeCat') ?? 'All');
 
   const productListData = { ...productItems };
 
@@ -42,11 +47,6 @@ export default function ProductCatalogue() {
 
   if (productListData && productItems && filtersState.weight !== '' && !isFiltersOpen) {
     productListData.results = filterWeight(productItems, Number(filtersState.weight));
-  }
-
-  function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
-    const { userSelect } = (e.target as HTMLElement).dataset;
-    if (userSelect && userSelect !== activeCat) setActiveCat(userSelect);
   }
 
   function fetchProducts(categoryId?: string, offset: number = 0) {
@@ -79,22 +79,45 @@ export default function ProductCatalogue() {
     setProductItems(undefined);
   }
 
+  function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
+    const {
+      dataset: { userSelect, id },
+    } = e.target as HTMLElement;
+
+    if (userSelect && userSelect !== activeCat && id) {
+      setActiveCat(userSelect);
+      onCategoryClick(id);
+    }
+  }
+
   function onSort(value: React.SetStateAction<string>) {
     setSortOrder(value);
     setProductItems(undefined);
   }
 
   function handleNextPage() {
-    fetchProducts(undefined, (productListData.offset ?? 0) + 5);
+    fetchProducts(undefined, (productListData?.offset ?? 0) + 5);
   }
 
   function handleApplyFilters() {
     setIsFiltersOpen(false);
     fetchProducts();
     setProductItems(undefined);
+
+    const encodedState = encodeQueryState(filtersState);
+
+    if (query.get('filter') !== encodedState) {
+      query.set('filter', encodedState);
+      setQuery(query);
+    }
   }
 
   useEffect(() => {
+    if (query.get('sort') !== sortOrder) {
+      query.set('sort', sortOrder);
+      setQuery(query);
+    }
+
     fetchProducts();
   }, [sortOrder]);
 
@@ -109,6 +132,16 @@ export default function ProductCatalogue() {
       };
     });
   }, [rawProductListData]);
+
+  useEffect(() => {
+    const encodedState = encodeQueryState(filtersState);
+
+    if (query.get('filter') !== encodedState) {
+      query.set('activeCat', activeCat);
+      query.set('filter', encodedState);
+      setQuery(query);
+    }
+  }, [filtersState.categoryId]);
 
   return (
     <div
@@ -195,7 +228,7 @@ export default function ProductCatalogue() {
         >
           {categories
             ? categories.results.map(({ id, name: { en } }) => (
-                <CategoryItem key={id} item={en} activeCat={activeCat} id={id} onCategoryClick={onCategoryClick} />
+                <CategoryItem key={id} item={en} activeCat={activeCat} id={id} />
               ))
             : null}
         </ul>
