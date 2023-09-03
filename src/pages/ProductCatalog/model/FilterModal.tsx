@@ -10,11 +10,11 @@ const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translat
 export default function FilterModal(props: {
   isFiltersOpen: boolean;
   filtersState: FiltersFields;
-  setIsFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
   onApplyFilters: () => void;
 }) {
-  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState, onApplyFilters } = props;
+  const { isFiltersOpen, onFilterOpen, filtersState, setFiltersState, onApplyFilters } = props;
 
   const universalFilterChanger = (value: string | boolean, field: string) => {
     setFiltersState((prev) => {
@@ -44,7 +44,7 @@ export default function FilterModal(props: {
       <h4 className="w-full text-center">Filters</h4>
       <button
         type="button"
-        onClick={() => setIsFiltersOpen(false)}
+        onClick={() => onFilterOpen(false)}
         className="absolute right-2 top-1 cursor-pointer text-xl font-semibold transition-all ease-in hover:text-text-grey"
       >
         ×

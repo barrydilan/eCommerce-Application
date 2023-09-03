@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
@@ -15,10 +13,11 @@ import filterCalories from './model/filterCalories.ts';
 import FilterModal from './model/FilterModal';
 import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
+import CategoriesList from './ui/CategoriesList.tsx';
 import CategoryItem from './ui/CategoryItem.tsx';
+import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
-import filterIcon from '../../assets/icons/FiltersIcon.svg';
 import {
   correctPrice,
   ProductAttributeNames,
@@ -33,7 +32,7 @@ import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 export default function ProductCatalogue() {
   const [query, setQuery] = useSearchParams();
   const [filtersState, setFiltersState] = useState(parseQueryState(query));
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isFiltersOpen, onFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery({});
@@ -100,7 +99,7 @@ export default function ProductCatalogue() {
   }
 
   function onApplyFilters() {
-    setIsFiltersOpen(false);
+    onFilterOpen(false);
     fetchProducts();
     setProductItems(undefined);
 
@@ -169,66 +168,23 @@ export default function ProductCatalogue() {
           lg:items-end
         "
       >
-        <button
-          type="button"
-          onClick={() => {
-            setIsFiltersOpen((prev) => !prev);
-          }}
-          className="
-            flex
-            items-center
-            rounded-lg
-            border-[1.5px]
-            border-text-grey
-            px-[12px]
-            py-[10px]
-            text-xs
-          "
-        >
-          <img src={filterIcon} alt="" className="mr-[12px]" />
-          Filters
-        </button>
+        <FilterButton onFilterOpen={onFilterOpen} />
         <FilterModal
           isFiltersOpen={isFiltersOpen}
           filtersState={filtersState}
-          setIsFiltersOpen={setIsFiltersOpen}
+          onFilterOpen={onFilterOpen}
           setFiltersState={setFiltersState}
           onApplyFilters={onApplyFilters}
         />
         <SortingSelector sortOrder={sortOrder} onSort={onSort} />
       </div>
-      <div
-        className="
-          z-0
-          mt-3
-          bg-none
-          text-sm
-          font-light
-          text-text-grey
-          lg:mt-11
-        "
-      >
-        <ul
-          onClick={(e: React.MouseEvent<HTMLUListElement, MouseEvent>) => changeActiveCat(e)}
-          className="
-            flex
-            h-6
-            gap-7
-            overflow-y-scroll
-            border-b-[2px]
-            border-separation-line
-            lg:h-8
-            lg:gap-3
-            lg:text-base
-          "
-        >
-          {categories
-            ? categories.results.map(({ id, name: { en } }) => (
-                <CategoryItem key={id} item={en} activeCat={activeCat} id={id} />
-              ))
-            : null}
-        </ul>
-      </div>
+      <CategoriesList changeActiveCat={changeActiveCat}>
+        {categories
+          ? categories.results.map(({ id, name: { en } }) => (
+              <CategoryItem key={id} item={en} activeCat={activeCat} id={id} />
+            ))
+          : null}
+      </CategoriesList>
       <MenuList>
         {!productListData?.results?.length ? (
           <p className="self-center justify-self-center text-text-grey">No Products Found :(</p>
