@@ -16,14 +16,19 @@ interface IMenuItemProps {
 
 export default function MenuItem({ name, price, image, id, calories, weight }: IMenuItemProps) {
   const [rating, setRating] = useState(4.5);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <li className="list-none">
+    <li className="w-full list-none">
       <Link to={`/${id}`}>
-        <div className="flex w-fit rounded-2xl border-1 border-border-black/10">
-          <div className="m-h-[120px] flex flex-[80%] gap-x-2">
+        <div className="flex rounded-2xl border-1 border-border-black/10">
+          <div className="m-h-[170px] flex flex-[80%] gap-x-2">
             <img
-              className="mr-2 inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover xs:max-w-[26%] xl:max-w-[19.5%]"
+              onLoad={() => setIsLoading(false)}
+              loading="lazy"
+              className={`${
+                isLoading ? 'h-full w-48 opacity-0' : 'opacity-100'
+              } mr-2 inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[26%] xl:max-w-[19.5%]`}
               src={image}
               alt={name}
             />

@@ -205,12 +205,12 @@ export default function ProductCatalogue() {
             hasMore={productListData.offset < productListData.total}
             next={handleNextPage}
             loader={
-              <div className="flex h-full items-center justify-center">
+              <div className="flex h-full items-center justify-center overflow-hidden">
                 <LoadingAnimation />
               </div>
             }
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
-            className="grid items-center gap-6"
+            className="grid items-center gap-5 lg:gap-6"
           >
             {productListData.results?.map(({ id, name, masterVariant }, i) => (
               <MenuItem
