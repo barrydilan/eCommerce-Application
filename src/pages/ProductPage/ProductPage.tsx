@@ -53,7 +53,12 @@ export default function ProductPage() {
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
   return (
-    <>
+    <div
+      className="
+        mt-14
+        sm:mt-16
+        md:py-11"
+    >
       <ImageSlider onClose={handleCloseSlider} isOpen={isSliderOpen} imgList={imgList} />
       <div className="mx-auto h-full md:max-w-[645px]">
         <div className="relative h-[1150px] md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
@@ -86,6 +91,6 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
