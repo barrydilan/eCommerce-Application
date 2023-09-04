@@ -26,7 +26,7 @@ export default function AddressesListItem(props: {
   return (
     <div className="border-b-2 border-separation-line py-6">
       <div className="relative w-full text-base font-medium">
-        <h6>{`Address ${index < 9 ? `0${index + 1}` : index + 1}`}</h6>
+        <h6>{`Address ${(index + 1).toString().padStart(2, '0')}`}</h6>
         <button
           onClick={() => editClickHandler()}
           className="absolute right-8 top-0 h-5 w-5 rounded-md hover:bg-separation-line"
