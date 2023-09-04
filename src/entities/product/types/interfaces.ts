@@ -12,6 +12,7 @@ export interface IGetProductAttributes {
 
 interface IGetProductListParams {
 	limit: number;
+	offset: number;
 	sort: {
 		field: ProductSortingFields;
 		order: ProductSortOrders;

@@ -1,7 +1,7 @@
 export type FiltersFields = {
-	vegan: boolean;
-	spicy: boolean;
-	promo: boolean;
+	isVegan: boolean;
+	isSpicy: boolean;
+	isPromo: boolean;
 	price: string;
 	calories: string;
 	weight: string;
@@ -9,9 +9,9 @@ export type FiltersFields = {
 };
 
 export const filtersInitialState: FiltersFields = {
-	vegan: false,
-	spicy: false,
-	promo: false,
+	isVegan: false,
+	isSpicy: false,
+	isPromo: false,
 	price: '',
 	calories: '',
 	weight: '',
