@@ -21,6 +21,7 @@ import {
   correctPrice,
   ProductAttributeNames,
   useGetCategoriesQuery,
+  useGetCategoryQuery,
   useLazyGetProductListQuery,
 } from '../../entities/product';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
@@ -35,7 +36,6 @@ export default function ProductCatalogue() {
   const urlActiveCat = decodeURIComponent(path.replace(path[0], path[0].toUpperCase()));
 
   const [query, setQuery] = useSearchParams();
-  const [filtersState, setFiltersState] = useState(parseQueryState(query));
   const [isFiltersOpen, onFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
@@ -43,14 +43,15 @@ export default function ProductCatalogue() {
     useLazyGetProductListQuery();
   const { data: categoriesData } = useGetCategoriesQuery(7);
   const [activeCat, setActiveCat] = useState(urlActiveCat ?? 'All');
+  const { data: categoryData } = useGetCategoryQuery(urlActiveCat.toLowerCase().replace(' ', '-'));
+  const [filtersState, setFiltersState] = useState(parseQueryState(query));
 
+  const productListData = { ...productItems };
   let categories: CategoryResult[] | null = null;
 
   if (categoriesData) {
     categories = categoriesData.results.filter((res) => res.ancestors.length <= 1);
   }
-
-  const productListData = { ...productItems };
 
   if (productListData && productItems && !isFiltersOpen) {
     if (filtersState.calories !== '') {
@@ -71,6 +72,8 @@ export default function ProductCatalogue() {
     const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
+    if (categoryId) setFiltersState((prevState) => ({ ...prevState, categoryId }));
+
     getProductList({
       limit: 5,
       offset,
@@ -78,15 +81,9 @@ export default function ProductCatalogue() {
         field,
         order,
       },
-      filters: { ...filtersState, categoryId: categoryId || filtersState.categoryId },
+      filters: { ...filtersState, ...(categoryId && { categoryId }) },
       searchQuery: query.get('search'),
     });
-  }
-
-  function setActiveCategory(categoryId: string) {
-    fetchProducts(categoryId);
-    setFiltersState((prev) => ({ ...prev, categoryId }));
-    setProductItems(undefined);
   }
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
@@ -96,7 +93,7 @@ export default function ProductCatalogue() {
 
     if (userSelect && userSelect !== activeCat && id) {
       setActiveCat(userSelect);
-      setActiveCategory(id);
+      setProductItems(undefined);
     }
   }
 
@@ -124,9 +121,8 @@ export default function ProductCatalogue() {
   useEffect(() => {
     if (query.get(QUERY_SORT) !== sortOrder) {
       pushQuery([QUERY_SORT, sortOrder]);
+      fetchProducts();
     }
-
-    fetchProducts();
   }, [sortOrder]);
 
   useEffect(() => {
@@ -140,6 +136,10 @@ export default function ProductCatalogue() {
       };
     });
   }, [rawProductListData]);
+
+  useEffect(() => {
+    if (categoryData) fetchProducts(categoryData.id);
+  }, [categoryData]);
 
   return (
     <div
