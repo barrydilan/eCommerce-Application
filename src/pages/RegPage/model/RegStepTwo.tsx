@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import * as Yup from 'yup';
 
-import { validSchemaStepTwo } from './validationSchemas';
 import calendarIcon from '../../../assets/icons/CalendarIcon.svg';
 import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { CustomRegForm } from '../../../entities/form/ui';
+import { validBirthDate, validName } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
 
-const validationSchema = validSchemaStepTwo();
+const validationSchema = Yup.object({
+  ...validBirthDate(),
+  firstName: validName().name,
+  lastName: validName().name,
+});
 
 export default function RegStepTwo(props: UserFormProps) {
   const { firstName, lastName, birthDate, updateData, enableNext } = props;
