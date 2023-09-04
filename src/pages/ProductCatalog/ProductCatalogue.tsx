@@ -35,7 +35,8 @@ export default function ProductCatalogue() {
   const [isFiltersOpen, onFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
-  const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] = useLazyGetProductListQuery({});
+  const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] =
+    useLazyGetProductListQuery({});
   const { data: categories } = useGetCategoriesQuery(7);
   const [activeCat, setActiveCat] = useState(query.get(QUERY_ACTIVE_CAT) ?? 'All');
 
@@ -69,7 +70,7 @@ export default function ProductCatalogue() {
       },
       filters: { ...filtersState, categoryId: categoryId || filtersState.categoryId },
       searchQuery: query.get('search'),
-    })
+    });
   }
 
   function setActiveCategory(categoryId: string) {
@@ -186,10 +187,12 @@ export default function ProductCatalogue() {
           : null}
       </CategoriesList>
       <MenuList>
-        {productsIsLoading ? <div className="flex h-full items-center justify-center">
+        {productsIsLoading ? (
+          <div className="flex h-full items-center justify-center">
             <LoadingAnimation />
-        </div> : null}
-        
+          </div>
+        ) : null}
+
         {!productListData?.results?.length && productsIsSuccess ? (
           <p className="self-center justify-self-center text-text-grey">No Products Found :(</p>
         ) : null}
@@ -199,7 +202,11 @@ export default function ProductCatalogue() {
             dataLength={productListData.results.length}
             hasMore={productListData.offset < productListData.total}
             next={handleNextPage}
-            loader={<LoadingAnimation />}
+            loader={
+              <div className="flex h-full items-center justify-center">
+                <LoadingAnimation />
+              </div>
+            }
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
             className="grid items-center gap-6"
           >
