@@ -98,6 +98,10 @@
   padding-bottom: 150px !important;
 }
 
+#miniSwiper {
+  padding-bottom: 0 !important;
+}
+
 .swiper-pagination {
   display: flex;
   align-items: center;
