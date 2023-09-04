@@ -11,7 +11,7 @@ export function validEmail() {
 
   return {
     email: Yup.string()
-      .matches(emailRegEx, { message: 'Email must follow email@example.com pattern', excludeEmptyString: true })
+      .matches(emailRegEx, { message: 'Email must be email@example.com', excludeEmptyString: true })
       .required('Email is required'),
   };
 }
