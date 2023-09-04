@@ -16,7 +16,7 @@ function Title({ imgList, name, children, onClick }: ITitleProps) {
       <Swiper id="miniSwiper" className="h-full pb-0">
         {imgList.map((image) => (
           <SwiperSlide key={image}>
-            <img className="h-full w-full object-cover brightness-[83%] md:rounded-t-2xl" src={image} alt={name} />
+            <img className="h-full w-full object-cover md:rounded-t-2xl" src={image} alt={name} />
           </SwiperSlide>
         ))}
       </Swiper>
