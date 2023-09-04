@@ -46,16 +46,16 @@ function NavMenu() {
         "
     >
       <li className="navMenuItem">
-        <NavLink to="/" className="navMenuLink text-text-grey">
+        <NavLink to="/" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
-              <MainIcon isActive={isActive || isPending} /> <span>Our menu</span>
+              <MainIcon style={{ hover: 'fill-accent' }} isActive={isActive || isPending} /> <span>Our menu</span>
             </>
           )}
         </NavLink>
       </li>
       <li className="navMenuItem lg:hidden">
-        <NavLink to="/cart" className="navMenuLink text-text-grey">
+        <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
               <CartIcon isActive={isActive || isPending} /> <span>Cart</span>
@@ -64,7 +64,7 @@ function NavMenu() {
         </NavLink>
       </li>
       <li className="navMenuItem">
-        <NavLink to="/delivery" className="navMenuLink text-text-grey">
+        <NavLink to="/delivery" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
               <DeliveryIcon isActive={isActive || isPending} /> <span>Delivery</span>
@@ -73,7 +73,7 @@ function NavMenu() {
         </NavLink>
       </li>
       <li className="navMenuItem">
-        <NavLink to="/payment" className="navMenuLink text-text-grey">
+        <NavLink to="/payment" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
               <PaymentIcon isActive={isActive || isPending} /> <span>Payment</span>
@@ -82,7 +82,7 @@ function NavMenu() {
         </NavLink>
       </li>
       <li className="navMenuItem">
-        <NavLink to="/about" className="navMenuLink text-text-grey">
+        <NavLink to="/about" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
               <ContactsIcon isActive={isActive || isPending} /> <span>Contacts</span>
