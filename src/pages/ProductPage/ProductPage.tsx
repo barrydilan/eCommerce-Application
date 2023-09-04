@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
-
 import getAttribute from './lib/helpers/getAttribute.ts';
 import AddWishlistMobile from './ui/AddWishlistMobile.tsx';
 import BackButton from './ui/BackButton.tsx';
@@ -17,13 +15,13 @@ import Rating from './ui/Rating.tsx';
 import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
-
 import 'swiper/css';
+import { useGetPath } from '../../shared/lib/hooks';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
   const [isSliderOpen, setSliderOpen] = useState(false);
-  const { pathname } = useLocation();
+  const productId = useGetPath();
 
   const handleSliderOpen = () => {
     setSliderOpen(true);
@@ -33,7 +31,6 @@ export default function ProductPage() {
     setSliderOpen(false);
   };
 
-  const productId = pathname.slice(pathname.lastIndexOf('/') + 1);
   const { data } = useGetProductQuery(productId);
 
   if (!data) return null;

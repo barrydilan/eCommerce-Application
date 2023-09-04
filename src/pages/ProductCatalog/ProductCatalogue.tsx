@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSearchParams } from 'react-router-dom';
 
-import { QUERY_ACTIVE_CAT, QUERY_FILTER, QUERY_SORT } from './const/constants.ts';
+import { QUERY_FILTER, QUERY_SORT } from './const/constants.ts';
 import encodeQueryState from './lib/helpers/encodeQueryState.ts';
 import parseQueryState from './lib/helpers/parseQueryState.ts';
 import filterCalories from './model/filterCalories.ts';
@@ -24,21 +24,31 @@ import {
   useLazyGetProductListQuery,
 } from '../../entities/product';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
-import { ProductResponse } from '../../entities/product/types/types.ts';
+import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
+import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export default function ProductCatalogue() {
+  const path = useGetPath();
+  const urlActiveCat = decodeURIComponent(path.replace(path[0], path[0].toUpperCase()));
+
   const [query, setQuery] = useSearchParams();
   const [filtersState, setFiltersState] = useState(parseQueryState(query));
   const [isFiltersOpen, onFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] =
-    useLazyGetProductListQuery({});
-  const { data: categories } = useGetCategoriesQuery(7);
-  const [activeCat, setActiveCat] = useState(query.get(QUERY_ACTIVE_CAT) ?? 'All');
+    useLazyGetProductListQuery();
+  const { data: categoriesData } = useGetCategoriesQuery(7);
+  const [activeCat, setActiveCat] = useState(urlActiveCat ?? 'All');
+
+  let categories: CategoryResult[] | null = null;
+
+  if (categoriesData) {
+    categories = categoriesData.results.filter((res) => res.ancestors.length <= 1);
+  }
 
   const productListData = { ...productItems };
 
@@ -131,14 +141,6 @@ export default function ProductCatalogue() {
     });
   }, [rawProductListData]);
 
-  useEffect(() => {
-    const encodedState = encodeQueryState(filtersState);
-
-    if (query.get(QUERY_FILTER) !== encodedState) {
-      pushQuery([QUERY_ACTIVE_CAT, activeCat], [QUERY_FILTER, encodedState]);
-    }
-  }, [filtersState.categoryId]);
-
   return (
     <div
       className="
@@ -183,9 +185,7 @@ export default function ProductCatalogue() {
       </div>
       <CategoriesList changeActiveCat={changeActiveCat}>
         {categories
-          ? categories.results.map(({ id, name: { en } }) => (
-              <CategoryItem key={id} item={en} activeCat={activeCat} id={id} />
-            ))
+          ? categories.map(({ id, name: { en } }) => <CategoryItem key={id} item={en} activeCat={activeCat} id={id} />)
           : null}
       </CategoriesList>
       <MenuList>
