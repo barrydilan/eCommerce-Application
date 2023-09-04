@@ -205,7 +205,7 @@ export default function ProductCatalogue() {
             hasMore={productListData.offset < productListData.total}
             next={handleNextPage}
             loader={
-              <div className="flex h-full items-center justify-center">
+              <div className="flex h-full items-center justify-center overflow-hidden">
                 <LoadingAnimation />
               </div>
             }
