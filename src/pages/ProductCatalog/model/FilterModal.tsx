@@ -1,23 +1,27 @@
+import React from 'react';
+
 import FilterModalCheckbox from './FilterModalCheckbox';
 import FilterModalNumberInput from './FilterModalNumberInput';
-import { FiltersFields } from '../ProductCatalog';
+import { FiltersFields, filtersInitialState } from './filtersInitialState.ts';
 
 const shownClasses = 'pointer-events-auto translate-x-0 opacity-1 lg:translate-y-16';
 const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translate-x-0 lg:-translate-y-52';
 
 export default function FilterModal(props: {
   isFiltersOpen: boolean;
-  setIsFiltersOpen: React.Dispatch<React.SetStateAction<boolean>>;
   filtersState: FiltersFields;
+  onFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setFiltersState: React.Dispatch<React.SetStateAction<FiltersFields>>;
+  onApplyFilters: () => void;
 }) {
-  const { isFiltersOpen, setIsFiltersOpen, filtersState, setFiltersState } = props;
+  const { isFiltersOpen, onFilterOpen, filtersState, setFiltersState, onApplyFilters } = props;
 
   const universalFilterChanger = (value: string | boolean, field: string) => {
     setFiltersState((prev) => {
       return { ...prev, [field]: value };
     });
   };
+
   return (
     <div
       className={`
@@ -40,31 +44,31 @@ export default function FilterModal(props: {
       <h4 className="w-full text-center">Filters</h4>
       <button
         type="button"
-        onClick={() => setIsFiltersOpen(false)}
+        onClick={() => onFilterOpen(false)}
         className="absolute right-2 top-1 cursor-pointer text-xl font-semibold transition-all ease-in hover:text-text-grey"
       >
         ×
       </button>
       <FilterModalCheckbox
-        id="vegan"
-        checked={filtersState.vegan}
+        id="isVegan"
+        checked={filtersState.isVegan}
         universalFilterChanger={universalFilterChanger}
         text="Show only vegan"
-        peer="peer-checked/vegan:before:block"
+        peer="peer-checked/isVegan:before:block"
       />
       <FilterModalCheckbox
-        id="spicy"
-        checked={filtersState.spicy}
+        id="isSpicy"
+        checked={filtersState.isSpicy}
         universalFilterChanger={universalFilterChanger}
         text="Show only spicy"
-        peer="peer-checked/spicy:before:block"
+        peer="peer-checked/isSpicy:before:block"
       />
       <FilterModalCheckbox
-        id="promo"
-        checked={filtersState.promo}
+        id="isPromo"
+        checked={filtersState.isPromo}
         universalFilterChanger={universalFilterChanger}
         text="Show only promo"
-        peer="peer-checked/promo:before:block"
+        peer="peer-checked/isPromo:before:block"
       />
       <FilterModalNumberInput
         id="price"
@@ -87,14 +91,7 @@ export default function FilterModal(props: {
       <div className="my-3 flex w-full justify-around">
         <button
           onClick={() => {
-            setFiltersState({
-              vegan: false,
-              spicy: false,
-              promo: false,
-              price: '',
-              calories: '',
-              weight: '',
-            });
+            setFiltersState(filtersInitialState);
           }}
           type="button"
           className="xl rounded bg-accent px-1.5 py-1 font-light text-primary"
@@ -102,7 +99,7 @@ export default function FilterModal(props: {
           Reset
         </button>
         <button
-          onClick={() => setIsFiltersOpen(false)}
+          onClick={onApplyFilters}
           type="button"
           className="xl rounded bg-accent px-1.5 py-1 font-light text-primary"
         >

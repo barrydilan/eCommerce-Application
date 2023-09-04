@@ -1,12 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
-import bearerBaseQuery from '../../../shared/api/bearerBaseQuery.ts';
+import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 import { ILoginUserDataResponse, ILoginUserParams, IUser } from '../../../shared/types';
 
 export const userDataApi = createApi({
 	reducerPath: 'userDataApi',
-	baseQuery: bearerBaseQuery,
+	baseQuery: baseQueryWithReauth,
 	endpoints: (build) => ({
 		loginUserData: build.mutation<ILoginUserDataResponse, ILoginUserParams>({
 			query: (loginData) => ({
