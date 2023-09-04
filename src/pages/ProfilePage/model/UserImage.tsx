@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import pencilIcon from '../../../assets/icons/pencilIcon.svg';
 
 export default function UserImage(props: { pic: string; fullName: string; email: string }) {
