@@ -49,7 +49,7 @@ function NavMenu() {
         <NavLink to="/" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
-              <MainIcon style={{ hover: 'fill-accent' }} isActive={isActive || isPending} /> <span>Our menu</span>
+              <MainIcon isActive={isActive || isPending} /> <span>Our menu</span>
             </>
           )}
         </NavLink>
