@@ -88,10 +88,10 @@ export default function ProductCatalogue() {
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
     const {
-      dataset: { userSelect, id },
+      dataset: { userSelect },
     } = e.target as HTMLElement;
 
-    if (userSelect && userSelect !== activeCat && id) {
+    if (userSelect && userSelect !== activeCat) {
       setActiveCat(userSelect);
       setProductItems(undefined);
     }
@@ -185,7 +185,7 @@ export default function ProductCatalogue() {
       </div>
       <CategoriesList changeActiveCat={changeActiveCat}>
         {categories
-          ? categories.map(({ id, name: { en } }) => <CategoryItem key={id} item={en} activeCat={activeCat} id={id} />)
+          ? categories.map(({ id, name: { en } }) => <CategoryItem key={id} item={en} activeCat={activeCat} />)
           : null}
       </CategoriesList>
       <MenuList>
