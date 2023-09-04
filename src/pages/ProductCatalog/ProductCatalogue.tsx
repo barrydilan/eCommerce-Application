@@ -17,6 +17,7 @@ import filterIcon from '../../assets/icons/FiltersIcon.svg';
 import { correctPrice, ProductAttributeNames, useLazyGetProductListQuery } from '../../entities/product';
 import { useGetCategoriesQuery } from '../../entities/product/api/productApi.ts';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
+import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
@@ -28,6 +29,7 @@ export default function ProductCatalogue() {
   const [query] = useSearchParams();
   const [getProductList, { data: rawProductListData }] = useLazyGetProductListQuery();
   const { data: categories } = useGetCategoriesQuery(7);
+  const [loading, setLoading] = useState(false);
 
   const productListData = { ...rawProductListData };
 
@@ -45,6 +47,7 @@ export default function ProductCatalogue() {
   }
 
   function fetchProducts(categoryId?: string) {
+    setLoading(true);
     const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
@@ -64,7 +67,14 @@ export default function ProductCatalogue() {
         categoryId: categoryId || filtersState.categoryId,
       },
       searchQuery: query.get('search'),
-    });
+    })
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        // console.error('Error fetching data:', error);
+      });
   }
 
   function onCategoryClick(categoryId: string) {
@@ -180,23 +190,23 @@ export default function ProductCatalogue() {
           setIsFiltersOpen(false);
         }}
       >
-        {!productListData?.results?.length ? (
-          <p className="self-center justify-self-center text-xl text-text-grey">No Products Found :(</p>
-        ) : null}
-
-        {productListData?.results?.length
-          ? productListData.results?.map(({ id, name, masterVariant }) => (
-              <MenuItem
-                key={id}
-                id={id}
-                name={name.en}
-                price={correctPrice(masterVariant.prices[0].value.centAmount)}
-                image={masterVariant.images[0].url}
-                weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
-                calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
-              />
-            ))
-          : null}
+        {loading ? (
+          <div className="flex h-full items-center justify-center">
+            <LoadingAnimation />
+          </div>
+        ) : (
+          productListData.results?.map(({ id, name, masterVariant }) => (
+            <MenuItem
+              key={id}
+              id={id}
+              name={name.en}
+              price={correctPrice(masterVariant.prices[0].value.centAmount)}
+              image={masterVariant.images[0].url}
+              weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
+              calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
+            />
+          ))
+        )}
       </div>
     </div>
   );
