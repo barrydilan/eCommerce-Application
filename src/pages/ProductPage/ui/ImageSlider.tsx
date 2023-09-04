@@ -39,7 +39,7 @@ export default function ImageSlider({ isOpen, onClose, imgList }: IImageSlider) 
     </svg>
   );
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-primary">
+    <div className="fixed left-0 top-0 z-[100] flex h-full w-full items-center justify-center bg-primary">
       <div className="w-full">
         <Swiper
           navigation={{
