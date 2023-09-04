@@ -28,13 +28,14 @@ function Header() {
   return (
     <header
       className="
-        lg:
-        relative
+        fixed
+        z-50
         col-span-full
         flex
         w-full
         items-center
         justify-end
+        bg-primary
         md:border-b-2
         md:border-separation-line lg:justify-start
       "

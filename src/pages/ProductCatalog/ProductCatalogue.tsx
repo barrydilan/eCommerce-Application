@@ -142,12 +142,14 @@ export default function ProductCatalogue() {
   return (
     <div
       className="
+        mt-14
         grid
         grid-cols-1
         grid-rows-prodPageMob
         px-[10px]
+        sm:mt-16
         md:px-12
-        md:py-12
+        md:py-11
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
       "

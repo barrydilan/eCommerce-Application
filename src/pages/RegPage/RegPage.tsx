@@ -133,7 +133,7 @@ export default function RegPage() {
         )
       ) : (
         <div
-          className={`relative mx-3 my-10 flex w-fit flex-col items-center justify-center rounded-3xl px-4 sm:px-10 ${
+          className={`relative mx-3 my-24 flex w-fit flex-col items-center justify-center rounded-3xl px-4 sm:px-10 ${
             sameBillShip || currentStepIndex < 2 ? 'h-[379.2px]' : 'h-[529.72px]'
           }`}
         >

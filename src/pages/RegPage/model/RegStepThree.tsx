@@ -2,18 +2,22 @@ import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
 import { AnimatePresence, motion } from 'framer-motion';
+import * as Yup from 'yup';
 
-import { validSchemaStepThree } from './validationSchemas';
 import cityIcon from '../../../assets/icons/CityIcon.svg';
 import cityIconRed from '../../../assets/icons/CityIconRed.svg';
 import countryIcon from '../../../assets/icons/CountryIcon.svg';
 import { CustomRegForm } from '../../../entities/form/ui';
+import { validCity } from '../../../shared/const/validationSchemas';
 import { ISignUpAddress } from '../../../shared/types';
 import { checkboxAnimation, ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
 import { InputIcon } from '../ui';
 
-const validationSchema = validSchemaStepThree();
+const validationSchema = Yup.object({
+  billCity: validCity().city,
+  shipCity: validCity().city,
+});
 
 const shipBillCluesStyles = 'relative after:absolute after:-top-5 after:right-0 after:text-2xs';
 
