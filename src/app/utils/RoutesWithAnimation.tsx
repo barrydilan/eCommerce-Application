@@ -13,7 +13,8 @@ export default function RoutesWithAnimation() {
   return (
     <Routes location={location} key={location.key}>
       <Route index element={<ProductCatalogue />} />
-      <Route path="/:productId" element={<ProductPage />} />
+      <Route path="/product/:productId" element={<ProductPage />} />
+      <Route path="/category/:categoryId" element={<ProductPage />} />
       <Route
         path="registration"
         element={

@@ -23,7 +23,7 @@ import 'swiper/css';
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
   const [isSliderOpen, setSliderOpen] = useState(false);
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   const handleSliderOpen = () => {
     setSliderOpen(true);
@@ -33,7 +33,7 @@ export default function ProductPage() {
     setSliderOpen(false);
   };
 
-  const productId = location.pathname.slice(1);
+  const productId = pathname.slice(pathname.lastIndexOf('/') + 1);
   const { data } = useGetProductQuery(productId);
 
   if (!data) return null;

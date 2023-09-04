@@ -20,7 +20,7 @@ export default function MenuItem({ name, price, image, id, calories, weight }: I
 
   return (
     <li className="w-full list-none">
-      <Link to={`/${id}`}>
+      <Link to={`/product/${id}`}>
         <div className="flex rounded-2xl border-1 border-border-black/10">
           <div className="m-h-[170px] flex flex-[80%] gap-x-2">
             <img
