@@ -2,17 +2,21 @@ import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import * as Yup from 'yup';
 
-import { validSchemaStepOne } from './validationSchemas';
 import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
 import { CustomRegForm } from '../../../entities/form/ui';
+import { validEmail, validPassword } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
 
-const validationSchema = validSchemaStepOne();
+const validationSchema = Yup.object({
+  ...validEmail(),
+  ...validPassword(),
+});
 
 export default function RegStepOne(props: UserFormProps) {
   const { email, password, updateData, enableNext } = props;

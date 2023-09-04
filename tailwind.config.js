@@ -6,7 +6,7 @@ export default {
   theme: {
     colors: {
       accent: 'hsl(126, 55%, 47%)',
-      'accent-light': 'hsl(0, 0%, 97%)',
+      'accent-light': 'hsl(134deg, 51%, 55%)',
       'accent-lightest': 'hsl(134, 73%, 90%)',
       primary: 'hsl(0, 0%, 100%)',
       secondary: 'hsl(0, 0%, 96%)',

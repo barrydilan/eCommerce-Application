@@ -1,36 +1,22 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
-import logOutIcon from '../../assets/icons/log-out.svg';
-import { COOKIE_ACCESS_TOKEN, useRevokeTokenMutation, userSlice } from '../../entities/user';
-import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../entities/user/consts/constants';
-import deleteCookie from '../../shared/lib/helpers/deleteCookie';
-import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import { TokenTypeHints } from '../../shared/types';
+import AccountSettings from './model/AccountSettings';
+import AddressesSettings from './model/AddressesSettings';
+import BackBtn from './model/BackBtn';
+import TabSelector from './model/TabSelector';
+import UserImage from './model/UserImage';
+import ProfileHeader from './ui/ProfileHeader';
+import userImage from '../../assets/img/UserImg.jpg';
 
 export default function ProfilePage() {
-  const { isLogged, accessToken: oldAccessToken } = useAppSelector((state) => state.userReducer);
-  const [revokeToken] = useRevokeTokenMutation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { loggedOut } = userSlice.actions;
-
-  async function handleLogout() {
-    dispatch(loggedOut());
-    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
-    navigate('/');
-    revokeToken({ token: oldAccessToken, tokenTypeHint: TokenTypeHints.ACCESS_TOKEN });
-  }
-
+  const [isAccTabActive, setIsAccTabActive] = useState(true);
   return (
-    <div className="flex h-1/2 flex-col items-center justify-center">
-      {isLogged && (
-        <div>
-          <button disabled onClick={handleLogout} type="button" className="navMenuLink text-text-dark">
-            <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
-            Log out
-          </button>
-        </div>
-      )}
+    <div className="my-12 p-5 sm:mt-[5.6rem] xl:px-24">
+      <BackBtn />
+      <ProfileHeader />
+      <UserImage pic={userImage} fullName="Oleksii Drohachov" email="asdrogachev@gmail.com" />
+      <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
+      <div>{isAccTabActive ? <AccountSettings /> : <AddressesSettings />}</div>
     </div>
   );
 }
