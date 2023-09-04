@@ -18,6 +18,8 @@ import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 
+import 'swiper/css';
+
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
   const [isSliderOpen, setSliderOpen] = useState(false);
@@ -64,8 +66,10 @@ export default function ProductPage() {
         <div className="relative h-[1150px] md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
           <AddWishlistMobile />
           <div className="relative h-full">
-            <Title onClick={handleSliderOpen} image={image} name={name}>
-              <TitleAbout name={name} weight={weight} calories={calories} />
+            <Title onClick={handleSliderOpen} imgList={imgList} name={name}>
+              <div>
+                <TitleAbout name={name} weight={weight} calories={calories} />
+              </div>
             </Title>
             <BackButton />
             <div className="absolute -mt-4 flex w-full flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">

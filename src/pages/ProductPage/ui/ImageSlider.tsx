@@ -54,7 +54,7 @@ export default function ImageSlider({ isOpen, onClose, imgList }: IImageSlider) 
           className=""
         >
           {imgList.map((img) => (
-            <SwiperSlide key={img} className="max-h-3/4">
+            <SwiperSlide key={img} style={{ display: 'flex' }} className="max-h-3/4 items-center justify-center">
               <TransformWrapper>
                 <TransformComponent>
                   <img className="mx-auto h-[70%] w-[70%] max-w-[1000px] sm:h-[60%] sm:w-[60%] " src={img} alt="" />
