@@ -56,14 +56,14 @@ export default function ProductPage() {
     <>
       <ImageSlider onClose={handleCloseSlider} isOpen={isSliderOpen} imgList={imgList} />
       <div className="mx-auto h-full md:max-w-[645px]">
-        <div className="relative h-[1100px] md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
+        <div className="relative h-[1150px] md:rounded-t-[32px] md:border-12 md:border-text-grey/10">
           <AddWishlistMobile />
           <div className="relative h-full">
             <Title onClick={handleSliderOpen} image={image} name={name}>
               <TitleAbout name={name} weight={weight} calories={calories} />
             </Title>
             <BackButton />
-            <div className="absolute -mt-12 flex w-full flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
+            <div className="absolute -mt-4 flex w-full flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8">
               <HeaderMobile name={name} calories={calories} weight={weight} />
               <Header>
                 <>
