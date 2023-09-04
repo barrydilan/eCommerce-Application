@@ -210,7 +210,7 @@ export default function ProductCatalogue() {
               </div>
             }
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
-            className="grid items-center gap-6"
+            className="grid items-center gap-5 lg:gap-6"
           >
             {productListData.results?.map(({ id, name, masterVariant }, i) => (
               <MenuItem
