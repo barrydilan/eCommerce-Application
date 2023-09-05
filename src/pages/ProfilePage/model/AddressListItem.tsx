@@ -1,14 +1,15 @@
 import { useState } from 'react';
 
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
-import { AddressObj, UserData } from '../types/profilePageTypes';
+import { IUser } from '../../../shared/types';
+import { AddressObj } from '../types/profilePageTypes';
 import AddressView from '../ui/AddressView';
 import InfoModal from '../ui/InfoModal';
 
 export default function AddressListItem(props: {
   index: number;
   address: AddressObj;
-  userData: UserData;
+  userData: IUser;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   getUser: (_id: string) => void;

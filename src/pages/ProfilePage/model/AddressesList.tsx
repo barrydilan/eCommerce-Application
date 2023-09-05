@@ -1,8 +1,9 @@
 import AddressListItem from './AddressListItem';
-import { AddressObj, UserData } from '../types/profilePageTypes';
+import { IUser } from '../../../shared/types';
+import { AddressObj } from '../types/profilePageTypes';
 
 export default function AddressesList(props: {
-  userData: UserData;
+  userData: IUser;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   getUser: (_id: string) => void;
