@@ -12,9 +12,11 @@ interface IMenuItemProps {
   id: string;
   calories: string | number;
   weight: string | number;
+  isSpicy: boolean;
+  isVegan: boolean;
 }
 
-export default function MenuItem({ name, price, image, id, calories, weight }: IMenuItemProps) {
+export default function MenuItem({ name, price, image, id, calories, weight, isSpicy, isVegan }: IMenuItemProps) {
   const [rating, setRating] = useState(4.5);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +24,7 @@ export default function MenuItem({ name, price, image, id, calories, weight }: I
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
         <div className="flex rounded-2xl border-1 border-border-black/10">
-          <div className="m-h-[170px] flex flex-[80%] gap-x-2">
+          <div className="m-h-[170px] relative flex flex-[80%] gap-x-2">
             <img
               onLoad={() => setIsLoading(false)}
               loading="lazy"
@@ -32,9 +34,25 @@ export default function MenuItem({ name, price, image, id, calories, weight }: I
               src={image}
               alt={name}
             />
+            {isSpicy ? (
+              <span className="absolute left-2 top-2 z-10 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+                <img src="../../src/assets/icons/spicy.svg" alt="spicyIcon" />
+              </span>
+            ) : (
+              ''
+            )}
+            {isVegan ? (
+              <span className="absolute left-2 top-2 z-10 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+                <img src="../../src/assets/icons/vegan.svg" alt="veganIcon" />
+              </span>
+            ) : (
+              ''
+            )}
             <div className="my-4 flex flex-1 flex-col gap-y-1 xs:gap-y-4 sm:my-4">
               <div className="flex flex-1 flex-col gap-y-1">
-                <h2 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">{name}</h2>
+                <h2 className="relative flex items-center text-sm font-light text-text-dark xs:text-lg sm:text-xl">
+                  {name}
+                </h2>
                 <h4 className="text-xs font-extralight text-text-grey sm:text-base">{calories} kcal</h4>
                 <h4 className="text-xs font-extralight text-text-grey sm:text-base">{weight} g</h4>
               </div>

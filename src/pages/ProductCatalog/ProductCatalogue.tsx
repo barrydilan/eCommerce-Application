@@ -151,6 +151,7 @@ export default function ProductCatalogue() {
     if (categoryData) fetchProducts(categoryData.id);
   }, [categoryData]);
 
+  // console.log(productListData.results);
   return (
     <div
       className="
@@ -242,6 +243,8 @@ export default function ProductCatalogue() {
                 image={masterVariant.images[0].url}
                 weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
                 calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
+                isSpicy={getAttribute(masterVariant.attributes, ProductAttributeNames.IS_SPICY)}
+                isVegan={getAttribute(masterVariant.attributes, ProductAttributeNames.IS_VEGAN)}
               />
             ))}
           </InfiniteScroll>

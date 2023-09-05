@@ -54,6 +54,8 @@ export default function ProductPage() {
   const ingredients = getAttribute(attributes, ProductAttributeNames.INGREDIENTS)?.toString()?.split(', ');
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
+  const isSpicy = attributes.find((item) => item.name === 'isSpicy')?.value;
+  const isVegan = attributes.find((item) => item.name === 'isVegan')?.value;
 
   return (
     <div
@@ -69,7 +71,7 @@ export default function ProductPage() {
           <div className="relative h-full">
             <Title onClick={handleSliderOpen} imgList={imgList} name={name}>
               <div>
-                <TitleAbout name={name} weight={weight} calories={calories} />
+                <TitleAbout isSpicy={isSpicy} isVegan={isVegan} name={name} weight={weight} calories={calories} />
               </div>
             </Title>
             <BackButton />

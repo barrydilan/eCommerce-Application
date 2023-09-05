@@ -1,4 +1,4 @@
-import { ProductAttribute } from '../../../entities/product';
+import { ProductAttribute, ProductAttributeNames } from '../../../entities/product';
 
 interface IDescriptionProps {
   attributes: ProductAttribute[];
@@ -11,6 +11,9 @@ function Description({ attributes }: IDescriptionProps) {
       <p className="mt-3 text-[13px] font-light text-text-grey">
         {attributes.map((attr, index) => {
           if (index === 0) return null;
+          if (attr.name === ProductAttributeNames.IS_SPICY || attr.name === ProductAttributeNames.IS_VEGAN) {
+            return null;
+          }
           return <span className="block" key={attr.name}>{`${attr.name} - ${attr.value}`}</span>;
         })}
       </p>
