@@ -41,7 +41,7 @@ export default function ProfilePage() {
           {isAccTabActive ? (
             <AccountSettings userData={data} accessToken={accessToken} getUser={memoizedGetUser} />
           ) : (
-            <AddressesSettings />
+            <AddressesSettings userData={data} accessToken={accessToken} getUser={memoizedGetUser} />
           )}
         </div>
       </div>

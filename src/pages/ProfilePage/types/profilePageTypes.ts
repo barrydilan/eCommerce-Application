@@ -1,7 +1,8 @@
 export type AddressObj = {
+	id: string;
 	country: string;
 	city: string;
-	street: string;
+	streetName: string;
 	postalCode: string;
 };
 
@@ -12,6 +13,9 @@ export type UserData = {
 	lastName: string | undefined;
 	dateOfBirth: string | undefined;
 	version: number | undefined;
+	addresses: AddressObj[] | undefined;
+	defaultBillingAddressId: string | undefined;
+	defaultShippingAddressId: string | undefined;
 };
 
 export type EditedAddressObj = { address: AddressObj; index?: number };
