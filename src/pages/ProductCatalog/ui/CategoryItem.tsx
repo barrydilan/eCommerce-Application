@@ -13,8 +13,21 @@ function CategoryItem({ item, activeCat }: ICategoryItemProps) {
   const { pathname } = useLocation();
 
   const isActive = activeCat === item;
+  const path = decodeURIComponent(pathname);
+  const name = item.toLowerCase();
+  const isPrevCategory = path.includes(name);
 
-  function goToCategory() {
+  function goBack() {
+    const itemIndex = path.indexOf(name);
+    const prevCategory = `${path.slice(0, itemIndex)}${name}`;
+
+    navigate({
+      pathname: prevCategory,
+      search: query.toString(),
+    });
+  }
+
+  function goForward() {
     navigate({
       pathname: `${pathname}/${item.toLowerCase()}`,
       search: query.toString(),
@@ -25,7 +38,7 @@ function CategoryItem({ item, activeCat }: ICategoryItemProps) {
     <li className={`whitespace-nowrap px-1 ${isActive ? greenBorder : ''}`}>
       <button
         className={`${isActive ? 'text-text-dark' : ''}`}
-        onClick={goToCategory}
+        onClick={isPrevCategory ? goBack : goForward}
         data-user-select={item}
         type="button"
       >

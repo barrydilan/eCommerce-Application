@@ -13,7 +13,6 @@ import FilterModal from './model/FilterModal';
 import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
 import CategoriesList from './ui/CategoriesList.tsx';
-import CategoryBackItem from './ui/CategoryBackItem.tsx';
 import CategoryItem from './ui/CategoryItem.tsx';
 import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
@@ -50,7 +49,7 @@ export default function ProductCatalogue() {
   const [filtersState, setFiltersState] = useState(parseQueryState(query));
 
   const productListData = { ...productItems };
-  const previousCategories = pathname
+  const prevCategories = pathname
     .replace(CATEGORIES, '')
     .split('/')
     .map((elem) => capitalize(decodeURIComponent(elem)))
@@ -192,27 +191,20 @@ export default function ProductCatalogue() {
         <SortingSelector sortOrder={sortOrder} onSort={onSort} />
       </div>
       <CategoriesList changeActiveCat={changeActiveCat}>
-        {categories ? (
-          <>
-            {previousCategories.map((item, i, arr) => {
-              const id = arr.length - (i + 1);
-              const isLastElem = i === arr.length - 1;
-              const isFirstElem = i === 0;
-              const isLastCategory = categories?.length;
+        {categories
+          ? [...prevCategories, ...categories].map((item, i, arr) => {
+              const isPrevCat = typeof item === 'string';
+              const name = isPrevCat ? item : item.name.en;
+              const isLast = i === arr.length - 1;
 
               return (
-                <React.Fragment key={item}>
-                  <CategoryBackItem item={item} id={id} isActive={isLastElem} />
-                  <span>{!isFirstElem && isLastElem && !isLastCategory ? '' : '/'}</span>
+                <React.Fragment key={name}>
+                  <CategoryItem item={name} activeCat={activeCat} />
+                  {!isLast && (activeCat === name || isPrevCat) ? '/' : ''}
                 </React.Fragment>
               );
-            })}
-
-            {categories.map((item) => (
-              <CategoryItem key={item.id} item={item.name.en} activeCat={activeCat} />
-            ))}
-          </>
-        ) : null}
+            })
+          : null}
       </CategoriesList>
       <MenuList>
         {productsIsLoading ? (
