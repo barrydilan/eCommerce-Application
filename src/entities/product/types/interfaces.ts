@@ -10,7 +10,7 @@ export interface IGetProductAttributes {
 	categoryId?: string;
 }
 
-interface IGetProductListParams {
+export interface IGetProductListParams {
 	limit: number;
 	offset: number;
 	sort: {
@@ -20,5 +20,3 @@ interface IGetProductListParams {
 	filters: IGetProductAttributes;
 	searchQuery: string | null;
 }
-
-export default IGetProductListParams;

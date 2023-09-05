@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { QUERY_ACTIVE_CAT, QUERY_FILTER, QUERY_SORT } from './const/constants.ts';
+import { CATEGORIES, QUERY_FILTER, QUERY_SORT } from './const/constants.ts';
 import encodeQueryState from './lib/helpers/encodeQueryState.ts';
 import parseQueryState from './lib/helpers/parseQueryState.ts';
 import filterCalories from './model/filterCalories.ts';
@@ -21,26 +21,44 @@ import {
   correctPrice,
   ProductAttributeNames,
   useGetCategoriesQuery,
+  useGetCategoryQuery,
   useLazyGetProductListQuery,
 } from '../../entities/product';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
-import { ProductResponse } from '../../entities/product/types/types.ts';
+import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
+import { capitalize } from '../../shared/lib/helpers';
+import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export default function ProductCatalogue() {
+  const path = useGetPath();
+  const urlActiveCat = capitalize(decodeURIComponent(path));
+
+  const { pathname } = useLocation();
   const [query, setQuery] = useSearchParams();
-  const [filtersState, setFiltersState] = useState(parseQueryState(query));
   const [isFiltersOpen, onFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] =
-    useLazyGetProductListQuery({});
-  const { data: categories } = useGetCategoriesQuery(7);
-  const [activeCat, setActiveCat] = useState(query.get(QUERY_ACTIVE_CAT) ?? 'All');
+    useLazyGetProductListQuery();
+  const { data: categoriesList } = useGetCategoriesQuery();
+  const [activeCat, setActiveCat] = useState(urlActiveCat ?? 'All');
+  const { data: categoryData } = useGetCategoryQuery(urlActiveCat.toLowerCase().replace(' ', '-'));
+  const [filtersState, setFiltersState] = useState(parseQueryState(query));
 
   const productListData = { ...productItems };
+  const prevCategories = pathname
+    .replace(CATEGORIES, '')
+    .split('/')
+    .map((elem) => capitalize(decodeURIComponent(elem)))
+    .filter(Boolean);
+  let categories: CategoryResult[] | null = null;
+
+  if (categoriesList && categoryData) {
+    categories = categoriesList.results.filter((res) => res?.parent?.id === categoryData.id);
+  }
 
   if (productListData && productItems && !isFiltersOpen) {
     if (filtersState.calories !== '') {
@@ -61,32 +79,31 @@ export default function ProductCatalogue() {
     const [currField, order] = sortOrder.split(' ') as [ProductSortingFields, ProductSortOrders];
     const field = ProductSortingFields[currField as unknown as keyof typeof ProductSortingFields];
 
-    getProductList({
-      limit: 5,
-      offset,
-      sort: {
-        field,
-        order,
-      },
-      filters: { ...filtersState, categoryId: categoryId || filtersState.categoryId },
-      searchQuery: query.get('search'),
-    });
-  }
+    if (categoryId) setFiltersState((prevState) => ({ ...prevState, categoryId }));
 
-  function setActiveCategory(categoryId: string) {
-    fetchProducts(categoryId);
-    setFiltersState((prev) => ({ ...prev, categoryId }));
-    setProductItems(undefined);
+    getProductList(
+      {
+        limit: 5,
+        offset,
+        sort: {
+          field,
+          order,
+        },
+        filters: { ...filtersState, ...(categoryId && { categoryId }) },
+        searchQuery: query.get('search'),
+      },
+      true,
+    );
   }
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
     const {
-      dataset: { userSelect, id },
+      dataset: { userSelect },
     } = e.target as HTMLElement;
 
-    if (userSelect && userSelect !== activeCat && id) {
+    if (userSelect && userSelect !== activeCat) {
       setActiveCat(userSelect);
-      setActiveCategory(id);
+      setProductItems(undefined);
     }
   }
 
@@ -114,9 +131,8 @@ export default function ProductCatalogue() {
   useEffect(() => {
     if (query.get(QUERY_SORT) !== sortOrder) {
       pushQuery([QUERY_SORT, sortOrder]);
+      fetchProducts();
     }
-
-    fetchProducts();
   }, [sortOrder]);
 
   useEffect(() => {
@@ -132,12 +148,8 @@ export default function ProductCatalogue() {
   }, [rawProductListData]);
 
   useEffect(() => {
-    const encodedState = encodeQueryState(filtersState);
-
-    if (query.get(QUERY_FILTER) !== encodedState) {
-      pushQuery([QUERY_ACTIVE_CAT, activeCat], [QUERY_FILTER, encodedState]);
-    }
-  }, [filtersState.categoryId]);
+    if (categoryData) fetchProducts(categoryData.id);
+  }, [categoryData]);
 
   return (
     <div
@@ -183,9 +195,18 @@ export default function ProductCatalogue() {
       </div>
       <CategoriesList changeActiveCat={changeActiveCat}>
         {categories
-          ? categories.results.map(({ id, name: { en } }) => (
-              <CategoryItem key={id} item={en} activeCat={activeCat} id={id} />
-            ))
+          ? [...prevCategories, ...categories].map((item, i, arr) => {
+              const isPrevCat = typeof item === 'string';
+              const name = isPrevCat ? item : item.name.en;
+              const isLast = i === arr.length - 1;
+
+              return (
+                <React.Fragment key={name}>
+                  <CategoryItem item={name} activeCat={activeCat} />
+                  {!isLast && (activeCat === name || isPrevCat) ? '/' : ''}
+                </React.Fragment>
+              );
+            })
           : null}
       </CategoriesList>
       <MenuList>

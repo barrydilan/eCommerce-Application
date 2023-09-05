@@ -3,8 +3,8 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 import prepareFilterQuery from '../../user/model/prepareFilterQuery.ts';
-import IGetProductListParams from '../types/interfaces.ts';
-import { CategoriesResponse, ProductResponse, ProductResult } from '../types/types.ts';
+import { IGetProductListParams } from '../types/interfaces.ts';
+import { CategoriesResponse, CategoryResult, ProductResponse, ProductResult } from '../types/types.ts';
 
 export const productApi = createApi({
 	reducerPath: 'productApi',
@@ -28,16 +28,27 @@ export const productApi = createApi({
 			}),
 		}),
 
-		getCategories: build.query<CategoriesResponse, number>({
-			query: (limit) => ({
+		getCategories: build.query<CategoriesResponse, number | void>({
+			query: (limit = 20) => ({
 				url: `/${PROJECT_KEY}/categories`,
 				params: {
 					limit,
 				},
 			}),
 		}),
+
+		getCategory: build.query<CategoryResult, string>({
+			query: (key) => ({
+				url: `/${PROJECT_KEY}/categories/key=${key}`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetProductListQuery, useLazyGetProductListQuery, useGetProductQuery, useGetCategoriesQuery } =
-	productApi;
+export const {
+	useGetProductListQuery,
+	useLazyGetProductListQuery,
+	useGetProductQuery,
+	useGetCategoriesQuery,
+	useGetCategoryQuery,
+} = productApi;

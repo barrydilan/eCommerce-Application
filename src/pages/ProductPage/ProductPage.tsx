@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
-
 import getAttribute from './lib/helpers/getAttribute.ts';
 import AddWishlistMobile from './ui/AddWishlistMobile.tsx';
 import BackButton from './ui/BackButton.tsx';
@@ -17,13 +15,15 @@ import Rating from './ui/Rating.tsx';
 import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
-
 import 'swiper/css';
+import { useGetPath } from '../../shared/lib/hooks';
+import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
   const [isSliderOpen, setSliderOpen] = useState(false);
-  const location = useLocation();
+  const productId = useGetPath();
+  const { data } = useGetProductQuery(productId);
 
   const handleSliderOpen = () => {
     setSliderOpen(true);
@@ -33,10 +33,12 @@ export default function ProductPage() {
     setSliderOpen(false);
   };
 
-  const productId = location.pathname.slice(1);
-  const { data } = useGetProductQuery(productId);
-
-  if (!data) return null;
+  if (!data)
+    return (
+      <div className="flex h-full items-center justify-center overflow-hidden">
+        <LoadingAnimation />
+      </div>
+    );
 
   const {
     masterVariant: { attributes, prices, images },
@@ -45,10 +47,9 @@ export default function ProductPage() {
 
   const rawPrice = prices[0].value.centAmount;
   const rawOldPrice = 4450;
-  const image = images[0].url;
   const name = en;
 
-  const imgList = [image];
+  const imgList = images.map((img) => img.url);
 
   const ingredients = getAttribute(attributes, ProductAttributeNames.INGREDIENTS)?.toString()?.split(', ');
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);

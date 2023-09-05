@@ -46,7 +46,7 @@ function NavMenu() {
         "
     >
       <li className="navMenuItem">
-        <NavLink to="/" className="navMenuLink text-text-grey hover:text-accent">
+        <NavLink to="/categories/all" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
               <MainIcon isActive={isActive || isPending} /> <span>Our menu</span>

@@ -9,6 +9,7 @@ export {
 	useLazyGetProductListQuery,
 	useGetProductQuery,
 	useGetCategoriesQuery,
+	useGetCategoryQuery,
 } from './api/productApi.ts';
 export { correctPrice, calcPriceDiscountPercentage };
 export { ProductAttributeNames } from './types/enums.ts';

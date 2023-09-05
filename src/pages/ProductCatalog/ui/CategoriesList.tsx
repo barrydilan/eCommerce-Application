@@ -25,12 +25,11 @@ function CategoriesList({ children, changeActiveCat }: ICategoryList) {
         className="
             flex
             h-6
-            gap-7
+            gap-1
             overflow-y-scroll
             border-b-[2px]
             border-separation-line
             lg:h-8
-            lg:gap-3
             lg:text-base
           "
       >

@@ -46,6 +46,16 @@ export type ProductResponse = Readonly<{
 	results: ProductResult[];
 }>;
 
+export type CategoryAncestor = Readonly<{
+	typeId: string;
+	id: string;
+}>;
+
+type CategoryParent = Readonly<{
+	typeId: string;
+	id: string;
+}>;
+
 export type CategoryResult = Readonly<{
 	id: string;
 	name: {
@@ -53,12 +63,8 @@ export type CategoryResult = Readonly<{
 		de: string;
 		ua: string;
 	};
-	ancestors: [
-		{
-			typeId: string;
-			id: string;
-		},
-	];
+	ancestors: CategoryAncestor[];
+	parent?: CategoryParent;
 }>;
 
 export type CategoriesResponse = Readonly<{
