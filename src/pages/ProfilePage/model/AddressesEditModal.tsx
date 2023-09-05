@@ -34,7 +34,7 @@ export default function AddressesEditModal(props: {
 
   const validationSchema = Yup.object({
     city: validCity().city,
-    street: validStreet().street,
+    streetName: validStreet().streetName,
     postalCode: validPostalCode(selectedCountry).postalCode,
   });
 
@@ -71,14 +71,29 @@ export default function AddressesEditModal(props: {
   }, [values, errors, touched, initData]);
 
   function handleEditBtn() {
-    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
-      method: 'POST',
-      body: JSON.stringify({
+    const getBody = () => {
+      if (addressId) {
+        return {
+          version,
+          actions: [
+            {
+              action: 'changeAddress',
+              addressId,
+              address: {
+                country: values.country,
+                city: values.city,
+                streetName: values.streetName,
+                postalCode: values.postalCode,
+              },
+            },
+          ],
+        };
+      }
+      return {
         version,
         actions: [
           {
-            action: 'changeAddress',
-            addressId,
+            action: 'addAddress',
             address: {
               country: values.country,
               city: values.city,
@@ -87,7 +102,11 @@ export default function AddressesEditModal(props: {
             },
           },
         ],
-      }),
+      };
+    };
+    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
+      method: 'POST',
+      body: JSON.stringify(getBody()),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
         Authorization: `Bearer ${accessToken}`,

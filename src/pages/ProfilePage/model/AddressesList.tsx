@@ -20,5 +20,22 @@ export default function AddressesList(props: {
       />
     );
   });
-  return <div>{addressesItems}</div>;
+
+  function addAddressHandler() {
+    setEditedAddress({ country: 'US', city: '', streetName: '', postalCode: '' });
+    setIsModalOpen(true);
+  }
+
+  return (
+    <div>
+      {addressesItems}
+      <button
+        className="mt-8 flex h-10 items-center rounded-md px-2 text-base font-medium text-accent transition-all duration-300 hover:bg-separation-line"
+        type="button"
+        onClick={addAddressHandler}
+      >
+        <span className="mr-2 text-2xl">+</span> Add more
+      </button>
+    </div>
+  );
 }
