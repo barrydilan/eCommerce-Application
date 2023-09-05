@@ -47,10 +47,9 @@ export default function ProductPage() {
 
   const rawPrice = prices[0].value.centAmount;
   const rawOldPrice = 4450;
-  const image = images[0].url;
   const name = en;
 
-  const imgList = [image];
+  const imgList = images.map((img) => img.url);
 
   const ingredients = getAttribute(attributes, ProductAttributeNames.INGREDIENTS)?.toString()?.split(', ');
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
