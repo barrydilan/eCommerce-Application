@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import StarsRating from 'react-star-rate';
 
+import spicyIcon from '../../assets/icons/spicy.svg';
+import veganIcon from '../../assets/icons/vegan.svg';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
 
 interface IMenuItemProps {
@@ -36,14 +38,14 @@ export default function MenuItem({ name, price, image, id, calories, weight, isS
             />
             {isSpicy ? (
               <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-                <img src="../../src/assets/icons/spicy.svg" alt="spicyIcon" />
+                <img src={spicyIcon} alt="spicyIcon" />
               </span>
             ) : (
               ''
             )}
             {isVegan ? (
               <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-                <img src="../../src/assets/icons/vegan.svg" alt="veganIcon" />
+                <img src={veganIcon} alt="veganIcon" />
               </span>
             ) : (
               ''

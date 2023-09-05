@@ -1,3 +1,6 @@
+import spicyIcon from '../../../assets/icons/spicy.svg';
+import veganIcon from '../../../assets/icons/vegan.svg';
+
 interface ITitleAboutProps {
   name: string;
   calories: number | string;
@@ -13,14 +16,14 @@ function TitleAbout({ name, calories, weight, isSpicy, isVegan }: ITitleAboutPro
         {name}
         {isSpicy ? (
           <span className="ml-4 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-            <img src="../../src/assets/icons/spicy.svg" alt="spicyIcon" />
+            <img src={spicyIcon} alt="spicyIcon" />
           </span>
         ) : (
           ''
         )}
         {isVegan ? (
           <span className="ml-4 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-            <img src="../../src/assets/icons/vegan.svg" alt="spicyIcon" />
+            <img src={veganIcon} alt="veganIcon" />
           </span>
         ) : (
           ''
