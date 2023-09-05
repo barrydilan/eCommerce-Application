@@ -1,4 +1,4 @@
-// import ChangePassword from './ChangePassword';
+import ChangePassword from './ChangePassword';
 import ChangePersonalData from './ChangePersonalData';
 import { UserData } from '../types/profilePageTypes';
 
@@ -12,7 +12,7 @@ export default function AccountSettings(props: {
   return (
     <div className="flex flex-col">
       <ChangePersonalData userData={userData} accessToken={accessToken} getUser={getUser} />
-      {/* <ChangePassword userData={data} accessToken={accessToken} getUser={memoizedGetUser} /> */}
+      <ChangePassword userData={userData} accessToken={accessToken} getUser={getUser} />
     </div>
   );
 }

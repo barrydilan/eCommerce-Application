@@ -47,7 +47,7 @@ export default function ChangePersonalData(props: {
   const [dateInputType, setDateInputType] = useState('text');
   const [isSaveBlocked, setIsSaveBlocked] = useState(true);
   const [msgModalShown, setMsgModalShown] = useState(false);
-  const [msgModalText, setMsgModalText] = useState('Sometext');
+  const [msgModalText, setMsgModalText] = useState('');
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
