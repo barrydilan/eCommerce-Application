@@ -12,7 +12,7 @@ function CategoriesList({ children, changeActiveCat }: ICategoryList) {
     <div
       className="
           z-0
-          mt-3
+          mt-6
           bg-none
           text-text-grey
           lg:mt-11
