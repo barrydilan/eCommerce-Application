@@ -81,16 +81,19 @@ export default function ProductCatalogue() {
 
     if (categoryId) setFiltersState((prevState) => ({ ...prevState, categoryId }));
 
-    getProductList({
-      limit: 5,
-      offset,
-      sort: {
-        field,
-        order,
+    getProductList(
+      {
+        limit: 5,
+        offset,
+        sort: {
+          field,
+          order,
+        },
+        filters: { ...filtersState, ...(categoryId && { categoryId }) },
+        searchQuery: query.get('search'),
       },
-      filters: { ...filtersState, ...(categoryId && { categoryId }) },
-      searchQuery: query.get('search'),
-    });
+      true,
+    );
   }
 
   function changeActiveCat(e: React.MouseEvent<HTMLUListElement, MouseEvent>) {
