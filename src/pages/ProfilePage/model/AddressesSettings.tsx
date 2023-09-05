@@ -17,7 +17,13 @@ export default function AddressesSettings(props: {
   return (
     <div className="relative flex flex-col">
       <AddressesDefault userData={userData} accessToken={accessToken} getUser={getUser} />
-      <AddressesList userData={userData} setEditedAddress={setEditedAddress} setIsModalOpen={setIsModalOpen} />
+      <AddressesList
+        userData={userData}
+        setEditedAddress={setEditedAddress}
+        setIsModalOpen={setIsModalOpen}
+        getUser={getUser}
+        accessToken={accessToken}
+      />
       {isModalOpen ? (
         <AddressesEditModal
           editedAddress={editedAddress}

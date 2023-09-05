@@ -1,27 +1,75 @@
 import { useState } from 'react';
 
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
-import { AddressObj } from '../types/profilePageTypes';
+import { AddressObj, UserData } from '../types/profilePageTypes';
 import AddressView from '../ui/AddressView';
+import InfoModal from '../ui/InfoModal';
 
 export default function AddressListItem(props: {
-  address: AddressObj;
   index: number;
+  address: AddressObj;
+  userData: UserData;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  getUser: (_id: string) => void;
+  accessToken: string | undefined;
 }) {
-  const { address, index, setEditedAddress, setIsModalOpen } = props;
+  const { index, setEditedAddress, setIsModalOpen, userData, getUser, address, accessToken } = props;
+  const { version, id } = userData;
+  const addressId = address.id;
   const [isConfirmShown, setIsConfirmShown] = useState(false);
+  const [msgModalShown, setMsgModalShown] = useState(false);
+  const [msgModalText, setMsgModalText] = useState('');
 
   function editClickHandler() {
     setEditedAddress(address);
     setIsModalOpen(true);
   }
 
+  function deleteClickHandler() {
+    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/me`, {
+      method: 'POST',
+      body: JSON.stringify({
+        version,
+        actions: [
+          {
+            action: 'removeAddress',
+            addressId,
+          },
+        ],
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok || res.status !== 200) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(() => {
+        setMsgModalText('Your addresses was deleted! :)');
+        setMsgModalShown(true);
+        setTimeout(() => {
+          setMsgModalShown(false);
+          setIsModalOpen(false);
+          if (typeof id === 'string') getUser(id);
+        }, 1500);
+      })
+      .catch(() => {
+        setMsgModalText('Something went wrong! :(');
+        setMsgModalShown(true);
+        setTimeout(() => setMsgModalShown(false), 1500);
+      });
+  }
+
   return (
     <div className="border-b-2 border-separation-line py-6">
       <div className="relative w-full text-base font-medium">
         <h6>{`Address ${(index + 1).toString().padStart(2, '0')}`}</h6>
+        <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
         <button
           onClick={editClickHandler}
           className="absolute right-8 top-0 h-5 w-5 rounded-md hover:bg-separation-line"
@@ -46,7 +94,11 @@ export default function AddressListItem(props: {
             <button onClick={() => setIsConfirmShown(false)} className="rounded-md px-2 py-1" type="button">
               No
             </button>
-            <button className="rounded-md bg-accent-lightest px-2 py-1 text-accent" type="button">
+            <button
+              className="rounded-md bg-accent-lightest px-2 py-1 text-accent"
+              type="button"
+              onClick={deleteClickHandler}
+            >
               Yes
             </button>
           </div>

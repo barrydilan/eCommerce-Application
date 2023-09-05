@@ -5,9 +5,12 @@ export default function AddressesList(props: {
   userData: UserData;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  getUser: (_id: string) => void;
+  accessToken: string | undefined;
 }) {
-  const { userData, setEditedAddress, setIsModalOpen } = props;
+  const { userData, setEditedAddress, setIsModalOpen, getUser, accessToken } = props;
   const { addresses } = userData;
+
   const addressesItems = addresses?.map((address, index) => {
     const { id: addressID } = address;
     return (
@@ -15,8 +18,11 @@ export default function AddressesList(props: {
         setEditedAddress={setEditedAddress}
         setIsModalOpen={setIsModalOpen}
         address={address}
+        userData={userData}
         index={index}
         key={addressID}
+        getUser={getUser}
+        accessToken={accessToken}
       />
     );
   });
