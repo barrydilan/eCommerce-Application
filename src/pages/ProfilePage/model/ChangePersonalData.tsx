@@ -13,6 +13,7 @@ import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserData } from '../types/profilePageTypes';
+import InfoModal from '../ui/infoModal';
 
 const validationSchema = Yup.object({
   ...validEmail(),
@@ -45,6 +46,8 @@ export default function ChangePersonalData(props: {
   const { handleChange, handleBlur, errors, touched, values } = formik;
   const [dateInputType, setDateInputType] = useState('text');
   const [isSaveBlocked, setIsSaveBlocked] = useState(true);
+  const [msgModalShown, setMsgModalShown] = useState(false);
+  const [msgModalText, setMsgModalText] = useState('Sometext');
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
@@ -90,9 +93,16 @@ export default function ChangePersonalData(props: {
         return res.json();
       })
       .then(() => {
+        setMsgModalText('Your data saved! :)');
+        setMsgModalShown(true);
+        setTimeout(() => setMsgModalShown(false), 1500);
         if (typeof id === 'string') getUser(id);
       })
-      .catch(() => {});
+      .catch(() => {
+        setMsgModalText('Something went wrong! :(');
+        setMsgModalShown(true);
+        setTimeout(() => setMsgModalShown(false), 1500);
+      });
   }
 
   useEffect(() => {
@@ -112,7 +122,8 @@ export default function ChangePersonalData(props: {
   }, [values, errors, touched, initData]);
 
   return (
-    <div className="border-b-2 border-separation-line">
+    <div className="relative border-b-2 border-separation-line">
+      <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
       <h4 className="mx-auto mt-12 w-full text-center text-base font-medium">Personal data</h4>
       <div className="profileInputWrapper">
         <div className="text-base font-medium">Email</div>
