@@ -1,14 +1,18 @@
 import pencilIcon from '../../../assets/icons/pencilIcon.svg';
+import { getFullName } from '../../../entities/user';
+import { UserData } from '../types/profilePageTypes';
 
-export default function UserImage(props: { pic: string; fullName: string; email: string }) {
-  const { pic, fullName, email } = props;
+export default function UserImage(props: { userData: UserData; pic: string }) {
+  const { userData, pic } = props;
+  const { firstName, lastName, email } = userData;
+
   return (
     <div className="relative mt-7 flex items-center">
       <div className="w-[60px]">
         <img className="w-full rounded-full" src={pic} alt="" />
       </div>
       <div className="ml-6">
-        <h5 className="text-base font-medium">{fullName}</h5>
+        <h5 className="text-base font-medium">{getFullName(firstName, lastName)}</h5>
         <p className="mt-1 text-sm text-text-grey">{email}</p>
       </div>
       <label
