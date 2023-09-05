@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ICategoryItemProps {
   item: string;
@@ -10,14 +10,16 @@ const greenBorder = 'border-b-2 border-accent';
 function CategoryItem({ item, activeCat }: ICategoryItemProps) {
   const [query] = useSearchParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const isActive = activeCat === item;
 
-  const goToCategory = () =>
+  function goToCategory() {
     navigate({
-      pathname: `/categories/${item.toLowerCase()}`,
+      pathname: `${pathname}/${item.toLowerCase()}`,
       search: query.toString(),
     });
+  }
 
   return (
     <li className={`whitespace-nowrap px-1 ${isActive ? greenBorder : ''}`}>

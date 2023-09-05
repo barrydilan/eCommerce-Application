@@ -28,8 +28,8 @@ export const productApi = createApi({
 			}),
 		}),
 
-		getCategories: build.query<CategoriesResponse, number>({
-			query: (limit) => ({
+		getCategories: build.query<CategoriesResponse, number | void>({
+			query: (limit = 20) => ({
 				url: `/${PROJECT_KEY}/categories`,
 				params: {
 					limit,

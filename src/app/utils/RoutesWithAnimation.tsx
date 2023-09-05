@@ -22,7 +22,7 @@ export default function RoutesWithAnimation() {
       />
 
       <Route path="/product/:productId" element={<ProductPage />} />
-      <Route path="/categories/:categoryId" element={<ProductCatalogue />} />
+      <Route path="/categories/*" element={<ProductCatalogue />} />
       <Route
         path="registration"
         element={

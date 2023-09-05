@@ -8,11 +8,13 @@ interface ILoginRequiredProps {
   children: ReactNode;
 }
 
+const PRODUCT_PATH = 'categories/all';
+
 function NavigateToCategories({ children }: ILoginRequiredProps) {
   const path = useGetPath();
 
-  if (path !== 'categories/all') {
-    return <Navigate to="/categories/all" replace />;
+  if (path !== PRODUCT_PATH) {
+    return <Navigate to={PRODUCT_PATH} replace />;
   }
 
   return children;

@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { QUERY_FILTER, QUERY_SORT } from './const/constants.ts';
+import { CATEGORIES, QUERY_FILTER, QUERY_SORT } from './const/constants.ts';
 import encodeQueryState from './lib/helpers/encodeQueryState.ts';
 import parseQueryState from './lib/helpers/parseQueryState.ts';
 import filterCalories from './model/filterCalories.ts';
@@ -13,6 +13,7 @@ import FilterModal from './model/FilterModal';
 import filterWeight from './model/filterWeight.ts';
 import SortingSelector from './model/SortingSelector';
 import CategoriesList from './ui/CategoriesList.tsx';
+import CategoryBackItem from './ui/CategoryBackItem.tsx';
 import CategoryItem from './ui/CategoryItem.tsx';
 import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
@@ -26,6 +27,7 @@ import {
 } from '../../entities/product';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
+import { capitalize } from '../../shared/lib/helpers';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
@@ -33,24 +35,30 @@ import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export default function ProductCatalogue() {
   const path = useGetPath();
-  const urlActiveCat = decodeURIComponent(path.replace(path[0], path[0].toUpperCase()));
+  const urlActiveCat = capitalize(decodeURIComponent(path));
 
+  const { pathname } = useLocation();
   const [query, setQuery] = useSearchParams();
   const [isFiltersOpen, onFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] =
     useLazyGetProductListQuery();
-  const { data: categoriesData } = useGetCategoriesQuery(7);
+  const { data: categoriesData } = useGetCategoriesQuery();
   const [activeCat, setActiveCat] = useState(urlActiveCat ?? 'All');
   const { data: categoryData } = useGetCategoryQuery(urlActiveCat.toLowerCase().replace(' ', '-'));
   const [filtersState, setFiltersState] = useState(parseQueryState(query));
 
   const productListData = { ...productItems };
+  const previousCategories = pathname
+    .replace(CATEGORIES, '')
+    .split('/')
+    .map((elem) => capitalize(decodeURIComponent(elem)))
+    .filter(Boolean);
   let categories: CategoryResult[] | null = null;
 
-  if (categoriesData) {
-    categories = categoriesData.results.filter((res) => res.ancestors.length <= 1);
+  if (categoriesData && categoryData) {
+    categories = categoriesData.results.filter((res) => res?.parent?.id === categoryData.id);
   }
 
   if (productListData && productItems && !isFiltersOpen) {
@@ -184,9 +192,27 @@ export default function ProductCatalogue() {
         <SortingSelector sortOrder={sortOrder} onSort={onSort} />
       </div>
       <CategoriesList changeActiveCat={changeActiveCat}>
-        {categories
-          ? categories.map(({ id, name: { en } }) => <CategoryItem key={id} item={en} activeCat={activeCat} />)
-          : null}
+        {categories ? (
+          <>
+            {previousCategories.map((item, i, arr) => {
+              const id = arr.length - (i + 1);
+              const isLastElem = i === arr.length - 1;
+              const isFirstElem = i === 0;
+              const isLastCategory = categories?.length;
+
+              return (
+                <React.Fragment key={item}>
+                  <CategoryBackItem item={item} id={id} isActive={isLastElem} />
+                  <span>{!isFirstElem && isLastElem && !isLastCategory ? '' : '/'}</span>
+                </React.Fragment>
+              );
+            })}
+
+            {categories.map((item) => (
+              <CategoryItem key={item.id} item={item.name.en} activeCat={activeCat} />
+            ))}
+          </>
+        ) : null}
       </CategoriesList>
       <MenuList>
         {productsIsLoading ? (
