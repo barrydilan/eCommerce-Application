@@ -17,11 +17,13 @@ import TitleAbout from './ui/TitleAbout.tsx';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import 'swiper/css';
 import { useGetPath } from '../../shared/lib/hooks';
+import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
   const [isSliderOpen, setSliderOpen] = useState(false);
   const productId = useGetPath();
+  const { data } = useGetProductQuery(productId);
 
   const handleSliderOpen = () => {
     setSliderOpen(true);
@@ -31,9 +33,12 @@ export default function ProductPage() {
     setSliderOpen(false);
   };
 
-  const { data } = useGetProductQuery(productId);
-
-  if (!data) return null;
+  if (!data)
+    return (
+      <div className="flex h-full items-center justify-center overflow-hidden">
+        <LoadingAnimation />
+      </div>
+    );
 
   const {
     masterVariant: { attributes, prices, images },
