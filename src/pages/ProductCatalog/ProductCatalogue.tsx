@@ -17,20 +17,13 @@ import CategoryItem from './ui/CategoryItem.tsx';
 import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
-import {
-  correctPrice,
-  ProductAttributeNames,
-  useGetCategoriesQuery,
-  useGetCategoryQuery,
-  useLazyGetProductListQuery,
-} from '../../entities/product';
+import { useGetCategoriesQuery, useGetCategoryQuery, useLazyGetProductListQuery } from '../../entities/product';
 import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
 import { capitalize } from '../../shared/lib/helpers';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
-import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export default function ProductCatalogue() {
   const path = useGetPath();
@@ -231,17 +224,16 @@ export default function ProductCatalogue() {
               </div>
             }
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
-            className="grid items-center gap-5 lg:gap-6"
+            className="grid items-center gap-5 pb-12 lg:gap-6"
           >
-            {productListData.results?.map(({ id, name, masterVariant }, i) => (
+            {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
               <MenuItem
                 key={`${id}-${i}`}
                 id={id}
                 name={name.en}
-                price={correctPrice(masterVariant.prices[0].value.centAmount)}
-                image={masterVariant.images[0].url}
-                weight={getAttribute(masterVariant.attributes, ProductAttributeNames.WEIGHT)}
-                calories={getAttribute(masterVariant.attributes, ProductAttributeNames.CALORIES)}
+                prices={prices}
+                image={images[0].url}
+                attributes={attributes}
               />
             ))}
           </InfiniteScroll>
