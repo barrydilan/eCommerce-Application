@@ -8,7 +8,7 @@ interface IRatingProps {
 function Rating({ rating, setRating }: IRatingProps) {
   return (
     <div className="flex flex-[50%] flex-col items-center gap-x-2">
-      <div className="flex items-center gap-x-2 self-start">
+      <div className="flex translate-x-4 scale-125 items-center gap-x-2 self-start">
         <StarsRating
           value={rating}
           onChange={(newRating) => {
