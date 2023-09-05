@@ -6,7 +6,7 @@ export default function InfoModal(props: { msgModalShown: boolean; msgModalText:
           absolute 
           left-[50%] 
           top-[50%] 
-          z-20
+          z-50
           flex
           h-20 
           w-60 

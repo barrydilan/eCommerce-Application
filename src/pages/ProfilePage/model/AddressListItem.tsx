@@ -1,34 +1,29 @@
 import { useState } from 'react';
 
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
-import { AddressObj, EditedAddressObj } from '../types/profilePageTypes';
+import { AddressObj } from '../types/profilePageTypes';
 import AddressView from '../ui/AddressView';
 
-export default function AddressesListItem(props: {
+export default function AddressListItem(props: {
   address: AddressObj;
   index: number;
-  setEditedAddress: React.Dispatch<React.SetStateAction<EditedAddressObj>>;
+  setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setMyAddresses: React.Dispatch<React.SetStateAction<AddressObj[]>>;
 }) {
-  const { address, setEditedAddress, setIsModalOpen, setMyAddresses } = props;
-  const { index } = props;
+  const { address, index, setEditedAddress, setIsModalOpen } = props;
   const [isConfirmShown, setIsConfirmShown] = useState(false);
+
   function editClickHandler() {
-    setEditedAddress({ address, index });
+    setEditedAddress(address);
     setIsModalOpen(true);
   }
-  function deleteHandler() {
-    setMyAddresses((prev) => {
-      return prev.filter((_, i) => i !== index);
-    });
-  }
+
   return (
     <div className="border-b-2 border-separation-line py-6">
       <div className="relative w-full text-base font-medium">
         <h6>{`Address ${(index + 1).toString().padStart(2, '0')}`}</h6>
         <button
-          onClick={() => editClickHandler()}
+          onClick={editClickHandler}
           className="absolute right-8 top-0 h-5 w-5 rounded-md hover:bg-separation-line"
           type="button"
         >
@@ -51,11 +46,7 @@ export default function AddressesListItem(props: {
             <button onClick={() => setIsConfirmShown(false)} className="rounded-md px-2 py-1" type="button">
               No
             </button>
-            <button
-              onClick={() => deleteHandler()}
-              className="rounded-md bg-accent-lightest px-2 py-1 text-accent"
-              type="button"
-            >
+            <button className="rounded-md bg-accent-lightest px-2 py-1 text-accent" type="button">
               Yes
             </button>
           </div>

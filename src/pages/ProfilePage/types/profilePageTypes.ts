@@ -17,5 +17,3 @@ export type UserData = {
 	defaultBillingAddressId: string | undefined;
 	defaultShippingAddressId: string | undefined;
 };
-
-export type EditedAddressObj = { address: AddressObj; index?: number };
