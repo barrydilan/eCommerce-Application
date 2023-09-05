@@ -1,8 +1,8 @@
 import pencilIcon from '../../../assets/icons/pencilIcon.svg';
 import { getFullName } from '../../../entities/user';
-import { UserData } from '../types/profilePageTypes';
+import { IUser } from '../../../shared/types';
 
-export default function UserImage(props: { userData: UserData; pic: string }) {
+export default function UserImage(props: { userData: IUser; pic: string }) {
   const { userData, pic } = props;
   const { firstName, lastName, email } = userData;
 

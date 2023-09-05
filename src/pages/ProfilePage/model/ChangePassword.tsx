@@ -12,8 +12,8 @@ import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../../entities/user/con
 import { validPassword } from '../../../shared/const/validationSchemas';
 import { deleteCookie } from '../../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector, useRevokeAccessRefreshTokens } from '../../../shared/lib/hooks';
+import { IUser } from '../../../shared/types';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
-import { UserData } from '../types/profilePageTypes';
 import InfoModal from '../ui/InfoModal';
 
 const validationSchema = Yup.object({
@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
 });
 
 export default function ChangePassword(props: {
-  userData: UserData;
+  userData: IUser;
   accessToken: string | undefined;
   getUser: (_id: string) => void;
 }) {

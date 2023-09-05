@@ -17,6 +17,7 @@ export interface IUserAddress {
 	streetName: string;
 	city: string;
 	country: string;
+	postalCode: string;
 }
 
 export interface IUser {

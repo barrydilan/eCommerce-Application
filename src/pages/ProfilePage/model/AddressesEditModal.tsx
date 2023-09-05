@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
@@ -26,7 +26,7 @@ export default function AddressesEditModal(props: {
 }) {
   const { editedAddress, setIsModalOpen, version, accessToken, getUser, id } = props;
   const { id: addressId, country, city, streetName, postalCode } = editedAddress;
-  const initData = [country, city, streetName, postalCode];
+  const initData = useMemo(() => [country, city, streetName, postalCode], [country, city, streetName, postalCode]);
   const [selectedCountry, setSelectedCountry] = useState(country);
   const [isEditBtnBlocked, setIsEditBtnBlocked] = useState(true);
   const [msgModalShown, setMsgModalShown] = useState(false);

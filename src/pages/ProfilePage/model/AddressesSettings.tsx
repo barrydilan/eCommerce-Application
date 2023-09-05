@@ -3,10 +3,11 @@ import { useState } from 'react';
 import AddressesDefault from './AddressesDefault';
 import AddressesEditModal from './AddressesEditModal';
 import AddressesList from './AddressesList';
-import { AddressObj, UserData } from '../types/profilePageTypes';
+import { IUser } from '../../../shared/types';
+import { AddressObj } from '../types/profilePageTypes';
 
 export default function AddressesSettings(props: {
-  userData: UserData;
+  userData: IUser;
   accessToken: string | undefined;
   getUser: (_id: string) => void;
 }) {

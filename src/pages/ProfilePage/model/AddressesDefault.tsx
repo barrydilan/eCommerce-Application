@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import icon from '../../../assets/icons/CityIcon.svg';
+import { IUser } from '../../../shared/types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui';
-import { UserData } from '../types/profilePageTypes';
 import InfoModal from '../ui/InfoModal';
 
 export default function AddressesDefault(props: {
-  userData: UserData;
+  userData: IUser;
   accessToken: string | undefined;
   getUser: (_id: string) => void;
 }) {

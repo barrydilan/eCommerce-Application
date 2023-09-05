@@ -11,8 +11,8 @@ import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
+import { IUser } from '../../../shared/types';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
-import { UserData } from '../types/profilePageTypes';
 import InfoModal from '../ui/InfoModal';
 
 const validationSchema = Yup.object({
@@ -23,7 +23,7 @@ const validationSchema = Yup.object({
 });
 
 export default function ChangePersonalData(props: {
-  userData: UserData;
+  userData: IUser;
   accessToken: string | undefined;
   getUser: (_id: string) => void;
 }) {

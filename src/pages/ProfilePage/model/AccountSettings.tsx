@@ -1,9 +1,9 @@
 import ChangePassword from './ChangePassword';
 import ChangePersonalData from './ChangePersonalData';
-import { UserData } from '../types/profilePageTypes';
+import { IUser } from '../../../shared/types';
 
 export default function AccountSettings(props: {
-  userData: UserData;
+  userData: IUser;
   accessToken: string | undefined;
   getUser: (_id: string) => void;
 }) {
