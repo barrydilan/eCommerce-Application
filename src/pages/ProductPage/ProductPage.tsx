@@ -49,7 +49,6 @@ export default function ProductPage() {
   const discountPrice = getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE);
   const rawPrice = discountPrice ?? price;
   const rawOldPrice = discountPrice ? price : null;
-  const image = images[0].url;
   const name = en;
 
   const imgList = images.map((img) => img.url);
