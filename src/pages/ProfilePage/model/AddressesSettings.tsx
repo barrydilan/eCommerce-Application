@@ -3,37 +3,36 @@ import { useState } from 'react';
 import AddressesDefault from './AddressesDefault';
 import AddressesEditModal from './AddressesEditModal';
 import AddressesList from './AddressesList';
-import AddressesNavBlock from './AddressesNavBlock';
-import { EditedAddressObj } from '../types/profilePageTypes';
+import { IUser } from '../../../shared/types';
+import { AddressObj } from '../types/profilePageTypes';
 
-const addresses = [
-  { country: 'US', city: 'New York', street: 'Manhatten', postalCode: '11111' },
-  { country: 'DE', city: 'Berlin', street: 'Rischtenstrasse', postalCode: '22222' },
-  { country: 'UA', city: 'Kyiv', street: 'Khreschatyk', postalCode: '33333' },
-];
-
-export default function AddressesSettings() {
-  const [myAddresses, setMyAddresses] = useState(addresses);
+export default function AddressesSettings(props: {
+  userData: IUser;
+  accessToken: string | undefined;
+  getUser: (_id: string) => void;
+}) {
+  const { userData, accessToken, getUser } = props;
+  const { version, id } = userData;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editedAddress, setEditedAddress] = useState({
-    address: { country: 'US', city: 'New York', street: 'Manhatten', postalCode: '11111' },
-    index: undefined,
-  } as EditedAddressObj);
+  const [editedAddress, setEditedAddress] = useState({} as AddressObj);
   return (
     <div className="relative flex flex-col">
-      <AddressesDefault addresses={myAddresses} />
+      <AddressesDefault userData={userData} accessToken={accessToken} getUser={getUser} />
       <AddressesList
-        addresses={myAddresses}
+        userData={userData}
         setEditedAddress={setEditedAddress}
         setIsModalOpen={setIsModalOpen}
-        setMyAddresses={setMyAddresses}
+        getUser={getUser}
+        accessToken={accessToken}
       />
-      <AddressesNavBlock setIsModalOpen={setIsModalOpen} setEditedAddress={setEditedAddress} />
       {isModalOpen ? (
         <AddressesEditModal
           editedAddress={editedAddress}
-          setMyAddresses={setMyAddresses}
           setIsModalOpen={setIsModalOpen}
+          version={version}
+          accessToken={accessToken}
+          getUser={getUser}
+          id={id}
         />
       ) : null}
     </div>

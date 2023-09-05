@@ -1,24 +1,48 @@
-import AddressesListItem from './AddressesListItem';
-import { AddressObj, EditedAddressObj } from '../types/profilePageTypes';
+import AddressListItem from './AddressListItem';
+import { IUser } from '../../../shared/types';
+import { AddressObj } from '../types/profilePageTypes';
 
 export default function AddressesList(props: {
-  addresses: AddressObj[];
-  setEditedAddress: React.Dispatch<React.SetStateAction<EditedAddressObj>>;
+  userData: IUser;
+  setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setMyAddresses: React.Dispatch<React.SetStateAction<AddressObj[]>>;
+  getUser: (_id: string) => void;
+  accessToken: string | undefined;
 }) {
-  const { addresses, setEditedAddress, setIsModalOpen, setMyAddresses } = props;
-  const addressesItems = addresses.map((address, i) => {
+  const { userData, setEditedAddress, setIsModalOpen, getUser, accessToken } = props;
+  const { addresses } = userData;
+
+  const addressesItems = addresses?.map((address, index) => {
+    const { id: addressID } = address;
     return (
-      <AddressesListItem
+      <AddressListItem
         setEditedAddress={setEditedAddress}
         setIsModalOpen={setIsModalOpen}
-        setMyAddresses={setMyAddresses}
         address={address}
-        index={i}
-        key={Object.values(address).join(',')}
+        userData={userData}
+        index={index}
+        key={addressID}
+        getUser={getUser}
+        accessToken={accessToken}
       />
     );
   });
-  return <div>{addressesItems}</div>;
+
+  function addAddressHandler() {
+    setEditedAddress({ country: 'US', city: '', streetName: '', postalCode: '' });
+    setIsModalOpen(true);
+  }
+
+  return (
+    <div>
+      {addressesItems}
+      <button
+        className="mt-8 flex h-10 items-center rounded-md px-2 text-base font-medium text-accent transition-all duration-300 hover:bg-separation-line"
+        type="button"
+        onClick={addAddressHandler}
+      >
+        <span className="mr-2 text-2xl">+</span> Add more
+      </button>
+    </div>
+  );
 }

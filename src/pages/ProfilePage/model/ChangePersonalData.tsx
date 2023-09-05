@@ -11,7 +11,9 @@ import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
+import { IUser } from '../../../shared/types';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
+import InfoModal from '../ui/InfoModal';
 
 const validationSchema = Yup.object({
   ...validEmail(),
@@ -21,12 +23,12 @@ const validationSchema = Yup.object({
 });
 
 export default function ChangePersonalData(props: {
-  email: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
+  userData: IUser;
+  accessToken: string | undefined;
+  getUser: (_id: string) => void;
 }) {
-  const { email, firstName, lastName, dateOfBirth } = props;
+  const { userData, accessToken, getUser } = props;
+  const { id, email, firstName, lastName, dateOfBirth, version } = userData;
 
   const formik = useFormik({
     initialValues: {
@@ -39,18 +41,68 @@ export default function ChangePersonalData(props: {
     onSubmit: () => {},
   });
 
-  const initData = Object.values(props);
+  const initData = Object.values([email, firstName, lastName, dateOfBirth]);
 
   const { handleChange, handleBlur, errors, touched, values } = formik;
   const [dateInputType, setDateInputType] = useState('text');
   const [isSaveBlocked, setIsSaveBlocked] = useState(true);
+  const [msgModalShown, setMsgModalShown] = useState(false);
+  const [msgModalText, setMsgModalText] = useState('');
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
   const touchedAndErrorBirthDate = touched.dateOfBirth && errors.dateOfBirth;
 
   function handleTransitionEnd() {
-    setDateInputType(document.activeElement?.id === 'birthDate' ? 'date' : 'text');
+    setDateInputType(document.activeElement?.id === 'dateOfBirth' ? 'date' : 'text');
+  }
+
+  function saveClickHandler() {
+    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        version,
+        actions: [
+          {
+            action: 'changeEmail',
+            email: values.email,
+          },
+          {
+            action: 'setFirstName',
+            firstName: values.firstName,
+          },
+          {
+            action: 'setLastName',
+            lastName: values.lastName,
+          },
+          {
+            action: 'setDateOfBirth',
+            dateOfBirth: values.dateOfBirth,
+          },
+        ],
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok || res.status !== 200) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(() => {
+        setMsgModalText('Your data saved! :)');
+        setMsgModalShown(true);
+        setTimeout(() => setMsgModalShown(false), 1500);
+        if (typeof id === 'string') getUser(id);
+      })
+      .catch(() => {
+        setMsgModalText('Something went wrong! :(');
+        setMsgModalShown(true);
+        setTimeout(() => setMsgModalShown(false), 1500);
+      });
   }
 
   useEffect(() => {
@@ -70,7 +122,8 @@ export default function ChangePersonalData(props: {
   }, [values, errors, touched, initData]);
 
   return (
-    <div className="border-b-2 border-separation-line">
+    <div className="relative border-b-2 border-separation-line">
+      <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
       <h4 className="mx-auto mt-12 w-full text-center text-base font-medium">Personal data</h4>
       <div className="profileInputWrapper">
         <div className="text-base font-medium">Email</div>
@@ -191,6 +244,7 @@ export default function ChangePersonalData(props: {
         className="mb-12 mt-5  h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line disabled:text-text-grey"
         type="button"
         disabled={isSaveBlocked}
+        onClick={saveClickHandler}
       >
         Save
       </button>

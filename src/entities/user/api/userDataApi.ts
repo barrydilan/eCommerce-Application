@@ -24,4 +24,4 @@ export const userDataApi = createApi({
 	}),
 });
 
-export const { useLoginUserDataMutation, useGetUserQuery } = userDataApi;
+export const { useLoginUserDataMutation, useGetUserQuery, useLazyGetUserQuery } = userDataApi;
