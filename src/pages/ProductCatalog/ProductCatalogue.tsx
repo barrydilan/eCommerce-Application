@@ -43,7 +43,7 @@ export default function ProductCatalogue() {
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] =
     useLazyGetProductListQuery();
-  const { data: categoriesData } = useGetCategoriesQuery();
+  const { data: categoriesList } = useGetCategoriesQuery();
   const [activeCat, setActiveCat] = useState(urlActiveCat ?? 'All');
   const { data: categoryData } = useGetCategoryQuery(urlActiveCat.toLowerCase().replace(' ', '-'));
   const [filtersState, setFiltersState] = useState(parseQueryState(query));
@@ -56,8 +56,8 @@ export default function ProductCatalogue() {
     .filter(Boolean);
   let categories: CategoryResult[] | null = null;
 
-  if (categoriesData && categoryData) {
-    categories = categoriesData.results.filter((res) => res?.parent?.id === categoryData.id);
+  if (categoriesList && categoryData) {
+    categories = categoriesList.results.filter((res) => res?.parent?.id === categoryData.id);
   }
 
   if (productListData && productItems && !isFiltersOpen) {
