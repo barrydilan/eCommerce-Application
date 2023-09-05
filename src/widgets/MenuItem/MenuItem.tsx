@@ -5,11 +5,14 @@ import StarsRating from 'react-star-rate';
 
 import spicyIcon from '../../assets/icons/spicy.svg';
 import veganIcon from '../../assets/icons/vegan.svg';
+
+import { correctPrice, ProductAttribute, ProductAttributeNames } from '../../entities/product';
+import { ProductPrice } from '../../entities/product/types/types.ts';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
+import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute.ts';
 
 interface IMenuItemProps {
   name: string;
-  price: string;
   image: string;
   id: string;
   calories: string | number;
@@ -19,8 +22,23 @@ interface IMenuItemProps {
 }
 
 export default function MenuItem({ name, price, image, id, calories, weight, isSpicy, isVegan }: IMenuItemProps) {
+  attributes: ProductAttribute[];
+  prices: ProductPrice[];
+}
+
+export default function MenuItem({ name, image, id, attributes, prices }: IMenuItemProps) {
   const [rating, setRating] = useState(4.5);
   const [isLoading, setIsLoading] = useState(true);
+
+  const discountPrice = getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE);
+  const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
+  const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
+  const price = prices[0].value.centAmount;
+  const rawPrice = discountPrice ?? price;
+  const rawOldPrice = discountPrice ? price : null;
+
+  const corePrice = correctPrice(Number(rawPrice));
+  const oldPrice = rawOldPrice ? correctPrice(rawOldPrice) : null;
 
   return (
     <li className="w-full list-none">
@@ -71,7 +89,14 @@ export default function MenuItem({ name, price, image, id, calories, weight, isS
             </div>
           </div>
           <div className="my-4 flex flex-[20%] flex-col items-end justify-between pr-2 sm:my-4 sm:pr-4">
-            <h3 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">$ {price}</h3>
+            <div className="grid">
+              {oldPrice ? (
+                <span className="justify-self-end text-[10px] font-light text-text-grey line-through">
+                  $ {oldPrice}
+                </span>
+              ) : null}
+              <h3 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">$ {corePrice}</h3>
+            </div>
             <AddToCartBtn />
           </div>
         </div>

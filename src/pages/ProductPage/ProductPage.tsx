@@ -45,8 +45,10 @@ export default function ProductPage() {
     name: { en },
   } = data;
 
-  const rawPrice = prices[0].value.centAmount;
-  const rawOldPrice = 4450;
+  const price = prices[0].value.centAmount;
+  const discountPrice = getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE);
+  const rawPrice = discountPrice ?? price;
+  const rawOldPrice = discountPrice ? price : null;
   const name = en;
 
   const imgList = images.map((img) => img.url);
@@ -83,7 +85,7 @@ export default function ProductPage() {
               <Header>
                 <>
                   <Rating rating={rating} setRating={setRating} />
-                  <Price rawOldPrice={rawOldPrice} rawPrice={rawPrice} />
+                  <Price rawOldPrice={rawOldPrice} rawPrice={Number(rawPrice)} />
                 </>
               </Header>
               <Footer />
