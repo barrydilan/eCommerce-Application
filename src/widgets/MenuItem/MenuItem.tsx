@@ -35,14 +35,14 @@ export default function MenuItem({ name, price, image, id, calories, weight, isS
               alt={name}
             />
             {isSpicy ? (
-              <span className="absolute left-2 top-2 z-10 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+              <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
                 <img src="../../src/assets/icons/spicy.svg" alt="spicyIcon" />
               </span>
             ) : (
               ''
             )}
             {isVegan ? (
-              <span className="absolute left-2 top-2 z-10 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+              <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
                 <img src="../../src/assets/icons/vegan.svg" alt="veganIcon" />
               </span>
             ) : (
