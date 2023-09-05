@@ -13,7 +13,7 @@ import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserData } from '../types/profilePageTypes';
-import InfoModal from '../ui/infoModal';
+import InfoModal from '../ui/InfoModal';
 
 const validationSchema = Yup.object({
   ...validEmail(),
