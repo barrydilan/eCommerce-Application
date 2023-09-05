@@ -72,8 +72,7 @@ function Header() {
             relative
             -translate-y-1
             text-sm
-            font-light
-            tracking-tight 
+            tracking-tight
             text-text-dark
             md:pt-2
             md:text-xl

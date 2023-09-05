@@ -6,7 +6,7 @@ interface IIngredientProps {
 
 function Ingredient({ value }: IIngredientProps) {
   return (
-    <li className="flex items-center text-[13px] font-light text-text-grey md:items-start">
+    <li className="flex items-center text-[13px] text-text-grey md:items-start">
       <span className="flex items-center gap-x-2 md:gap-x-3">
         <img src={checkIcon} alt="" /> {value}
       </span>

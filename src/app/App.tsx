@@ -32,6 +32,9 @@ export function App() {
           grid-cols-1
           grid-rows-mobGridRows
           font-poppins
+          text-base
+          font-normal
+          text-text-dark
           2xl:container
           md:grid-cols-tabGridCols
           md:grid-rows-tabGridRows

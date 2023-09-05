@@ -14,11 +14,9 @@ function Price({ rawPrice, rawOldPrice }: IPriceProps) {
     <div className="relative">
       <h2 className="pr-4 text-3xl font-bold text-text-dark">$ {price}</h2>
       {oldPrice ? (
-        <span className="absolute -top-6 left-14 text-sm font-light text-text-grey line-through">$ {oldPrice}</span>
+        <span className="absolute -top-6 left-14 text-sm text-text-grey line-through">$ {oldPrice}</span>
       ) : null}
-      {discountPercentage ? (
-        <p className="mt-1 text-sm font-light text-accent">You save: {discountPercentage}%</p>
-      ) : null}
+      {discountPercentage ? <p className="mt-1 text-sm text-accent">You save: {discountPercentage}%</p> : null}
     </div>
   );
 }

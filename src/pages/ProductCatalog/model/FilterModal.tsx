@@ -94,15 +94,11 @@ export default function FilterModal(props: {
             setFiltersState(filtersInitialState);
           }}
           type="button"
-          className="xl rounded bg-accent px-1.5 py-1 font-light text-primary"
+          className="xl rounded bg-accent px-1.5 py-1 text-primary"
         >
           Reset
         </button>
-        <button
-          onClick={onApplyFilters}
-          type="button"
-          className="xl rounded bg-accent px-1.5 py-1 font-light text-primary"
-        >
+        <button onClick={onApplyFilters} type="button" className="xl rounded bg-accent px-1.5 py-1 text-primary">
           Apply
         </button>
       </div>

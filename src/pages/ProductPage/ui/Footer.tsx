@@ -26,7 +26,7 @@ function Footer() {
         </button>
       </div>
       <button type="button" className="mt-3 block w-full rounded-md bg-accent-lightest py-3 text-accent md:mt-0">
-        <span className="mx-auto flex w-fit gap-x-2 font-light">
+        <span className="mx-auto flex w-fit gap-x-2">
           <img src={shoppingCart} alt="" />
           <span className="inline-block">Add to Cart</span>
         </span>

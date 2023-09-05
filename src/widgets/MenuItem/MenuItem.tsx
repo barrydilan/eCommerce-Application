@@ -46,9 +46,9 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
             />
             <div className="my-4 flex flex-1 flex-col gap-y-1 xs:gap-y-4 sm:my-4">
               <div className="flex flex-1 flex-col gap-y-1">
-                <h2 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">{name}</h2>
-                <h4 className="text-xs font-extralight text-text-grey sm:text-base">{calories} kcal</h4>
-                <h4 className="text-xs font-extralight text-text-grey sm:text-base">{weight} g</h4>
+                <h2 className="text-sm text-text-dark sm:text-xl">{name}</h2>
+                <h4 className="text-xs text-text-grey sm:text-base">{calories} kcal</h4>
+                <h4 className="text-xs text-text-grey sm:text-base">{weight} g</h4>
               </div>
               <div className="mb-2 flex items-center gap-x-2 text-sm">
                 <StarsRating
@@ -58,18 +58,16 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
                     setRating(rating);
                   }}
                 />
-                <p className="text-xs font-extralight text-text-grey sm:text-base">{rating}</p>
+                <p className="text-xs text-text-grey sm:text-base">{rating}</p>
               </div>
             </div>
           </div>
           <div className="my-4 flex flex-[20%] flex-col items-end justify-between pr-2 sm:my-4 sm:pr-4">
             <div className="grid">
               {oldPrice ? (
-                <span className="justify-self-end text-[10px] font-light text-text-grey line-through">
-                  $ {oldPrice}
-                </span>
+                <span className="justify-self-end text-[10px] text-text-grey line-through">$ {oldPrice}</span>
               ) : null}
-              <h3 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">$ {corePrice}</h3>
+              <h3 className="text-sm text-text-dark sm:text-xl">$ {corePrice}</h3>
             </div>
             <AddToCartBtn />
           </div>

@@ -15,7 +15,6 @@ function CategoriesList({ children, changeActiveCat }: ICategoryList) {
           mt-3
           bg-none
           text-sm
-          font-light
           text-text-grey
           lg:mt-11
         "
