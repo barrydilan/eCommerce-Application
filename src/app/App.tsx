@@ -26,6 +26,7 @@ export function App() {
   return (
     <main
       className="
+          font-base
           mx-auto
           grid
           min-h-[100dvh]
@@ -33,7 +34,6 @@ export function App() {
           grid-rows-mobGridRows
           font-poppins
           text-base
-          font-normal
           text-text-dark
           2xl:container
           md:grid-cols-tabGridCols
