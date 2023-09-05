@@ -1,21 +1,33 @@
-import ChangePassword from './ChangePassword';
+import { useCallback, useEffect } from 'react';
+
+// import ChangePassword from './ChangePassword';
 import ChangePersonalData from './ChangePersonalData';
-
-const userData = {
-  firstName: 'Ololontiy',
-  lastName: 'Ololoevich',
-  dateOfBirth: '01/01/1999',
-  email: 'trololo@kakah.net',
-  currPassword: '2023Pa$$word',
-};
-
-const { firstName, lastName, dateOfBirth, email, currPassword } = userData;
+import { useLazyGetUserQuery } from '../../../entities/user';
+import getCookieValue from '../../../entities/user/lib/helpers/getCookieValue';
+import { useAppSelector } from '../../../shared/lib/hooks';
 
 export default function AccountSettings() {
+  const { userId } = useAppSelector((state) => state.userReducer);
+  const [getUser, { data, isSuccess }] = useLazyGetUserQuery();
+  const accessToken = getCookieValue('accessToken');
+
+  const memoizedGetUser = useCallback(
+    (_id: string) => {
+      getUser(_id).unwrap();
+    },
+    [getUser],
+  );
+
+  useEffect(() => {
+    memoizedGetUser(userId);
+  }, [userId, memoizedGetUser]);
+
+  if (!data) return null;
+
   return (
     <div className="flex flex-col">
-      <ChangePersonalData firstName={firstName} lastName={lastName} dateOfBirth={dateOfBirth} email={email} />
-      <ChangePassword currPassword={currPassword} />
+      {isSuccess ? <ChangePersonalData userData={data} accessToken={accessToken} getUser={memoizedGetUser} /> : null}
+      {/* <ChangePassword userData={data} accessToken={accessToken} getUser={memoizedGetUser} /> */}
     </div>
   );
 }

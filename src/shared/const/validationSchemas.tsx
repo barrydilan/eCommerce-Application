@@ -47,7 +47,7 @@ export function validBirthDate() {
   );
 
   return {
-    birthDate: Yup.date().max(ageLimit, 'Age restriction: 13+').required('Birth date is required'),
+    dateOfBirth: Yup.date().max(ageLimit, 'Age restriction: 13+').required('Birth date is required'),
   };
 }
 

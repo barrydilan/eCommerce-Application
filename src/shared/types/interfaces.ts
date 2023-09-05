@@ -6,6 +6,12 @@ export interface ILoginUserParams {
 	scope?: string;
 }
 
+export interface IUpdateUserParams {
+	id: string;
+	accessToken: string;
+	body: object;
+}
+
 export interface IUserAddress {
 	id: string;
 	streetName: string;
@@ -68,7 +74,7 @@ export interface ISignUpParams {
 	password: string;
 	firstName: string;
 	lastName: string;
-	birthDate: string;
+	dateOfBirth: string;
 	addresses: SignUpAddresses;
 	billingAddresses: number[];
 	shippingAddresses: number[];

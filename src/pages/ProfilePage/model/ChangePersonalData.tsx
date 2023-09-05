@@ -12,6 +12,7 @@ import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
+import { UserData } from '../types/profilePageTypes';
 
 const validationSchema = Yup.object({
   ...validEmail(),
@@ -21,12 +22,12 @@ const validationSchema = Yup.object({
 });
 
 export default function ChangePersonalData(props: {
-  email: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
+  userData: UserData;
+  accessToken: string | undefined;
+  getUser: (_id: string) => void;
 }) {
-  const { email, firstName, lastName, dateOfBirth } = props;
+  const { userData, accessToken, getUser } = props;
+  const { id, email, firstName, lastName, dateOfBirth, version } = userData;
 
   const formik = useFormik({
     initialValues: {
@@ -39,7 +40,7 @@ export default function ChangePersonalData(props: {
     onSubmit: () => {},
   });
 
-  const initData = Object.values(props);
+  const initData = Object.values([email, firstName, lastName, dateOfBirth]);
 
   const { handleChange, handleBlur, errors, touched, values } = formik;
   const [dateInputType, setDateInputType] = useState('text');
@@ -50,7 +51,48 @@ export default function ChangePersonalData(props: {
   const touchedAndErrorBirthDate = touched.dateOfBirth && errors.dateOfBirth;
 
   function handleTransitionEnd() {
-    setDateInputType(document.activeElement?.id === 'birthDate' ? 'date' : 'text');
+    setDateInputType(document.activeElement?.id === 'dateOfBirth' ? 'date' : 'text');
+  }
+
+  function saveClickHandler() {
+    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        version,
+        actions: [
+          {
+            action: 'changeEmail',
+            email: values.email,
+          },
+          {
+            action: 'setFirstName',
+            firstName: values.firstName,
+          },
+          {
+            action: 'setLastName',
+            lastName: values.lastName,
+          },
+          {
+            action: 'setDateOfBirth',
+            dateOfBirth: values.dateOfBirth,
+          },
+        ],
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok || res.status !== 200) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(() => {
+        if (typeof id === 'string') getUser(id);
+      })
+      .catch(() => {});
   }
 
   useEffect(() => {
@@ -191,6 +233,7 @@ export default function ChangePersonalData(props: {
         className="mb-12 mt-5  h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line disabled:text-text-grey"
         type="button"
         disabled={isSaveBlocked}
+        onClick={saveClickHandler}
       >
         Save
       </button>
