@@ -54,8 +54,8 @@ export default function ProductPage() {
   const ingredients = getAttribute(attributes, ProductAttributeNames.INGREDIENTS)?.toString()?.split(', ');
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
-  const isSpicy = attributes.find((item) => item.name === 'isSpicy')?.value;
-  const isVegan = attributes.find((item) => item.name === 'isVegan')?.value;
+  const isSpicy = getAttribute(attributes, ProductAttributeNames.IS_SPICY);
+  const isVegan = getAttribute(attributes, ProductAttributeNames.IS_VEGAN);
 
   return (
     <div
@@ -79,7 +79,7 @@ export default function ProductPage() {
               className="absolute z-[10]
  -mt-4 flex w-full flex-col rounded-3xl bg-primary px-4 pt-7 sm:px-8"
             >
-              <HeaderMobile name={name} calories={calories} weight={weight} />
+              <HeaderMobile isSpicy={isSpicy} isVegan={isVegan} name={name} calories={calories} weight={weight} />
               <Header>
                 <>
                   <Rating rating={rating} setRating={setRating} />
