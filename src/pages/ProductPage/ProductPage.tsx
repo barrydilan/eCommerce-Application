@@ -47,6 +47,8 @@ export default function ProductPage() {
 
   const price = prices[0].value.centAmount;
   const discountPrice = getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE);
+  const isSpicy = Boolean(getAttribute(attributes, ProductAttributeNames.IS_SPICY));
+  const isVegan = Boolean(getAttribute(attributes, ProductAttributeNames.IS_VEGAN));
   const rawPrice = discountPrice ?? price;
   const rawOldPrice = discountPrice ? price : null;
   const name = en;
@@ -71,13 +73,13 @@ export default function ProductPage() {
           <div className="h-full">
             <Title onClick={handleSliderOpen} imgList={imgList} name={name}>
               <div>
-                <TitleAbout name={name} weight={weight} calories={calories} />
+                <TitleAbout isSpicy={isSpicy} isVegan={isVegan} name={name} weight={weight} calories={calories} />
               </div>
             </Title>
             <BackButton />
             <div className="absolute z-10 -mt-4 flex w-full flex-col rounded-3xl rounded-t-[32px] bg-primary px-4 pt-7 sm:px-8 md:relative">
               <div className="absolute left-0 top-0 z-10 hidden h-8 w-full bg-primary md:block md:h-5 md:rounded-t-2xl" />
-              <HeaderMobile name={name} calories={calories} weight={weight} />
+              <HeaderMobile isSpicy={isSpicy} isVegan={isVegan} name={name} calories={calories} weight={weight} />
               <Header>
                 <>
                   <Rating rating={rating} setRating={setRating} />

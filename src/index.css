@@ -125,6 +125,10 @@ html {
   padding-bottom: 0 !important;
 }
 
+#miniSwiper .swiper-pagination {
+  bottom: 20px !important;
+}
+
 .swiper-pagination {
   display: flex;
   align-items: center;
