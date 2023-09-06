@@ -2,7 +2,7 @@ import { ProductAttributeNames } from './enums.ts';
 
 export type ProductAttribute = Readonly<{
 	name: ProductAttributeNames;
-	value: string | number | boolean;
+	value: string | number;
 }>;
 
 export type ProductPrice = Readonly<{
