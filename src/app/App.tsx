@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
@@ -61,8 +61,8 @@ export function App() {
 
 export function WrappedApp() {
   return (
-    <BrowserRouter basename="/eCommerce-Application">
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
