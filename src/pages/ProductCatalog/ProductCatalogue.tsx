@@ -24,6 +24,7 @@ import { capitalize } from '../../shared/lib/helpers';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
+import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
 
 export default function ProductCatalogue() {
   const path = useGetPath();
@@ -226,18 +227,20 @@ export default function ProductCatalogue() {
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
             className="grid items-center gap-5 pb-12 lg:gap-6"
           >
-            {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
-              <MenuItem
-                key={`${id}-${i}`}
-                id={id}
-                name={name.en}
-                prices={prices}
-                image={images[0].url}
-                attributes={attributes}
-                isSpicy={Boolean(attributes.find((item) => item.name === ProductAttributeNames.IS_SPICY)?.value)}
-                isVegan={Boolean(attributes.find((item) => item.name === ProductAttributeNames.IS_VEGAN)?.value)}
-              />
-            ))}
+            {productListData.results?.map(
+              ({ id, name, masterVariant, masterVariant: { prices, images, attributes } }, i) => (
+                <MenuItem
+                  key={`${id}-${i}`}
+                  id={id}
+                  name={name.en}
+                  prices={prices}
+                  image={images[0].url}
+                  attributes={attributes}
+                  isSpicy={Boolean(getAttribute(masterVariant.attributes, ProductAttributeNames.IS_SPICY))}
+                  isVegan={Boolean(getAttribute(masterVariant.attributes, ProductAttributeNames.IS_VEGAN))}
+                />
+              ),
+            )}
           </InfiniteScroll>
         ) : null}
       </MenuList>

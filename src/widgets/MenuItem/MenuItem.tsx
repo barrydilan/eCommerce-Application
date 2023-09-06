@@ -48,20 +48,11 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               src={image}
               alt={name}
             />
-            {isSpicy ? (
+            {isSpicy || isVegan ? (
               <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-                <img src={spicyIcon} alt="spicyIcon" />
+                <img src={isSpicy ? spicyIcon : veganIcon} alt={`${isSpicy ? 'spicyIcon' : 'veganIcon'}`} />
               </span>
-            ) : (
-              ''
-            )}
-            {isVegan ? (
-              <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-                <img src={veganIcon} alt="veganIcon" />
-              </span>
-            ) : (
-              ''
-            )}
+            ) : null}
             <div className="my-4 flex flex-col gap-y-2 xs:gap-y-3 sm:my-7">
               <div className="flex w-fit flex-1 flex-col gap-y-3">
                 <h2 className="text-text-dark sm:text-xl">{name}</h2>

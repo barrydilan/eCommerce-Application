@@ -14,20 +14,11 @@ function HeaderMobile({ name, calories, weight, isSpicy, isVegan }: IHeaderMobil
     <div className="md:hidden">
       <h2 className="text-3xl font-bold text-text-dark md:text-primary">
         {name}
-        {isSpicy ? (
+        {isSpicy || isVegan ? (
           <span className="ml-4 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-            <img src={spicyIcon} alt="spicyIcon" />
+            <img src={isSpicy ? spicyIcon : veganIcon} alt={`${isSpicy ? 'spicyIcon' : 'veganIcon'}`} />
           </span>
-        ) : (
-          ''
-        )}
-        {isVegan ? (
-          <span className="ml-4 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
-            <img src={veganIcon} alt="veganIcon" />
-          </span>
-        ) : (
-          ''
-        )}
+        ) : null}
       </h2>
       <h3 className="mt-5 text-base text-text-grey md:text-primary">{calories} kcal</h3>
       <h3 className="mt-1 text-base text-text-grey md:text-primary">{weight} g</h3>
