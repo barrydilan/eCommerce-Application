@@ -47,8 +47,8 @@ export default function ProductPage() {
 
   const price = prices[0].value.centAmount;
   const discountPrice = getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE);
-  const isSpicy = getAttribute(attributes, ProductAttributeNames.IS_SPICY);
-  const isVegan = getAttribute(attributes, ProductAttributeNames.IS_VEGAN);
+  const isSpicy = Boolean(attributes.find((item) => item.name === ProductAttributeNames.IS_SPICY)?.value);
+  const isVegan = Boolean(attributes.find((item) => item.name === ProductAttributeNames.IS_VEGAN)?.value);
   const rawPrice = discountPrice ?? price;
   const rawOldPrice = discountPrice ? price : null;
   const name = en;

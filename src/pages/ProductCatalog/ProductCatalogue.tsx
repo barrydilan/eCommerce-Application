@@ -234,8 +234,8 @@ export default function ProductCatalogue() {
                 prices={prices}
                 image={images[0].url}
                 attributes={attributes}
-                isSpicy={Boolean(attributes.find((item) => item.name === 'isSpicy')?.value)}
-                isVegan={Boolean(attributes.find((item) => item.name === 'isVegan')?.value)}
+                isSpicy={Boolean(attributes.find((item) => item.name === ProductAttributeNames.IS_SPICY)?.value)}
+                isVegan={Boolean(attributes.find((item) => item.name === ProductAttributeNames.IS_VEGAN)?.value)}
               />
             ))}
           </InfiniteScroll>
