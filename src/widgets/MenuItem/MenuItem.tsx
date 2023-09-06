@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import StarsRating from 'react-star-rate';
 
+import spicyIcon from '../../assets/icons/spicy.svg';
+import veganIcon from '../../assets/icons/vegan.svg';
 import { correctPrice, ProductAttribute, ProductAttributeNames } from '../../entities/product';
 import { ProductPrice } from '../../entities/product/types/types.ts';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
@@ -14,9 +16,11 @@ interface IMenuItemProps {
   id: string;
   attributes: ProductAttribute[];
   prices: ProductPrice[];
+  isSpicy: boolean;
+  isVegan: boolean;
 }
 
-export default function MenuItem({ name, image, id, attributes, prices }: IMenuItemProps) {
+export default function MenuItem({ name, image, id, attributes, prices, isSpicy, isVegan }: IMenuItemProps) {
   const [rating, setRating] = useState(4.5);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,7 +38,7 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
         <div className="flex rounded-2xl border-1 border-border-black/10">
-          <div className="m-h-[170px] flex flex-[75%] gap-x-3 sm:gap-x-7">
+          <div className="m-h-[170px] relative flex flex-[75%] gap-x-3 sm:gap-x-7">
             <img
               onLoad={() => setIsLoading(false)}
               loading="lazy"
@@ -44,6 +48,20 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
               src={image}
               alt={name}
             />
+            {isSpicy ? (
+              <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+                <img src={spicyIcon} alt="spicyIcon" />
+              </span>
+            ) : (
+              ''
+            )}
+            {isVegan ? (
+              <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+                <img src={veganIcon} alt="veganIcon" />
+              </span>
+            ) : (
+              ''
+            )}
             <div className="my-4 flex flex-col gap-y-2 xs:gap-y-3 sm:my-7">
               <div className="flex w-fit flex-1 flex-col gap-y-3">
                 <h2 className="text-text-dark sm:text-xl">{name}</h2>

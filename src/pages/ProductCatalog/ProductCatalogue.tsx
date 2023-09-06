@@ -18,7 +18,7 @@ import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import { useGetCategoriesQuery, useGetCategoryQuery, useLazyGetProductListQuery } from '../../entities/product';
-import { ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
+import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
 import { capitalize } from '../../shared/lib/helpers';
 import { useGetPath } from '../../shared/lib/hooks';
@@ -234,6 +234,8 @@ export default function ProductCatalogue() {
                 prices={prices}
                 image={images[0].url}
                 attributes={attributes}
+                isSpicy={Boolean(attributes.find((item) => item.name === 'isSpicy')?.value)}
+                isVegan={Boolean(attributes.find((item) => item.name === 'isVegan')?.value)}
               />
             ))}
           </InfiniteScroll>
