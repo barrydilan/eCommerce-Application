@@ -4,17 +4,19 @@ export default function FilterModalCheckbox(props: {
   universalFilterChanger: (value: string | boolean, field: string) => void;
   text: string;
   peer: string;
+  itemsNum: number;
 }) {
-  const { id, checked, universalFilterChanger, text, peer } = props;
+  const { id, checked, universalFilterChanger, text, peer, itemsNum } = props;
   return (
     <div
       className="
-                mt-2
-                flex
-                h-8
-                items-center
-                justify-center
-              "
+        mt-5
+        flex
+        h-8
+        w-full  
+        items-center
+        justify-start
+      "
     >
       <input
         id={id}
@@ -23,9 +25,10 @@ export default function FilterModalCheckbox(props: {
         onChange={() => universalFilterChanger(!checked, id)}
         className={`
                   peer/${id}
-                  mr-2
+                  mr-5
                   h-5
                   w-5
+                  cursor-pointer
                   appearance-none
                   rounded-md
                   bg-accent
@@ -35,10 +38,12 @@ export default function FilterModalCheckbox(props: {
         htmlFor={id}
         className={`
                 relative
-                text-xs
-                text-text-grey
+                cursor-pointer
+                text-base
+                leading-[15px]
+                text-text-dark
                 before:absolute
-                before:-left-6
+                before:-left-9
                 before:top-0.5
                 before:hidden
                 before:h-2
@@ -54,6 +59,9 @@ export default function FilterModalCheckbox(props: {
       >
         {text}
       </label>
+      <div className="ml-auto h-5 w-5 rounded-md bg-accent-lightest text-center text-xs leading-[20px] text-accent">
+        {itemsNum}
+      </div>
     </div>
   );
 }

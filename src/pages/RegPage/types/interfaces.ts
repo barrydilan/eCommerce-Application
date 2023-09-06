@@ -5,7 +5,7 @@ export interface IFormData extends ISignUpParams {
 	password: string;
 	firstName: string;
 	lastName: string;
-	birthDate: string;
+	dateOfBirth: string;
 	sameBillShip: boolean;
 	billSetDefault: boolean;
 	shipSetDefault: boolean;

@@ -47,7 +47,7 @@ export function validBirthDate() {
   );
 
   return {
-    birthDate: Yup.date().max(ageLimit, 'Age restriction: 13+').required('Birth date is required'),
+    dateOfBirth: Yup.date().max(ageLimit, 'Age restriction: 13+').required('Birth date is required'),
   };
 }
 
@@ -89,7 +89,7 @@ export function validStreet() {
   const streetRegEx = /^(?=.*[a-zA-Z]).*$/;
 
   return {
-    street: Yup.string()
+    streetName: Yup.string()
       .matches(streetRegEx, { message: 'Street name must contain at least one letter', excludeEmptyString: true })
       .required('Street name is required'),
   };

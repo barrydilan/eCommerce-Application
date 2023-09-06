@@ -29,8 +29,8 @@ function HeaderMobile({ name, calories, weight, isSpicy, isVegan }: IHeaderMobil
           ''
         )}
       </h2>
-      <h3 className="mt-5 text-sm font-light text-text-grey md:text-primary">{calories} kcal</h3>
-      <h3 className="mt-1 text-sm font-light text-text-grey md:text-primary">{weight} g</h3>
+      <h3 className="mt-5 text-base text-text-grey md:text-primary">{calories} kcal</h3>
+      <h3 className="mt-1 text-base text-text-grey md:text-primary">{weight} g</h3>
     </div>
   );
 }

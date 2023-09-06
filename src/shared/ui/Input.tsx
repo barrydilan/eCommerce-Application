@@ -20,7 +20,6 @@ export default function Input({ id, label, disabled, type = 'text' }: InputProps
           border-2 
           p-4 
           pt-6
-          font-light
           outline-none
           transition
           disabled:cursor-not-allowed

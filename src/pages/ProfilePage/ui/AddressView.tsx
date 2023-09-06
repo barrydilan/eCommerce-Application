@@ -20,7 +20,7 @@ function getCountry(country: string) {
 
 export default function AddressView(props: { address: AddressObj }) {
   const { address } = props;
-  const { country, city, street, postalCode } = address;
+  const { country, city, streetName, postalCode } = address;
   return (
     <div className="mt-6 flex-wrap justify-between gap-6 md:flex">
       <div className="addressProfileWrapper">
@@ -54,7 +54,7 @@ export default function AddressView(props: { address: AddressObj }) {
           src={streetIcon}
           alt=""
         />
-        {street}
+        {streetName}
       </div>
       <div className="addressProfileWrapper">
         <motion.img

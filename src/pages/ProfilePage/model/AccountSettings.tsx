@@ -1,21 +1,18 @@
 import ChangePassword from './ChangePassword';
 import ChangePersonalData from './ChangePersonalData';
+import { IUser } from '../../../shared/types';
 
-const userData = {
-  firstName: 'Ololontiy',
-  lastName: 'Ololoevich',
-  dateOfBirth: '01/01/1999',
-  email: 'trololo@kakah.net',
-  currPassword: '2023Pa$$word',
-};
+export default function AccountSettings(props: {
+  userData: IUser;
+  accessToken: string | undefined;
+  getUser: (_id: string) => void;
+}) {
+  const { userData, accessToken, getUser } = props;
 
-const { firstName, lastName, dateOfBirth, email, currPassword } = userData;
-
-export default function AccountSettings() {
   return (
     <div className="flex flex-col">
-      <ChangePersonalData firstName={firstName} lastName={lastName} dateOfBirth={dateOfBirth} email={email} />
-      <ChangePassword currPassword={currPassword} />
+      <ChangePersonalData userData={userData} accessToken={accessToken} getUser={getUser} />
+      <ChangePassword userData={userData} accessToken={accessToken} getUser={getUser} />
     </div>
   );
 }

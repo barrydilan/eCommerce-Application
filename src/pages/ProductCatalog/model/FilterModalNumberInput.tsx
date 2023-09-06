@@ -5,18 +5,18 @@ export default function FilterModalNumberInput(props: {
   text: string;
 }) {
   const { id, value, universalFilterChanger, text } = props;
+  const placeholder = `${text}...`;
   return (
-    <div className="mt-2 flex w-full justify-between text-text-grey">
-      <label className="font-light" htmlFor={id}>
-        {text}
-      </label>
+    <div className="mt-5 h-8 w-full text-text-dark">
       <input
-        className="lg w-16 rounded border-2 border-separation-line pl-1 text-text-dark"
+        className="lg mr-5 h-full w-28 rounded-lg border-1 border-text-grey pl-4 text-text-dark md:w-[100px] md:pl-2"
         id={id}
         type="number"
         value={value}
+        placeholder={placeholder}
         onChange={(e) => universalFilterChanger(e.target.value, id)}
       />
+      <label htmlFor={id}>{text}</label>
     </div>
   );
 }

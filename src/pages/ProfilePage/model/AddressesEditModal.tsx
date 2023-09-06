@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
@@ -13,23 +13,28 @@ import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import { validCity, validPostalCode, validStreet } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
-import { AddressObj, EditedAddressObj } from '../types/profilePageTypes';
+import { AddressObj } from '../types/profilePageTypes';
+import InfoModal from '../ui/InfoModal';
 
 export default function AddressesEditModal(props: {
-  editedAddress: EditedAddressObj;
-  setMyAddresses: React.Dispatch<React.SetStateAction<AddressObj[]>>;
+  id: string | undefined;
+  version: number | undefined;
+  editedAddress: AddressObj;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  accessToken: string | undefined;
+  getUser: (_id: string) => void;
 }) {
-  const { editedAddress, setMyAddresses, setIsModalOpen } = props;
-  const { index } = editedAddress;
-  const { country, city, street, postalCode } = editedAddress.address;
-  const initData = Object.values(editedAddress.address);
+  const { editedAddress, setIsModalOpen, version, accessToken, getUser, id } = props;
+  const { id: addressId, country, city, streetName, postalCode } = editedAddress;
+  const initData = useMemo(() => [country, city, streetName, postalCode], [country, city, streetName, postalCode]);
   const [selectedCountry, setSelectedCountry] = useState(country);
   const [isEditBtnBlocked, setIsEditBtnBlocked] = useState(true);
+  const [msgModalShown, setMsgModalShown] = useState(false);
+  const [msgModalText, setMsgModalText] = useState('');
 
   const validationSchema = Yup.object({
     city: validCity().city,
-    street: validStreet().street,
+    streetName: validStreet().streetName,
     postalCode: validPostalCode(selectedCountry).postalCode,
   });
 
@@ -37,7 +42,7 @@ export default function AddressesEditModal(props: {
     initialValues: {
       country,
       city,
-      street,
+      streetName,
       postalCode,
     },
     validationSchema,
@@ -46,7 +51,7 @@ export default function AddressesEditModal(props: {
 
   const { handleChange, handleBlur, errors, touched, values } = formik;
   const touchedAndErrorCity = touched.city && errors.city;
-  const touchedAndErrorStreet = touched.street && errors.street;
+  const touchedAndErrorStreet = touched.streetName && errors.streetName;
   const touchedAndErrorPostalCode = touched.postalCode && errors.postalCode;
 
   useEffect(() => {
@@ -58,7 +63,7 @@ export default function AddressesEditModal(props: {
       setIsEditBtnBlocked(true);
       return;
     }
-    if (errors.city || errors.street || errors.postalCode) {
+    if (errors.city || errors.streetName || errors.postalCode) {
       setIsEditBtnBlocked(true);
       return;
     }
@@ -66,15 +71,67 @@ export default function AddressesEditModal(props: {
   }, [values, errors, touched, initData]);
 
   function handleEditBtn() {
-    setMyAddresses((prev) => {
-      if (index === undefined) {
-        return [...prev, values];
+    const getBody = () => {
+      if (addressId) {
+        return {
+          version,
+          actions: [
+            {
+              action: 'changeAddress',
+              addressId,
+              address: {
+                country: values.country,
+                city: values.city,
+                streetName: values.streetName,
+                postalCode: values.postalCode,
+              },
+            },
+          ],
+        };
       }
-      const copy = [...prev];
-      copy[index] = values;
-      return copy;
-    });
-    setIsModalOpen(false);
+      return {
+        version,
+        actions: [
+          {
+            action: 'addAddress',
+            address: {
+              country: values.country,
+              city: values.city,
+              streetName: values.streetName,
+              postalCode: values.postalCode,
+            },
+          },
+        ],
+      };
+    };
+    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
+      method: 'POST',
+      body: JSON.stringify(getBody()),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok || res.status !== 200) {
+          throw Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(() => {
+        setMsgModalText('Your addresses saved! :)');
+        setMsgModalShown(true);
+        setTimeout(() => {
+          setMsgModalShown(false);
+          setIsModalOpen(false);
+        }, 1500);
+        if (typeof id === 'string') getUser(id);
+      })
+      .catch(() => {
+        setMsgModalText('Something went wrong! :(');
+        setMsgModalShown(true);
+        setTimeout(() => setMsgModalShown(false), 1500);
+      });
   }
 
   window.scrollTo(0, 250);
@@ -89,7 +146,7 @@ export default function AddressesEditModal(props: {
           mt-5
           box-border
           min-h-[184px]
-          w-[90%] 
+          w-[90%]
           rounded-md
           bg-primary
           p-5
@@ -97,6 +154,7 @@ export default function AddressesEditModal(props: {
           text-text-grey"
       >
         <h4 className="w-full text-center font-medium">Edit your address:</h4>
+        <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
         <div>
           <label
             htmlFor="countryInput"
@@ -162,12 +220,12 @@ export default function AddressesEditModal(props: {
               transition={{ ...inputAnimation.transition, delay: 0.05 }}
               id="streetInput"
               type="text"
-              name="street"
+              name="streetName"
               placeholder="Street"
               className={`loginRegInput ${touchedAndErrorStreet ? 'border-shop-cart-red' : ''}`}
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.street}
+              value={values.streetName}
             />
             <motion.img
               initial={svgAnimation.initial}
@@ -177,7 +235,7 @@ export default function AddressesEditModal(props: {
               src={touchedAndErrorStreet ? streetIconRed : streetIcon}
               alt=""
             />
-            {touchedAndErrorStreet && <ErrorMessage>{errors.street}</ErrorMessage>}
+            {touchedAndErrorStreet && <ErrorMessage>{errors.streetName}</ErrorMessage>}
           </label>
           <label htmlFor="postCodeInput" className="loginRegLabel">
             <motion.input
@@ -189,7 +247,7 @@ export default function AddressesEditModal(props: {
               name="postalCode"
               placeholder="Postal code"
               className={`
-              loginRegInput   
+              loginRegInput
               ${touchedAndErrorPostalCode ? 'border-shop-cart-red' : ''}
             `}
               onChange={handleChange}

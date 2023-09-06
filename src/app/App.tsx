@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
@@ -26,12 +26,15 @@ export function App() {
   return (
     <main
       className="
+          font-base
           mx-auto
           grid
           min-h-[100dvh]
           grid-cols-1
           grid-rows-mobGridRows
           font-poppins
+          text-base
+          text-text-dark
           2xl:container
           md:grid-cols-tabGridCols
           md:grid-rows-tabGridRows
@@ -58,8 +61,8 @@ export function App() {
 
 export function WrappedApp() {
   return (
-    <BrowserRouter basename="/eCommerce-Application">
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   );
 }

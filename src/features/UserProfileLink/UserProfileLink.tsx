@@ -28,8 +28,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
                 w-40 
                 overflow-hidden 
                 text-ellipsis 
-                text-xl 
-                font-light 
+                text-xl
                 text-text-dark
                 md:text-center 
                 lg:w-full 
@@ -39,9 +38,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
           </h5>
           <h6
             className="
-                text-lg 
-                font-light 
-                md:text-center 
+                md:text-center
                 lg:text-start"
           >
             Good morning!

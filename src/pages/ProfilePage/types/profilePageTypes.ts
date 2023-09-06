@@ -1,8 +1,7 @@
 export type AddressObj = {
+	id?: string;
 	country: string;
 	city: string;
-	street: string;
+	streetName: string;
 	postalCode: string;
 };
-
-export type EditedAddressObj = { address: AddressObj; index?: number };

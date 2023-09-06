@@ -29,9 +29,9 @@ export default function RegStepFour(props: UserFormProps) {
 
   const validationSchema = Yup.object({
     billPostalCode: validPostalCode(billCountry).postalCode,
-    billStreet: validStreet().street,
+    billStreet: validStreet().streetName,
     shipPostalCode: validPostalCode(shipCountry).postalCode,
-    shipStreet: validStreet().street,
+    shipStreet: validStreet().streetName,
   });
 
   const formik = useFormik({

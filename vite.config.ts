@@ -19,6 +19,6 @@ export default defineConfig({
 	},
 	base: './',
 	server: {
-		open: '/eCommerce-Application',
+		open: '/',
 	},
 });

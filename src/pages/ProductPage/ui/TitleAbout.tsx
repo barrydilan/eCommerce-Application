@@ -29,8 +29,8 @@ function TitleAbout({ name, calories, weight, isSpicy, isVegan }: ITitleAboutPro
           ''
         )}
       </h2>
-      <h3 className="mt-2 text-sm font-light text-text-grey md:text-primary">{calories} kcal pre portion</h3>
-      <h3 className="text-sm font-light text-text-grey md:text-primary">{weight} g</h3>
+      <h3 className="mt-2 text-sm text-text-grey md:text-primary">{calories} kcal pro portion</h3>
+      <h3 className="text-sm text-text-grey md:text-primary">{weight} g</h3>
     </div>
   );
 }

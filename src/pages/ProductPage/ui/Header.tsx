@@ -3,7 +3,7 @@ interface IHeaderProps {
 }
 
 function Header({ children }: IHeaderProps) {
-  return <div className="flex items-baseline justify-between pt-6 sm:pt-10">{children}</div>;
+  return <div className="flex items-end justify-between">{children}</div>;
 }
 
 export default Header;
