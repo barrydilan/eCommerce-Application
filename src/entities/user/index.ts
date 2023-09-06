@@ -11,6 +11,7 @@ export {
 	useLoginUserDataMutation,
 	useGetUserQuery,
 	useLazyGetUserQuery,
+	useDeleteUserDataMutation,
 	useUpdateUserDataMutation,
 } from './api/userDataApi.ts';
 export { getFullName, prepareLoginCookieData, useLoginUser };

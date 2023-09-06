@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
-import { useUpdateUserDataMutation } from '../../../entities/user';
+import { useDeleteUserDataMutation } from '../../../entities/user';
 import { IUser } from '../../../shared/types';
 import { AddressObj } from '../types/profilePageTypes';
 import AddressView from '../ui/AddressView';
@@ -21,7 +21,7 @@ export default function AddressListItem(props: {
   const [isConfirmShown, setIsConfirmShown] = useState(false);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('');
-  const [deleteUserData] = useUpdateUserDataMutation();
+  const [deleteUserData] = useDeleteUserDataMutation();
 
   function editClickHandler() {
     setEditedAddress(address);

@@ -10,8 +10,9 @@ import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
+import { useUpdateUserDataMutation } from '../../../entities/user';
+import UserUpdateActions from '../../../entities/user/types/enums.ts';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
-import { useAppSelector } from '../../../shared/lib/hooks';
 import { IUser } from '../../../shared/types';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import InfoModal from '../ui/InfoModal';
@@ -24,7 +25,7 @@ const validationSchema = Yup.object({
 });
 
 export default function ChangePersonalData(props: { userData: IUser; getUser: (_id: string) => void }) {
-  const { accessToken } = useAppSelector((state) => state.userReducer);
+  const [updateUser] = useUpdateUserDataMutation();
 
   const { userData, getUser } = props;
   const { id, email, firstName, lastName, dateOfBirth, version } = userData;
@@ -56,52 +57,39 @@ export default function ChangePersonalData(props: { userData: IUser; getUser: (_
     setDateInputType(document.activeElement?.id === 'dateOfBirth' ? 'date' : 'text');
   }
 
-  function saveClickHandler() {
-    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
-      method: 'POST',
-      body: JSON.stringify({
+  async function saveClickHandler() {
+    try {
+      await updateUser({
         version,
         actions: [
           {
-            action: 'changeEmail',
+            action: UserUpdateActions.CHANGE_EMAIL,
             email: values.email,
           },
           {
-            action: 'setFirstName',
+            action: UserUpdateActions.SET_FIRST_NAME,
             firstName: values.firstName,
           },
           {
-            action: 'setLastName',
+            action: UserUpdateActions.SET_LAST_NAME,
             lastName: values.lastName,
           },
           {
-            action: 'setDateOfBirth',
+            action: UserUpdateActions.SET_BIRTH_DATE,
             dateOfBirth: values.dateOfBirth,
           },
         ],
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok || res.status !== 200) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(() => {
-        setMsgModalText('Your data saved! :)');
-        setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 1500);
-        getUser(id);
-      })
-      .catch(() => {
-        setMsgModalText('Something went wrong! :(');
-        setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 1500);
       });
+
+      setMsgModalText('Your data saved! :)');
+      setMsgModalShown(true);
+      setTimeout(() => setMsgModalShown(false), 1500);
+      getUser(id);
+    } catch (e) {
+      setMsgModalText('Something went wrong! :(');
+      setMsgModalShown(true);
+      setTimeout(() => setMsgModalShown(false), 1500);
+    }
   }
 
   useEffect(() => {

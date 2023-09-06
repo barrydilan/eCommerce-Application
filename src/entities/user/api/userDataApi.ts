@@ -3,16 +3,7 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 import { ILoginUserDataResponse, ILoginUserParams, IUser } from '../../../shared/types';
-
-interface IAction {
-	action: string;
-	addressId: string;
-}
-
-interface IUpdateUserParams {
-	version: number;
-	actions: IAction[];
-}
+import { IUpdateUserDataParams } from '../types/interfaces.ts';
 
 export const userDataApi = createApi({
 	reducerPath: 'userDataApi',
@@ -32,7 +23,15 @@ export const userDataApi = createApi({
 			}),
 		}),
 
-		updateUserData: build.mutation<void, IUpdateUserParams>({
+		deleteUserData: build.mutation<void, IUpdateUserDataParams>({
+			query: (body) => ({
+				url: `${PROJECT_KEY}/me`,
+				method: 'POST',
+				body: JSON.stringify(body),
+			}),
+		}),
+
+		updateUserData: build.mutation<void, IUpdateUserDataParams>({
 			query: (body) => ({
 				url: `${PROJECT_KEY}/me`,
 				method: 'POST',
@@ -42,5 +41,10 @@ export const userDataApi = createApi({
 	}),
 });
 
-export const { useLoginUserDataMutation, useGetUserQuery, useLazyGetUserQuery, useUpdateUserDataMutation } =
-	userDataApi;
+export const {
+	useLoginUserDataMutation,
+	useGetUserQuery,
+	useLazyGetUserQuery,
+	useDeleteUserDataMutation,
+	useUpdateUserDataMutation,
+} = userDataApi;
