@@ -94,7 +94,7 @@ export default function AddressesDefault(props: { userData: IUser }) {
           <motion.select
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
-            transition={inputAnimation.transition}
+            transition={{ ...inputAnimation.transition, delay: 0.1 }}
             id="shipAddress"
             name="shipAddress"
             className="loginRegInput"
@@ -106,7 +106,7 @@ export default function AddressesDefault(props: { userData: IUser }) {
           <motion.img
             initial={svgAnimation.initial}
             animate={svgAnimation.animate}
-            transition={svgAnimation.transition}
+            transition={{ ...svgAnimation.transition, delay: 0.2 }}
             className="invalidInputIcon"
             src={icon}
             alt=""
