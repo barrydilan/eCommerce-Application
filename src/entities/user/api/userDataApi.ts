@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 import { ILoginUserDataResponse, ILoginUserParams, IUser } from '../../../shared/types';
-import { IUpdateUserAddressParams, IUpdateUserDataParams } from '../types/interfaces.ts';
+import { IUpdateUserAddressParams, IUpdateUserDataParams, IUpdateUserPassword } from '../types/interfaces.ts';
 
 export const userDataApi = createApi({
 	reducerPath: 'userDataApi',
@@ -46,6 +46,14 @@ export const userDataApi = createApi({
 				body: JSON.stringify(body),
 			}),
 		}),
+
+		updateUserPassword: build.mutation<void, IUpdateUserPassword>({
+			query: (body) => ({
+				url: `${PROJECT_KEY}/me/password`,
+				method: 'POST',
+				body: JSON.stringify(body),
+			}),
+		}),
 	}),
 });
 
@@ -56,4 +64,5 @@ export const {
 	useDeleteUserDataMutation,
 	useUpdateUserDataMutation,
 	useUpdateUserAddressMutation,
+	useUpdateUserPasswordMutation,
 } = userDataApi;

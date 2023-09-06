@@ -15,6 +15,7 @@ export {
 	useDeleteUserDataMutation,
 	useUpdateUserDataMutation,
 	useUpdateUserAddressMutation,
+	useUpdateUserPasswordMutation,
 } from './api/userDataApi.ts';
 export { getFullName, prepareLoginCookieData, useLoginUser };
 export type { IUpdateUserDataParams } from './types/interfaces.ts';

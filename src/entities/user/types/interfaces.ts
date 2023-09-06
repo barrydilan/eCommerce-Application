@@ -22,6 +22,11 @@ export interface IUpdateUserDataParams {
 	actions: IAction[];
 }
 
+export interface IUpdateUserPassword extends Pick<IUpdateUserDataParams, 'version'> {
+	currentPassword: string;
+	newPassword: string;
+}
+
 export interface IUpdateUserAddressParams {
 	body: IUpdateUserDataParams;
 	id: string;

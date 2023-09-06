@@ -2,18 +2,16 @@ import { useEffect, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import lockIcon from '../../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../../assets/icons/LockIconRed.svg';
-import { COOKIE_ACCESS_TOKEN, userSlice } from '../../../entities/user';
-import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../../entities/user/consts/constants.ts';
+import { useLazyGetUserQuery, useLoginUser, useUpdateUserPasswordMutation } from '../../../entities/user';
 import { validPassword } from '../../../shared/const/validationSchemas';
-import { deleteCookie } from '../../../shared/lib/helpers';
-import { useAppDispatch, useAppSelector, useRevokeAccessRefreshTokens } from '../../../shared/lib/hooks';
+import { useAppSelector, useRevokeAccessRefreshTokens } from '../../../shared/lib/hooks';
 import { IUser } from '../../../shared/types';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
+import MODAL_TIMEOUT from '../constants/constants.ts';
 import InfoModal from '../ui/InfoModal';
 
 const validationSchema = Yup.object({
@@ -21,14 +19,18 @@ const validationSchema = Yup.object({
   newPass: validPassword().password,
 });
 
-export default function ChangePassword(props: { userData: IUser; getUser: (_id: string) => void }) {
-  const { accessToken } = useAppSelector((state) => state.userReducer);
-
-  const { userData, getUser } = props;
+export default function ChangePassword(props: { userData: IUser }) {
+  const { userData } = props;
   const { id, version } = userData;
   const [isSaveBlocked, setIsSaveBlocked] = useState(true);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('Sometext');
+  const [getUser] = useLazyGetUserQuery();
+  const [updatePassword] = useUpdateUserPasswordMutation();
+  const [loginUser] = useLoginUser();
+  const revokeTokens = useRevokeAccessRefreshTokens();
+
+  const { accessToken: oldAccessToken, refreshToken: oldRefreshToken } = useAppSelector((state) => state.userReducer);
 
   const formik = useFormik({
     initialValues: {
@@ -58,56 +60,29 @@ export default function ChangePassword(props: { userData: IUser; getUser: (_id: 
     setIsSaveBlocked(false);
   }, [values, errors, touched, setIsSaveBlocked]);
 
-  const { accessToken: oldAccessToken, refreshToken: oldRefreshToken } = useAppSelector((state) => state.userReducer);
-  const revokeTokens = useRevokeAccessRefreshTokens();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { loggedOut } = userSlice.actions;
-
-  async function handleLogout() {
-    dispatch(loggedOut());
-    navigate('/');
-    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
-    revokeTokens(oldAccessToken, oldRefreshToken);
-  }
-
-  function saveHandler() {
-    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/me/password`, {
-      method: 'POST',
-      body: JSON.stringify({
+  async function saveHandler() {
+    try {
+      await updatePassword({
         version,
         currentPassword: values.currPass,
         newPassword: values.newPass,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok || res.status !== 200) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(() => {
-        setMsgModalText(`
-          You have new password! :)
-          Login in once again, please
-        `);
-        setMsgModalShown(true);
-        setTimeout(() => {
-          setMsgModalShown(false);
-          handleLogout();
-        }, 2000);
-        setIsSaveBlocked(true);
-        getUser(id);
-      })
-      .catch(() => {
-        setMsgModalText('Enter valid current password!');
-        setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 2500);
       });
+
+      setMsgModalText(`Password was changed! :)`);
+      setMsgModalShown(true);
+      setTimeout(() => {
+        setMsgModalShown(false);
+      }, MODAL_TIMEOUT);
+      setIsSaveBlocked(true);
+
+      await loginUser(userData.email, values.newPass, id);
+      revokeTokens(oldAccessToken, oldRefreshToken);
+      getUser(id);
+    } catch (e) {
+      setMsgModalText(`Oh snap! Something went wrong :(`);
+      setMsgModalShown(true);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
+    }
   }
 
   return (
