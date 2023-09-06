@@ -6,5 +6,11 @@ export { signUpApi, useSignUpMutation } from './api/signUpApi.ts';
 export { COOKIE_ACCESS_TOKEN, USER_LOGGED_IN_DATA_KEY } from './consts/constants.ts';
 export { authApi, useAnonymousSessionMutation, useLoginTokenMutation, useRevokeTokenMutation } from './api/authApi.ts';
 export { userReducer, userSlice } from './model/slice.ts';
-export { userDataApi, useLoginUserDataMutation, useGetUserQuery, useLazyGetUserQuery } from './api/userDataApi.ts';
+export {
+	userDataApi,
+	useLoginUserDataMutation,
+	useGetUserQuery,
+	useLazyGetUserQuery,
+	useUpdateUserDataMutation,
+} from './api/userDataApi.ts';
 export { getFullName, prepareLoginCookieData, useLoginUser };

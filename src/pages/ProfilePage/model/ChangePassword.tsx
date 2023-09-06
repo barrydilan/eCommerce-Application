@@ -21,12 +21,10 @@ const validationSchema = Yup.object({
   newPass: validPassword().password,
 });
 
-export default function ChangePassword(props: {
-  userData: IUser;
-  accessToken: string | undefined;
-  getUser: (_id: string) => void;
-}) {
-  const { userData, accessToken, getUser } = props;
+export default function ChangePassword(props: { userData: IUser; getUser: (_id: string) => void }) {
+  const { accessToken } = useAppSelector((state) => state.userReducer);
+
+  const { userData, getUser } = props;
   const { id, version } = userData;
   const [isSaveBlocked, setIsSaveBlocked] = useState(true);
   const [msgModalShown, setMsgModalShown] = useState(false);
@@ -103,7 +101,7 @@ export default function ChangePassword(props: {
           handleLogout();
         }, 2000);
         setIsSaveBlocked(true);
-        if (typeof id === 'string') getUser(id);
+        getUser(id);
       })
       .catch(() => {
         setMsgModalText('Enter valid current password!');

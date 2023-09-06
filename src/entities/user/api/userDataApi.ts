@@ -4,6 +4,16 @@ import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { PROJECT_KEY } from '../../../shared/const';
 import { ILoginUserDataResponse, ILoginUserParams, IUser } from '../../../shared/types';
 
+interface IAction {
+	action: string;
+	addressId: string;
+}
+
+interface IUpdateUserParams {
+	version: number;
+	actions: IAction[];
+}
+
 export const userDataApi = createApi({
 	reducerPath: 'userDataApi',
 	baseQuery: baseQueryWithReauth,
@@ -21,7 +31,16 @@ export const userDataApi = createApi({
 				url: `${PROJECT_KEY}/customers/${id}`,
 			}),
 		}),
+
+		updateUserData: build.mutation<void, IUpdateUserParams>({
+			query: (body) => ({
+				url: `${PROJECT_KEY}/me`,
+				method: 'POST',
+				body: JSON.stringify(body),
+			}),
+		}),
 	}),
 });
 
-export const { useLoginUserDataMutation, useGetUserQuery, useLazyGetUserQuery } = userDataApi;
+export const { useLoginUserDataMutation, useGetUserQuery, useLazyGetUserQuery, useUpdateUserDataMutation } =
+	userDataApi;

@@ -11,6 +11,7 @@ import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
+import { useAppSelector } from '../../../shared/lib/hooks';
 import { IUser } from '../../../shared/types';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import InfoModal from '../ui/InfoModal';
@@ -22,12 +23,10 @@ const validationSchema = Yup.object({
   lastName: validName().name,
 });
 
-export default function ChangePersonalData(props: {
-  userData: IUser;
-  accessToken: string | undefined;
-  getUser: (_id: string) => void;
-}) {
-  const { userData, accessToken, getUser } = props;
+export default function ChangePersonalData(props: { userData: IUser; getUser: (_id: string) => void }) {
+  const { accessToken } = useAppSelector((state) => state.userReducer);
+
+  const { userData, getUser } = props;
   const { id, email, firstName, lastName, dateOfBirth, version } = userData;
 
   const formik = useFormik({
@@ -96,7 +95,7 @@ export default function ChangePersonalData(props: {
         setMsgModalText('Your data saved! :)');
         setMsgModalShown(true);
         setTimeout(() => setMsgModalShown(false), 1500);
-        if (typeof id === 'string') getUser(id);
+        getUser(id);
       })
       .catch(() => {
         setMsgModalText('Something went wrong! :(');
