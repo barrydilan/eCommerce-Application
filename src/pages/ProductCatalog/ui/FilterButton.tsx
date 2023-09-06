@@ -21,7 +21,6 @@ function FilterButton({ onFilterOpen }: IFilterButton) {
             border-text-grey
             px-[12px]
             py-[10px]
-            text-xs
           "
     >
       <img src={filterIcon} alt="" className="mr-[12px]" />

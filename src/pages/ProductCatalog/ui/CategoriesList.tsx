@@ -12,10 +12,8 @@ function CategoriesList({ children, changeActiveCat }: ICategoryList) {
     <div
       className="
           z-0
-          mt-3
+          mt-6
           bg-none
-          text-sm
-          font-light
           text-text-grey
           lg:mt-11
         "
@@ -24,13 +22,12 @@ function CategoriesList({ children, changeActiveCat }: ICategoryList) {
         onClick={(e: React.MouseEvent<HTMLUListElement, MouseEvent>) => changeActiveCat(e)}
         className="
             flex
-            h-6
-            gap-1
+            h-8
+            gap-2
             overflow-y-scroll
             border-b-[2px]
             border-separation-line
-            lg:h-8
-            lg:text-base
+            md:h-9
           "
       >
         {children}

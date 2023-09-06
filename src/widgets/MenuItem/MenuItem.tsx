@@ -34,23 +34,25 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
         <div className="flex rounded-2xl border-1 border-border-black/10">
-          <div className="m-h-[170px] flex flex-[80%] gap-x-2">
+          <div className="m-h-[170px] flex flex-[75%] gap-x-3 sm:gap-x-7">
             <img
               onLoad={() => setIsLoading(false)}
               loading="lazy"
               className={`${
                 isLoading ? 'h-full w-48 opacity-0' : 'opacity-100'
-              } mr-2 inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[26%] xl:max-w-[19.5%]`}
+              } inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[30%] xl:max-w-[19.5%]`}
               src={image}
               alt={name}
             />
-            <div className="my-4 flex flex-1 flex-col gap-y-1 xs:gap-y-4 sm:my-4">
-              <div className="flex flex-1 flex-col gap-y-1">
-                <h2 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">{name}</h2>
-                <h4 className="text-xs font-extralight text-text-grey sm:text-base">{calories} kcal</h4>
-                <h4 className="text-xs font-extralight text-text-grey sm:text-base">{weight} g</h4>
+            <div className="my-4 flex flex-col gap-y-2 xs:gap-y-3 sm:my-7">
+              <div className="flex w-fit flex-1 flex-col gap-y-3">
+                <h2 className="text-text-dark sm:text-xl">{name}</h2>
+                <div>
+                  <h4 className="text-sm text-text-grey">{calories} kcal</h4>
+                  <h4 className="text-sm text-text-grey">{weight} g</h4>
+                </div>
               </div>
-              <div className="mb-2 flex items-center gap-x-2 text-sm">
+              <div className="mb-2 flex w-fit items-center gap-x-2">
                 <StarsRating
                   value={rating}
                   allowHalf
@@ -58,18 +60,16 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
                     setRating(rating);
                   }}
                 />
-                <p className="text-xs font-extralight text-text-grey sm:text-base">{rating}</p>
+                <p className="text-text-grey">{rating}</p>
               </div>
             </div>
           </div>
-          <div className="my-4 flex flex-[20%] flex-col items-end justify-between pr-2 sm:my-4 sm:pr-4">
+          <div className="my-4 flex flex-auto flex-col items-end justify-between pr-3.5 sm:my-7 sm:pr-7">
             <div className="grid">
               {oldPrice ? (
-                <span className="justify-self-end text-[10px] font-light text-text-grey line-through">
-                  $ {oldPrice}
-                </span>
+                <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
               ) : null}
-              <h3 className="text-sm font-light text-text-dark xs:text-lg sm:text-xl">$ {corePrice}</h3>
+              <h3 className="text-base font-medium text-text-dark sm:text-xl">$ {corePrice}</h3>
             </div>
             <AddToCartBtn />
           </div>

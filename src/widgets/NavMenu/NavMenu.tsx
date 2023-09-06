@@ -7,9 +7,7 @@ import { deleteCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector, useRevokeAccessRefreshTokens } from '../../shared/lib/hooks';
 import CartIcon from '../ui/CartIcon.tsx';
 import ContactsIcon from '../ui/ContactsIcon.tsx';
-import DeliveryIcon from '../ui/DeliveryIcon.tsx';
 import MainIcon from '../ui/MenuIcon';
-import PaymentIcon from '../ui/PaymentIcon.tsx';
 
 function NavMenu() {
   const {
@@ -32,16 +30,18 @@ function NavMenu() {
   return (
     <ul
       className="
-        mt-2
         flex
         w-full
         justify-between
+        px-4
+        py-2
         md:mt-8
         md:max-h-full
         md:flex-col
         md:items-end
         md:justify-start
-        md:gap-6
+        md:gap-9
+        md:px-0
         lg:mt-12
         "
     >
@@ -59,24 +59,6 @@ function NavMenu() {
           {({ isActive, isPending }) => (
             <>
               <CartIcon isActive={isActive || isPending} /> <span>Cart</span>
-            </>
-          )}
-        </NavLink>
-      </li>
-      <li className="navMenuItem">
-        <NavLink to="/delivery" className="navMenuLink text-text-grey hover:text-accent">
-          {({ isActive, isPending }) => (
-            <>
-              <DeliveryIcon isActive={isActive || isPending} /> <span>Delivery</span>
-            </>
-          )}
-        </NavLink>
-      </li>
-      <li className="navMenuItem">
-        <NavLink to="/payment" className="navMenuLink text-text-grey hover:text-accent">
-          {({ isActive, isPending }) => (
-            <>
-              <PaymentIcon isActive={isActive || isPending} /> <span>Payment</span>
             </>
           )}
         </NavLink>
