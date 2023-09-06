@@ -6,6 +6,8 @@ enum UserUpdateActions {
 	SET_DEFAULT_SHIPPING_ADDRESS = 'setDefaultShippingAddress',
 	SET_DEFAULT_BILLING_ADDRESS = 'setDefaultBillingAddress',
 	REMOVE_ADDRESS = 'removeAddress',
+	CHANGE_ADDRESS = 'changeAddress',
+	ADD_ADDRESS = 'addAddress',
 }
 
 export default UserUpdateActions;

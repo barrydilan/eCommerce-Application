@@ -14,7 +14,7 @@ export interface IAction {
 	firstName?: string;
 	lastName?: string;
 	dateOfBirth?: string;
-	address?: IAddress[];
+	address?: IAddress | IAddress[];
 }
 
 export interface IUpdateUserDataParams {
