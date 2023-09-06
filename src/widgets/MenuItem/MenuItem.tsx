@@ -33,7 +33,7 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
   return (
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
-        <div className="flex rounded-2xl border-1 border-border-black/10">
+        <div className="flex rounded-2xl border-1 border-border-black/10 transition delay-150 duration-300 ease-in-out hover:bg-accent-light">
           <div className="m-h-[170px] flex flex-[75%] gap-x-3 sm:gap-x-7">
             <img
               onLoad={() => setIsLoading(false)}
