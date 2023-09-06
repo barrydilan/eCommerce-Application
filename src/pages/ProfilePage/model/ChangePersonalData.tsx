@@ -10,11 +10,12 @@ import emailIcon from '../../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../../assets/icons/emailIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
-import { useUpdateUserDataMutation } from '../../../entities/user';
+import { useLazyGetUserQuery, useUpdateUserDataMutation } from '../../../entities/user';
 import UserUpdateActions from '../../../entities/user/types/enums.ts';
 import { validBirthDate, validEmail, validName } from '../../../shared/const/validationSchemas';
 import { IUser } from '../../../shared/types';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
+import MODAL_TIMEOUT from '../constants/constants.ts';
 import InfoModal from '../ui/InfoModal';
 
 const validationSchema = Yup.object({
@@ -24,10 +25,10 @@ const validationSchema = Yup.object({
   lastName: validName().name,
 });
 
-export default function ChangePersonalData(props: { userData: IUser; getUser: (_id: string) => void }) {
+export default function ChangePersonalData(props: { userData: IUser }) {
   const [updateUser] = useUpdateUserDataMutation();
 
-  const { userData, getUser } = props;
+  const { userData } = props;
   const { id, email, firstName, lastName, dateOfBirth, version } = userData;
 
   const formik = useFormik({
@@ -44,10 +45,13 @@ export default function ChangePersonalData(props: { userData: IUser; getUser: (_
   const initData = Object.values([email, firstName, lastName, dateOfBirth]);
 
   const { handleChange, handleBlur, errors, touched, values } = formik;
+
   const [dateInputType, setDateInputType] = useState('text');
   const [isSaveBlocked, setIsSaveBlocked] = useState(true);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('');
+  const [getUser] = useLazyGetUserQuery();
+
   const touchedAndErrorEmail = touched.email && errors.email;
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
@@ -83,12 +87,12 @@ export default function ChangePersonalData(props: { userData: IUser; getUser: (_
 
       setMsgModalText('Your data saved! :)');
       setMsgModalShown(true);
-      setTimeout(() => setMsgModalShown(false), 1500);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
       getUser(id);
     } catch (e) {
       setMsgModalText('Something went wrong! :(');
       setMsgModalShown(true);
-      setTimeout(() => setMsgModalShown(false), 1500);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
     }
   }
 

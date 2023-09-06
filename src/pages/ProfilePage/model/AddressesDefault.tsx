@@ -3,21 +3,49 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import icon from '../../../assets/icons/CityIcon.svg';
+import { useLazyGetUserQuery, useUpdateUserAddressMutation } from '../../../entities/user';
+import UserUpdateActions from '../../../entities/user/types/enums.ts';
 import { IUser } from '../../../shared/types';
 import { inputAnimation, svgAnimation } from '../../../shared/ui';
+import MODAL_TIMEOUT from '../constants/constants.ts';
 import InfoModal from '../ui/InfoModal';
 
-export default function AddressesDefault(props: {
-  userData: IUser;
-  accessToken: string | undefined;
-  getUser: (_id: string) => void;
-}) {
-  const { userData, accessToken, getUser } = props;
+export default function AddressesDefault(props: { userData: IUser }) {
+  const { userData } = props;
   const { addresses, defaultBillingAddressId, defaultShippingAddressId, version, id } = userData;
+
   const [billAddress, setBillAddress] = useState(defaultBillingAddressId);
   const [shipAddress, setShipAddress] = useState(defaultShippingAddressId);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('');
+  const [updateAddress] = useUpdateUserAddressMutation();
+  const [getUser] = useLazyGetUserQuery();
+
+  async function saveClickHandler() {
+    try {
+      await updateAddress({
+        version,
+        actions: [
+          {
+            action: UserUpdateActions.SET_DEFAULT_SHIPPING_ADDRESS,
+            addressId: shipAddress,
+          },
+          {
+            action: UserUpdateActions.SET_DEFAULT_BILLING_ADDRESS,
+            addressId: billAddress,
+          },
+        ],
+      });
+      setMsgModalText('Your default addresses saved! :)');
+      setMsgModalShown(true);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
+      getUser(id);
+    } catch (e) {
+      setMsgModalText('Something went wrong! :(');
+      setMsgModalShown(true);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
+    }
+  }
 
   const options = addresses?.map((opt) => {
     const { id: addressId, country, city, streetName, postalCode } = opt;
@@ -28,46 +56,6 @@ export default function AddressesDefault(props: {
       </option>
     );
   });
-
-  function saveClickHandler() {
-    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        version,
-        actions: [
-          {
-            action: 'setDefaultShippingAddress',
-            addressId: shipAddress,
-          },
-          {
-            action: 'setDefaultBillingAddress',
-            addressId: billAddress,
-          },
-        ],
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok || res.status !== 200) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(() => {
-        setMsgModalText('Your default addresses saved! :)');
-        setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 1500);
-        if (typeof id === 'string') getUser(id);
-      })
-      .catch(() => {
-        setMsgModalText('Something went wrong! :(');
-        setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 1500);
-      });
-  }
 
   return (
     <div className="relative h-auto w-full border-b-2 border-separation-line py-6">

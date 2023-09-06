@@ -13,6 +13,7 @@ import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
 import { validCity, validPostalCode, validStreet } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
+import MODAL_TIMEOUT from '../constants/constants.ts';
 import { AddressObj } from '../types/profilePageTypes';
 import InfoModal from '../ui/InfoModal';
 
@@ -124,13 +125,13 @@ export default function AddressesEditModal(props: {
         setTimeout(() => {
           setMsgModalShown(false);
           setIsModalOpen(false);
-        }, 1500);
+        }, MODAL_TIMEOUT);
         if (typeof id === 'string') getUser(id);
       })
       .catch(() => {
         setMsgModalText('Something went wrong! :(');
         setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 1500);
+        setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
       });
   }
 

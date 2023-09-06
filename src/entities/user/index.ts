@@ -13,5 +13,6 @@ export {
 	useLazyGetUserQuery,
 	useDeleteUserDataMutation,
 	useUpdateUserDataMutation,
+	useUpdateUserAddressMutation,
 } from './api/userDataApi.ts';
 export { getFullName, prepareLoginCookieData, useLoginUser };

@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
 import { useDeleteUserDataMutation } from '../../../entities/user';
+import UserUpdateActions from '../../../entities/user/types/enums.ts';
 import { IUser } from '../../../shared/types';
+import MODAL_TIMEOUT from '../constants/constants.ts';
 import { AddressObj } from '../types/profilePageTypes';
 import AddressView from '../ui/AddressView';
 import InfoModal from '../ui/InfoModal';
@@ -34,7 +36,7 @@ export default function AddressListItem(props: {
         version,
         actions: [
           {
-            action: 'removeAddress',
+            action: UserUpdateActions.REMOVE_ADDRESS,
             addressId: addressId as string,
           },
         ],
@@ -47,11 +49,11 @@ export default function AddressListItem(props: {
         setMsgModalShown(false);
         setIsModalOpen(false);
         getUser(id);
-      }, 1500);
+      }, MODAL_TIMEOUT);
     } catch (e) {
       setMsgModalText('Something went wrong! :(');
       setMsgModalShown(true);
-      setTimeout(() => setMsgModalShown(false), 1500);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
     }
   }
 

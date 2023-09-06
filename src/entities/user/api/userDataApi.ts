@@ -38,6 +38,14 @@ export const userDataApi = createApi({
 				body: JSON.stringify(body),
 			}),
 		}),
+
+		updateUserAddress: build.mutation<void, IUpdateUserDataParams>({
+			query: (body) => ({
+				url: `${PROJECT_KEY}/me`,
+				method: 'POST',
+				body: JSON.stringify(body),
+			}),
+		}),
 	}),
 });
 
@@ -47,4 +55,5 @@ export const {
 	useLazyGetUserQuery,
 	useDeleteUserDataMutation,
 	useUpdateUserDataMutation,
+	useUpdateUserAddressMutation,
 } = userDataApi;
