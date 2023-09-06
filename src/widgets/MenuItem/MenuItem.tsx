@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import StarsRating from 'react-star-rate';
 
+import spicyIcon from '../../assets/icons/spicy.svg';
+import veganIcon from '../../assets/icons/vegan.svg';
+
 import { correctPrice, ProductAttribute, ProductAttributeNames } from '../../entities/product';
 import { ProductPrice } from '../../entities/product/types/types.ts';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
@@ -12,6 +15,13 @@ interface IMenuItemProps {
   name: string;
   image: string;
   id: string;
+  calories: string | number;
+  weight: string | number;
+  isSpicy: boolean;
+  isVegan: boolean;
+}
+
+export default function MenuItem({ name, price, image, id, calories, weight, isSpicy, isVegan }: IMenuItemProps) {
   attributes: ProductAttribute[];
   prices: ProductPrice[];
 }
@@ -44,6 +54,20 @@ export default function MenuItem({ name, image, id, attributes, prices }: IMenuI
               src={image}
               alt={name}
             />
+            {isSpicy ? (
+              <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+                <img src={spicyIcon} alt="spicyIcon" />
+              </span>
+            ) : (
+              ''
+            )}
+            {isVegan ? (
+              <span className="absolute left-2 top-2 z-[1] inline-block max-w-[30px] rounded-xl bg-accent-light p-1">
+                <img src={veganIcon} alt="veganIcon" />
+              </span>
+            ) : (
+              ''
+            )}
             <div className="my-4 flex flex-col gap-y-2 xs:gap-y-3 sm:my-7">
               <div className="flex w-fit flex-1 flex-col gap-y-3">
                 <h2 className="text-text-dark sm:text-xl">{name}</h2>

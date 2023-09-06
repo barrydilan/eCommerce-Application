@@ -1,4 +1,4 @@
-import { ProductAttribute } from '../../../entities/product';
+import { ProductAttribute, ProductAttributeNames } from '../../../entities/product';
 import { capitalize } from '../../../shared/lib/helpers';
 
 interface IDescriptionProps {
@@ -12,6 +12,9 @@ function Description({ attributes }: IDescriptionProps) {
       <p className="mt-5 grid gap-y-2 text-text-grey md:grid-cols-2 lg:gap-x-40">
         {attributes.map((attr, index) => {
           if (index === 0) return null;
+          if (attr.name === ProductAttributeNames.IS_SPICY || attr.name === ProductAttributeNames.IS_VEGAN) {
+            return null;
+          }
           return <span className="block" key={attr.name}>{`${capitalize(attr.name)} - ${attr.value}`}</span>;
         })}
       </p>
