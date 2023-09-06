@@ -21,3 +21,8 @@ export interface IUpdateUserDataParams {
 	version: number;
 	actions: IAction[];
 }
+
+export interface IUpdateUserAddressParams {
+	body: IUpdateUserDataParams;
+	id: string;
+}

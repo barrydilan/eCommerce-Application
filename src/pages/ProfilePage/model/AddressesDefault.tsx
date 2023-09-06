@@ -24,17 +24,20 @@ export default function AddressesDefault(props: { userData: IUser }) {
   async function saveClickHandler() {
     try {
       await updateAddress({
-        version,
-        actions: [
-          {
-            action: UserUpdateActions.SET_DEFAULT_SHIPPING_ADDRESS,
-            addressId: shipAddress,
-          },
-          {
-            action: UserUpdateActions.SET_DEFAULT_BILLING_ADDRESS,
-            addressId: billAddress,
-          },
-        ],
+        body: {
+          version,
+          actions: [
+            {
+              action: UserUpdateActions.SET_DEFAULT_SHIPPING_ADDRESS,
+              addressId: shipAddress,
+            },
+            {
+              action: UserUpdateActions.SET_DEFAULT_BILLING_ADDRESS,
+              addressId: billAddress,
+            },
+          ],
+        },
+        id,
       });
       setMsgModalText('Your default addresses saved! :)');
       setMsgModalShown(true);
