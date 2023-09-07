@@ -6,9 +6,8 @@ export default function AddressesList(props: {
   userData: IUser;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  getUser: (_id: string) => void;
 }) {
-  const { userData, setEditedAddress, setIsModalOpen, getUser } = props;
+  const { userData, setEditedAddress, setIsModalOpen } = props;
   const { addresses } = userData;
 
   function addAddressHandler() {
@@ -28,7 +27,6 @@ export default function AddressesList(props: {
             userData={userData}
             index={index}
             key={addressID}
-            getUser={getUser}
           />
         );
       })}

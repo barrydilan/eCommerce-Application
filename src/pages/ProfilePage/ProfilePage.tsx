@@ -40,11 +40,7 @@ export default function ProfilePage() {
       <ProfileHeader />
       <UserImage pic={userImage} userData={data} />
       <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
-      {isAccTabActive ? (
-        <AccountSettings userData={data} getUser={memoizedGetUser} />
-      ) : (
-        <AddressesSettings userData={data} getUser={memoizedGetUser} />
-      )}
+      {isAccTabActive ? <AccountSettings userData={data} /> : <AddressesSettings userData={data} />}
     </div>
   );
 }

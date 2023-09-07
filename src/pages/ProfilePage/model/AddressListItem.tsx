@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
-import { useDeleteUserDataMutation } from '../../../entities/user';
+import { useDeleteUserDataMutation, useLazyGetUserQuery } from '../../../entities/user';
 import UserUpdateActions from '../../../entities/user/types/enums.ts';
 import { IUser } from '../../../shared/types';
 import MODAL_TIMEOUT from '../constants/constants.ts';
@@ -15,15 +15,15 @@ export default function AddressListItem(props: {
   userData: IUser;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  getUser: (_id: string) => void;
 }) {
-  const { index, setEditedAddress, setIsModalOpen, userData, getUser, address } = props;
+  const { index, setEditedAddress, setIsModalOpen, userData, address } = props;
   const { version, id } = userData;
   const addressId = address.id;
   const [isConfirmShown, setIsConfirmShown] = useState(false);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('');
   const [deleteUserData] = useDeleteUserDataMutation();
+  const [getUser] = useLazyGetUserQuery();
 
   function editClickHandler() {
     setEditedAddress(address);
