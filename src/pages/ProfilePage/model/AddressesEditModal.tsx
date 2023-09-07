@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
@@ -11,8 +11,15 @@ import postalCodeIcon from '../../../assets/icons/postalCodeIcon.svg';
 import postalCodeIconRed from '../../../assets/icons/postalCodeIconRed.svg';
 import streetIcon from '../../../assets/icons/StreetIcon.svg';
 import streetIconRed from '../../../assets/icons/StreetIconRed.svg';
+import {
+  IUpdateUserDataParams,
+  useLazyGetUserQuery,
+  UserUpdateActions,
+  useUpdateUserAddressMutation,
+} from '../../../entities/user';
 import { validCity, validPostalCode, validStreet } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
+import MODAL_TIMEOUT from '../constants/constants.ts';
 import { AddressObj } from '../types/profilePageTypes';
 import InfoModal from '../ui/InfoModal';
 
@@ -21,16 +28,16 @@ export default function AddressesEditModal(props: {
   version: number | undefined;
   editedAddress: AddressObj;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  accessToken: string | undefined;
-  getUser: (_id: string) => void;
 }) {
-  const { editedAddress, setIsModalOpen, version, accessToken, getUser, id } = props;
+  const { editedAddress, setIsModalOpen, version, id } = props;
   const { id: addressId, country, city, streetName, postalCode } = editedAddress;
   const initData = useMemo(() => [country, city, streetName, postalCode], [country, city, streetName, postalCode]);
   const [selectedCountry, setSelectedCountry] = useState(country);
   const [isEditBtnBlocked, setIsEditBtnBlocked] = useState(true);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('');
+  const [getUser] = useLazyGetUserQuery();
+  const [updateAddress] = useUpdateUserAddressMutation();
 
   const validationSchema = Yup.object({
     city: validCity().city,
@@ -70,14 +77,16 @@ export default function AddressesEditModal(props: {
     setIsEditBtnBlocked(false);
   }, [values, errors, touched, initData]);
 
-  function handleEditBtn() {
-    const getBody = () => {
+  async function handleEditBtn() {
+    const getBody = (): IUpdateUserDataParams => {
+      if (!version) throw new Error('Version is not defined!');
+
       if (addressId) {
         return {
           version,
           actions: [
             {
-              action: 'changeAddress',
+              action: UserUpdateActions.CHANGE_ADDRESS,
               addressId,
               address: {
                 country: values.country,
@@ -89,11 +98,12 @@ export default function AddressesEditModal(props: {
           ],
         };
       }
+
       return {
         version,
         actions: [
           {
-            action: 'addAddress',
+            action: UserUpdateActions.ADD_ADDRESS,
             address: {
               country: values.country,
               city: values.city,
@@ -104,34 +114,20 @@ export default function AddressesEditModal(props: {
         ],
       };
     };
-    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/customers/${id}`, {
-      method: 'POST',
-      body: JSON.stringify(getBody()),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok || res.status !== 200) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(() => {
-        setMsgModalText('Your addresses saved! :)');
-        setMsgModalShown(true);
-        setTimeout(() => {
-          setMsgModalShown(false);
-          setIsModalOpen(false);
-        }, 1500);
-        if (typeof id === 'string') getUser(id);
-      })
-      .catch(() => {
-        setMsgModalText('Something went wrong! :(');
-        setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 1500);
-      });
+    try {
+      await updateAddress({ body: getBody(), id: id as string });
+      setMsgModalText('Your addresses saved! :)');
+      setMsgModalShown(true);
+      setTimeout(() => {
+        setMsgModalShown(false);
+        setIsModalOpen(false);
+      }, MODAL_TIMEOUT);
+      getUser(id as string);
+    } catch (e) {
+      setMsgModalText('Something went wrong! :(');
+      setMsgModalShown(true);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
+    }
   }
 
   window.scrollTo(0, 250);

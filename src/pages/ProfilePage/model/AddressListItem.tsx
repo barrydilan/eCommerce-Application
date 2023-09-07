@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
+import { useDeleteUserDataMutation, useLazyGetUserQuery } from '../../../entities/user';
+import UserUpdateActions from '../../../entities/user/types/enums.ts';
 import { IUser } from '../../../shared/types';
+import MODAL_TIMEOUT from '../constants/constants.ts';
 import { AddressObj } from '../types/profilePageTypes';
 import AddressView from '../ui/AddressView';
 import InfoModal from '../ui/InfoModal';
@@ -12,58 +15,46 @@ export default function AddressListItem(props: {
   userData: IUser;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  getUser: (_id: string) => void;
-  accessToken: string | undefined;
 }) {
-  const { index, setEditedAddress, setIsModalOpen, userData, getUser, address, accessToken } = props;
+  const { index, setEditedAddress, setIsModalOpen, userData, address } = props;
   const { version, id } = userData;
   const addressId = address.id;
   const [isConfirmShown, setIsConfirmShown] = useState(false);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('');
+  const [deleteUserData] = useDeleteUserDataMutation();
+  const [getUser] = useLazyGetUserQuery();
 
   function editClickHandler() {
     setEditedAddress(address);
     setIsModalOpen(true);
   }
 
-  function deleteClickHandler() {
-    fetch(`https://api.europe-west1.gcp.commercetools.com/async-await-ecommerce-application/me`, {
-      method: 'POST',
-      body: JSON.stringify({
+  async function deleteClickHandler() {
+    try {
+      await deleteUserData({
         version,
         actions: [
           {
-            action: 'removeAddress',
-            addressId,
+            action: UserUpdateActions.REMOVE_ADDRESS,
+            addressId: addressId as string,
           },
         ],
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok || res.status !== 200) {
-          throw Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(() => {
-        setMsgModalText('Your addresses was deleted! :)');
-        setMsgModalShown(true);
-        setTimeout(() => {
-          setMsgModalShown(false);
-          setIsModalOpen(false);
-          if (typeof id === 'string') getUser(id);
-        }, 1500);
-      })
-      .catch(() => {
-        setMsgModalText('Something went wrong! :(');
-        setMsgModalShown(true);
-        setTimeout(() => setMsgModalShown(false), 1500);
       });
+
+      setMsgModalText('Your addresses was deleted! :)');
+      setMsgModalShown(true);
+
+      setTimeout(() => {
+        setMsgModalShown(false);
+        setIsModalOpen(false);
+        getUser(id);
+      }, MODAL_TIMEOUT);
+    } catch (e) {
+      setMsgModalText('Something went wrong! :(');
+      setMsgModalShown(true);
+      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
+    }
   }
 
   return (
