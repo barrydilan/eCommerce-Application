@@ -35,6 +35,7 @@ export default function RegStepTwo(props: UserFormProps) {
   const [isDateFocus, setIsDateFocus] = useState(false);
 
   function handleTransitionEnd() {
+    console.log(document.activeElement);
     setDateInputType(document.activeElement?.id === 'dateOfBirthInput' ? 'date' : 'text');
   }
 
@@ -96,8 +97,11 @@ export default function RegStepTwo(props: UserFormProps) {
           />
           <span className="text-sm">{touchedAndErrorFirstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}</span>
         </label>
-        <div className={`w-2/4 overflow-hidden transition-all duration-300 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
-          <label onTransitionEnd={handleTransitionEnd} htmlFor="dateOfBirthInput" className="loginRegLabel">
+        <div
+          onTransitionEnd={handleTransitionEnd}
+          className={`w-2/4 overflow-hidden transition-all duration-300 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}
+        >
+          <label htmlFor="dateOfBirthInput" className="loginRegLabel">
             <motion.input
               initial={inputAnimation.initial}
               animate={inputAnimation.animate}
