@@ -35,7 +35,6 @@ export default function RegStepTwo(props: UserFormProps) {
   const [isDateFocus, setIsDateFocus] = useState(false);
 
   function handleTransitionEnd() {
-    console.log(document.activeElement);
     setDateInputType(document.activeElement?.id === 'dateOfBirthInput' ? 'date' : 'text');
   }
 

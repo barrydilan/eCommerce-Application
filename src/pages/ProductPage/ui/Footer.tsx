@@ -1,6 +1,6 @@
+import MinusIcon from './MinusIcon';
+import PlusIcon from './PlusIcon';
 import heartAccent from '../../../assets/icons/heart-accent.svg';
-import minus from '../../../assets/icons/minus.svg';
-import plus from '../../../assets/icons/plus.svg';
 import shoppingCart from '../../../assets/icons/shopping-cart-accent.svg';
 
 function Footer() {
@@ -19,7 +19,7 @@ function Footer() {
           sm:h-8 sm:w-8"
           type="button"
         >
-          <img src={minus} alt="minus" />
+          <MinusIcon />
         </button>
         <span className="dark:text-primary sm:text-xl">01</span>
         <button
@@ -27,7 +27,7 @@ function Footer() {
           sm:h-8 sm:w-8"
           type="button"
         >
-          <img src={plus} alt="plus" />
+          <PlusIcon />
         </button>
       </div>
       <button
