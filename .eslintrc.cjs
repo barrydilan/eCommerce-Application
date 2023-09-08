@@ -21,13 +21,47 @@ module.exports = {
     ecmaVersion: 2021,
     sourceType: 'module',
   },
-  plugins: ['react', 'import', 'react-refresh', '@typescript-eslint', 'prettier'],
+  plugins: ['react', 'import', 'react-refresh', '@typescript-eslint', 'simple-import-sort', 'import', 'prettier'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/react-in-jsx-scope': 0,
+    'import/no-extraneous-dependencies': 0,
     'import/extensions': 0,
-    "import/no-extraneous-dependencies": 0,
+    'import/no-cycle': 0,
     'no-param-reassign': 0,
+    "jsx-a11y/label-has-associated-control":  0,
+    "jsx-a11y/label-has-for": 0,
+    "react/jsx-no-bind": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
+    'sort-imports': ['error', {ignoreCase: true, ignoreDeclarationSort: true}],
+    'import/order': [
+      'error',
+      {
+        groups: [
+          ['external', 'builtin'],
+          'internal',
+          ['sibling', 'parent'],
+          'index',
+        ],
+        pathGroups: [
+          {
+            pattern: '@(react|react-native)',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: '@src/**',
+            group: 'internal',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['internal', 'react'],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
   },
   settings: {
     'import/resolver': {
