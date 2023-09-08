@@ -38,13 +38,13 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
         <div className="flex rounded-2xl border-1 border-border-black/10 transition delay-150 duration-300 ease-in-out hover:bg-accent-light">
-          <div className="m-h-[170px] relative flex flex-[75%] gap-x-3 sm:gap-x-7">
+          <div className="relative flex max-h-[170px] flex-[75%] gap-x-3 sm:gap-x-7">
             <img
               onLoad={() => setIsLoading(false)}
               loading="lazy"
               className={`${
                 isLoading ? 'h-full w-48 opacity-0' : 'opacity-100'
-              } inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[30%] xl:max-w-[19.5%]`}
+              } inline-block h-full max-w-[60%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[30%] xl:max-w-[19.5%]`}
               src={image}
               alt={name}
             />
@@ -78,7 +78,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               {oldPrice ? (
                 <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
               ) : null}
-              <h3 className="text-base font-medium text-text-dark sm:text-xl">$ {corePrice}</h3>
+              <h3 className="text-base font-medium text-text-dark sm:text-lg">$ {corePrice}</h3>
             </div>
             <AddToCartBtn />
           </div>

@@ -152,12 +152,14 @@ export default function ProductCatalogue() {
         grid
         grid-cols-1
         grid-rows-prodPageMob
+        border-2
+        border-text-dark
         px-[10px]
         sm:mt-16
-        md:px-12
-        md:py-11
+        md:px-4
+        md:py-4
         lg:grid-cols-prodPageDesk
-        lg:grid-rows-prodPageDesk
+      lg:grid-rows-prodPageDesk
       "
     >
       <ProductPageHeader />

@@ -6,6 +6,7 @@ import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../entities/user';
 import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
+import Cart from '../pages/Cart/Cart.tsx';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
@@ -24,13 +25,14 @@ export function App() {
   }, [dispatch, loggedIn]);
 
   return (
-    <main
-      className="
+    <main>
+      <div
+        className="
           font-base
           mx-auto
           grid
           min-h-[100dvh]
-          grid-cols-1
+          grid-cols-3
           grid-rows-mobGridRows
           font-poppins
           text-base
@@ -40,21 +42,23 @@ export function App() {
           md:grid-rows-tabGridRows
           lg:grid-cols-deskGridCols
           "
-    >
-      <Header />
-      <div
-        className="
+      >
+        <Header />
+        <div
+          className="
             md:col-start-2
             md:col-end-3
             md:row-start-2
             md:row-end-3
             "
-      >
-        <LocationProvider>
-          <RoutesWithAnimation />
-        </LocationProvider>
+        >
+          <LocationProvider>
+            <RoutesWithAnimation />
+          </LocationProvider>
+        </div>
+        <NavBlock />
+        <Cart />
       </div>
-      <NavBlock />
     </main>
   );
 }

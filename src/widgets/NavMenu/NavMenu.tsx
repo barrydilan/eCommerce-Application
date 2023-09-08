@@ -42,7 +42,7 @@ function NavMenu() {
         md:justify-start
         md:gap-9
         md:px-0
-        lg:mt-12
+      lg:mt-12
         "
     >
       <li className="navMenuItem">
@@ -54,7 +54,7 @@ function NavMenu() {
           )}
         </NavLink>
       </li>
-      <li className="navMenuItem lg:hidden">
+      <li className="navMenuItem">
         <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>

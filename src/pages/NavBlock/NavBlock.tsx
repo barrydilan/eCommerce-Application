@@ -6,11 +6,11 @@ function NavBlock() {
     <div
       className="
         fixed
-        bottom-0 
+        bottom-0
         z-50
         h-14
-        w-full
-        bg-separation-line
+        w-full 
+        md:static
         md:col-start-1
         md:col-end-2
         md:row-start-2
@@ -20,7 +20,8 @@ function NavBlock() {
         md:border-r-2
         md:border-separation-line
         md:bg-opacity-0
-        lg:w-[22rem]
+        lg:min-w-full
+        lg:max-w-[22rem]
       "
     >
       <UserProfileLink isHeader={false} />
