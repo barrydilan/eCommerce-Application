@@ -1,3 +1,5 @@
+import crossIcon from '../../assets/icons/cross.svg';
+
 export default function Cart() {
   return (
     <div
@@ -11,20 +13,24 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 md:mt-12">Your order</h2>
-      <div className="relative flex items-center justify-between gap-x-4 border-b-1 border-text-grey/40 pb-4 md:gap-x-1">
+      <div className="relative flex items-center gap-x-4 border-b-1 border-text-grey/40 pb-4 md:gap-x-1">
         <div className="flex items-center gap-x-4 md:max-w-[40%] md:gap-x-2">
           <img className="h-full w-full object-cover" src="src/assets/img/cart-img.png" alt="" />
-          <div className="flex flex-col gap-y-8 md:gap-y-8">
-            <h3 className="text-lg sm:text-xl md:text-xs">Vegan Meal</h3>
+        </div>
+        <div className="flex w-2/3 flex-col gap-y-10">
+          <h3 className="text-lg sm:text-xl md:text-base">Vegan Meal</h3>
+          <div className="flex items-start justify-between">
             <div className="flex items-center gap-x-2 pl-2">
-              <div className="text-lg sm:text-xl md:text-xs">-</div>
-              <div className="text-lg sm:text-xl md:text-xs">1</div>
-              <div className="text-lg sm:text-xl md:text-xs">+</div>
+              <div className="text-lg sm:text-xl md:text-sm">-</div>
+              <div className="text-lg sm:text-xl md:text-sm">1</div>
+              <div className="text-lg sm:text-xl md:text-sm">+</div>
             </div>
+            <span className="block self-end pb-1 text-lg xs:pb-3 sm:text-xl md:pb-[0.7rem] md:text-sm">$24,50</span>
           </div>
         </div>
-        <span className="block self-end pb-[0.75rem] text-lg xs:pb-3 sm:text-xl md:pb-[0.7rem] md:text-xs">$24,50</span>
-        <div className="absolute right-0 top-0">X</div>
+        <div className="absolute right-0 top-0">
+          <img src={crossIcon} alt="" />
+        </div>
       </div>
     </div>
   );
