@@ -68,7 +68,7 @@ export default function ProductPage() {
     >
       <ImageSlider onClose={handleCloseSlider} isOpen={isSliderOpen} imgList={imgList} />
       <div className="mx-auto h-full md:max-w-[645px]">
-        <div className="relative h-fit md:rounded-[32px] md:border-[15px] md:border-text-grey/10">
+        <div className="relative h-fit md:rounded-[32px] md:border-[15px] md:border-text-grey/10 dark:md:border-text-grey/40">
           <AddWishlistMobile />
           <div className="h-full">
             <Title onClick={handleSliderOpen} imgList={imgList} name={name}>
@@ -77,8 +77,8 @@ export default function ProductPage() {
               </div>
             </Title>
             <BackButton />
-            <div className="absolute z-10 -mt-4 flex w-full flex-col rounded-3xl rounded-t-[32px] bg-primary px-4 pt-7 sm:px-8 md:relative">
-              <div className="absolute left-0 top-0 z-10 hidden h-8 w-full bg-primary md:block md:h-5 md:rounded-t-2xl" />
+            <div className="absolute z-10 -mt-4 flex w-full flex-col rounded-3xl rounded-t-[32px] bg-primary px-4 pt-7 dark:bg-dark-bg-primary sm:px-8 md:relative">
+              <div className="absolute left-0 top-0 z-10 hidden h-8 w-full bg-primary dark:bg-dark-bg-primary md:block md:h-5 md:rounded-t-2xl" />
               <HeaderMobile isSpicy={isSpicy} isVegan={isVegan} name={name} calories={calories} weight={weight} />
               <Header>
                 <>

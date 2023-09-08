@@ -115,9 +115,9 @@ export default function ChangePersonalData(props: { userData: IUser }) {
   return (
     <div className="relative border-b-2 border-separation-line">
       <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
-      <h4 className="mx-auto mt-12 w-full text-center text-base font-medium">Personal data</h4>
+      <h4 className="mx-auto mt-12 w-full text-center text-base font-medium dark:text-primary">Personal data</h4>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Email</div>
+        <div className="text-base font-medium dark:text-primary">Email</div>
         <label htmlFor="emailInput" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
@@ -144,7 +144,7 @@ export default function ChangePersonalData(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Name</div>
+        <div className="text-base font-medium dark:text-primary">Name</div>
         <label htmlFor="firstName" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
@@ -171,7 +171,7 @@ export default function ChangePersonalData(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Surname</div>
+        <div className="text-base font-medium dark:text-primary">Surname</div>
         <label htmlFor="lastName" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
@@ -198,7 +198,7 @@ export default function ChangePersonalData(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Birth date</div>
+        <div className="text-base font-medium dark:text-primary">Birth date</div>
         <label
           onTransitionEnd={handleTransitionEnd}
           htmlFor="dateOfBirth"
