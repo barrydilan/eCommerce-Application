@@ -46,9 +46,9 @@ function CategoryItem({ item, activeCat, index, children = null }: ICategoryItem
       animate={{ y: 0 }}
       transition={{
         type: 'spring',
-        stiffness: 660,
+        stiffness: 560,
         damping: 23,
-        delay: 0.03 * index,
+        delay: 0.05 * index,
       }}
       className="flex items-center gap-3 whitespace-nowrap px-1"
     >
@@ -59,7 +59,18 @@ function CategoryItem({ item, activeCat, index, children = null }: ICategoryItem
         type="button"
       >
         {item}
-        {isActive ? <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-accent" /> : null}
+        {isActive ? (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              type: 'spring',
+              stiffness: 160,
+              damping: 23,
+            }}
+            className="absolute -bottom-0.5 left-0 h-0.5 w-full bg-accent md:-bottom-1"
+          />
+        ) : null}
       </button>
       {children}
     </motion.li>
