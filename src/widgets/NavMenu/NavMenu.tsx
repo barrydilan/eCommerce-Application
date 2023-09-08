@@ -1,15 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-import paymentIcon from '../../assets/icons/credit-card.svg';
-import deliveryIcon from '../../assets/icons/delivery.svg';
 import logOutIcon from '../../assets/icons/log-out.svg';
-import menuIcon from '../../assets/icons/menu.svg';
-import contactsIcon from '../../assets/icons/phone.svg';
-import cartIcon from '../../assets/icons/shopping-cart.svg';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../../entities/user';
 import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { deleteCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector, useRevokeAccessRefreshTokens } from '../../shared/lib/hooks';
+import CartIcon from '../ui/CartIcon.tsx';
+import ContactsIcon from '../ui/ContactsIcon.tsx';
+import MainIcon from '../ui/MenuIcon';
 
 function NavMenu() {
   const {
@@ -32,48 +30,47 @@ function NavMenu() {
   return (
     <ul
       className="
-        mt-2
         flex
         w-full
         justify-between
+        px-4
+        py-2
         md:mt-8
         md:max-h-full
         md:flex-col
         md:items-end
         md:justify-start
-        md:gap-6
+        md:gap-9
+        md:px-0
         lg:mt-12
         "
     >
       <li className="navMenuItem">
-        <Link to="/" className="navMenuLink text-text-grey">
-          <img src={menuIcon} alt="" className="navMenuIcon md:inline-block" />
-          Our&nbsp;menu
-        </Link>
+        <NavLink to="/categories/all" className="navMenuLink text-text-grey hover:text-accent">
+          {({ isActive, isPending }) => (
+            <>
+              <MainIcon isActive={isActive || isPending} /> <span>Our menu</span>
+            </>
+          )}
+        </NavLink>
       </li>
       <li className="navMenuItem lg:hidden">
-        <Link to="/cart" className="navMenuLink text-text-grey">
-          <img src={cartIcon} alt="" className="navMenuIcon md:inline-block" />
-          Cart
-        </Link>
+        <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
+          {({ isActive, isPending }) => (
+            <>
+              <CartIcon isActive={isActive || isPending} /> <span>Cart</span>
+            </>
+          )}
+        </NavLink>
       </li>
       <li className="navMenuItem">
-        <Link to="/delivery" className="navMenuLink text-text-grey">
-          <img src={deliveryIcon} alt="" className="navMenuIcon md:inline-block" />
-          Delivery
-        </Link>
-      </li>
-      <li className="navMenuItem">
-        <Link to="/payment" className="navMenuLink text-text-grey">
-          <img src={paymentIcon} alt="" className="navMenuIcon md:inline-block" />
-          Payment
-        </Link>
-      </li>
-      <li className="navMenuItem">
-        <Link to="/about" className="navMenuLink text-text-grey">
-          <img src={contactsIcon} alt="" className="navMenuIcon md:inline-block" />
-          Contacts
-        </Link>
+        <NavLink to="/about" className="navMenuLink text-text-grey hover:text-accent">
+          {({ isActive, isPending }) => (
+            <>
+              <ContactsIcon isActive={isActive || isPending} /> <span>Contacts</span>
+            </>
+          )}
+        </NavLink>
       </li>
       {isLogged && (
         <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">

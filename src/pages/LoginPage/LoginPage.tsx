@@ -3,14 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
-import { togglePassVisibility, validationSchema } from './model/loginPageModel';
+import togglePassVisibility from './model/passwordToggler';
 import emailIcon from '../../assets/icons/emailIcon.svg';
 import emailIconRed from '../../assets/icons/emailIconRed.svg';
 import lockIcon from '../../assets/icons/LockIcon.svg';
 import lockIconRed from '../../assets/icons/LockIconRed.svg';
 import { ErrorModal } from '../../entities/form/ui';
 import { useLoginUser, useLoginUserDataMutation } from '../../entities/user';
+import { validEmail, validPassword } from '../../shared/const/validationSchemas';
 import { getErrorMessage } from '../../shared/lib/helpers';
 import { useAppSelector, useRevokeAccessRefreshTokens } from '../../shared/lib/hooks';
 import { ILoginUserParams } from '../../shared/types';
@@ -46,6 +48,11 @@ function LoginPage() {
       // console.error(`Error occurred while logging the user! (${e.status})`);
     }
   }
+
+  const validationSchema = Yup.object({
+    ...validEmail(),
+    ...validPassword(),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -105,7 +112,7 @@ function LoginPage() {
           onSubmit={formik.handleSubmit}
           className="
               mx-3
-              my-10
+              mt-24
               box-content
               max-h-[21.5rem]
               w-full
@@ -119,6 +126,7 @@ function LoginPage() {
               text-text-grey
               sm:pl-10
               sm:pr-10
+              md:mt-10
               "
         >
           <h5
@@ -246,6 +254,8 @@ function LoginPage() {
                   bg-accent
                   text-base
                   text-primary
+                  transition-all
+                  duration-300
                   disabled:bg-separation-line 
                   disabled:text-text-grey
                   ${loginIsLoading || loginDataIsLoading ? 'animate-pulse' : ''}

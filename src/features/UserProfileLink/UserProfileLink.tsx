@@ -6,7 +6,7 @@ import { useAppSelector } from '../../shared/lib/hooks';
 
 const headerLoggedClass = 'block md:hidden';
 const menuLoggedClass =
-  'hidden w-full justify-center gap-3 text-text-grey md:mt-6 md:flex md:flex-col md:items-center lg:mt-12 lg:flex-row';
+  'hidden w-full justify-center gap-3 text-text-grey md:mt-28 md:flex md:flex-col md:items-center lg:mt-28 lg:flex-row';
 
 function UserProfileLink(props: { isHeader: boolean }) {
   const { isLogged, userId } = useAppSelector((state) => state.userReducer);
@@ -28,8 +28,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
                 w-40 
                 overflow-hidden 
                 text-ellipsis 
-                text-xl 
-                font-light 
+                text-xl
                 text-text-dark
                 md:text-center 
                 lg:w-full 
@@ -39,9 +38,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
           </h5>
           <h6
             className="
-                text-lg 
-                font-light 
-                md:text-center 
+                md:text-center
                 lg:text-start"
           >
             Good morning!
@@ -54,7 +51,11 @@ function UserProfileLink(props: { isHeader: boolean }) {
     <>
       <Link
         className={`
-        ${isHeader ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 md:hidden' : 'mt-12 hidden h-10 w-3/5 md:block lg:w-2/5'}
+        ${
+          isHeader
+            ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 md:hidden'
+            : 'mt-28 hidden h-10 w-3/5 md:block lg:mt-28 lg:w-2/5'
+        }
         rounded-md
         bg-accent
         text-center

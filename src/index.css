@@ -1,30 +1,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: hsl(0deg, 0%, 95%);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: hsl(126deg, 55%, 47%);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(134deg, 51%, 55%);
+}
+
 @layer base {
   .navMenuItem {
-    @apply flex w-1/5 flex-col items-center justify-end md:mr-auto md:w-full md:flex-row md:justify-start md:pl-6 lg:pl-16;
+    @apply flex w-1/5 flex-col items-center justify-end md:mr-auto md:w-full md:flex-row md:justify-start md:pl-6 lg:pl-14;
   }
+
   .navMenuLink {
-    @apply text-center text-xs md:text-sm lg:text-lg lg:font-light;
+    @apply text-center md:text-left text-base min-w-[80px] min-h-[40];
   }
+
   .navMenuIcon {
     @apply m-auto w-5 md:mr-2 md:w-6 lg:mr-4;
   }
+
   .loginRegLabel {
     @apply relative mt-6 block h-11 w-full rounded-md;
   }
+
   .loginRegInput {
-    @apply h-full w-full rounded-lg border-2 border-separation-line pl-11 text-xs font-medium text-text-dark outline-none transition-colors
-    placeholder:text-sm focus:border-text-grey md:text-base md:placeholder:text-lg;
+    @apply h-full w-full rounded-lg border-2 border-separation-line pl-11 text-xs text-text-dark outline-none transition-colors
+    placeholder:text-sm md:placeholder:text-base focus:border-text-grey md:text-base;
   }
+
   .invalidInputIcon {
     @apply absolute left-4 top-3.5 h-5  w-5 bg-contain bg-no-repeat;
   }
+
   .invalidInputMsg {
     @apply absolute  -top-[1.15rem] left-2  text-[0.5rem]  leading-[0.5rem] text-shop-cart-red peer-invalid:block md:-top-5 md:text-xs;
+  }
+
+  .profileInputWrapper {
+    @apply pt-4 sm:flex sm:items-center sm:justify-between sm:border-b-2 sm:border-separation-line sm:py-5
+  }
+
+  .addressProfileWrapper {
+    @apply mt-6 block h-10 w-full rounded-md border-2 border-separation-line pl-4 text-base leading-[35px] text-text-dark md:max-w-[47%]
+  }
+
+  a.active {
+    @apply text-accent;
   }
 }
 
@@ -37,5 +82,88 @@
 @layer utilities {
   .regFormCheckGulp {
     @apply before:absolute before:-left-5 before:top-2 before:hidden before:h-1.5 before:w-2.5 before:-rotate-45 before:border-b-3 before:border-l-3 before:border-b-accent before:border-l-accent;
+  }
+}
+
+.react-star-rate {
+  display: flex !important;
+}
+
+.react-star-rate__star {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  margin-right: 2px !important;
+}
+
+.swiper-button-prev-unique,
+.swiper-button-next-unique {
+  position: absolute;
+  top: 50%;
+  z-index: 80;
+  width: 0;
+  height: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.swiper-button-prev-unique {
+  background-image: url('assets/icons/slidetPrev.svg');
+  object-fit: cover;
+  left: 0;
+}
+
+.swiper-button-next-unique {
+  background-image: url('assets/icons/sliderRight.svg');
+  object-fit: cover;
+  right: 0;
+}
+
+.swiper {
+  padding-bottom: 150px !important;
+}
+
+#miniSwiper {
+  padding-bottom: 0 !important;
+}
+
+#miniSwiper .swiper-pagination {
+  bottom: 20px !important;
+}
+
+.swiper-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  bottom: 10px !important;
+  background-color: hsl(0deg, 0%, 57%);
+  border-radius: 24px;
+  max-width: 100px;
+  left: 50% !important;
+  transform: translate(-50%, 0%) !important;
+}
+
+.swiper-pagination-bullet,
+.swiper-pagination-bullet-active {
+  background-color: hsla(0, 0%, 0%, 0) !important;
+  border: 1px solid black;
+  height: 18px !important;
+  width: 18px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: hsl(126deg, 0%, 20%) !important;
+  border: none;
+}
+
+@media (min-width: 680px) {
+  .swiper-button-prev-unique,
+  .swiper-button-next-unique {
+    position: absolute;
+    top: 40%;
+    z-index: 80;
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 }

@@ -2,25 +2,30 @@ import React, { useEffect, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import * as Yup from 'yup';
 
-import { validSchemaStepTwo } from './validationSchemas';
 import calendarIcon from '../../../assets/icons/CalendarIcon.svg';
 import calendarIconRed from '../../../assets/icons/CalendarIconRed.svg';
 import userIcon from '../../../assets/icons/UserIcon.svg';
 import userIconRed from '../../../assets/icons/UserIconRed.svg';
 import { CustomRegForm } from '../../../entities/form/ui';
+import { validBirthDate, validName } from '../../../shared/const/validationSchemas';
 import { ErrorMessage, inputAnimation, svgAnimation } from '../../../shared/ui';
 import { UserFormProps } from '../types';
 
-const validationSchema = validSchemaStepTwo();
+const validationSchema = Yup.object({
+  ...validBirthDate(),
+  firstName: validName().name,
+  lastName: validName().name,
+});
 
 export default function RegStepTwo(props: UserFormProps) {
-  const { firstName, lastName, birthDate, updateData, enableNext } = props;
+  const { firstName, lastName, dateOfBirth, updateData, enableNext } = props;
   const formik = useFormik({
     initialValues: {
       firstName,
       lastName,
-      birthDate,
+      dateOfBirth,
     },
     validationSchema,
     onSubmit: () => {},
@@ -30,7 +35,7 @@ export default function RegStepTwo(props: UserFormProps) {
   const [isDateFocus, setIsDateFocus] = useState(false);
 
   function handleTransitionEnd() {
-    setDateInputType(document.activeElement?.id === 'birthDateInput' ? 'date' : 'text');
+    setDateInputType(document.activeElement?.id === 'dateOfBirthInput' ? 'date' : 'text');
   }
 
   function blurHandler(e: React.FocusEvent<HTMLInputElement, Element>) {
@@ -43,17 +48,17 @@ export default function RegStepTwo(props: UserFormProps) {
   }
 
   useEffect(() => {
-    updateData({ firstName: values.firstName, lastName: values.lastName, birthDate: values.birthDate });
+    updateData({ firstName: values.firstName, lastName: values.lastName, dateOfBirth: values.dateOfBirth });
 
     if (
       (touched.firstName === undefined && values.firstName === '') ||
       (touched.lastName === undefined && values.lastName === '') ||
-      (touched.birthDate === undefined && values.birthDate === '')
+      (touched.dateOfBirth === undefined && values.dateOfBirth === '')
     ) {
       enableNext(false);
       return;
     }
-    if (errors.firstName || errors.lastName || errors.birthDate) {
+    if (errors.firstName || errors.lastName || errors.dateOfBirth) {
       enableNext(false);
       return;
     }
@@ -62,7 +67,7 @@ export default function RegStepTwo(props: UserFormProps) {
 
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
-  const touchedAndErrorBirthDate = touched.birthDate && errors.birthDate;
+  const touchedAndErrorBirthDate = touched.dateOfBirth && errors.dateOfBirth;
 
   return (
     <CustomRegForm>
@@ -92,14 +97,14 @@ export default function RegStepTwo(props: UserFormProps) {
           <span className="text-sm">{touchedAndErrorFirstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}</span>
         </label>
         <div className={`w-2/4 overflow-hidden transition-all duration-300 ease-bounce ${isDateFocus ? 'w-5/6' : ''}`}>
-          <label onTransitionEnd={handleTransitionEnd} htmlFor="birthDateInput" className="loginRegLabel">
+          <label onTransitionEnd={handleTransitionEnd} htmlFor="dateOfBirthInput" className="loginRegLabel">
             <motion.input
               initial={inputAnimation.initial}
               animate={inputAnimation.animate}
               transition={{ ...inputAnimation.transition, delay: 0.15 }}
-              id="birthDateInput"
+              id="dateOfBirthInput"
               type={dateInputType}
-              name="birthDate"
+              name="dateOfBirth"
               placeholder="Birth date"
               onFocus={(e: React.FocusEvent<HTMLInputElement, Element>) => focusHandler(e)}
               className={`loginRegInput placeholder:placeholder-opacity-0 ${
@@ -107,7 +112,7 @@ export default function RegStepTwo(props: UserFormProps) {
               }`}
               onChange={handleChange}
               onBlur={(e: React.FocusEvent<HTMLInputElement, Element>) => blurHandler(e)}
-              value={values.birthDate}
+              value={values.dateOfBirth}
             />
             <motion.img
               initial={svgAnimation.initial}
@@ -117,7 +122,7 @@ export default function RegStepTwo(props: UserFormProps) {
               src={touchedAndErrorBirthDate ? calendarIconRed : calendarIcon}
               alt=""
             />
-            {touchedAndErrorBirthDate && <ErrorMessage>{errors.birthDate}</ErrorMessage>}
+            {touchedAndErrorBirthDate && <ErrorMessage>{errors.dateOfBirth}</ErrorMessage>}
           </label>
         </div>
       </div>

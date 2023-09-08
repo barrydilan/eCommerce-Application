@@ -19,7 +19,7 @@ const initVals: IFormData = {
   password: '',
   firstName: '',
   lastName: '',
-  birthDate: '',
+  dateOfBirth: '',
   sameBillShip: true,
   billSetDefault: true,
   shipSetDefault: true,
@@ -57,7 +57,7 @@ export default function RegPage() {
     [setFormData],
   );
 
-  const { email, password, firstName, lastName, birthDate, sameBillShip, addresses, billSetDefault, shipSetDefault } =
+  const { email, password, firstName, lastName, dateOfBirth, sameBillShip, addresses, billSetDefault, shipSetDefault } =
     formData;
 
   const { isFirstStep, isLastStep, formLength, reStartForm, currentStepIndex, currForm, back, next } = useMultistepForm(
@@ -66,7 +66,7 @@ export default function RegPage() {
       <RegStepTwo
         firstName={firstName}
         lastName={lastName}
-        birthDate={birthDate}
+        dateOfBirth={dateOfBirth}
         updateData={updateData}
         enableNext={enableNext}
         key={1}
@@ -133,7 +133,7 @@ export default function RegPage() {
         )
       ) : (
         <div
-          className={`relative mx-3 my-10 flex w-fit flex-col items-center justify-center rounded-3xl px-4 sm:px-10 ${
+          className={`relative mx-3 my-24 flex w-fit flex-col items-center justify-center rounded-3xl px-4 sm:px-10 ${
             sameBillShip || currentStepIndex < 2 ? 'h-[379.2px]' : 'h-[529.72px]'
           }`}
         >
