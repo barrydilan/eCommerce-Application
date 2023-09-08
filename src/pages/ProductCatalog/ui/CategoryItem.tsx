@@ -40,6 +40,16 @@ function CategoryItem({ item, activeCat, index, children = null }: ICategoryItem
     });
   }
 
+  function handleClick() {
+    if (activeCat === item) return;
+
+    if (isPrevCategory) {
+      goBack();
+    } else {
+      goForward();
+    }
+  }
+
   return (
     <motion.li
       initial={{ y: isPrevCategory ? '0' : '100%' }}
@@ -54,7 +64,7 @@ function CategoryItem({ item, activeCat, index, children = null }: ICategoryItem
     >
       <button
         className={`${isActive ? 'text-text-dark' : ''} relative`}
-        onClick={isPrevCategory ? goBack : goForward}
+        onClick={handleClick}
         data-user-select={item}
         type="button"
       >
