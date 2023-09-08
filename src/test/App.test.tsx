@@ -16,7 +16,7 @@ describe('App', () => {
   });
 
   it('Renders the not found page if invalid path', () => {
-    RenderTestApp(<App />, '/test-for-not-found-route');
+    RenderTestApp(<App />, '/eCommerce-Application/test-for-not-found-route');
 
     expect(
       screen.getByRole('heading', {
@@ -53,11 +53,13 @@ describe('App', () => {
 
   // it('Renders the menu page', () => {
   //   RenderTestApp(<App />);
-  //   // expect(screen.getByText('Here will be main content', { exact: false })).toBeInTheDocument();
+  //
+  //   expect(screen.getByText('Here will be main content', { exact: false })).toBeInTheDocument();
   // });
   //
   // it('Renders the about page', () => {
   //   RenderTestApp(<App />, '/about');
-  //   // expect(screen.getByText('About us', { exact: false })).toBeInTheDocument();
+  //
+  //   expect(screen.getByText('About us', { exact: false })).toBeInTheDocument();
   // });
 });
