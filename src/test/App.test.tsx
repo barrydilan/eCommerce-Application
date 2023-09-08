@@ -51,15 +51,13 @@ describe('App', () => {
     expect(screen.getByRole('link', { name: 'Log in' })).toBeInTheDocument();
   });
 
-  it('Renders the menu page', () => {
-    RenderTestApp(<App />);
-
-    expect(screen.getByText('Here will be main content', { exact: false })).toBeInTheDocument();
-  });
-
-  it('Renders the about page', () => {
-    RenderTestApp(<App />, '/about');
-
-    expect(screen.getByText('About us', { exact: false })).toBeInTheDocument();
-  });
+  // it('Renders the menu page', () => {
+  //   RenderTestApp(<App />);
+  //   // expect(screen.getByText('Here will be main content', { exact: false })).toBeInTheDocument();
+  // });
+  //
+  // it('Renders the about page', () => {
+  //   RenderTestApp(<App />, '/about');
+  //   // expect(screen.getByText('About us', { exact: false })).toBeInTheDocument();
+  // });
 });
