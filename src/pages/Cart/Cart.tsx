@@ -1,13 +1,6 @@
 export default function Cart() {
   return (
-    <div
-      className="
-      col-start-3
-      row-start-2
-      min-w-[11rem]
-      border-2
-      border-accent"
-    >
+    <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae saepe culpa est in non. Laboriosam omnis
       doloribus adipisci quas, exercitationem, accusamus nesciunt tenetur quis tempore nobis assumenda vitae odit
       tempora? Ducimus vero, qui aperiam sed eius tempora quia quos architecto, quae reiciendis praesentium, quaerat

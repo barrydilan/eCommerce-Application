@@ -32,7 +32,7 @@ export function App() {
           mx-auto
           grid
           min-h-[100dvh]
-          grid-cols-3
+          grid-cols-1
           grid-rows-mobGridRows
           font-poppins
           text-base
@@ -57,7 +57,18 @@ export function App() {
           </LocationProvider>
         </div>
         <NavBlock />
-        <Cart />
+        <div
+          className="
+         hidden
+         md:col-start-3
+      md:row-start-2
+          md:block
+      md:min-w-[11rem]
+      md:border-2
+    md:border-accent"
+        >
+          <Cart />
+        </div>
       </div>
     </main>
   );

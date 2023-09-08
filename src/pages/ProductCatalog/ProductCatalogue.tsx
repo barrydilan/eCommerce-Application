@@ -150,7 +150,7 @@ export default function ProductCatalogue() {
       className="
         mt-14
         grid
-        grid-cols-2
+        grid-cols-1
         grid-rows-prodPageMob
         px-[10px]
         sm:mt-16
