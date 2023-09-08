@@ -37,7 +37,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
   return (
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
-        <div className="flex rounded-2xl border-1 border-border-black/10 transition delay-150 duration-300 ease-in-out hover:bg-accent-light">
+        <div className="flex rounded-2xl border-1 border-border-black/10 transition delay-150 duration-300 ease-in-out hover:bg-accent-light dark:border-dark-separation-line dark:hover:bg-dark-separation-line">
           <div className="m-h-[170px] relative flex flex-[75%] gap-x-3 sm:gap-x-7">
             <img
               onLoad={() => setIsLoading(false)}
@@ -55,7 +55,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
             ) : null}
             <div className="my-4 flex flex-col gap-y-2 xs:gap-y-3 sm:my-7">
               <div className="flex w-fit flex-1 flex-col gap-y-3">
-                <h2 className="text-text-dark sm:text-xl">{name}</h2>
+                <h2 className="text-text-dark dark:text-primary sm:text-xl">{name}</h2>
                 <div>
                   <h4 className="text-sm text-text-grey">{calories} kcal</h4>
                   <h4 className="text-sm text-text-grey">{weight} g</h4>
@@ -78,7 +78,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               {oldPrice ? (
                 <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
               ) : null}
-              <h3 className="text-base font-medium text-text-dark sm:text-xl">$ {corePrice}</h3>
+              <h3 className="text-base font-medium text-text-dark dark:text-primary sm:text-xl">$ {corePrice}</h3>
             </div>
             <AddToCartBtn />
           </div>

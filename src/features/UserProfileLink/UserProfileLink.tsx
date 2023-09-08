@@ -30,9 +30,11 @@ function UserProfileLink(props: { isHeader: boolean }) {
                 text-ellipsis 
                 text-xl
                 text-text-dark
+                dark:text-primary 
                 md:text-center 
-                lg:w-full 
-                lg:text-start"
+                lg:w-full
+                lg:text-start
+            "
           >
             {userFullName}
           </h5>

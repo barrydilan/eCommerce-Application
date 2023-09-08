@@ -39,7 +39,9 @@ function Header() {
         transition-all
         duration-300 dark:bg-dark-bg-primary
         md:border-b-2
-        md:border-separation-line lg:justify-start
+        md:border-separation-line dark:md:border-dark-separation-line
+        lg:w-[1536px]
+        lg:justify-start
       "
     >
       <div
@@ -56,6 +58,7 @@ function Header() {
           md:w-44
           md:border-r-2
           md:border-separation-line
+          dark:md:border-dark-separation-line
           lg:mr-0
           lg:w-89
           lg:pl-8
