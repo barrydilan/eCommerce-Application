@@ -3,6 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
   theme: {
     colors: {
       'accent': 'hsl(126, 55%, 47%)',
@@ -20,6 +21,7 @@ export default {
       'rating-star-empty': 'hsl(100, 100%, 100%)',
       'modal-overlay': 'hsl(0, 0%, 0%)',
       'modal-bg': 'hsl(0, 0%, 100%)',
+      'dark-bg-primary': 'hsl(240, 2%, 24%)',
     },
     fontFamily: {
       poppins: ['Poppins', 'sans-serif'],

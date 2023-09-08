@@ -36,6 +36,8 @@ function Header() {
         items-center
         justify-end
         bg-primary
+        transition-all
+        duration-300 dark:bg-dark-bg-primary
         md:border-b-2
         md:border-separation-line lg:justify-start
       "
@@ -74,6 +76,7 @@ function Header() {
             text-sm
             tracking-tight
             text-text-dark
+            dark:text-primary
             md:pt-2
             md:text-xl
             lg:text-2xl
@@ -104,6 +107,7 @@ function Header() {
           before:content-searchIcon
           md:leading-10
           lg:before:left-4
+          
         "
       >
         <input
@@ -122,9 +126,12 @@ function Header() {
             w-full 
             rounded 
             pl-2
-            focus:bg-separation-line 
-            focus:outline-none 
-            md:leading-10
+            transition-all 
+            duration-300 
+            focus:bg-separation-line
+            focus:outline-none
+            dark:bg-dark-bg-primary
+            dark:text-text-grey md:leading-10
             lg:pl-10
             "
         />
