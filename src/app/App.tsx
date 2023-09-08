@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, useLocation } from 'react-router-dom';
 
-import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../entities/user';
 import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
@@ -11,10 +10,12 @@ import NavBlock from '../pages/NavBlock/NavBlock';
 import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
+import LocationProvider from './utils/LocationProvider.tsx';
 
 export function App() {
   const dispatch = useAppDispatch();
   const { loggedIn } = userSlice.actions;
+  const location = useLocation();
 
   useEffect(() => {
     const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
@@ -57,8 +58,9 @@ export function App() {
           </LocationProvider>
         </div>
         <NavBlock />
-        <div
-          className="
+        {location.pathname !== '/cart' ? (
+          <div
+            className="
          hidden
          md:col-start-3
       md:row-start-2
@@ -66,9 +68,10 @@ export function App() {
       md:min-w-[11rem]
       md:border-2
     md:border-accent"
-        >
-          <Cart />
-        </div>
+          >
+            <Cart />
+          </div>
+        ) : null}
       </div>
     </main>
   );
