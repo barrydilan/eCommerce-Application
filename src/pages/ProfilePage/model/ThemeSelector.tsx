@@ -40,10 +40,10 @@ export default function ThemeSelector() {
 
   return (
     <div>
-      <div className="text-md flex w-full items-center justify-around font-medium dark:text-primary">
-        <div className="mt-6 flex items-center">
+      <div className="text-md mt-10 flex w-full flex-col items-center justify-around gap-6 font-medium dark:text-primary sm:flex-row sm:gap-0">
+        <div className="flex items-center">
           <input
-            onClick={handleDefTheme}
+            onChange={handleDefTheme}
             id="defTheme"
             type="checkbox"
             checked={defTheme}
@@ -60,21 +60,21 @@ export default function ThemeSelector() {
           <label
             htmlFor="defTheme"
             className="
-              relative
-              before:absolute
-              before:-left-6
-              before:top-1.5
-              before:hidden
-              before:h-2
-              before:w-3
-              before:-rotate-45
-              before:rounded-sm
-              before:border-b-4
-              before:border-l-4
-              before:border-b-primary
-              before:border-l-primary
-              peer-checked/passToggler:before:block
-            "
+                relative
+                before:absolute
+                before:-left-6
+                before:top-1.5
+                before:hidden
+                before:h-2
+                before:w-3
+                before:-rotate-45
+                before:rounded-sm
+                before:border-b-4
+                before:border-l-4
+                before:border-b-primary
+                before:border-l-primary
+                peer-checked/passToggler:before:block
+              "
           >
             Use default OS color theme
           </label>

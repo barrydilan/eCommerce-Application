@@ -39,8 +39,8 @@ export default function ProfilePage() {
     <div className="my-12 p-5 sm:mt-[5.6rem] xl:px-24">
       <BackBtn />
       <ProfileHeader />
-      <ThemeSelector />
       <UserImage pic={userImage} userData={data} />
+      <ThemeSelector />
       <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
       {isAccTabActive ? <AccountSettings userData={data} /> : <AddressesSettings userData={data} />}
     </div>
