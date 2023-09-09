@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import getAttribute from './lib/helpers/getAttribute.ts';
 import AddWishlistMobile from './ui/AddWishlistMobile.tsx';
@@ -32,6 +32,17 @@ export default function ProductPage() {
   const handleCloseSlider = () => {
     setSliderOpen(false);
   };
+
+  useEffect(() => {
+    if (!data) return;
+    const title = data.name.en;
+    document.title = title;
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      document.title = 'SushiSushi - Royal Asia Flavour';
+    };
+  });
 
   if (!data)
     return (
