@@ -15,6 +15,17 @@ function UserProfileLink(props: { isHeader: boolean }) {
   const { isHeader } = props;
   const userFullName = getFullName(data?.firstName, data?.lastName);
 
+  const hours = new Date().getHours();
+
+  function getGreeting(_hours: number) {
+    if (_hours >= 6 && _hours < 12) return 'Good morning!';
+    if (_hours >= 12 && _hours < 18) return 'Good day!';
+    if (_hours >= 18 && _hours < 23) return 'Good evening!';
+    return 'Good night!';
+  }
+
+  const greeting = getGreeting(hours);
+
   if (isLogged) {
     return (
       <Link
@@ -43,7 +54,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
                 md:text-center
                 lg:text-start"
           >
-            Good morning!
+            {greeting}
           </h6>
         </div>
       </Link>
