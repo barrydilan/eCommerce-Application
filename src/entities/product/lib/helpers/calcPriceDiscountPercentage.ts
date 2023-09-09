@@ -6,7 +6,7 @@
  * @return {number} The percentage discount between the two prices.
  */
 function calcPriceDiscountPercentage(oldPrice: number, newPrice: number) {
-	return Math.floor((newPrice / oldPrice) * 100);
+	return 100 - Math.floor((newPrice / oldPrice) * 100);
 }
 
 export default calcPriceDiscountPercentage;

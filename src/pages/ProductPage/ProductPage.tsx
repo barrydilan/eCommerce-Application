@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import getAttribute from './lib/helpers/getAttribute.ts';
 import AddWishlistMobile from './ui/AddWishlistMobile.tsx';
+import Allergens from './ui/Allergens.tsx';
 import BackButton from './ui/BackButton.tsx';
 import Description from './ui/Description.tsx';
 import Footer from './ui/Footer.tsx';
@@ -69,6 +70,7 @@ export default function ProductPage() {
   const ingredients = getAttribute(attributes, ProductAttributeNames.INGREDIENTS)?.toString()?.split(', ');
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
+  const allergens = getAttribute(attributes, ProductAttributeNames.ALLERGENS);
 
   return (
     <div
@@ -108,6 +110,7 @@ export default function ProductPage() {
                   </>
                 </IngredientList>
               ) : null}
+              {typeof allergens === 'string' ? <Allergens allergens={allergens} /> : null}
             </div>
           </div>
         </div>
