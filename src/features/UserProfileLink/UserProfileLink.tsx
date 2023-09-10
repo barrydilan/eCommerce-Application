@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import getGreeting from './helpers/getGreeting';
 import userPic from '../../assets/img/UserImg.jpg';
 import { getFullName, useGetUserQuery } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
@@ -16,13 +17,6 @@ function UserProfileLink(props: { isHeader: boolean }) {
   const userFullName = getFullName(data?.firstName, data?.lastName);
 
   const hours = new Date().getHours();
-
-  function getGreeting(_hours: number) {
-    if (_hours >= 6 && _hours < 12) return 'Good morning!';
-    if (_hours >= 12 && _hours < 18) return 'Good day!';
-    if (_hours >= 18 && _hours < 23) return 'Good evening!';
-    return 'Good night!';
-  }
 
   const greeting = getGreeting(hours);
 
