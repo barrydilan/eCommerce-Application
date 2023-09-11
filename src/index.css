@@ -61,7 +61,7 @@ html {
   }
 
   .profileInputWrapper {
-    @apply pt-4 sm:flex sm:items-center sm:justify-between sm:border-b-2 sm:border-separation-line sm:py-5
+    @apply pt-4 sm:flex sm:items-center sm:justify-between sm:py-5;
   }
 
   .addressProfileWrapper {

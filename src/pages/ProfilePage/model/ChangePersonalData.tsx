@@ -221,14 +221,16 @@ export default function ChangePersonalData(props: { userData: IUser }) {
           {touchedAndErrorBirthDate && <ErrorMessage>{errors.dateOfBirth}</ErrorMessage>}
         </label>
       </div>
-      <button
-        className="mb-12 mt-5  h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line disabled:text-text-grey"
-        type="button"
-        disabled={isSaveBlocked}
-        onClick={saveClickHandler}
-      >
-        Save
-      </button>
+      <div className="flex w-full justify-end">
+        <button
+          className="mb-12 ml-auto mt-5 h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line disabled:text-text-grey sm:w-30"
+          type="button"
+          disabled={isSaveBlocked}
+          onClick={saveClickHandler}
+        >
+          Save
+        </button>
+      </div>
     </div>
   );
 }

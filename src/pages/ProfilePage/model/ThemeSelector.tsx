@@ -110,6 +110,8 @@ export default function ThemeSelector() {
                 damping: 26,
               }}
               className={`
+                relative
+                z-10
                 block
                 h-4
                 w-4
