@@ -17,7 +17,7 @@ function Blackout({ isBlackout }: IBlackoutProps) {
     <div
       className={`${
         isBlackout ? 'visible opacity-10' : 'invisible opacity-0'
-      } pointer-events-none absolute inset-0 z-30 m-auto h-full w-full bg-border-black backdrop-blur-3xl transition-all`}
+      } pointer-events-none absolute inset-0 z-30 m-auto h-[430%] w-full bg-border-black backdrop-blur-3xl transition-all`}
     />
   );
 }

@@ -4,6 +4,7 @@ import AddressesDefault from './AddressesDefault';
 import AddressesEditModal from './AddressesEditModal';
 import AddressesList from './AddressesList';
 import { IUser } from '../../../shared/types';
+import { Blackout } from '../../../shared/ui';
 import { AddressObj } from '../types/profilePageTypes';
 
 export default function AddressesSettings(props: { userData: IUser }) {
@@ -13,7 +14,8 @@ export default function AddressesSettings(props: { userData: IUser }) {
   const [editedAddress, setEditedAddress] = useState({} as AddressObj);
 
   return (
-    <div className="relative flex flex-col">
+    <div className="flex flex-col">
+      <Blackout isBlackout={isModalOpen} />
       <AddressesDefault userData={userData} />
       <AddressesList userData={userData} setEditedAddress={setEditedAddress} setIsModalOpen={setIsModalOpen} />
       {isModalOpen ? (

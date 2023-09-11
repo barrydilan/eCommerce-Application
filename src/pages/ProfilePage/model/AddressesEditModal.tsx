@@ -132,12 +132,11 @@ export default function AddressesEditModal(props: {
 
   window.scrollTo(0, 250);
   return (
-    <div className={`absolute h-full w-full transition-all duration-300 `}>
-      <div className="absolute z-10 h-full w-full rounded-md bg-text-dark opacity-30" />
+    <div className={`absolute inset-0 z-50 m-auto h-full w-5/6 translate-y-1/2 transition-all duration-300 md:w-1/2 `}>
       <div
         className="
           relative
-          z-20
+          z-40
           m-auto
           mt-5
           box-border
@@ -152,7 +151,7 @@ export default function AddressesEditModal(props: {
           dark:bg-dark-bg-primary
         "
       >
-        <h4 className="w-full text-center font-medium">Edit your address:</h4>
+        <h4 className="w-full text-center text-lg font-medium text-text-dark">Edit your address:</h4>
         <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
         <div>
           <label
