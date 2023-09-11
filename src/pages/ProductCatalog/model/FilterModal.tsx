@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import FilterModalCheckbox from './FilterModalCheckbox';
 import FilterModalNumberInput from './FilterModalNumberInput';
 import { FiltersFields, filtersInitialState } from './filtersInitialState.ts';
+import { ProductAttributeNames, useLazyGetProductListQuery } from '../../../entities/product';
+import getAttribute from '../../ProductPage/lib/helpers/getAttribute.ts';
 
 const shownClasses = 'pointer-events-auto translate-x-0 opacity-1 lg:translate-y-16';
 const hiddenClasses = 'pointer-events-none -translate-x-52 opacity-0 lg:translate-x-0 lg:-translate-y-52';
@@ -15,12 +17,46 @@ export default function FilterModal(props: {
   onApplyFilters: () => void;
 }) {
   const { isFiltersOpen, onFilterOpen, filtersState, setFiltersState, onApplyFilters } = props;
+  const [getProducts, { data }] = useLazyGetProductListQuery();
 
   const universalFilterChanger = (value: string | boolean, field: string) => {
     setFiltersState((prev) => {
       return { ...prev, [field]: value };
     });
   };
+
+  let veganResults = 0;
+  let spicyResults = 0;
+  let promoResults = 0;
+
+  if (data) {
+    data.results.forEach(({ masterVariant: { attributes } }) => {
+      if (getAttribute(attributes, ProductAttributeNames.IS_VEGAN)) {
+        veganResults += 1;
+      }
+
+      if (getAttribute(attributes, ProductAttributeNames.IS_SPICY)) {
+        spicyResults += 1;
+      }
+
+      if (getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE)) {
+        promoResults += 1;
+      }
+    });
+  }
+
+  const getProductList = useCallback(() => {
+    getProducts(
+      {
+        limit: 100,
+      },
+      true,
+    );
+  }, [getProducts]);
+
+  useEffect(() => {
+    getProductList();
+  }, [getProductList]);
 
   return (
     <div
@@ -58,7 +94,7 @@ export default function FilterModal(props: {
             checked={filtersState.isVegan}
             universalFilterChanger={universalFilterChanger}
             text="Vegan"
-            itemsNum={8}
+            itemsNum={veganResults}
             peer="peer-checked/isVegan:before:block"
           />
           <FilterModalCheckbox
@@ -66,7 +102,7 @@ export default function FilterModal(props: {
             checked={filtersState.isSpicy}
             universalFilterChanger={universalFilterChanger}
             text="Spicy"
-            itemsNum={5}
+            itemsNum={spicyResults}
             peer="peer-checked/isSpicy:before:block"
           />
           <FilterModalCheckbox
@@ -74,7 +110,7 @@ export default function FilterModal(props: {
             checked={filtersState.isPromo}
             universalFilterChanger={universalFilterChanger}
             text="Promo"
-            itemsNum={7}
+            itemsNum={promoResults}
             peer="peer-checked/isPromo:before:block"
           />
         </div>

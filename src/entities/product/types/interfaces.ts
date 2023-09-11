@@ -12,11 +12,11 @@ export interface IGetProductAttributes {
 
 export interface IGetProductListParams {
 	limit: number;
-	offset: number;
-	sort: {
+	offset?: number;
+	sort?: {
 		field: ProductSortingFields;
 		order: ProductSortOrders;
 	};
-	filters: IGetProductAttributes;
-	searchQuery: string | null;
+	filters?: IGetProductAttributes;
+	searchQuery?: string | null;
 }

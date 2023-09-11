@@ -227,20 +227,18 @@ export default function ProductCatalogue() {
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
             className="grid items-center gap-5 pb-12 lg:gap-6"
           >
-            {productListData.results?.map(
-              ({ id, name, masterVariant, masterVariant: { prices, images, attributes } }, i) => (
-                <MenuItem
-                  key={`${id}-${i}`}
-                  id={id}
-                  name={name.en}
-                  prices={prices}
-                  image={images[0].url}
-                  attributes={attributes}
-                  isSpicy={Boolean(getAttribute(masterVariant.attributes, ProductAttributeNames.IS_SPICY))}
-                  isVegan={Boolean(getAttribute(masterVariant.attributes, ProductAttributeNames.IS_VEGAN))}
-                />
-              ),
-            )}
+            {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
+              <MenuItem
+                key={`${id}-${i}`}
+                id={id}
+                name={name.en}
+                prices={prices}
+                image={images[0].url}
+                attributes={attributes}
+                isSpicy={Boolean(getAttribute(attributes, ProductAttributeNames.IS_SPICY))}
+                isVegan={Boolean(getAttribute(attributes, ProductAttributeNames.IS_VEGAN))}
+              />
+            ))}
           </InfiniteScroll>
         ) : null}
       </MenuList>
