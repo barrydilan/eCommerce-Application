@@ -106,7 +106,7 @@ export default function FilterModal(props: {
             setFiltersState(filtersInitialState);
           }}
           type="button"
-          className="w-1/2 rounded-lg border-1 bg-primary px-1.5 py-2 text-text-grey  transition-all
+          className="w-1/2 rounded-lg border-1 bg-primary px-1.5 py-2 text-text-grey transition-all
           hover:bg-separation-line"
         >
           Reset
@@ -114,8 +114,8 @@ export default function FilterModal(props: {
         <button
           onClick={onApplyFilters}
           type="button"
-          className="w-1/2 rounded-lg bg-accent-lightest px-1.5 py-2 text-accent transition-all
-          hover:bg-separation-line"
+          className="w-1/2 rounded-lg bg-accent px-1.5 py-2 text-accent-lightest transition-all
+          hover:bg-accent-lightest hover:text-accent"
         >
           Apply
         </button>
