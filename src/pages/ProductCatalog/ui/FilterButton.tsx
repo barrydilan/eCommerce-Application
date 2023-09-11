@@ -1,9 +1,9 @@
-import React from 'react';
+import { Cycle } from 'framer-motion';
 
 import filterIcon from '../../../assets/icons/FiltersIcon.svg';
 
 interface IFilterButton {
-  onFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onFilterOpen: Cycle;
 }
 
 function FilterButton({ onFilterOpen }: IFilterButton) {
@@ -11,14 +11,16 @@ function FilterButton({ onFilterOpen }: IFilterButton) {
     <button
       type="button"
       onClick={() => {
-        onFilterOpen((prev) => !prev);
+        onFilterOpen();
       }}
       className="
+            z-20
             flex
             items-center
             rounded-lg
             border-[1.5px]
             border-text-grey
+            bg-primary
             px-[12px]
             py-[10px]
             transition-all

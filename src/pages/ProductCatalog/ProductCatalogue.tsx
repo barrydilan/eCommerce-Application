@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 
+import { useCycle } from 'framer-motion';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
@@ -32,7 +33,7 @@ export default function ProductCatalogue() {
 
   const { pathname } = useLocation();
   const [query, setQuery] = useSearchParams();
-  const [isFiltersOpen, onFilterOpen] = useState(false);
+  const [isFiltersOpen, onFilterOpen] = useCycle(false, true);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] =
@@ -111,7 +112,7 @@ export default function ProductCatalogue() {
   }
 
   function onApplyFilters() {
-    onFilterOpen(false);
+    onFilterOpen();
     fetchProducts();
     setProductItems(undefined);
 
