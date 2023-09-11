@@ -1,13 +1,16 @@
+import React from 'react';
+
+import { motion } from 'framer-motion';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ICategoryItemProps {
   item: string;
   activeCat: string;
+  children?: React.ReactNode | null;
+  index: number;
 }
 
-const greenBorder = 'border-b-2 border-accent';
-
-function CategoryItem({ item, activeCat }: ICategoryItemProps) {
+function CategoryItem({ item, activeCat, index, children = null }: ICategoryItemProps) {
   const [query] = useSearchParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -34,18 +37,55 @@ function CategoryItem({ item, activeCat }: ICategoryItemProps) {
     });
   }
 
+  function handleClick() {
+    if (activeCat === item) return;
+
+    if (isPrevCategory) {
+      goBack();
+    } else {
+      goForward();
+    }
+  }
+
   return (
-    <li className={`whitespace-nowrap px-1 ${isActive ? greenBorder : ''}`}>
+    <motion.li
+      initial={{ y: isPrevCategory ? '0' : '100%' }}
+      animate={{ y: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 560,
+        damping: 23,
+        delay: 0.05 * index,
+      }}
+      className="flex items-center gap-3 whitespace-nowrap px-1"
+    >
       <button
-        className={`${isActive ? 'text-text-dark dark:text-primary' : ''}`}
-        onClick={isPrevCategory ? goBack : goForward}
+        className={`${isActive ? 'text-text-dark dark:text-primary' : ''} relative`}
+        onClick={handleClick}
         data-user-select={item}
         type="button"
       >
         {item}
+        {isActive ? (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              type: 'spring',
+              stiffness: 160,
+              damping: 23,
+            }}
+            className="absolute -bottom-0.5 left-0 h-0.5 w-full bg-accent md:-bottom-1"
+          />
+        ) : null}
       </button>
-    </li>
+      {children}
+    </motion.li>
   );
 }
+
+CategoryItem.defaultProps = {
+  children: null,
+};
 
 export default CategoryItem;
