@@ -14,7 +14,9 @@ function Description({ attributes }: IDescriptionProps) {
           if (
             index === 0 ||
             attr.name === ProductAttributeNames.IS_SPICY ||
-            attr.name === ProductAttributeNames.IS_VEGAN
+            attr.name === ProductAttributeNames.IS_VEGAN ||
+            attr.name === ProductAttributeNames.DISCOUNT_PRICE ||
+            attr.name === ProductAttributeNames.ALLERGENS
           )
             return null;
           return <span className="block" key={attr.name}>{`${capitalize(attr.name)} - ${attr.value}`}</span>;

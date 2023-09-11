@@ -8,6 +8,7 @@ export enum ProductAttributeNames {
 	IS_VEGAN = 'isVegan',
 	IS_SPICY = 'isSpicy',
 	DISCOUNT_PRICE = 'discountPrice',
+	ALLERGENS = 'allergens',
 }
 
 export enum ProductSortingFields {

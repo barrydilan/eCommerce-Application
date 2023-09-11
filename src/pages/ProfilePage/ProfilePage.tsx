@@ -4,6 +4,7 @@ import AccountSettings from './model/AccountSettings';
 import AddressesSettings from './model/AddressesSettings';
 import BackBtn from './model/BackBtn';
 import TabSelector from './model/TabSelector';
+import ThemeSelector from './model/ThemeSelector.tsx';
 import UserImage from './model/UserImage';
 import ProfileHeader from './ui/ProfileHeader';
 import userImage from '../../assets/img/UserImg.jpg';
@@ -39,6 +40,7 @@ export default function ProfilePage() {
       <BackBtn />
       <ProfileHeader />
       <UserImage pic={userImage} userData={data} />
+      <ThemeSelector />
       <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
       {isAccTabActive ? <AccountSettings userData={data} /> : <AddressesSettings userData={data} />}
     </div>

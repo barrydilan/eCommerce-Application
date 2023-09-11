@@ -74,8 +74,8 @@ function NavMenu() {
         </NavLink>
       </li>
       {isLogged && (
-        <li className="navMenuItem hidden md:absolute md:bottom-6 md:block">
-          <button onClick={handleLogout} type="button" className="navMenuLink text-text-dark">
+        <li className="navMenuItem hidden md:absolute md:bottom-6 md:block ">
+          <button onClick={handleLogout} type="button" className="navMenuLink text-text-dark dark:text-primary">
             <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
             Log out
           </button>

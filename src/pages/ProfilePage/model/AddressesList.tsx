@@ -31,7 +31,7 @@ export default function AddressesList(props: {
         );
       })}
       <button
-        className="mt-8 flex h-10 items-center rounded-md px-2 text-base font-medium text-accent transition-all duration-300 hover:bg-separation-line"
+        className="mt-8 flex h-10 w-32 items-center rounded-md px-2 text-base font-medium text-accent transition-all duration-300 hover:bg-separation-line dark:border-2 dark:border-text-grey dark:text-primary dark:hover:bg-dark-separation-line"
         type="button"
         onClick={addAddressHandler}
       >

@@ -22,6 +22,9 @@ export default function InfoModal(props: { msgModalShown: boolean; msgModalText:
           font-medium
           transition-all
           duration-500
+          dark:border-dark-separation-line
+          dark:bg-dark-bg-primary
+          dark:text-primary
           ${msgModalShown ? '-translate-y-1/2 opacity-100' : 'translate-y-0 opacity-0'}
         `}
     >

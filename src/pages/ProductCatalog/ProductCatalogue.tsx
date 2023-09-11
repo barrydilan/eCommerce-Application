@@ -196,7 +196,7 @@ export default function ProductCatalogue() {
 
               return (
                 <React.Fragment key={name}>
-                  <CategoryItem item={name} activeCat={activeCat} />
+                  <CategoryItem index={i} item={name} activeCat={activeCat} />
                   {!isLast && (activeCat === name || isPrevCat) ? '/' : ''}
                 </React.Fragment>
               );

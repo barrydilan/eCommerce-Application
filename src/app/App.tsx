@@ -12,6 +12,18 @@ import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
 import Header from '../widgets/Header/Header';
 
+if (!localStorage.sushiDefThemeUsage) {
+  localStorage.sushiDefThemeUsage = 'true';
+}
+if (
+  localStorage.sushiTheme === 'dark' ||
+  (!('sushiTheme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+
 export function App() {
   const dispatch = useAppDispatch();
   const { loggedIn } = userSlice.actions;

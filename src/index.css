@@ -49,7 +49,7 @@ html {
 
   .loginRegInput {
     @apply h-full w-full rounded-lg border-2 border-separation-line pl-11 text-xs text-text-dark outline-none transition-colors
-    placeholder:text-sm md:placeholder:text-base focus:border-text-grey md:text-base;
+    placeholder:text-sm md:placeholder:text-base focus:border-text-grey md:text-base dark:bg-dark-separation-line dark:border-text-grey dark:text-primary;
   }
 
   .invalidInputIcon {
@@ -65,7 +65,7 @@ html {
   }
 
   .addressProfileWrapper {
-    @apply mt-6 block h-10 w-full rounded-md border-2 border-separation-line pl-4 text-base leading-[35px] text-text-dark md:max-w-[47%]
+    @apply mt-6 block h-10 w-full rounded-md border-2 border-separation-line pl-4 text-base leading-[35px] text-text-dark md:max-w-[47%] dark:text-primary dark:border-text-grey;
   }
 
   a.active {
