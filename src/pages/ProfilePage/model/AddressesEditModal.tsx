@@ -147,7 +147,10 @@ export default function AddressesEditModal(props: {
           bg-primary
           p-5
           font-medium
-          text-text-grey"
+          text-text-grey
+          dark:border-2
+          dark:bg-dark-bg-primary
+        "
       >
         <h4 className="w-full text-center font-medium">Edit your address:</h4>
         <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
@@ -268,7 +271,7 @@ export default function AddressesEditModal(props: {
           <button
             disabled={isEditBtnBlocked}
             type="button"
-            className="rounded-md bg-accent-lightest px-4 py-2 text-accent disabled:bg-separation-line"
+            className="cursor-pointer rounded-md bg-accent-lightest px-4 py-2 text-accent disabled:bg-separation-line"
             onClick={() => handleEditBtn()}
           >
             Edit

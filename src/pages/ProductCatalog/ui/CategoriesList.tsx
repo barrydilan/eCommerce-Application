@@ -27,6 +27,7 @@ function CategoriesList({ children, changeActiveCat }: ICategoryList) {
             overflow-y-scroll
             border-b-[2px]
             border-separation-line
+            dark:border-dark-separation-line
             md:h-9
           "
       >

@@ -37,7 +37,7 @@ function CategoryItem({ item, activeCat }: ICategoryItemProps) {
   return (
     <li className={`whitespace-nowrap px-1 ${isActive ? greenBorder : ''}`}>
       <button
-        className={`${isActive ? 'text-text-dark' : ''}`}
+        className={`${isActive ? 'text-text-dark dark:text-primary' : ''}`}
         onClick={isPrevCategory ? goBack : goForward}
         data-user-select={item}
         type="button"
