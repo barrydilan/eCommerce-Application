@@ -1,15 +1,31 @@
-import crossIcon from '../../assets/icons/cross.svg';
+import { useEffect } from 'react';
+
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import xIcon from '../../assets/icons/xIcon.svg';
 
 export default function Cart() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isMobile = window.screen.width < 768;
+  const isCart = location.pathname.includes('cart');
+
+  useEffect(() => {
+    if (!isMobile && isCart) {
+      navigate('categories/all?sort=price+desc');
+    }
+  });
+
   return (
     <div
       className="
       mt-28
-    px-6
-    sm:mt-16
-    sm:px-28
-    md:px-[6px]
-    md:py-[6px]
+      px-6
+      sm:mt-16
+      sm:px-28
+      md:px-[6px]
+      md:py-[6px]
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 md:mt-12">Your order</h2>
@@ -33,7 +49,7 @@ export default function Cart() {
           </div>
         </div>
         <div className="absolute right-0 top-0">
-          <img src={crossIcon} alt="" />
+          <img src={xIcon} alt="" />
         </div>
       </div>
     </div>
