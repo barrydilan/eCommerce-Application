@@ -43,7 +43,7 @@ export default {
       },
       gridTemplateColumns: {
         tabGridCols: '1fr 4fr 2fr',
-        deskGridCols: '1fr 4fr 3fr',
+        deskGridCols: '1fr 3fr 3fr',
         prodPageDesk: '1fr 130px',
         noCartGrid: '1fr 7fr'
       },

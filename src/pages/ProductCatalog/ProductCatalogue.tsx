@@ -155,7 +155,7 @@ export default function ProductCatalogue() {
         px-[10px]
         sm:mt-16
         md:px-[6px]
-        md:py-[6px]
+        md:py-[48px]
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
       "
