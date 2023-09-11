@@ -1,3 +1,5 @@
+import { Cycle } from 'framer-motion';
+
 import AddressListItem from './AddressListItem';
 import { IUser } from '../../../shared/types';
 import { AddressObj } from '../types/profilePageTypes';
@@ -5,14 +7,14 @@ import { AddressObj } from '../types/profilePageTypes';
 export default function AddressesList(props: {
   userData: IUser;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalOpen: Cycle;
 }) {
   const { userData, setEditedAddress, setIsModalOpen } = props;
   const { addresses } = userData;
 
   function addAddressHandler() {
     setEditedAddress({ country: 'US', city: '', streetName: '', postalCode: '' });
-    setIsModalOpen(true);
+    setIsModalOpen();
   }
 
   return (

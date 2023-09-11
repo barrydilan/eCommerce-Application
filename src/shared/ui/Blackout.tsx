@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 
 interface IBlackoutProps {
   isBlackout: boolean;
+  unlock?: () => void;
 }
 
-function Blackout({ isBlackout }: IBlackoutProps) {
+function Blackout({ isBlackout, unlock }: IBlackoutProps) {
   useEffect(() => {
     if (isBlackout) {
       document.body.style.overflow = 'hidden';
@@ -14,12 +15,19 @@ function Blackout({ isBlackout }: IBlackoutProps) {
   }, [isBlackout]);
 
   return (
-    <div
-      className={`${
-        isBlackout ? 'visible opacity-10' : 'invisible opacity-0'
-      } pointer-events-none absolute inset-0 z-30 m-auto h-[430%] w-full bg-border-black backdrop-blur-3xl transition-all`}
+    <button
+      aria-label="blackout"
+      type="button"
+      onClick={unlock}
+      className={`${isBlackout ? 'scale-1 visible opacity-10' : 'invisible scale-0 opacity-0'} ${
+        unlock ? '' : 'pointer-events-none'
+      } absolute inset-0 z-30 m-auto h-[430%] w-full cursor-auto bg-border-black backdrop-blur-3xl transition-opacity`}
     />
   );
 }
+
+Blackout.defaultProps = {
+  unlock: null,
+};
 
 export default Blackout;

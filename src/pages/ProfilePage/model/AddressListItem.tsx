@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Cycle } from 'framer-motion';
+
 import greenPencil from '../../../assets/icons/pencilIconGreen.svg';
 import { useDeleteUserDataMutation, useLazyGetUserQuery } from '../../../entities/user';
 import UserUpdateActions from '../../../entities/user/types/enums.ts';
@@ -14,7 +16,7 @@ export default function AddressListItem(props: {
   address: AddressObj;
   userData: IUser;
   setEditedAddress: React.Dispatch<React.SetStateAction<AddressObj>>;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalOpen: Cycle;
 }) {
   const { index, setEditedAddress, setIsModalOpen, userData, address } = props;
   const { version, id } = userData;
@@ -27,7 +29,7 @@ export default function AddressListItem(props: {
 
   function editClickHandler() {
     setEditedAddress(address);
-    setIsModalOpen(true);
+    setIsModalOpen();
   }
 
   async function deleteClickHandler() {
@@ -47,7 +49,7 @@ export default function AddressListItem(props: {
 
       setTimeout(() => {
         setMsgModalShown(false);
-        setIsModalOpen(false);
+        setIsModalOpen();
         getUser(id);
       }, MODAL_TIMEOUT);
     } catch (e) {

@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useFormik } from 'formik';
-import { motion } from 'framer-motion';
+import { Cycle, motion } from 'framer-motion';
 import * as Yup from 'yup';
 
 import cityIcon from '../../../assets/icons/CityIcon.svg';
@@ -27,7 +27,7 @@ export default function AddressesEditModal(props: {
   id: string | undefined;
   version: number | undefined;
   editedAddress: AddressObj;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalOpen: Cycle;
 }) {
   const { editedAddress, setIsModalOpen, version, id } = props;
   const { id: addressId, country, city, streetName, postalCode } = editedAddress;
@@ -120,7 +120,7 @@ export default function AddressesEditModal(props: {
       setMsgModalShown(true);
       setTimeout(() => {
         setMsgModalShown(false);
-        setIsModalOpen(false);
+        setIsModalOpen();
       }, MODAL_TIMEOUT);
       getUser(id as string);
     } catch (e) {
@@ -132,7 +132,7 @@ export default function AddressesEditModal(props: {
 
   window.scrollTo(0, 250);
   return (
-    <div className={`absolute inset-0 z-50 m-auto h-full w-5/6 translate-y-1/2 transition-all duration-300 md:w-1/2 `}>
+    <div>
       <div
         className="
           relative
@@ -264,7 +264,7 @@ export default function AddressesEditModal(props: {
           </label>
         </div>
         <div className="my-4 flex justify-between">
-          <button type="button" className="p-2" onClick={() => setIsModalOpen(false)}>
+          <button type="button" className="p-2" onClick={() => setIsModalOpen()}>
             Cancel
           </button>
           <button
