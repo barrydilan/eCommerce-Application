@@ -47,12 +47,12 @@ export function App() {
         <Header />
         <div
           className="
-            justify-self-center
             md:col-start-2
             md:col-end-3
             md:row-start-2
             md:row-end-3
             md:max-w-[400px]
+            md:justify-self-center
             lg:max-w-[600px]
             "
         >

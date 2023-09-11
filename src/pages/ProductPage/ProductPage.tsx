@@ -63,8 +63,8 @@ export default function ProductPage() {
     <div
       className="
         mx-auto
-        w-full
         mt-14
+        w-full
         sm:mt-16
         md:py-11
         "

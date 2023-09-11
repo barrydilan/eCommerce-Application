@@ -29,7 +29,7 @@ function Header() {
     <header
       className="
         fixed
-        z-[60]
+        z-[70]
         col-span-full
         flex
         w-full
