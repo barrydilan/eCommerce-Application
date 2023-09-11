@@ -6,12 +6,9 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 interface ICategoryItemProps {
   item: string;
   activeCat: string;
-  // eslint-disable-next-line react/require-default-props
   children?: React.ReactNode | null;
   index: number;
 }
-
-// const greenBorder = 'border-b-2 border-accent';
 
 function CategoryItem({ item, activeCat, index, children = null }: ICategoryItemProps) {
   const [query] = useSearchParams();
@@ -86,5 +83,9 @@ function CategoryItem({ item, activeCat, index, children = null }: ICategoryItem
     </motion.li>
   );
 }
+
+CategoryItem.defaultProps = {
+  children: null,
+};
 
 export default CategoryItem;
