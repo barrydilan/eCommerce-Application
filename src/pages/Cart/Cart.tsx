@@ -24,6 +24,7 @@ export default function Cart() {
       px-6
       sm:mt-16
       sm:px-28
+      md:max-w-[350px]
       md:px-[6px]
       md:py-[6px]
 "

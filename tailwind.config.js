@@ -46,7 +46,7 @@ export default {
       gridTemplateRows: {
         mobGridRows: 'auto 1fr auto',
         tabGridRows: 'auto 1fr',
-        prodPageMob: 'repeat(2, auto) 1fr',
+        prodPageMob: 'repeat(3, auto) 1fr',
         prodPageDesk: 'repeat(2, auto) 1fr'
       },
       spacing: {

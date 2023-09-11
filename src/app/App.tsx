@@ -47,10 +47,13 @@ export function App() {
         <Header />
         <div
           className="
+            justify-self-center
             md:col-start-2
             md:col-end-3
             md:row-start-2
             md:row-end-3
+            md:max-w-[400px]
+            lg:max-w-[600px]
             "
         >
           <LocationProvider>
@@ -64,11 +67,11 @@ export function App() {
          hidden
          border-1
          md:col-start-3
-      md:row-start-2
-          md:block
-          md:min-w-[11rem]
-      md:border-separation-line
-      lg:px-2"
+         md:row-start-2
+         md:block
+         md:min-w-[11rem]
+       md:border-separation-line
+         lg:px-2"
           >
             <Cart />
           </div>

@@ -62,12 +62,15 @@ export default function ProductPage() {
   return (
     <div
       className="
+        mx-auto
+        w-full
         mt-14
         sm:mt-16
-        md:py-11"
+        md:py-11
+        "
     >
       <ImageSlider onClose={handleCloseSlider} isOpen={isSliderOpen} imgList={imgList} />
-      <div className="mx-auto h-full md:max-w-[645px]">
+      <div className="h-full ">
         <div className="relative h-fit md:rounded-[32px] md:border-[15px] md:border-text-grey/10">
           <AddWishlistMobile />
           <div className="h-full">
