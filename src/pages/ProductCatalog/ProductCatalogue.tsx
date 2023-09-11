@@ -112,15 +112,15 @@ export default function ProductCatalogue() {
   }
 
   function onApplyFilters() {
-    onFilterOpen(false);
-    fetchProducts();
-    setProductItems(undefined);
-
     const encodedState = encodeQueryState(filtersState);
 
-    if (query.get(QUERY_FILTER) !== encodedState) {
-      pushQuery([QUERY_FILTER, encodedState]);
-    }
+    onFilterOpen(false);
+
+    if (query.get(QUERY_FILTER) !== encodedState) return;
+
+    fetchProducts();
+    setProductItems(undefined);
+    pushQuery([QUERY_FILTER, encodedState]);
   }
 
   useEffect(() => {
