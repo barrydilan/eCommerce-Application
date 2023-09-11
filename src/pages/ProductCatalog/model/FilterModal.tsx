@@ -25,16 +25,18 @@ export default function FilterModal(props: {
   return (
     <div
       className={`
-        absolute 
+        absolute
         top-[4.6rem]
-        z-10 flex 
+        z-40 flex 
+        h-96
         w-72
         flex-col
-        items-start
+        items-start 
+        overflow-auto
         rounded-[32px] 
-        border-2
-        border-separation-line 
-        bg-primary 
+        border-2 
+        border-separation-line
+        bg-primary
         p-5
         transition-all
         ease-in
