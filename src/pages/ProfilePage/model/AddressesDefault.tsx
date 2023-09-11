@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { motion } from 'framer-motion';
+import { motion, useCycle } from 'framer-motion';
 
 import icon from '../../../assets/icons/CityIcon.svg';
 import { useLazyGetUserQuery, useUpdateUserAddressMutation } from '../../../entities/user';
@@ -16,7 +16,7 @@ export default function AddressesDefault(props: { userData: IUser }) {
 
   const [billAddress, setBillAddress] = useState(defaultBillingAddressId);
   const [shipAddress, setShipAddress] = useState(defaultShippingAddressId);
-  const [msgModalShown, setMsgModalShown] = useState(false);
+  const [msgModalShown, setMsgModalShown] = useCycle(false, true);
   const [msgModalText, setMsgModalText] = useState('');
   const [updateAddress] = useUpdateUserAddressMutation();
   const [getUser] = useLazyGetUserQuery();
@@ -39,14 +39,14 @@ export default function AddressesDefault(props: { userData: IUser }) {
         },
         id,
       });
-      setMsgModalText('Your default addresses saved! :)');
-      setMsgModalShown(true);
-      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
+      setMsgModalText('Your addresses has been saved! :)');
+      setMsgModalShown();
+      setTimeout(() => setMsgModalShown(), MODAL_TIMEOUT);
       getUser(id);
     } catch (e) {
       setMsgModalText('Something went wrong! :(');
-      setMsgModalShown(true);
-      setTimeout(() => setMsgModalShown(false), MODAL_TIMEOUT);
+      setMsgModalShown();
+      setTimeout(() => setMsgModalShown(), MODAL_TIMEOUT);
     }
   }
 
@@ -61,7 +61,7 @@ export default function AddressesDefault(props: { userData: IUser }) {
   });
 
   return (
-    <div className="relative h-auto w-full border-b-2 border-separation-line py-6">
+    <div className="h-auto w-full border-b-2 border-separation-line py-6">
       <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
       <div className="profileInputWrapper">
         <div className="text-sm font-medium text-text-grey">Select default shipping address:</div>

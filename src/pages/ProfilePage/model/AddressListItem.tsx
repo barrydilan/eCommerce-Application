@@ -49,7 +49,6 @@ export default function AddressListItem(props: {
 
       setTimeout(() => {
         setMsgModalShown(false);
-        setIsModalOpen();
         getUser(id);
       }, MODAL_TIMEOUT);
     } catch (e) {
@@ -81,10 +80,10 @@ export default function AddressListItem(props: {
         <div
           className={`absolute right-0 top-8 rounded-md border-2 border-separation-line bg-primary p-2 ${
             isConfirmShown ? 'opacity-100' : 'opacity-0'
-          } transition-all duration-300 dark:border-text-grey dark:bg-dark-bg-primary`}
+          } transition-all duration-300 ease-bounce dark:border-text-grey dark:bg-dark-bg-primary`}
         >
           Are you sure?
-          <div className="mt-2 flex justify-between">
+          <div className="mt-2 flex justify-between text-text-grey">
             <button onClick={() => setIsConfirmShown(false)} className="rounded-md px-2 py-1" type="button">
               No
             </button>
