@@ -67,7 +67,7 @@ export function App() {
       md:row-start-2
           md:block
           md:min-w-[11rem]
-      md:border-l-border-black/10
+      md:border-separation-line
       lg:px-2"
           >
             <Cart />

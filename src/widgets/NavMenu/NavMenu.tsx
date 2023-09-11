@@ -54,7 +54,7 @@ function NavMenu() {
           )}
         </NavLink>
       </li>
-      <li className="navMenuItem">
+      <li className="navMenuItem md:hidden">
         <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>
