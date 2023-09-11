@@ -15,7 +15,7 @@ function Rating({ rating, setRating }: IRatingProps) {
             setRating(newRating as number);
           }}
         />
-        <span className="inline-block self-center text-base font-semibold">{rating}</span>
+        <span className="inline-block self-center text-base font-semibold dark:text-text-grey">{rating}</span>
       </div>
       <p className="self-start pl-1 pt-1 text-sm text-text-grey">2,032 Reviews</p>
     </div>

@@ -134,6 +134,7 @@ function LoginPage() {
                 pt-4
                 text-2xl
                 text-text-dark
+                dark:text-primary
                 "
           >
             Log in

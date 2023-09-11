@@ -60,7 +60,7 @@ function CategoryItem({ item, activeCat, index, children = null }: ICategoryItem
       className="flex items-center gap-3 whitespace-nowrap px-1"
     >
       <button
-        className={`${isActive ? 'text-text-dark' : ''} relative`}
+        className={`${isActive ? 'text-text-dark dark:text-primary' : ''} relative`}
         onClick={handleClick}
         data-user-select={item}
         type="button"

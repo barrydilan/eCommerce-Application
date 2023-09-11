@@ -45,8 +45,6 @@ export default function ChangePersonalData(props: { userData: IUser }) {
   const initData = Object.values([email, firstName, lastName, dateOfBirth]);
 
   const { handleChange, handleBlur, errors, touched, values } = formik;
-
-  const [dateInputType, setDateInputType] = useState('text');
   const [isSaveBlocked, setIsSaveBlocked] = useState(true);
   const [msgModalShown, setMsgModalShown] = useState(false);
   const [msgModalText, setMsgModalText] = useState('');
@@ -56,10 +54,6 @@ export default function ChangePersonalData(props: { userData: IUser }) {
   const touchedAndErrorFirstName = touched.firstName && errors.firstName;
   const touchedAndErrorLastName = touched.lastName && errors.lastName;
   const touchedAndErrorBirthDate = touched.dateOfBirth && errors.dateOfBirth;
-
-  function handleTransitionEnd() {
-    setDateInputType(document.activeElement?.id === 'dateOfBirth' ? 'date' : 'text');
-  }
 
   async function saveClickHandler() {
     try {
@@ -115,9 +109,9 @@ export default function ChangePersonalData(props: { userData: IUser }) {
   return (
     <div className="relative border-b-2 border-separation-line">
       <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
-      <h4 className="mx-auto mt-12 w-full text-center text-base font-medium">Personal data</h4>
+      <h4 className="mx-auto mt-12 w-full text-center text-base font-medium dark:text-primary">Personal data</h4>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Email</div>
+        <div className="text-base font-medium dark:text-primary">Email</div>
         <label htmlFor="emailInput" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
@@ -144,7 +138,7 @@ export default function ChangePersonalData(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Name</div>
+        <div className="text-base font-medium dark:text-primary">Name</div>
         <label htmlFor="firstName" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
@@ -171,7 +165,7 @@ export default function ChangePersonalData(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Surname</div>
+        <div className="text-base font-medium dark:text-primary">Surname</div>
         <label htmlFor="lastName" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
@@ -198,18 +192,14 @@ export default function ChangePersonalData(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium">Birth date</div>
-        <label
-          onTransitionEnd={handleTransitionEnd}
-          htmlFor="dateOfBirth"
-          className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]"
-        >
+        <div className="text-base font-medium dark:text-primary">Birth date</div>
+        <label htmlFor="dateOfBirth" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
             transition={{ ...inputAnimation.transition, delay: 0.15 }}
             id="dateOfBirth"
-            type={dateInputType}
+            type="date"
             name="dateOfBirth"
             placeholder="Birth date"
             onFocus={handleChange}

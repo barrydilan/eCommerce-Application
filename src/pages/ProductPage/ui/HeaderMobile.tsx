@@ -12,7 +12,7 @@ interface IHeaderMobileProps {
 function HeaderMobile({ name, calories, weight, isSpicy, isVegan }: IHeaderMobileProps) {
   return (
     <div className="md:hidden">
-      <h2 className="text-3xl font-bold text-text-dark md:text-primary">
+      <h2 className="text-3xl font-bold text-text-dark dark:text-primary md:text-primary">
         {name}
         {isSpicy || isVegan ? (
           <span className="ml-4 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">

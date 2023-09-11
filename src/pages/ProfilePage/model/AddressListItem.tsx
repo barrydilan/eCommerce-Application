@@ -59,7 +59,7 @@ export default function AddressListItem(props: {
 
   return (
     <div className="border-b-2 border-separation-line py-6">
-      <div className="relative w-full text-base font-medium">
+      <div className="relative w-full text-base font-medium dark:text-primary">
         <h6>{`Address ${(index + 1).toString().padStart(2, '0')}`}</h6>
         <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
         <button
@@ -79,7 +79,7 @@ export default function AddressListItem(props: {
         <div
           className={`absolute right-0 top-8 rounded-md border-2 border-separation-line bg-primary p-2 ${
             isConfirmShown ? 'opacity-100' : 'opacity-0'
-          } transition-all duration-300`}
+          } transition-all duration-300 dark:border-text-grey dark:bg-dark-bg-primary`}
         >
           Are you sure?
           <div className="mt-2 flex justify-between">

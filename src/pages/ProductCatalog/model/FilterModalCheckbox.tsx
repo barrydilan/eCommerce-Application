@@ -54,6 +54,7 @@ export default function FilterModalCheckbox(props: {
                 before:border-l-4
                 before:border-b-primary
                 before:border-l-primary
+                dark:text-primary
                 ${peer}
               `}
       >
