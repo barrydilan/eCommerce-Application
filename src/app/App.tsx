@@ -58,7 +58,7 @@ export function App() {
           </LocationProvider>
         </div>
         <NavBlock />
-        {location.pathname !== '/cart' ? (
+        {location.pathname !== '/cart' && location.pathname !== '/about' && (
           <div
             className="
          hidden
@@ -72,7 +72,7 @@ export function App() {
           >
             <Cart />
           </div>
-        ) : null}
+        )}
       </div>
     </main>
   );

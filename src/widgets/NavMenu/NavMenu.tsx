@@ -33,6 +33,7 @@ function NavMenu() {
         flex
         w-full
         justify-between
+        bg-primary
         px-4
         py-2
         md:mt-8

@@ -7,7 +7,7 @@ function NavBlock() {
       className="
         fixed
         bottom-0
-        z-50
+        z-[60]
         h-14
         w-full 
         md:static
