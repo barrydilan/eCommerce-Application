@@ -37,7 +37,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
   return (
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
-        <div className="flex max-h-[130px] rounded-2xl border-1 border-border-black/10 pr-4 transition delay-150 duration-300 ease-in-out hover:bg-accent-ligh dark:border-dark-separation-line dark:hover:bg-dark-separation-linet">
+        <div className="hover:bg-accent-ligh dark:hover:bg-dark-separation-linet flex max-h-[130px] rounded-2xl border-1 border-border-black/10 pr-4 transition delay-150 duration-300 ease-in-out dark:border-dark-separation-line">
           <div className="relative flex max-h-[130px] flex-[75%] gap-x-3">
             <img
               onLoad={() => setIsLoading(false)}
@@ -77,7 +77,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
             {oldPrice ? (
               <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
             ) : null}
-            <h3 className="text-base font-medium dark:text-primary text-text-dark">$ {corePrice}</h3>
+            <h3 className="text-base font-medium text-text-dark dark:text-primary">$ {corePrice}</h3>
             <AddToCartBtn />
           </div>
         </div>
