@@ -5,7 +5,6 @@ import { Mutex } from 'async-mutex';
 import authQuery from './authQuery.ts';
 import baseQuery from './baseQuery.ts';
 import { userSlice } from '../../entities/user';
-import { DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../const';
 import { ErrorCodeStatus } from '../types';
 
 const mutex = new Mutex();
@@ -25,11 +24,11 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 			try {
 				const refreshResult = await authQuery(
 					{
-						url: `/oauth/${PROJECT_KEY}/anonymous/token`,
+						url: `/oauth/${import.meta.env.VITE_PROJECT_KEY}/anonymous/token`,
 						method: 'POST',
 						params: {
 							grant_type: 'client_credentials',
-							scope: DEFAULT_CUSTOMER_SCOPE,
+							scope: import.meta.env.VITE_DEFAULT_CUSTOMER_SCOPE,
 						},
 					},
 					api,
