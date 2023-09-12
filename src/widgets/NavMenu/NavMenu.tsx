@@ -33,6 +33,7 @@ function NavMenu() {
         flex
         w-full
         justify-between
+        bg-primary
         px-4
         py-2
         md:mt-8
@@ -42,7 +43,7 @@ function NavMenu() {
         md:justify-start
         md:gap-9
         md:px-0
-        lg:mt-12
+      lg:mt-12
         "
     >
       <li className="navMenuItem">
@@ -54,7 +55,7 @@ function NavMenu() {
           )}
         </NavLink>
       </li>
-      <li className="navMenuItem lg:hidden">
+      <li className="navMenuItem md:hidden">
         <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>

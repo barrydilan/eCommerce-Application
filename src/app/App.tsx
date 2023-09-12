@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, useLocation } from 'react-router-dom';
 
 import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../entities/user';
 import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
+import Cart from '../pages/Cart/Cart.tsx';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import { getCookie } from '../shared/lib/helpers';
 import { useAppDispatch } from '../shared/lib/hooks';
@@ -26,6 +27,7 @@ if (
 export function App() {
   const dispatch = useAppDispatch();
   const { loggedIn } = userSlice.actions;
+  const location = useLocation();
 
   useEffect(() => {
     const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
@@ -36,8 +38,9 @@ export function App() {
   }, [dispatch, loggedIn]);
 
   return (
-    <main
-      className="
+    <main>
+      <div
+        className="
           font-base
           mx-auto
           grid
@@ -52,21 +55,40 @@ export function App() {
           md:grid-rows-tabGridRows
           lg:grid-cols-deskGridCols
           "
-    >
-      <Header />
-      <div
-        className="
+      >
+        <Header />
+        <div
+          className="
             md:col-start-2
             md:col-end-3
             md:row-start-2
             md:row-end-3
+            md:max-w-[400px]
+            md:justify-self-center
+            lg:max-w-[600px]
             "
-      >
-        <LocationProvider>
-          <RoutesWithAnimation />
-        </LocationProvider>
+        >
+          <LocationProvider>
+            <RoutesWithAnimation />
+          </LocationProvider>
+        </div>
+        <NavBlock />
+        {location.pathname !== '/cart' && location.pathname !== '/about' && (
+          <div
+            className="
+         hidden
+         border-1
+         md:col-start-3
+         md:row-start-2
+         md:block
+         md:min-w-[11rem]
+       md:border-separation-line
+         lg:px-2"
+          >
+            <Cart />
+          </div>
+        )}
       </div>
-      <NavBlock />
     </main>
   );
 }
