@@ -24,8 +24,15 @@ jobs:
       - name: Setup Continuous integration
         uses: ./.github/actions/ci-setup
 
+      - name: Create env file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
       - name: Build
         run: npm run build
+
+      - name: Delete env file
+        run: rm .env
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
