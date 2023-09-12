@@ -115,7 +115,7 @@ export default function ProductCatalogue() {
   function onApplyFilters() {
     const encodedState = encodeQueryState(filtersState);
 
-    onFilterOpen(false);
+    onFilterOpen();
 
     if (query.get(QUERY_FILTER) !== encodedState) return;
 
