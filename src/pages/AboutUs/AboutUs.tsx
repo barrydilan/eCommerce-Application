@@ -38,7 +38,7 @@ export default function AboutUs() {
                   alt=""
                 />
               </div>
-              <div className="relative -translate-y-24 rounded-3xl border-1 border-separation-line bg-primary px-4 py-6 text-text-grey dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-y-[245px] xl:translate-x-[360px]">
+              <div className="relative -translate-y-24 rounded-3xl border-1 border-separation-line bg-primary px-4 py-6 text-text-grey shadow-[3px_5px_10px_1px_rgba(0,0,0,0.3)] dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-y-[245px] xl:translate-x-[360px]">
                 <a
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-separation-line"
                   href="https://github.com/"
@@ -61,7 +61,7 @@ export default function AboutUs() {
                   alt=""
                 />
               </div>
-              <div className="relative -translate-y-24 rounded-3xl border-1 border-separation-line bg-primary px-4 py-6 text-text-grey dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-x-[200px] xl:-translate-y-[255px]">
+              <div className="relative -translate-y-24 rounded-3xl border-1 border-separation-line bg-primary px-4 py-6 text-text-grey shadow-[3px_5px_10px_1px_rgba(0,0,0,0.3)] dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-x-[200px] xl:-translate-y-[255px]">
                 <a
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center  justify-center rounded-full bg-separation-line"
                   href="https://github.com/"
@@ -89,7 +89,7 @@ export default function AboutUs() {
                   alt=""
                 />
               </div>
-              <div className="relative -translate-y-24 rounded-3xl border-2 border-separation-line bg-primary px-4 py-6 text-text-grey dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-y-[250px] xl:translate-x-[360px]">
+              <div className="relative -translate-y-24 rounded-3xl border-2 border-separation-line bg-primary px-4 py-6 text-text-grey shadow-[3px_5px_10px_1px_rgba(0,0,0,0.3)] dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-y-[250px] xl:translate-x-[360px]">
                 <a
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center  justify-center rounded-full bg-separation-line"
                   href="https://github.com/"
