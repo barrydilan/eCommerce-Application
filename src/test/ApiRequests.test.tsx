@@ -23,7 +23,7 @@ function wrapper({ children }: { children: React.ReactNode }) {
   return <Provider store={store}>{children}</Provider>;
 }
 
-describe('App', () => {
+describe('Api requests', () => {
   afterAll(async () => {
     const { result } = renderHook(() => useRevokeTokenMutation(), { wrapper });
 
