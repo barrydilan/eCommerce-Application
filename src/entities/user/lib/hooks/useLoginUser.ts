@@ -1,5 +1,5 @@
 import { setCookie } from '../../../../shared/lib/helpers';
-import { useAppDispatch } from '../../../../shared/lib/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../shared/lib/hooks';
 import { prepareLoginCookieData, useLoginTokenMutation, userSlice } from '../../index.ts';
 
 /**
@@ -16,6 +16,7 @@ function useLoginUser() {
 	const [getLoginToken, params] = useLoginTokenMutation();
 	const dispatch = useAppDispatch();
 	const { loggedIn } = userSlice.actions;
+	const { cartId } = useAppSelector((state) => state.userReducer);
 
 	/**
 	 * Logs in a user using the provided email, password, and id.
@@ -36,13 +37,14 @@ function useLoginUser() {
 
 			dispatch(loggedIn({ accessToken, userId: id, refreshToken }));
 
-			const [accessTokenCookie, idCookie, refreshTokenCookie] = prepareLoginCookieData({
+			const [accessTokenCookie, idCookie, refreshTokenCookie, cardIdCookie] = prepareLoginCookieData({
 				accessToken,
 				id,
 				refreshToken,
 				expiresInToken: expiresIn,
+				cartId,
 			});
-			setCookie(accessTokenCookie, idCookie, refreshTokenCookie);
+			setCookie(accessTokenCookie, idCookie, refreshTokenCookie, cardIdCookie);
 		} catch (e) {
 			if (e && typeof e === 'object' && 'status' in e) {
 				throw new Error(`Error occurred while logged in user ${e.status}`);

@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
-import { CartListResponse } from '../types/types.ts';
+import CartListResponse from '../types/types.ts';
 
 export const readCartApi = createApi({
 	reducerPath: 'readCartApi',

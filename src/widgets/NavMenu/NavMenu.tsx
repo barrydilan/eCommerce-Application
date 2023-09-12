@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import logOutIcon from '../../assets/icons/log-out.svg';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../../entities/user';
-import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
+import { COOKIE_CART_ID, COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../../entities/user/consts/constants.ts';
 import { deleteCookie } from '../../shared/lib/helpers';
 import { useAppDispatch, useAppSelector, useRevokeAccessRefreshTokens } from '../../shared/lib/hooks';
 import CartIcon from '../ui/CartIcon.tsx';
@@ -23,7 +23,7 @@ function NavMenu() {
   async function handleLogout() {
     dispatch(loggedOut());
     navigate('/');
-    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
+    deleteCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN, COOKIE_CART_ID);
     revokeTokens(oldAccessToken, oldRefreshToken);
   }
 
