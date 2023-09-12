@@ -47,9 +47,8 @@ jobs:
         uses: ./.github/actions/ci-setup
 
       - name: Create env file
-        env:
-          ENV_FILE: ${{ secrets.ENV_FILE }}
-        run: echo ${#ENV_FILE} > .env
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: test
         run: npm run test
