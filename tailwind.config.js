@@ -43,8 +43,9 @@ export default {
       },
       gridTemplateColumns: {
         tabGridCols: '1fr 4fr 2fr',
-        deskGridCols: '2fr 4fr 3fr',
-        prodPageDesk: '1fr 130px'
+        deskGridCols: '1fr 3fr 3fr',
+        prodPageDesk: '1fr 130px',
+        noCartGrid: '1fr 7fr'
       },
       gridTemplateRows: {
         mobGridRows: 'auto 1fr auto',

@@ -28,6 +28,7 @@ export function App() {
   const dispatch = useAppDispatch();
   const { loggedIn } = userSlice.actions;
   const location = useLocation();
+  const isCartToRender = location.pathname.includes('/categories') || location.pathname.includes('/product');
 
   useEffect(() => {
     const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
@@ -40,7 +41,7 @@ export function App() {
   return (
     <main>
       <div
-        className="
+        className={`
           font-base
           mx-auto
           grid
@@ -51,10 +52,9 @@ export function App() {
           text-base
           text-text-dark
           2xl:container
-          md:grid-cols-tabGridCols
-          md:grid-rows-tabGridRows
-          lg:grid-cols-deskGridCols
-          "
+          ${isCartToRender ? 'md:grid-cols-deskGridCols' : 'md:grid-cols-noCartGrid'}
+          ${isCartToRender ? 'lg:grid-cols-deskGridCols' : 'lg:grid-cols-noCartGrid'}
+          `}
       >
         <Header />
         <div
@@ -73,7 +73,7 @@ export function App() {
           </LocationProvider>
         </div>
         <NavBlock />
-        {location.pathname !== '/cart' && location.pathname !== '/about' && (
+        {isCartToRender ? (
           <div
             className="
          hidden
@@ -87,7 +87,7 @@ export function App() {
           >
             <Cart />
           </div>
-        )}
+        ) : null}
       </div>
     </main>
   );
