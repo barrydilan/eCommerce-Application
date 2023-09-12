@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 
 import AccountSettings from './model/AccountSettings';
 import AddressesSettings from './model/AddressesSettings';
-import BackBtn from './model/BackBtn';
 import TabSelector from './model/TabSelector';
 import ThemeSelector from './model/ThemeSelector.tsx';
 import UserImage from './model/UserImage';
 import ProfileHeader from './ui/ProfileHeader';
 import userImage from '../../assets/img/UserImg.jpg';
 import { useLazyGetUserQuery } from '../../entities/user';
+import PageBackBtn from '../../features/PageBackBtn/PageBackBtn.tsx';
 import { useAppSelector } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 
@@ -37,7 +37,7 @@ export default function ProfilePage() {
 
   return (
     <div className="my-12 p-5 sm:mt-[5.6rem] xl:px-24">
-      <BackBtn />
+      <PageBackBtn title="Account" />
       <ProfileHeader />
       <UserImage pic={userImage} userData={data} />
       <ThemeSelector />

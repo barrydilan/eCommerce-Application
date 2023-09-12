@@ -28,6 +28,9 @@ export default {
       poppins: ['Poppins', 'sans-serif'],
     },
     extend: {
+      backgroundImage: {
+        aboutMob: "$img/about_bg_mob.svg"
+      },
       screens: {
         xs: '420px',
         ...defaultTheme.screens,
