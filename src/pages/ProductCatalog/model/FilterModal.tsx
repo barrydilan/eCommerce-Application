@@ -90,10 +90,14 @@ export default function FilterModal(props: {
         border-separation-line 
         bg-primary 
         p-5
+        transition-all
+        ease-in
+        dark:border-dark-separation-line
+        dark:bg-dark-bg-primary
         md:w-[475px]
       `}
         >
-          <h4 className="w-full text-center text-base font-normal">Filters</h4>
+          <h4 className="w-full text-center text-base font-normal dark:text-primary">Filters</h4>
           <button
             type="button"
             onClick={() => onFilterOpen()}

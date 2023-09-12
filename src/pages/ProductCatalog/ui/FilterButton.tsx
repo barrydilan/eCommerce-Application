@@ -25,6 +25,8 @@ function FilterButton({ onFilterOpen }: IFilterButton) {
             py-[10px]
             transition-all
             hover:bg-accent-lightest
+            dark:text-primary
+            dark:hover:bg-text-grey
           "
     >
       <img src={filterIcon} alt="" className="mr-[12px]" />

@@ -10,7 +10,7 @@ export default function SortingSelector(props: {
         name="sortSelect"
         value={sortOrder}
         onChange={(e) => onSort(e.target.value)}
-        className="appearance-none px-1 text-text-dark"
+        className="cursor-pointer appearance-none px-1 text-text-dark dark:bg-dark-bg-primary dark:text-primary"
       >
         {/* <option value="rate desc" className="text-right"> */}
         {/*  Rate ▼ */}

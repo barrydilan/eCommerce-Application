@@ -87,10 +87,10 @@ export default function ChangePassword(props: { userData: IUser }) {
 
   return (
     <div>
-      <h4 className="mx-auto mt-12 w-full text-center text-base font-medium">Password</h4>
+      <h4 className="mx-auto mt-12 w-full text-center text-base font-medium dark:text-primary">Password</h4>
       <div className="profileInputWrapper relative">
         <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
-        <div className="text-base font-medium">Current password</div>
+        <div className="text-base font-medium dark:text-primary">Current password</div>
         <label htmlFor="currPass" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
@@ -117,7 +117,7 @@ export default function ChangePassword(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium text-text-dark">New password</div>
+        <div className="text-base font-medium text-text-dark dark:text-primary">New password</div>
         <label htmlFor="newPass" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}

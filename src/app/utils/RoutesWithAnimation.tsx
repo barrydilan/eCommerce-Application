@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 
+import Cart from '../../pages/Cart/Cart';
 import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProductCatalogue from '../../pages/ProductCatalog/ProductCatalogue.tsx';
@@ -40,7 +41,7 @@ export default function RoutesWithAnimation() {
         }
       />
       <Route path="profile" element={<ProfilePage />} />
-      <Route path="cart" element={<p>Shopping cart</p>} />
+      <Route path="cart" element={<Cart />} />
       <Route path="delivery" element={<p>Delivery</p>} />
       <Route path="payment" element={<p>Payment</p>} />
       <Route path="about" element={<p>About us</p>} />

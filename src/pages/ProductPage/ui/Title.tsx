@@ -14,7 +14,7 @@ interface ITitleProps {
 function Title({ imgList, name, children, onClick }: ITitleProps) {
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div onClick={onClick} className="relative h-fit max-h-[320px] md:max-h-[400px]">
+    <div onClick={onClick} className="m-w-768px relative h-fit max-h-[320px] md:max-h-[400px]">
       <Swiper
         id="miniSwiper"
         loop

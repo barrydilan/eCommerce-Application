@@ -155,8 +155,8 @@ export default function ProductCatalogue() {
         grid-rows-prodPageMob
         px-[10px]
         sm:mt-16
-        md:px-12
-        md:py-11
+        md:px-[6px]
+        md:py-[6px]
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
       "
@@ -197,7 +197,7 @@ export default function ProductCatalogue() {
 
               return (
                 <React.Fragment key={name}>
-                  <CategoryItem item={name} activeCat={activeCat} />
+                  <CategoryItem index={i} item={name} activeCat={activeCat} />
                   {!isLast && (activeCat === name || isPrevCat) ? '/' : ''}
                 </React.Fragment>
               );
