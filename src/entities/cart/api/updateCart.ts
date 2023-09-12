@@ -1,17 +1,17 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
-import { CartResponse } from '../types/types.ts';
+import { CartResponse } from '../../../shared/types';
 
 interface ICreateCartParams {
 	currency: 'USD' | 'UAH' | 'EUR';
 }
 
-export const changeCartApi = createApi({
-	reducerPath: 'changeCartApi',
+export const updateCartApi = createApi({
+	reducerPath: 'updateCartApi',
 	baseQuery: baseQueryWithReauth,
 	endpoints: (build) => ({
-		createCart: build.mutation<CartResponse, ICreateCartParams>({
+		getCart: build.mutation<CartResponse, ICreateCartParams>({
 			query: (body) => ({
 				url: `/${import.meta.env.VITE_PROJECT_KEY}/carts`,
 				method: 'POST',
@@ -21,4 +21,4 @@ export const changeCartApi = createApi({
 	}),
 });
 
-export const { useCreateCartMutation } = changeCartApi;
+export const { useGetCartMutation } = updateCartApi;

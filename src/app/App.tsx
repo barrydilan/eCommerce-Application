@@ -4,7 +4,7 @@ import { HashRouter, useLocation } from 'react-router-dom';
 
 import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
-import { useCreateCartMutation } from '../entities/cart';
+import { useGetCartMutation } from '../entities/cart';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../entities/user';
 import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
 import Cart from '../pages/Cart/Cart.tsx';
@@ -30,7 +30,7 @@ export function App() {
   const { loggedIn } = userSlice.actions;
   const location = useLocation();
   const isCartToRender = location.pathname.includes('/categories') || location.pathname.includes('/product');
-  const [createCart, { data }] = useCreateCartMutation();
+  const [createCart, { data }] = useGetCartMutation();
 
   useEffect(() => {
     const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
