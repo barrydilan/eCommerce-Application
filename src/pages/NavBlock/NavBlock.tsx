@@ -6,8 +6,8 @@ function NavBlock() {
     <div
       className="
         fixed
-        bottom-0
-        z-[60]
+        bottom-0 
+        z-20
         h-14
         w-full 
         md:static

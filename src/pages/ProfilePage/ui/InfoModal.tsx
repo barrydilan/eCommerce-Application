@@ -1,16 +1,28 @@
+import { AnimatePresence, motion } from 'framer-motion';
+
 export default function InfoModal(props: { msgModalShown: boolean; msgModalText: string }) {
   const { msgModalShown, msgModalText } = props;
   return (
-    <div
-      className={`
-          absolute 
-          left-[50%] 
-          top-[50%] 
+    <AnimatePresence>
+      {msgModalShown ? (
+        <motion.div
+          key="dialog"
+          initial={{ scale: 1.5, opacity: 0 }}
+          animate={{ y: '100%', scale: 1, opacity: 1 }}
+          transition={{
+            type: 'spring',
+            stiffness: 560,
+            damping: 28,
+          }}
+          exit={{ scale: 0, opacity: 0 }}
+          className={`
+          fixed
+          right-10
+          top-0
           z-50
           flex
           h-20 
           w-60 
-          -translate-x-1/2
           items-center
           justify-center
           rounded-md
@@ -20,15 +32,14 @@ export default function InfoModal(props: { msgModalShown: boolean; msgModalText:
           px-2
           text-center
           font-medium
-          transition-all
-          duration-500
           dark:border-dark-separation-line
           dark:bg-dark-bg-primary
           dark:text-primary
-          ${msgModalShown ? '-translate-y-1/2 opacity-100' : 'translate-y-0 opacity-0'}
         `}
-    >
-      {msgModalText}
-    </div>
+        >
+          {msgModalText}
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
   );
 }

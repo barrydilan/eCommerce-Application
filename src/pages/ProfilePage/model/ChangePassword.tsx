@@ -143,14 +143,16 @@ export default function ChangePassword(props: { userData: IUser }) {
           {touchedAndErrorNewPassword && <ErrorMessage>{errors.newPass}</ErrorMessage>}
         </label>
       </div>
-      <button
-        className="mt-5 h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line disabled:text-text-grey"
-        type="button"
-        disabled={isSaveBlocked}
-        onClick={saveHandler}
-      >
-        Save
-      </button>
+      <div className="flex w-full justify-end">
+        <button
+          className="mt-5 h-10 w-full rounded-md bg-accent-lightest text-center text-accent transition-all duration-300 disabled:bg-separation-line disabled:text-text-grey sm:w-30"
+          type="button"
+          disabled={isSaveBlocked}
+          onClick={saveHandler}
+        >
+          Save
+        </button>
+      </div>
     </div>
   );
 }

@@ -23,6 +23,7 @@ import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '
 import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
 import { capitalize } from '../../shared/lib/helpers';
 import { useGetPath } from '../../shared/lib/hooks';
+import { Blackout } from '../../shared/ui';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
@@ -112,15 +113,15 @@ export default function ProductCatalogue() {
   }
 
   function onApplyFilters() {
-    onFilterOpen();
-    fetchProducts();
-    setProductItems(undefined);
-
     const encodedState = encodeQueryState(filtersState);
 
-    if (query.get(QUERY_FILTER) !== encodedState) {
-      pushQuery([QUERY_FILTER, encodedState]);
-    }
+    onFilterOpen();
+
+    if (query.get(QUERY_FILTER) !== encodedState) return;
+
+    fetchProducts();
+    setProductItems(undefined);
+    pushQuery([QUERY_FILTER, encodedState]);
   }
 
   useEffect(() => {
@@ -159,8 +160,9 @@ export default function ProductCatalogue() {
         md:py-[48px]
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
-      "
+        "
     >
+      <Blackout isBlackout={isFiltersOpen} />
       <ProductPageHeader />
       <div
         className="

@@ -80,21 +80,21 @@ export default function FilterModal(props: {
           exit={initial}
           className={`
           absolute
-        top-[4.6rem]
-        z-10 flex 
-        w-72
-        flex-col
-        items-start
-        rounded-[32px] 
-        border-2
-        border-separation-line 
-        bg-primary 
-        p-5
-        transition-all
-        ease-in
-        dark:border-dark-separation-line
-        dark:bg-dark-bg-primary
-        md:w-[475px]
+          top-[4.6rem]
+          z-40 flex 
+          h-96
+          w-72
+          flex-col
+          items-start 
+          overflow-auto
+          rounded-[32px] 
+          border-2 
+          border-separation-line
+          bg-primary
+          p-5
+          dark:border-dark-separation-line
+          dark:bg-dark-bg-primary
+          md:w-[475px]
       `}
         >
           <h4 className="w-full text-center text-base font-normal dark:text-primary">Filters</h4>

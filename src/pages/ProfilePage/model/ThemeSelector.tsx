@@ -1,5 +1,15 @@
 import { useState } from 'react';
 
+import { motion } from 'framer-motion';
+
+import moon from '../../../assets/icons/moon.svg';
+import sun from '../../../assets/icons/sun.svg';
+
+const themeToggleVariants = {
+  light: { x: 0 },
+  dark: { x: '190%' },
+};
+
 export default function ThemeSelector() {
   const [defTheme, setDefTheme] = useState(localStorage.sushiDefThemeUsage === 'true');
   const [theme, setTheme] = useState(localStorage.sushiTheme === 'light');
@@ -80,30 +90,37 @@ export default function ThemeSelector() {
           </label>
         </div>
         <div className="flex items-center">
-          Light
-          <div className={`mx-2 h-7 w-16 rounded-full ${theme ? 'bg-separation-line' : 'bg-text-grey'} px-1`}>
-            <button
-              onClick={handleThemeSelect}
-              disabled={defTheme}
+          <button
+            aria-label="Theme selector"
+            type="button"
+            disabled={defTheme}
+            onClick={handleThemeSelect}
+            className={`relative h-6 w-14 rounded-full ${
+              theme ? 'border-text-grey bg-separation-line' : 'border-primary bg-text-grey'
+            } border-1 px-1`}
+          >
+            <img src={sun} alt="light theme" className="absolute left-1.5 top-[18%]" />
+            <img src={moon} alt="dark theme" className="absolute right-1.5 top-[20%]" />
+            <motion.span
+              variants={themeToggleVariants}
+              animate={theme ? themeToggleVariants.light : themeToggleVariants.dark}
+              transition={{
+                type: 'spring',
+                stiffness: 460,
+                damping: 26,
+              }}
               className={`
-                h-7 
-                w-7 
-                scale-90 rounded-full 
-                bg-accent 
-                transition-all
-                duration-300
-                disabled:bg-separation-line
-                ${
-                  theme
-                    ? 'translate-x-0 shadow-[inset_2px_-3px_3px_2px_rgba(0,0,0,0.4)]'
-                    : 'translate-x-7 shadow-[inset_-2px_2px_5px_2px_rgba(255,255,255,0.8)]'
-                }
+                relative
+                z-10
+                block
+                h-4
+                w-4
+                rounded-full
+                ${theme ? 'bg-text-dark' : 'bg-primary'}
+                disabled:bg-inactive-icons-grey
               `}
-              type="button"
-              aria-label="Theme selector"
             />
-          </div>
-          Dark
+          </button>
         </div>
       </div>
     </div>

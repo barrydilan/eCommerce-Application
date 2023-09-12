@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useFormik } from 'formik';
-import { motion } from 'framer-motion';
+import { Cycle, motion } from 'framer-motion';
 import * as Yup from 'yup';
 
 import cityIcon from '../../../assets/icons/CityIcon.svg';
@@ -27,7 +27,7 @@ export default function AddressesEditModal(props: {
   id: string | undefined;
   version: number | undefined;
   editedAddress: AddressObj;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsModalOpen: Cycle;
 }) {
   const { editedAddress, setIsModalOpen, version, id } = props;
   const { id: addressId, country, city, streetName, postalCode } = editedAddress;
@@ -120,7 +120,7 @@ export default function AddressesEditModal(props: {
       setMsgModalShown(true);
       setTimeout(() => {
         setMsgModalShown(false);
-        setIsModalOpen(false);
+        setIsModalOpen();
       }, MODAL_TIMEOUT);
       getUser(id as string);
     } catch (e) {
@@ -132,12 +132,11 @@ export default function AddressesEditModal(props: {
 
   window.scrollTo(0, 250);
   return (
-    <div className={`absolute h-full w-full transition-all duration-300 `}>
-      <div className="absolute z-10 h-full w-full rounded-md bg-text-dark opacity-30" />
+    <div>
       <div
         className="
           relative
-          z-20
+          z-40
           m-auto
           mt-5
           box-border
@@ -152,7 +151,7 @@ export default function AddressesEditModal(props: {
           dark:bg-dark-bg-primary
         "
       >
-        <h4 className="w-full text-center font-medium">Edit your address:</h4>
+        <h4 className="w-full text-center text-lg font-medium text-text-dark">Edit your address:</h4>
         <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
         <div>
           <label
@@ -265,7 +264,7 @@ export default function AddressesEditModal(props: {
           </label>
         </div>
         <div className="my-4 flex justify-between">
-          <button type="button" className="p-2" onClick={() => setIsModalOpen(false)}>
+          <button type="button" className="p-2" onClick={() => setIsModalOpen()}>
             Cancel
           </button>
           <button
