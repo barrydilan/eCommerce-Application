@@ -52,8 +52,8 @@ export function App() {
           text-base
           text-text-dark
           2xl:container
-          ${isCartToRender ? 'md:grid-cols-deskGridCols' : 'md:grid-cols-noCartGrid'}
-          ${isCartToRender ? 'lg:grid-cols-deskGridCols' : 'lg:grid-cols-noCartGrid'}
+          md:grid-rows-tabGridRows
+          ${isCartToRender ? 'md:grid-cols-tabGridCols' : 'md:grid-cols-noCartGrid'}
           `}
       >
         <Header />
@@ -63,9 +63,7 @@ export function App() {
             md:col-end-3
             md:row-start-2
             md:row-end-3
-            md:max-w-[400px]
             md:justify-self-center
-            lg:max-w-[600px]
             "
         >
           <LocationProvider>
@@ -76,14 +74,16 @@ export function App() {
         {isCartToRender ? (
           <div
             className="
-         hidden
-         border-1
-         md:col-start-3
-         md:row-start-2
-         md:block
-         md:min-w-[11rem]
-       md:border-separation-line
-         lg:px-2"
+              box-border
+              hidden
+              border-2
+              md:col-start-3
+              md:col-end-4
+              md:row-start-2
+            md:block
+              md:border-separation-line
+              lg:px-2
+            "
           >
             <Cart />
           </div>

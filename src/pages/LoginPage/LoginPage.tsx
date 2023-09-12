@@ -127,6 +127,7 @@ function LoginPage() {
               sm:pl-10
               sm:pr-10
               md:mt-10
+              md:w-[29.9rem]
               "
         >
           <h5

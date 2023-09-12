@@ -37,14 +37,14 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
   return (
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
-        <div className="flex rounded-2xl border-1 border-border-black/10 transition-all ease-in-out hover:bg-accent-light dark:border-dark-separation-line dark:hover:bg-dark-separation-line">
-          <div className="m-h-[170px] relative flex flex-[75%] gap-x-3 sm:gap-x-7">
+        <div className="flex rounded-2xl border-1 border-border-black/10 pr-3 transition-all ease-in-out hover:bg-accent-light dark:border-dark-separation-line dark:hover:bg-dark-separation-line md:min-h-[170px]">
+          <div className="relative flex flex-[75%] gap-x-3 sm:gap-x-7">
             <img
               onLoad={() => setIsLoading(false)}
               loading="lazy"
               className={`${
                 isLoading ? 'h-full w-48 opacity-0' : 'opacity-100'
-              } inline-block h-full max-w-[40%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[35%] xl:max-w-[19.5%]`}
+              } inline-block h-full max-w-[40%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[40%] xl:max-w-[19.5%]`}
               src={image}
               alt={name}
             />
@@ -53,9 +53,9 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
                 <img src={isSpicy ? spicyIcon : veganIcon} alt={`${isSpicy ? 'spicyIcon' : 'veganIcon'}`} />
               </span>
             ) : null}
-            <div className="my-1 flex flex-col gap-y-2 xs:gap-y-3">
-              <div className="flex flex-1 flex-col gap-y-3 sm:gap-y-1">
-                <div className="truncate-text text-text-dark dark:text-primary sm:text-base">{name}</div>
+            <div className="my-2 flex flex-col gap-y-2 xs:gap-y-3">
+              <div className="flex flex-1 flex-col sm:gap-y-1">
+                <div className="truncate-text mr-3 text-text-dark dark:text-primary sm:text-base">{name}</div>
                 <div>
                   <h4 className="text-xs text-text-grey">{calories} kcal</h4>
                   <h4 className="text-xs text-text-grey">{weight} g</h4>
@@ -73,11 +73,11 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-evenly">
+          <div className="mt-2 flex flex-col items-center justify-start">
             {oldPrice ? (
               <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
             ) : null}
-            <h3 className="text-base font-medium text-text-dark dark:text-primary">$ {corePrice}</h3>
+            <h3 className="mt-2 text-base font-semibold text-text-dark dark:text-primary">$ {corePrice}</h3>
             <AddToCartBtn />
           </div>
         </div>

@@ -192,7 +192,7 @@ export default function ChangePersonalData(props: { userData: IUser }) {
         </label>
       </div>
       <div className="profileInputWrapper">
-        <div className="text-base font-medium dark:text-primary">Birth date</div>
+        <div className="text-base font-medium dark:text-primary md:pr-5">Birth&nbsp;date</div>
         <label htmlFor="dateOfBirth" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
           <motion.input
             initial={inputAnimation.initial}
