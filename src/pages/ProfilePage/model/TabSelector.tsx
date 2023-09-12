@@ -10,18 +10,14 @@ export default function TabSelector(props: {
     <div className="mt-8 w-full font-medium dark:text-primary">
       <button
         onClick={() => setIsAccTabActive(true)}
-        className={`${
-          isAccTabActive ? greenBorder : borderGrey
-        } h-9 w-1/2 transition-all duration-500 hover:border-accent-lightest`}
+        className={`${isAccTabActive ? greenBorder : borderGrey} h-9 w-1/2 transition-all`}
         type="button"
       >
         Account settings
       </button>
       <button
         onClick={() => setIsAccTabActive(false)}
-        className={`${
-          isAccTabActive ? borderGrey : greenBorder
-        } h-9 w-1/2 transition-all duration-500 hover:border-accent-lightest`}
+        className={`${isAccTabActive ? borderGrey : greenBorder} h-9 w-1/2 transition-all`}
         type="button"
       >
         Addresses

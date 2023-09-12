@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 
+import { useCycle } from 'framer-motion';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '
 import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
 import { capitalize } from '../../shared/lib/helpers';
 import { useGetPath } from '../../shared/lib/hooks';
+import { Blackout } from '../../shared/ui';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import MenuItem from '../../widgets/MenuItem/MenuItem.tsx';
 import getAttribute from '../ProductPage/lib/helpers/getAttribute.ts';
@@ -32,7 +34,7 @@ export default function ProductCatalogue() {
 
   const { pathname } = useLocation();
   const [query, setQuery] = useSearchParams();
-  const [isFiltersOpen, onFilterOpen] = useState(false);
+  const [isFiltersOpen, onFilterOpen] = useCycle(false, true);
   const [sortOrder, setSortOrder] = useState(query.get(QUERY_SORT) ?? 'price desc');
   const [productItems, setProductItems] = useState<ProductResponse>();
   const [getProductList, { data: rawProductListData, isSuccess: productsIsSuccess, isLoading: productsIsLoading }] =
@@ -111,15 +113,15 @@ export default function ProductCatalogue() {
   }
 
   function onApplyFilters() {
-    onFilterOpen(false);
-    fetchProducts();
-    setProductItems(undefined);
-
     const encodedState = encodeQueryState(filtersState);
 
-    if (query.get(QUERY_FILTER) !== encodedState) {
-      pushQuery([QUERY_FILTER, encodedState]);
-    }
+    onFilterOpen();
+
+    if (query.get(QUERY_FILTER) !== encodedState) return;
+
+    fetchProducts();
+    setProductItems(undefined);
+    pushQuery([QUERY_FILTER, encodedState]);
   }
 
   useEffect(() => {
@@ -154,12 +156,13 @@ export default function ProductCatalogue() {
         grid-rows-prodPageMob
         px-[10px]
         sm:mt-16
-        md:px-12
-        md:py-11
+        md:px-[6px]
+        md:py-[48px]
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
-      "
+        "
     >
+      <Blackout isBlackout={isFiltersOpen} />
       <ProductPageHeader />
       <div
         className="
@@ -196,7 +199,7 @@ export default function ProductCatalogue() {
 
               return (
                 <React.Fragment key={name}>
-                  <CategoryItem item={name} activeCat={activeCat} />
+                  <CategoryItem index={i} item={name} activeCat={activeCat} />
                   {!isLast && (activeCat === name || isPrevCat) ? '/' : ''}
                 </React.Fragment>
               );
@@ -227,20 +230,18 @@ export default function ProductCatalogue() {
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
             className="grid items-center gap-5 pb-12 lg:gap-6"
           >
-            {productListData.results?.map(
-              ({ id, name, masterVariant, masterVariant: { prices, images, attributes } }, i) => (
-                <MenuItem
-                  key={`${id}-${i}`}
-                  id={id}
-                  name={name.en}
-                  prices={prices}
-                  image={images[0].url}
-                  attributes={attributes}
-                  isSpicy={Boolean(getAttribute(masterVariant.attributes, ProductAttributeNames.IS_SPICY))}
-                  isVegan={Boolean(getAttribute(masterVariant.attributes, ProductAttributeNames.IS_VEGAN))}
-                />
-              ),
-            )}
+            {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
+              <MenuItem
+                key={`${id}-${i}`}
+                id={id}
+                name={name.en}
+                prices={prices}
+                image={images[0].url}
+                attributes={attributes}
+                isSpicy={Boolean(getAttribute(attributes, ProductAttributeNames.IS_SPICY))}
+                isVegan={Boolean(getAttribute(attributes, ProductAttributeNames.IS_VEGAN))}
+              />
+            ))}
           </InfiniteScroll>
         ) : null}
       </MenuList>

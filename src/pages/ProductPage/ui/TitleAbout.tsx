@@ -11,8 +11,8 @@ interface ITitleAboutProps {
 
 function TitleAbout({ name, calories, weight, isSpicy, isVegan }: ITitleAboutProps) {
   return (
-    <div className="z-10 ml-3 mr-12 hidden border-1 border-primary border-opacity-30 bg-primary bg-opacity-40 backdrop-brightness-[85%] backdrop-saturate-200 md:absolute md:left-[3%] md:top-[48%] md:block md:rounded-3xl md:py-7 md:pl-4 md:pr-10 md:backdrop-blur-[8px]">
-      <h2 className="text-3xl font-bold text-text-dark md:text-primary">
+    <div className="z-10 ml-3 mr-12 hidden border-1 border-primary border-opacity-30 bg-primary bg-opacity-40 backdrop-brightness-[85%] backdrop-saturate-200 md:absolute md:left-[3%] md:top-[37%] md:block md:rounded-3xl md:py-7 md:pl-4 md:pr-10 md:backdrop-blur-[8px]">
+      <h2 className="text-3xl font-bold text-text-dark md:text-xl md:text-primary lg:text-3xl">
         {name}
         {isSpicy || isVegan ? (
           <span className="ml-4 inline-block max-w-[30px] rounded-xl bg-accent-light p-1">

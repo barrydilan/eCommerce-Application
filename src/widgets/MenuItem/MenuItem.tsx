@@ -37,14 +37,14 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
   return (
     <li className="w-full list-none">
       <Link to={`/product/${id}`}>
-        <div className="flex rounded-2xl border-1 border-border-black/10 transition delay-150 duration-300 ease-in-out hover:bg-accent-light dark:border-dark-separation-line dark:hover:bg-dark-separation-line">
+        <div className="flex rounded-2xl border-1 border-border-black/10 transition-all ease-in-out hover:bg-accent-light dark:border-dark-separation-line dark:hover:bg-dark-separation-line">
           <div className="m-h-[170px] relative flex flex-[75%] gap-x-3 sm:gap-x-7">
             <img
               onLoad={() => setIsLoading(false)}
               loading="lazy"
               className={`${
                 isLoading ? 'h-full w-48 opacity-0' : 'opacity-100'
-              } inline-block h-full max-w-[45%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[30%] xl:max-w-[19.5%]`}
+              } inline-block h-full max-w-[40%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[35%] xl:max-w-[19.5%]`}
               src={image}
               alt={name}
             />
@@ -53,15 +53,15 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
                 <img src={isSpicy ? spicyIcon : veganIcon} alt={`${isSpicy ? 'spicyIcon' : 'veganIcon'}`} />
               </span>
             ) : null}
-            <div className="my-4 flex flex-col gap-y-2 xs:gap-y-3 sm:my-7">
-              <div className="flex w-fit flex-1 flex-col gap-y-3">
-                <h2 className="text-text-dark dark:text-primary sm:text-xl">{name}</h2>
+            <div className="my-1 flex flex-col gap-y-2 xs:gap-y-3">
+              <div className="flex flex-1 flex-col gap-y-3 sm:gap-y-1">
+                <div className="truncate-text text-text-dark dark:text-primary sm:text-base">{name}</div>
                 <div>
-                  <h4 className="text-sm text-text-grey">{calories} kcal</h4>
-                  <h4 className="text-sm text-text-grey">{weight} g</h4>
+                  <h4 className="text-xs text-text-grey">{calories} kcal</h4>
+                  <h4 className="text-xs text-text-grey">{weight} g</h4>
                 </div>
               </div>
-              <div className="mb-2 flex w-fit items-center gap-x-2">
+              <div className="mb-2 flex max-w-[40px] items-center gap-x-2">
                 <StarsRating
                   value={rating}
                   allowHalf
@@ -73,13 +73,11 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               </div>
             </div>
           </div>
-          <div className="my-4 flex flex-auto flex-col items-end justify-between pr-3.5 sm:my-7 sm:pr-7">
-            <div className="grid">
-              {oldPrice ? (
-                <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
-              ) : null}
-              <h3 className="text-base font-medium text-text-dark dark:text-primary sm:text-xl">$ {corePrice}</h3>
-            </div>
+          <div className="flex flex-col items-center justify-evenly">
+            {oldPrice ? (
+              <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
+            ) : null}
+            <h3 className="text-base font-medium text-text-dark dark:text-primary">$ {corePrice}</h3>
             <AddToCartBtn />
           </div>
         </div>

@@ -23,6 +23,7 @@ function CategoriesList({ children, changeActiveCat }: ICategoryList) {
         className="
             flex
             h-8
+            items-center
             gap-2
             overflow-y-scroll
             border-b-[2px]

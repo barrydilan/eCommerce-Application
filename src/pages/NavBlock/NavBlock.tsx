@@ -7,11 +7,10 @@ function NavBlock() {
       className="
         fixed
         bottom-0 
-        z-40
+        z-20
         h-14
-        w-full
-        bg-separation-line
-        dark:bg-dark-separation-line
+        w-full 
+        md:static
         md:col-start-1
         md:col-end-2
         md:row-start-2
@@ -20,10 +19,9 @@ function NavBlock() {
         md:w-44
         md:border-r-2
         md:border-separation-line
-        md:bg-primary
-        md:dark:border-dark-separation-line
-        md:dark:bg-dark-bg-primary
-        lg:w-[22rem]
+        md:bg-opacity-0
+        lg:min-w-full
+        lg:max-w-[22rem]
       "
     >
       <UserProfileLink isHeader={false} />
