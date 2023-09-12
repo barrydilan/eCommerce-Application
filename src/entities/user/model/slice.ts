@@ -8,17 +8,20 @@ interface ILoggedInPayload {
 	refreshToken: string;
 }
 
-type IUpdateAccessTokenPayload = Omit<ILoggedInPayload, 'userId'>;
+interface IUpdateAccessTokenPayload extends Omit<ILoggedInPayload, 'userId'> {
+	cartId: string;
+}
 
 export const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
 		updateAccessToken: (state, action: PayloadAction<IUpdateAccessTokenPayload>) => {
-			const { accessToken, refreshToken } = action.payload;
+			const { accessToken, refreshToken, cartId } = action.payload;
 
 			state.accessToken = accessToken;
 			state.refreshToken = refreshToken;
+			state.cartId = cartId;
 		},
 
 		loggedIn: (state, action: PayloadAction<ILoggedInPayload>) => {

@@ -1,15 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import authQueryWithReauth from '../../../shared/api/authQueryWithReauth.ts';
-import { ILoginUserParams, TokenTypeHints } from '../../../shared/types';
-
-type IAuthResponse = Readonly<{
-	access_token: string;
-	expires_in: number;
-	refresh_token: string;
-	scope: string;
-	token_type: string;
-}>;
+import { IAuthResponse, ILoginUserParams, TokenTypeHints } from '../../../shared/types';
 
 interface ITokenRevokeParams {
 	token: string;
