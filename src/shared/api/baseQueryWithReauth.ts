@@ -1,5 +1,4 @@
-import { BaseQueryFn } from '@reduxjs/toolkit/dist/query';
-import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { BaseQueryFn, fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 import { type FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 
