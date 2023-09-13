@@ -1,7 +1,7 @@
 export default function ContactsIcon({ isActive }: { isActive: boolean }) {
   return (
     <svg
-      className={`navMenuIcon ${isActive ? 'fill-accent' : 'fill-inactive-icons-grey'}  md:inline-block`}
+      className={`navMenuIcon ${isActive ? 'fill-accent' : 'fill-inactive-icons-grey'}  lg:inline-block`}
       width="24"
       height="24"
       viewBox="0 0 24 24"

@@ -91,7 +91,7 @@ export default function ChangePassword(props: { userData: IUser }) {
       <div className="profileInputWrapper relative">
         <InfoModal msgModalShown={msgModalShown} msgModalText={msgModalText} />
         <div className="text-base font-medium dark:text-primary">Current password</div>
-        <label htmlFor="currPass" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
+        <label htmlFor="currPass" className="loginRegLabel mt-5 sm:mt-0 sm:max-w-[350px]">
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}
@@ -118,7 +118,7 @@ export default function ChangePassword(props: { userData: IUser }) {
       </div>
       <div className="profileInputWrapper">
         <div className="text-base font-medium text-text-dark dark:text-primary">New password</div>
-        <label htmlFor="newPass" className="loginRegLabel mt-5 sm:mt-0 sm:w-[470px]">
+        <label htmlFor="newPass" className="loginRegLabel mt-5 sm:mt-0 sm:max-w-[350px]">
           <motion.input
             initial={inputAnimation.initial}
             animate={inputAnimation.animate}

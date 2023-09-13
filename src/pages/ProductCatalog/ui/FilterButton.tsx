@@ -25,6 +25,7 @@ function FilterButton({ onFilterOpen }: IFilterButton) {
             py-[10px]
             transition-all
             hover:bg-accent-lightest
+            dark:bg-dark-bg-primary
             dark:text-primary
             dark:hover:bg-text-grey
           "

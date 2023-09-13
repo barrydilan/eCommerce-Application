@@ -4,7 +4,7 @@ export default function SortingSelector(props: {
 }) {
   const { sortOrder, onSort } = props;
   return (
-    <div className="relative text-text-grey lg:h-8 lg:border-b-2 lg:border-separation-line">
+    <div className="relative ml-auto text-text-grey lg:h-8 lg:border-b-2 lg:border-separation-line">
       Sort by:
       <select
         name="sortSelect"

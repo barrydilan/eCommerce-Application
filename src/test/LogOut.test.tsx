@@ -21,9 +21,9 @@ describe('LogOut', () => {
       userReducer: { isLogged: true, accessToken: '', refreshToken: '', userId: '', cartId: '' },
     });
 
-    expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
+    expect(screen.getAllByText(/log out/i)[0]).toBeInTheDocument();
 
-    await userEvent.click(screen.getByText(/log out/i));
+    await userEvent.click(screen.getAllByText(/log out/i)[0]);
 
     await waitFor(() => {
       expect(loggedOutSpy).toBeCalledTimes(1);

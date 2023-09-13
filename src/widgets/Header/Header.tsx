@@ -1,16 +1,13 @@
-import React, { useRef, useState } from 'react';
-
 import { stagger, useAnimate } from 'framer-motion';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import LogOutBtn from '../../features/LogOutBtn/LogOutBtn';
+import SearchInput from '../../features/SearchInput/SearchInput';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 import Logo from '../ui/Logo';
 
 function Header() {
   const [scope, animate] = useAnimate();
-  const [query, setQuery] = useSearchParams('');
-  const [searchValue, setSearchValue] = useState(query.get('search') ?? '');
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const logoName = 'SushiSushi'.split('');
 
@@ -20,16 +17,11 @@ function Header() {
     }
   };
 
-  function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key !== 'Enter') return;
-    searchInputRef?.current?.blur();
-  }
-
   return (
     <header
       className="
         fixed
-        z-30
+        z-50
         col-span-full
         flex
         w-full
@@ -56,9 +48,12 @@ function Header() {
           pt-2
           md:h-16
           md:w-44
+          md:border-r-2
+          md:border-separation-line
+          dark:md:border-dark-separation-line
           lg:mr-0
-          lg:w-89
-          lg:pl-8
+          xl:w-89
+          xl:pl-8
         "
       >
         <Link to="/">
@@ -79,7 +74,7 @@ function Header() {
             dark:text-primary
             md:pt-2
             md:text-xl
-            lg:text-2xl
+            xl:text-2xl
           "
         >
           {logoName.map((letter, index) => {
@@ -92,50 +87,8 @@ function Header() {
           })}
         </h1>
       </div>
-      <label
-        htmlFor="searchInput"
-        className="
-          relative
-          flex
-          w-2/5
-          p-2
-          pr-1
-          before:absolute 
-          before:right-2 
-          before:top-3 
-          before:w-5 
-          before:content-searchIcon
-          md:leading-10
-          lg:before:left-4
-          
-        "
-      >
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="Search"
-          ref={searchInputRef}
-          onKeyDown={handleKeyDown}
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onBlur={(e) => {
-            query.set('search', e.target.value);
-            setQuery(query);
-          }}
-          className="
-            w-full 
-            rounded 
-            pl-2
-            transition-all 
-            duration-300 
-            focus:bg-separation-line
-            focus:outline-none
-            dark:bg-dark-bg-primary
-            dark:text-text-grey md:leading-10
-            lg:pl-10
-            "
-        />
-      </label>
+      <SearchInput isHeader />
+      <LogOutBtn isHeader />
       <UserProfileLink isHeader />
     </header>
   );

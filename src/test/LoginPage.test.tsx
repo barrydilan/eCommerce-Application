@@ -115,7 +115,7 @@ describe('LoginPage', () => {
       userReducer: { isLogged: true, accessToken: '', refreshToken: '', userId: '', cartId: '' },
     });
 
-    expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();
+    expect(screen.getAllByText(/log out/i)[0]).toBeInTheDocument();
     expect(screen.queryByText('log in', { exact: false })).toBeNull();
 
     expect(loggedInSpy).toBeCalledTimes(0);

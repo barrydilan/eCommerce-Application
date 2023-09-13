@@ -20,6 +20,7 @@ export default function ErrorModal({ reStartForm, errorMessage, navigateTo }: IE
       exit="out"
       className="
       mx-3
+      my-24
       box-border
       flex
       w-10/12
@@ -32,9 +33,10 @@ export default function ErrorModal({ reStartForm, errorMessage, navigateTo }: IE
       sm:w-128
     "
     >
-      <h3 className="text-5xl font-medium tracking-widest text-text-dark">Oh snap!</h3>
-      <p className="text-center text-base text-text-grey">
-        <span className="text-text-dark">{errorMessage}</span> <br />
+      <h3 className="text-5xl font-medium tracking-widest text-text-dark dark:text-primary">Oh snap!</h3>
+      <p className="mt-5 text-center text-base text-text-grey">
+        <span className="text-text-dark dark:text-primary">{errorMessage}</span> <br />
+        <br />
         <span>Change a few things up and try again</span>
       </p>
       <div

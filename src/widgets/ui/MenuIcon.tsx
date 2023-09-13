@@ -1,7 +1,7 @@
 export default function MainIcon({ isActive }: { isActive: boolean }) {
   return (
     <svg
-      className={`navMenuIcon ${isActive ? 'fill-accent' : 'fill-inactive-icons-grey'}  md:inline-block`}
+      className={`navMenuIcon ${isActive ? 'fill-accent' : 'fill-inactive-icons-grey'}  lg:inline-block`}
       xmlns="http://www.w3.org/2000/svg"
       width="23"
       height="23"

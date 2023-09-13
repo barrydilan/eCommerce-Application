@@ -57,20 +57,19 @@ export function App() {
           text-base
           text-text-dark
           2xl:container
-          ${isCartToRender ? 'md:grid-cols-deskGridCols' : 'md:grid-cols-noCartGrid'}
-          ${isCartToRender ? 'lg:grid-cols-deskGridCols' : 'lg:grid-cols-noCartGrid'}
+          lg:grid-rows-tabGridRows
+          ${isCartToRender ? 'lg:grid-cols-mdGridCols' : 'lg:grid-cols-mdNoCartGrid'}
+          ${isCartToRender ? 'xl:grid-cols-xlGridCols' : 'xl:grid-cols-xlNoCartGrid'}
           `}
       >
         <Header />
         <div
           className="
-            md:col-start-2
-            md:col-end-3
-            md:row-start-2
-            md:row-end-3
-            md:max-w-[400px]
-            md:justify-self-center
-            lg:max-w-[600px]
+            lg:col-start-2
+            lg:col-end-3
+            lg:row-start-2
+            lg:row-end-3
+            lg:justify-self-center
             "
         >
           <LocationProvider>
@@ -81,14 +80,18 @@ export function App() {
         {isCartToRender ? (
           <div
             className="
-         hidden
-         border-1
-         md:col-start-3
-         md:row-start-2
-         md:block
-         md:min-w-[11rem]
-       md:border-separation-line
-         lg:px-2"
+              box-border
+              hidden
+              border-l-2
+              dark:border-dark-separation-line
+              dark:bg-dark-separation-line
+              lg:col-start-3
+              lg:col-end-4
+              lg:row-start-2
+              lg:block
+              lg:border-separation-line
+              lg:bg-separation-line
+            "
           >
             <Cart />
           </div>

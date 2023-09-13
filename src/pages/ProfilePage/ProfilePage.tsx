@@ -36,13 +36,15 @@ export default function ProfilePage() {
     );
 
   return (
-    <div className="my-12 p-5 sm:mt-[5.6rem] xl:px-24">
-      <PageBackBtn title="Account" />
-      <ProfileHeader />
-      <UserImage pic={userImage} userData={data} />
-      <ThemeSelector />
-      <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
-      {isAccTabActive ? <AccountSettings userData={data} /> : <AddressesSettings userData={data} />}
+    <div className="">
+      <div className="mx-auto my-12 p-5 sm:mt-[5.6rem] xl:px-24 ">
+        <PageBackBtn title="Account" />
+        <ProfileHeader />
+        <UserImage pic={userImage} userData={data} />
+        <ThemeSelector />
+        <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
+        {isAccTabActive ? <AccountSettings userData={data} /> : <AddressesSettings userData={data} />}
+      </div>
     </div>
   );
 }
