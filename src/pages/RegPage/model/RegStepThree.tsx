@@ -93,7 +93,6 @@ export default function RegStepThree(props: UserFormProps) {
   return (
     <CustomRegForm>
       <label
-        data-testid="select"
         htmlFor="billCountryInput"
         className={`
         loginRegLabel
@@ -101,6 +100,7 @@ export default function RegStepThree(props: UserFormProps) {
       `}
       >
         <motion.select
+          data-testid="select"
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
           transition={inputAnimation.transition}
@@ -168,11 +168,11 @@ export default function RegStepThree(props: UserFormProps) {
             }}
           >
             <label
-              data-testid="select"
               htmlFor="billCountryInput"
               className={`loginRegLabel ${shipBillCluesStyles} mt-10 after:content-['Shipping']`}
             >
               <motion.select
+                data-testid="select"
                 initial={{ y: '-30%' }}
                 animate={{ y: '0%' }}
                 exit={{ scaleY: 0, opacity: 0 }}

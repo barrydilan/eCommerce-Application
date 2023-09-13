@@ -232,4 +232,470 @@ describe('RegPage', () => {
     expect(screen.queryByPlaceholderText('Last name')).toBeNull();
     expect(screen.queryByPlaceholderText('Birth date')).toBeNull();
   });
+
+  it('Renders the third step', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    const backBtn = screen.getByRole('button', { name: 'Back' });
+    const continueBtn = screen.getByRole('button', { name: 'Continue' });
+    const useSameAddressCheckbox = screen.getByTestId('checkbox');
+
+    expect(screen.getByText('Country & City')).toBeInTheDocument();
+    expect(screen.getByTestId('select')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('City')).toBeInTheDocument();
+    expect(useSameAddressCheckbox).toBeInTheDocument();
+    expect(useSameAddressCheckbox).toBeChecked();
+
+    expect(backBtn).toBeInTheDocument();
+    expect(backBtn).toBeEnabled();
+    expect(continueBtn).toBeInTheDocument();
+    expect(continueBtn).toBeDisabled();
+
+    const options = screen.getAllByTestId('select-option');
+    expect(options[0]).toHaveValue('US');
+    expect(options[1]).toHaveValue('UA');
+    expect(options[2]).toHaveValue('DE');
+
+    expect(options[0]).toHaveTextContent('USA');
+    expect(options[1]).toHaveTextContent('Ukraine');
+    expect(options[2]).toHaveTextContent('Germany');
+
+    await userEvent.click(useSameAddressCheckbox);
+
+    expect(screen.getByTestId('checkbox')).not.toBeChecked();
+
+    screen.getAllByTestId('select').forEach((select) => {
+      expect(select).toBeInTheDocument();
+    });
+
+    screen.getAllByPlaceholderText('City').forEach((input) => {
+      expect(input).toBeInTheDocument();
+    });
+  });
+
+  it('Third step empty inputs', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    await userEvent.click(screen.getByPlaceholderText('City'));
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('City')).toHaveClass('border-shop-cart-red');
+    expect(screen.getByText('City name is required')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByTestId('checkbox'));
+
+    const cities = screen.getAllByPlaceholderText('City');
+
+    const waitUserEvents = cities.map(async (city) => {
+      await userEvent.click(city);
+      await userEvent.tab();
+    });
+
+    await Promise.all(waitUserEvents);
+
+    cities.forEach((city) => {
+      expect(city).toHaveClass('border-shop-cart-red');
+    });
+
+    expect(screen.getAllByText('City name is required')).toHaveLength(2);
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
+  });
+
+  it('Third step wrong inputs', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    await userEvent.type(screen.getByPlaceholderText('City'), 'dsadasdasdasdsadsaddd');
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('City')).toHaveClass('border-shop-cart-red');
+    expect(screen.getByText('Too long name')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByTestId('checkbox'));
+
+    const cities = screen.getAllByPlaceholderText('City');
+
+    const waitUserEvents = cities.map(async (city) => {
+      await userEvent.type(city, 'dsadasdasdasdsadsaddd');
+      await userEvent.tab();
+    });
+
+    await Promise.all(waitUserEvents);
+
+    cities.forEach((city) => {
+      expect(city).toHaveClass('border-shop-cart-red');
+    });
+
+    expect(screen.getAllByText('Too long name')).toHaveLength(2);
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
+  });
+
+  it('Third step correct inputs', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    await userEvent.type(screen.getByPlaceholderText('City'), 'test');
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('City')).not.toHaveClass('border-shop-cart-red');
+    expect(screen.queryByText('Too long name')).toBeNull();
+
+    await userEvent.click(screen.getByTestId('checkbox'));
+
+    const cities = screen.getAllByPlaceholderText('City');
+
+    const waitUserEvents = cities.map(async (city) => {
+      await userEvent.type(city, 'test');
+      await userEvent.tab();
+    });
+
+    await Promise.all(waitUserEvents);
+
+    cities.forEach((city) => {
+      expect(city).not.toHaveClass('border-shop-cart-red');
+    });
+
+    expect(screen.queryAllByText('Too long name')).toHaveLength(0);
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
+  });
+
+  it('Third step select is working properly', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    const options = screen.getAllByTestId('select-option');
+    expect((options.at(0) as HTMLOptionElement).selected).toBeTruthy();
+    expect((options.at(1) as HTMLOptionElement).selected).toBeFalsy();
+    expect((options.at(2) as HTMLOptionElement).selected).toBeFalsy();
+
+    await userEvent.selectOptions(screen.getByTestId('select'), 'UA');
+
+    const options2 = screen.getAllByTestId('select-option');
+
+    expect((options2.at(0) as HTMLOptionElement).selected).toBeFalsy();
+    expect((options2.at(1) as HTMLOptionElement).selected).toBeTruthy();
+    expect((options2.at(2) as HTMLOptionElement).selected).toBeFalsy();
+
+    await userEvent.selectOptions(screen.getByTestId('select'), 'DE');
+
+    const options3 = screen.getAllByTestId('select-option');
+
+    expect((options3.at(0) as HTMLOptionElement).selected).toBeFalsy();
+    expect((options3.at(1) as HTMLOptionElement).selected).toBeFalsy();
+    expect((options3.at(2) as HTMLOptionElement).selected).toBeTruthy();
+  });
+
+  it('Renders the fourth step', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the third step
+
+    await userEvent.type(screen.getByPlaceholderText('City'), 'test');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    const backBtn = screen.getByRole('button', { name: 'Back' });
+    const continueBtn = screen.getByRole('button', { name: 'Continue' });
+
+    expect(screen.getByText('PC & Street')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Postal code')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Street')).toBeInTheDocument();
+
+    expect(backBtn).toBeInTheDocument();
+    expect(backBtn).toBeEnabled();
+    expect(continueBtn).toBeInTheDocument();
+    expect(continueBtn).toBeDisabled();
+  });
+
+  it('Fourth step empty inputs', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the third step
+
+    await userEvent.type(screen.getByPlaceholderText('City'), 'test');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    await userEvent.click(screen.getByPlaceholderText('Postal code'));
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('Postal code')).toHaveClass('border-shop-cart-red');
+    expect(screen.getByText('PostalCode is required')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByPlaceholderText('Street'));
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('Street')).toHaveClass('border-shop-cart-red');
+    expect(screen.getByText('Street name is required')).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
+  });
+
+  it('Fourth step wrong inputs', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the third step
+
+    await userEvent.type(screen.getByPlaceholderText('City'), 'test');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    await userEvent.type(screen.getByPlaceholderText('Postal code'), 'dsadasdasdasdsadsaddd');
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('Postal code')).toHaveClass('border-shop-cart-red');
+    expect(screen.getByText('Enter valid postal code')).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
+  });
+
+  it('Third step correct inputs', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the third step
+
+    await userEvent.type(screen.getByPlaceholderText('City'), 'test');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    await userEvent.type(screen.getByPlaceholderText('Postal code'), '33333-3333');
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('Postal code')).not.toHaveClass('border-shop-cart-red');
+    expect(screen.queryByText('Enter valid postal code')).toBeNull();
+
+    await userEvent.type(screen.getByPlaceholderText('Street'), 'street');
+    await userEvent.tab();
+
+    expect(screen.getByPlaceholderText('Street')).not.toHaveClass('border-shop-cart-red');
+    expect(screen.queryByText('Street name is required')).toBeNull();
+
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeEnabled();
+  });
+
+  it('Failed submit', async () => {
+    RenderTestApp(<RegPage />);
+
+    /// ///////////////////////////////////////
+    // Skip the first step
+
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'MyEmail@gmail.com');
+    await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the second step
+
+    await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
+    await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the third step
+
+    await userEvent.type(screen.getByPlaceholderText('City'), 'test');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Skip the fourth step
+
+    await userEvent.type(screen.getByPlaceholderText('Postal code'), '33333-3333');
+    await userEvent.type(screen.getByPlaceholderText('Street'), 'street');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////////
+    // Actual test
+
+    const continueBtn = screen.getByText('Continue');
+
+    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent('Oh snap!');
+    expect(screen.getByText('Change a few things up and try again')).toBeInTheDocument();
+    expect(continueBtn).toBeInTheDocument();
+  });
 });
