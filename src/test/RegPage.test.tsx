@@ -16,7 +16,7 @@ describe('RegPage', () => {
     const backBtn = screen.getByRole('button', { name: 'Back' });
     const continueBtn = screen.getByRole('button', { name: 'Continue' });
 
-    expect(screen.getByPlaceholderText('Email & Password')).toBeInTheDocument();
+    expect(screen.getByText('Email & Password')).toBeInTheDocument();
 
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
@@ -89,10 +89,16 @@ describe('RegPage', () => {
   it('Renders the second step', async () => {
     RenderTestApp(<RegPage />);
 
+    /// ////////////////////////////////////
+    // Skip the first step
+
     await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
     await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
 
     await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// ////////////////////////////////////
+    // Actual test
 
     const backBtn = screen.getByRole('button', { name: 'Back' });
     const continueBtn = screen.getByRole('button', { name: 'Continue' });
@@ -113,10 +119,16 @@ describe('RegPage', () => {
   it('Second step empty inputs', async () => {
     RenderTestApp(<RegPage />);
 
+    /// /////////////////////////////////
+    // Skip the first step
+
     await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
     await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
 
     await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// /////////////////////////////////
+    // Actual test
 
     await userEvent.click(screen.getByPlaceholderText('First name'));
     await userEvent.tab();
@@ -142,10 +154,16 @@ describe('RegPage', () => {
   it('Second step wrong inputs', async () => {
     RenderTestApp(<RegPage />);
 
+    /// //////////////////////////////////////
+    // Skip the first step
+
     await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
     await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
 
     await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// //////////////////////////////////////
+    // Actual test
 
     await userEvent.type(screen.getByPlaceholderText('First name'), 'dsadasdasdasdsadsaddd');
     await userEvent.tab();
@@ -171,30 +189,37 @@ describe('RegPage', () => {
   it('Second step correct inputs', async () => {
     RenderTestApp(<RegPage />);
 
+    /// ///////////////////////////////////////
+    // Skip the first step
+
     await userEvent.type(screen.getByPlaceholderText('Email'), 'test@gmail.com');
     await userEvent.type(screen.getByPlaceholderText('Password'), 'testPassword123#');
 
     await userEvent.click(screen.getByRole('button', { name: 'Continue' }));
+
+    /// ///////////////////////////////////////
+    // Actual test
 
     await userEvent.type(screen.getByPlaceholderText('First name'), 'test');
     await userEvent.tab();
 
     expect(screen.getByPlaceholderText('First name')).not.toHaveClass('border-shop-cart-red');
     expect(screen.queryByText('Too long name')).toBeNull();
+    expect(screen.queryByText('Last name is required')).toBeNull();
 
     await userEvent.type(screen.getByPlaceholderText('Last name'), 'test');
     await userEvent.tab();
 
     expect(screen.getByPlaceholderText('Last name')).not.toHaveClass('border-shop-cart-red');
-    screen.queryAllByText('Too long name').forEach((match) => {
-      expect(match).toBeNull();
-    });
+    expect(screen.queryByText('Too long name')).toBeNull();
+    expect(screen.queryByText('Last name is required')).toBeNull();
 
     await userEvent.type(screen.getByPlaceholderText('Birth date'), '2000-02-02');
     await userEvent.tab();
 
     expect(screen.getByPlaceholderText('Birth date')).not.toHaveClass('border-shop-cart-red');
     expect(screen.queryByText('Age restriction: 13+')).toBeNull();
+    expect(screen.queryByText('Birth date is required')).toBeNull();
 
     expect(screen.getByRole('button', { name: 'Back' })).toBeEnabled();
 
@@ -206,12 +231,5 @@ describe('RegPage', () => {
     expect(screen.queryByPlaceholderText('First name')).toBeNull();
     expect(screen.queryByPlaceholderText('Last name')).toBeNull();
     expect(screen.queryByPlaceholderText('Birth date')).toBeNull();
-  });
-
-  it('Renders the third step', async () => {
-    expect(screen.getByPlaceholderText('Country & City')).toBeInTheDocument();
-
-    expect(screen.getBy('Email')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
   });
 });

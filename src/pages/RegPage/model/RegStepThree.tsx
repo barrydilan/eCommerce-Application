@@ -93,6 +93,7 @@ export default function RegStepThree(props: UserFormProps) {
   return (
     <CustomRegForm>
       <label
+        data-testid="select"
         htmlFor="billCountryInput"
         className={`
         loginRegLabel
@@ -100,7 +101,6 @@ export default function RegStepThree(props: UserFormProps) {
       `}
       >
         <motion.select
-          data-testid="select"
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
           transition={inputAnimation.transition}
@@ -168,6 +168,7 @@ export default function RegStepThree(props: UserFormProps) {
             }}
           >
             <label
+              data-testid="select"
               htmlFor="billCountryInput"
               className={`loginRegLabel ${shipBillCluesStyles} mt-10 after:content-['Shipping']`}
             >
@@ -188,9 +189,15 @@ export default function RegStepThree(props: UserFormProps) {
                 onBlur={handleBlur}
                 value={values.shipCountry}
               >
-                <option value="US">USA</option>
-                <option value="UA">Ukraine</option>
-                <option value="DE">Germany</option>
+                <option data-testid="select-option" value="US">
+                  USA
+                </option>
+                <option data-testid="select-option" value="UA">
+                  Ukraine
+                </option>
+                <option data-testid="select-option" value="DE">
+                  Germany
+                </option>
               </motion.select>
               <InputIcon icon={countryIcon} delay={0.3} />
             </label>
@@ -230,6 +237,7 @@ export default function RegStepThree(props: UserFormProps) {
         className="mt-4 flex items-center text-text-grey"
       >
         <motion.input
+          data-testid="checkbox"
           initial={checkboxAnimation.initial}
           animate={checkboxAnimation.animate}
           transition={checkboxAnimation.transitionInput}
