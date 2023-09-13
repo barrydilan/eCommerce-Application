@@ -1,13 +1,9 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-
-import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
+import rootApi from '../../../shared/api/rootApi.ts';
 import prepareFilterQuery from '../../user/model/prepareFilterQuery.ts';
 import { IGetProductListParams } from '../types/interfaces.ts';
 import { CategoriesResponse, CategoryResult, ProductResponse, ProductResult } from '../types/types.ts';
 
-export const productApi = createApi({
-	reducerPath: 'productApi',
-	baseQuery: baseQueryWithReauth,
+export const productApi = rootApi.injectEndpoints({
 	endpoints: (build) => ({
 		getProductList: build.query<ProductResponse, IGetProductListParams>({
 			query: ({ limit = 5, offset = 0, sort, filters, searchQuery }) => ({
