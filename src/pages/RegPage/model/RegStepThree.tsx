@@ -100,6 +100,7 @@ export default function RegStepThree(props: UserFormProps) {
       `}
       >
         <motion.select
+          data-testid="select"
           initial={inputAnimation.initial}
           animate={inputAnimation.animate}
           transition={inputAnimation.transition}
@@ -110,9 +111,15 @@ export default function RegStepThree(props: UserFormProps) {
           onBlur={handleBlur}
           value={values.billCountry}
         >
-          <option value="US">USA</option>
-          <option value="UA">Ukraine</option>
-          <option value="DE">Germany</option>
+          <option data-testid="select-option" value="US">
+            USA
+          </option>
+          <option data-testid="select-option" value="UA">
+            Ukraine
+          </option>
+          <option data-testid="select-option" value="DE">
+            Germany
+          </option>
         </motion.select>
         <motion.img
           initial={svgAnimation.initial}
