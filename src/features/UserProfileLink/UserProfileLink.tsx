@@ -7,7 +7,7 @@ import { useAppSelector } from '../../shared/lib/hooks';
 
 const headerLoggedClass = 'block md:hidden';
 const menuLoggedClass =
-  'hidden w-full justify-center gap-3 text-text-grey md:mt-28 md:flex md:flex-col md:items-center lg:mt-28 lg:flex-row';
+  'hidden w-full justify-center gap-3 text-text-grey md:mt-28 md:flex md:flex-col md:items-center lg:mt-28 xl:flex-row';
 
 function UserProfileLink(props: { isHeader: boolean }) {
   const { isLogged, userId } = useAppSelector((state) => state.userReducer);
@@ -37,8 +37,8 @@ function UserProfileLink(props: { isHeader: boolean }) {
                 text-text-dark
                 dark:text-primary 
                 md:text-center 
-                lg:w-full
-                lg:text-start
+                xl:w-full
+                xl:text-start
             "
           >
             {userFullName}
@@ -46,7 +46,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
           <h6
             className="
                 md:text-center
-                lg:text-start"
+                xl:text-start"
           >
             {greeting}
           </h6>

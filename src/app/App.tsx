@@ -53,7 +53,9 @@ export function App() {
           text-text-dark
           2xl:container
           md:grid-rows-tabGridRows
-          ${isCartToRender ? 'md:grid-cols-tabGridCols' : 'md:grid-cols-noCartGrid'}
+          ${isCartToRender ? 'md:grid-cols-mdGridCols' : 'md:grid-cols-mdNoCartGrid'}
+          ${isCartToRender ? 'lg:grid-cols-lgGridCols' : 'lg:grid-cols-mdNoCartGrid'}
+          ${isCartToRender ? 'xl:grid-cols-xlGridCols' : 'xl:grid-cols-xlNoCartGrid'}
           `}
       >
         <Header />
@@ -76,13 +78,13 @@ export function App() {
             className="
               box-border
               hidden
-              border-2
+              border-l-2
               md:col-start-3
               md:col-end-4
               md:row-start-2
-            md:block
+              md:block
               md:border-separation-line
-              lg:px-2
+              md:bg-separation-line
             "
           >
             <Cart />

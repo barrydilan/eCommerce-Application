@@ -44,7 +44,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               loading="lazy"
               className={`${
                 isLoading ? 'h-full w-48 opacity-0' : 'opacity-100'
-              } inline-block h-full max-w-[40%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[40%] xl:max-w-[19.5%]`}
+              } inline-block h-full max-w-[40%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[40%] xl:max-w-[30%]`}
               src={image}
               alt={name}
             />
@@ -55,7 +55,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
             ) : null}
             <div className="my-2 flex flex-col gap-y-2 xs:gap-y-3">
               <div className="flex flex-1 flex-col sm:gap-y-1">
-                <div className="truncate-text mr-3 text-text-dark dark:text-primary sm:text-base">{name}</div>
+                <div className="truncate-text mr-3 text-text-dark dark:text-primary sm:text-base lg:mr-7">{name}</div>
                 <div>
                   <h4 className="text-xs text-text-grey">{calories} kcal</h4>
                   <h4 className="text-xs text-text-grey">{weight} g</h4>
@@ -77,7 +77,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
             {oldPrice ? (
               <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
             ) : null}
-            <h3 className="mt-2 text-base font-semibold text-text-dark dark:text-primary">$ {corePrice}</h3>
+            <h3 className="mt-2 text-base font-semibold text-text-dark dark:text-primary lg:text-lg">$ {corePrice}</h3>
             <AddToCartBtn />
           </div>
         </div>

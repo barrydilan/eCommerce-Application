@@ -60,8 +60,8 @@ function Header() {
           md:border-separation-line
           dark:md:border-dark-separation-line
           lg:mr-0
-          lg:w-89
-          lg:pl-8
+          xl:w-89
+          xl:pl-8
         "
       >
         <Link to="/">
@@ -82,7 +82,7 @@ function Header() {
             dark:text-primary
             md:pt-2
             md:text-xl
-            lg:text-2xl
+            xl:text-2xl
           "
         >
           {logoName.map((letter, index) => {

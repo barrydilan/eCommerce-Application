@@ -23,7 +23,7 @@ function NavBlock() {
         md:bg-primary
         md:dark:border-dark-separation-line
         md:dark:bg-dark-bg-primary
-        lg:w-[22rem]
+        xl:w-[22rem]
       "
     >
       <UserProfileLink isHeader={false} />

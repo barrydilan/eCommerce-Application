@@ -43,7 +43,8 @@ function NavMenu() {
         md:justify-start
         md:gap-9
         md:px-0
-      lg:mt-12
+        lg:mt-12
+        xl:pl-8
         "
     >
       <li className="navMenuItem">
@@ -74,7 +75,7 @@ function NavMenu() {
         </NavLink>
       </li>
       {isLogged && (
-        <li className="navMenuItem hidden md:absolute md:bottom-6 md:block ">
+        <li className="navMenuItem hidden md:absolute md:bottom-6 md:block lg:pl-14">
           <button onClick={handleLogout} type="button" className="navMenuLink text-text-dark dark:text-primary">
             <img src={logOutIcon} alt="" className="navMenuIcon md:inline-block" />
             Log out
