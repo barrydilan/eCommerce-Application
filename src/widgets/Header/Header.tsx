@@ -1,6 +1,7 @@
 import { stagger, useAnimate } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
+import LogOutBtn from '../../features/LogOutBtn/LogOutBtn';
 import SearchInput from '../../features/SearchInput/SearchInput';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 import Logo from '../ui/Logo';
@@ -87,6 +88,7 @@ function Header() {
         </h1>
       </div>
       <SearchInput isHeader />
+      <LogOutBtn isHeader />
       <UserProfileLink isHeader />
     </header>
   );
