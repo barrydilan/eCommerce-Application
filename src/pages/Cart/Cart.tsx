@@ -25,21 +25,20 @@ export default function Cart() {
       dark:text-primary
       sm:mt-16
       sm:px-28
-      md:fixed 
-      md:mx-3
-      md:px-0
-      md:py-[6px]
-      lg:px-7
+      lg:fixed 
+      lg:mx-3
+      lg:px-0
+      lg:py-[6px]
       xl:w-[332px]
 "
     >
-      <h2 className="mb-6 text-xl sm:mt-24 md:mt-10">Your order</h2>
-      <div className="relative flex items-start gap-x-4 md:gap-x-1 lg:gap-x-2">
-        <div className="md:max-w-[33%] lg:max-w-[35%]">
+      <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
+      <div className="relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2">
+        <div className="lg:max-w-[33%] xl:max-w-[35%]">
           <img className="h-full w-full object-cover" src="src/assets/img/cart-img.png" alt="" />
         </div>
         <div>
-          <h3 className="text-lg sm:text-xl  md:text-sm lg:mr-7 lg:text-base">Set four flavours of salmon</h3>
+          <h3 className="text-lg sm:text-xl  lg:text-sm xl:mr-7 xl:text-base">Set four flavours of salmon</h3>
           <p className="mt-1 hidden text-xs text-text-grey lg:block">
             2205kcal <br />
             1405 g
@@ -53,19 +52,19 @@ export default function Cart() {
         </button>
       </div>
       <div className="flex items-center justify-between">
-        <span className="block text-lg font-medium sm:text-xl md:ml-auto md:mt-2 md:text-sm lg:text-lg">$24,50</span>
+        <span className="block text-lg font-medium sm:text-xl lg:ml-auto lg:mt-2 lg:text-sm xl:text-lg">$24,50</span>
       </div>
-      <div className="flex items-center justify-end gap-x-3 md:mt-2 lg:mb-3 lg:mt-4 lg:gap-x-3">
+      <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
         <button
           type="button"
-          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl md:px-1 md:text-sm lg:h-9 lg:w-9 lg:px-2 lg:text-lg"
+          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
         >
           -
         </button>
-        <div className="text-lg sm:text-xl md:text-sm lg:text-lg">1</div>
+        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">1</div>
         <button
           type="button"
-          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl md:px-1 md:text-sm lg:h-9 lg:w-9 lg:px-2 lg:text-lg"
+          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
         >
           +
         </button>

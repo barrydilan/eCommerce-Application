@@ -126,8 +126,8 @@ function LoginPage() {
               text-text-grey
               sm:pl-10
               sm:pr-10
-              md:mt-10
-              md:w-[29.9rem]
+              lg:mt-10
+              lg:w-[29.9rem]
               "
         >
           <h5

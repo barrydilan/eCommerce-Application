@@ -5,9 +5,9 @@ import userPic from '../../assets/img/UserImg.jpg';
 import { getFullName, useGetUserQuery } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
 
-const headerLoggedClass = 'block md:hidden';
+const headerLoggedClass = 'block lg:hidden';
 const menuLoggedClass =
-  'hidden w-full justify-center gap-3 text-text-grey md:mt-28 md:flex md:flex-col md:items-center lg:mt-28 xl:flex-row';
+  'hidden w-full justify-center gap-3 text-text-grey lg:mt-28 lg:flex lg:flex-col lg:items-center xl:flex-row';
 
 function UserProfileLink(props: { isHeader: boolean }) {
   const { isLogged, userId } = useAppSelector((state) => state.userReducer);
@@ -58,13 +58,13 @@ function UserProfileLink(props: { isHeader: boolean }) {
     <>
       <Link
         className={`
-        ${isHeader ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 md:hidden' : 'mt-28 hidden h-10 w-3/5 lg:mt-28 lg:block'}
+        ${isHeader ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 lg:hidden' : 'mt-28 hidden h-10 w-3/5 lg:mt-28 lg:block'}
         rounded-md
         bg-accent
         text-center
         leading-10 
         text-primary 
-        md:ml-6
+        lg:ml-6
         xl:ml-14`}
         to="/login"
       >
@@ -72,13 +72,13 @@ function UserProfileLink(props: { isHeader: boolean }) {
       </Link>
       <Link
         className={`
-        ${isHeader ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 md:hidden' : 'mt-3 hidden h-10 w-3/5 lg:block'}
+        ${isHeader ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 lg:hidden' : 'mt-3 hidden h-10 w-3/5 lg:block'}
         rounded-md
         bg-accent
         text-center
         leading-10 
         text-primary 
-        md:ml-6
+        lg:ml-6
         xl:ml-14`}
         to="/registration"
       >

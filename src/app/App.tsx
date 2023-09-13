@@ -53,7 +53,7 @@ export function App() {
           text-text-dark
           2xl:container
           lg:grid-rows-tabGridRows
-          ${isCartToRender ? 'lg:grid-cols-lgGridCols' : 'lg:grid-cols-mdNoCartGrid'}
+          ${isCartToRender ? 'lg:grid-cols-mdGridCols' : 'lg:grid-cols-mdNoCartGrid'}
           ${isCartToRender ? 'xl:grid-cols-xlGridCols' : 'xl:grid-cols-xlNoCartGrid'}
           `}
       >
@@ -80,12 +80,12 @@ export function App() {
               border-l-2
               dark:border-dark-separation-line
               dark:bg-dark-separation-line
-              md:col-start-3
-              md:col-end-4
-              md:row-start-2
-              md:block
-              md:border-separation-line
-              md:bg-separation-line
+              lg:col-start-3
+              lg:col-end-4
+              lg:row-start-2
+              lg:block
+              lg:border-separation-line
+              lg:bg-separation-line
             "
           >
             <Cart />
