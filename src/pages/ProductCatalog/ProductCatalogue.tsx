@@ -190,7 +190,7 @@ export default function ProductCatalogue() {
           setFiltersState={setFiltersState}
           onApplyFilters={onApplyFilters}
         />
-        <SortingSelector sortOrder={sortOrder} onSort={onSort} />S
+        <SortingSelector sortOrder={sortOrder} onSort={onSort} />
       </div>
       <CategoriesList changeActiveCat={changeActiveCat}>
         {categories

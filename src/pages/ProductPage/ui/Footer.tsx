@@ -35,7 +35,9 @@ function Footer() {
       >
         <span className="mx-auto flex w-fit gap-x-2">
           <img src={shoppingCart} alt="" />
-          <span className="inline-block">Add to Cart</span>
+          <span className="inline-block">
+            Add <span className="md:hidden lg:inline">to Cart</span>
+          </span>
         </span>
       </button>
     </div>
