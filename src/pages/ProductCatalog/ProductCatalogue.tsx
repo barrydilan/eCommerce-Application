@@ -21,6 +21,7 @@ import ProductPageHeader from './ui/ProductPageHeader';
 import { useGetCategoriesQuery, useGetCategoryQuery, useLazyGetProductListQuery } from '../../entities/product';
 import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
+import SearchInput from '../../features/SearchInput/SearchInput.tsx';
 import { capitalize } from '../../shared/lib/helpers';
 import { useGetPath } from '../../shared/lib/hooks';
 import { Blackout } from '../../shared/ui';
@@ -164,6 +165,7 @@ export default function ProductCatalogue() {
     >
       <Blackout isBlackout={isFiltersOpen} />
       <ProductPageHeader />
+      <SearchInput isHeader={false} />
       <div
         className="
           relative
@@ -188,7 +190,7 @@ export default function ProductCatalogue() {
           setFiltersState={setFiltersState}
           onApplyFilters={onApplyFilters}
         />
-        <SortingSelector sortOrder={sortOrder} onSort={onSort} />
+        <SortingSelector sortOrder={sortOrder} onSort={onSort} />S
       </div>
       <CategoriesList changeActiveCat={changeActiveCat}>
         {categories

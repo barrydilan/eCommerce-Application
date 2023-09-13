@@ -1,16 +1,12 @@
-import React, { useRef, useState } from 'react';
-
 import { stagger, useAnimate } from 'framer-motion';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import SearchInput from '../../features/SearchInput/SearchInput';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
 import Logo from '../ui/Logo';
 
 function Header() {
   const [scope, animate] = useAnimate();
-  const [query, setQuery] = useSearchParams('');
-  const [searchValue, setSearchValue] = useState(query.get('search') ?? '');
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const logoName = 'SushiSushi'.split('');
 
@@ -19,11 +15,6 @@ function Header() {
       animate([['.letter', { y: 5, opacity: 1 }, { duration: 0.3, delay: stagger(0.1) }]]);
     }
   };
-
-  function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key !== 'Enter') return;
-    searchInputRef?.current?.blur();
-  }
 
   return (
     <header
@@ -95,50 +86,7 @@ function Header() {
           })}
         </h1>
       </div>
-      <label
-        htmlFor="searchInput"
-        className="
-          relative
-          flex
-          w-2/5
-          p-2
-          pr-1
-          before:absolute 
-          before:right-2 
-          before:top-3 
-          before:w-5 
-          before:content-searchIcon
-          md:leading-10
-          lg:before:left-4
-          
-        "
-      >
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="Search"
-          ref={searchInputRef}
-          onKeyDown={handleKeyDown}
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onBlur={(e) => {
-            query.set('search', e.target.value);
-            setQuery(query);
-          }}
-          className="
-            w-full 
-            rounded 
-            pl-2
-            transition-all 
-            duration-300 
-            focus:bg-separation-line
-            focus:outline-none
-            dark:bg-dark-bg-primary
-            dark:text-text-grey md:leading-10
-            lg:pl-10
-            "
-        />
-      </label>
+      <SearchInput isHeader />
       <UserProfileLink isHeader />
     </header>
   );
