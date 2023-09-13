@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import xIcon from '../../assets/icons/xIcon.svg';
-
 export default function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,10 +22,11 @@ export default function Cart() {
       border-b-2
       border-text-grey/30
       px-6
+      dark:text-primary
       sm:mt-16
       sm:px-28
-      md:fixed
-      md:mx-3 
+      md:fixed 
+      md:mx-3
       md:px-0
       md:py-[6px]
       lg:px-7
@@ -46,9 +45,12 @@ export default function Cart() {
             1405 g
           </p>
         </div>
-        <div className="absolute right-0 top-0">
-          <img src={xIcon} alt="" />
-        </div>
+        <button
+          type="button"
+          className="absolute right-0 top-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark"
+        >
+          ×
+        </button>
       </div>
       <div className="flex items-center justify-between">
         <span className="block text-lg font-medium sm:text-xl md:ml-auto md:mt-2 md:text-sm lg:text-lg">$24,50</span>

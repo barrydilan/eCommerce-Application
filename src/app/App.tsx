@@ -79,6 +79,8 @@ export function App() {
               box-border
               hidden
               border-l-2
+              dark:border-dark-separation-line
+              dark:bg-dark-separation-line
               md:col-start-3
               md:col-end-4
               md:row-start-2

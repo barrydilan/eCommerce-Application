@@ -4,7 +4,7 @@ import keanu from '../../assets/img/Sad_Keanu.png';
 
 function ErrorPage() {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center font-poppins">
+    <div className="mt-24 flex flex-col items-center justify-center font-poppins">
       <div className="w-40 object-contain sm:w-64">
         <img src={keanu} alt="sad Keanu Reeves sitting on a bench" />
       </div>

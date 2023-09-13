@@ -36,6 +36,7 @@ function NavMenu() {
         bg-primary
         px-4
         py-2
+        dark:bg-dark-bg-primary
         md:mt-8
         md:max-h-full
         md:flex-col

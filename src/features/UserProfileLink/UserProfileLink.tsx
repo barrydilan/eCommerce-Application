@@ -65,7 +65,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
         leading-10 
         text-primary 
         md:ml-6
-        lg:ml-6`}
+        xl:ml-14`}
         to="/login"
       >
         Log&nbsp;in
@@ -79,7 +79,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
         leading-10 
         text-primary 
         md:ml-6
-        lg:ml-6`}
+        xl:ml-14`}
         to="/registration"
       >
         Sign&nbsp;Up
