@@ -2,10 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
 import { CartResponse } from '../../../shared/types';
-
-interface ICreateCartParams {
-	currency: 'USD' | 'UAH' | 'EUR';
-}
+import ICreateCartParams from '../types/interfaces.ts';
 
 export const updateCartApi = createApi({
 	reducerPath: 'updateCartApi',
