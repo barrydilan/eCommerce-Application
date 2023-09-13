@@ -1,8 +1,8 @@
-import { PROJECT_KEY } from '../../../shared/const';
 import { IGetProductListParams } from '../../product/types/interfaces.ts';
 
 function prepareFilterQuery(filters: IGetProductListParams['filters']) {
-	if (!filters || !Object.values(filters).filter(Boolean).length) return `/${PROJECT_KEY}/product-projections/search`;
+	if (!filters || !Object.values(filters).filter(Boolean).length)
+		return `/${import.meta.env.VITE_PROJECT_KEY}/product-projections/search`;
 
 	const queries = Object.entries(filters)
 		.map(([name, value]) => {
@@ -32,7 +32,7 @@ function prepareFilterQuery(filters: IGetProductListParams['filters']) {
 		.filter(Boolean)
 		.join('&filter=');
 
-	return `/${PROJECT_KEY}/product-projections/search?filter=${queries}`;
+	return `/${import.meta.env.VITE_PROJECT_KEY}/product-projections/search?filter=${queries}`;
 }
 
 export default prepareFilterQuery;

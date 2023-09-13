@@ -112,7 +112,7 @@ describe('LoginPage', () => {
 
   it('Route to the main page and not to send new request on the second login', async () => {
     RenderTestApp(<App />, '/login', {
-      userReducer: { isLogged: true, accessToken: '', refreshToken: '', userId: '' },
+      userReducer: { isLogged: true, accessToken: '', refreshToken: '', userId: '', cartId: '' },
     });
 
     expect(screen.getByText('log out', { exact: false })).toBeInTheDocument();

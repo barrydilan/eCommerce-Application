@@ -17,7 +17,7 @@ import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import 'swiper/css';
-import { DEFAULT_TITLE } from '../../shared/const/constants.ts';
+import DEFAULT_TITLE from '../../shared/const';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 

@@ -1,8 +1,3 @@
-export {
-	API_HOST_URL,
-	PROJECT_KEY,
-	DEFAULT_CUSTOMER_SCOPE,
-	AUTH_SERVICE_URL,
-	CLIENT_ID,
-	CLIENT_SECRET,
-} from './constants.ts';
+import DEFAULT_TITLE from './constants.ts';
+
+export default DEFAULT_TITLE;

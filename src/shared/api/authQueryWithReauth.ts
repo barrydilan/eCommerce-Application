@@ -1,11 +1,10 @@
-import { BaseQueryFn, FetchArgs } from '@reduxjs/toolkit/dist/query/react';
+import { BaseQueryFn, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 
 import authQuery from './authQuery.ts';
 import { userSlice } from '../../entities/user';
-import { DEFAULT_CUSTOMER_SCOPE, PROJECT_KEY } from '../const';
-import { ErrorCodeStatus } from '../types';
+import { CartResponse, ErrorCodeStatus, IAuthResponse } from '../types';
 
 const mutex = new Mutex();
 const authQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
@@ -22,13 +21,13 @@ const authQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 		if (!mutex.isLocked()) {
 			const release = await mutex.acquire();
 			try {
-				const refreshResult = await authQuery(
+				const refreshResultAnonToken = await authQuery(
 					{
-						url: `/oauth/${PROJECT_KEY}/anonymous/token`,
+						url: `/oauth/${import.meta.env.VITE_PROJECT_KEY}/anonymous/token`,
 						method: 'POST',
 						params: {
 							grant_type: 'client_credentials',
-							scope: DEFAULT_CUSTOMER_SCOPE,
+							scope: import.meta.env.VITE_DEFAULT_CUSTOMER_SCOPE,
 						},
 					},
 					api,
@@ -36,15 +35,33 @@ const authQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 				);
 
 				if (
-					refreshResult.data &&
-					typeof refreshResult.data === 'object' &&
-					'access_token' in refreshResult.data &&
-					'refresh_token' in refreshResult.data
+					refreshResultAnonToken.data &&
+					typeof refreshResultAnonToken.data === 'object' &&
+					'access_token' in refreshResultAnonToken.data &&
+					'refresh_token' in refreshResultAnonToken.data
 				) {
+					const refreshResultCart = await fetchBaseQuery({
+						baseUrl: import.meta.env.VITE_API_HOST_URL,
+						prepareHeaders: (headers) => {
+							headers.set('Authorization', `Bearer ${(refreshResultAnonToken.data as IAuthResponse).access_token}`);
+						},
+					})(
+						{
+							url: `/${import.meta.env.VITE_PROJECT_KEY}/carts`,
+							method: 'POST',
+							body: {
+								currency: 'USD',
+							},
+						},
+						api,
+						extraOptions,
+					);
+
 					api.dispatch(
 						updateAccessToken({
-							accessToken: refreshResult.data.access_token as string,
-							refreshToken: refreshResult.data.refresh_token as string,
+							accessToken: refreshResultAnonToken.data.access_token as string,
+							refreshToken: refreshResultAnonToken.data.refresh_token as string,
+							cartId: (refreshResultCart.data as CartResponse).id as string,
 						}),
 					);
 					result = await authQuery(args, api, extraOptions);

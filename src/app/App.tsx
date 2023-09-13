@@ -5,7 +5,7 @@ import { HashRouter, useLocation } from 'react-router-dom';
 import LocationProvider from './utils/LocationProvider.tsx';
 import RoutesWithAnimation from './utils/RoutesWithAnimation.tsx';
 import { COOKIE_ACCESS_TOKEN, userSlice } from '../entities/user';
-import { COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
+import { COOKIE_CART_ID, COOKIE_REFRESH_TOKEN, COOKIE_USER_ID } from '../entities/user/consts/constants.ts';
 import Cart from '../pages/Cart/Cart.tsx';
 import NavBlock from '../pages/NavBlock/NavBlock';
 import { getCookie } from '../shared/lib/helpers';
@@ -31,10 +31,15 @@ export function App() {
   const isCartToRender = location.pathname.includes('/categories') || location.pathname.includes('/product');
 
   useEffect(() => {
-    const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
+    const [token, userId, refreshToken, cartId] = getCookie(
+      COOKIE_ACCESS_TOKEN,
+      COOKIE_USER_ID,
+      COOKIE_REFRESH_TOKEN,
+      COOKIE_CART_ID,
+    );
 
-    if (token && userId && refreshToken) {
-      dispatch(loggedIn({ accessToken: token, userId, refreshToken }));
+    if (token && userId && refreshToken && cartId) {
+      dispatch(loggedIn({ accessToken: token, userId, refreshToken, cartId }));
     }
   }, [dispatch, loggedIn]);
 
