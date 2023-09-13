@@ -44,7 +44,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               loading="lazy"
               className={`${
                 isLoading ? 'h-full w-48 opacity-0' : 'opacity-100'
-              } inline-block h-full max-w-[40%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[40%] xl:max-w-[30%]`}
+              } inline-block h-full max-w-[40%] flex-none rounded-2xl object-cover transition-all duration-300 ease-bounce xs:max-w-[30%] md:max-w-[25%] xl:max-w-[30%]`}
               src={image}
               alt={name}
             />

@@ -37,14 +37,13 @@ function NavMenu() {
         px-4
         py-2
         dark:bg-dark-bg-primary
-        md:mt-8
-        md:max-h-full
-        md:flex-col
-        md:items-end
-        md:justify-start
-        md:gap-9
-        md:px-0
         lg:mt-12
+        lg:max-h-full
+        lg:flex-col
+        lg:items-end
+        lg:justify-start
+        lg:gap-9
+        lg:px-0
         xl:pl-8
         "
     >
@@ -57,7 +56,7 @@ function NavMenu() {
           )}
         </NavLink>
       </li>
-      <li className="navMenuItem md:hidden">
+      <li className="navMenuItem lg:hidden">
         <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <>

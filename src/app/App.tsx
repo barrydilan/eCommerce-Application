@@ -52,8 +52,7 @@ export function App() {
           text-base
           text-text-dark
           2xl:container
-          md:grid-rows-tabGridRows
-          ${isCartToRender ? 'md:grid-cols-mdGridCols' : 'md:grid-cols-mdNoCartGrid'}
+          lg:grid-rows-tabGridRows
           ${isCartToRender ? 'lg:grid-cols-lgGridCols' : 'lg:grid-cols-mdNoCartGrid'}
           ${isCartToRender ? 'xl:grid-cols-xlGridCols' : 'xl:grid-cols-xlNoCartGrid'}
           `}
@@ -61,11 +60,11 @@ export function App() {
         <Header />
         <div
           className="
-            md:col-start-2
-            md:col-end-3
-            md:row-start-2
-            md:row-end-3
-            md:justify-self-center
+            lg:col-start-2
+            lg:col-end-3
+            lg:row-start-2
+            lg:row-end-3
+            lg:justify-self-center
             "
         >
           <LocationProvider>
