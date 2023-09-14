@@ -17,6 +17,7 @@ import CategoriesList from './ui/CategoriesList.tsx';
 import CategoryItem from './ui/CategoryItem.tsx';
 import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
+import ProductNotFound from './ui/ProductNotFound.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import { useGetCategoriesQuery, useGetCategoryQuery, useLazyGetProductListQuery } from '../../entities/product';
 import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
@@ -215,9 +216,7 @@ export default function ProductCatalogue() {
           </div>
         ) : null}
 
-        {!productListData?.results?.length && productsIsSuccess && !productsIsLoading ? (
-          <p className="self-center justify-self-center text-text-grey">No Products Found :(</p>
-        ) : null}
+        {!productListData?.results?.length && productsIsSuccess && !productsIsLoading ? <ProductNotFound /> : null}
 
         {productListData?.results?.length && productListData.total && productListData.offset !== undefined ? (
           <InfiniteScroll
