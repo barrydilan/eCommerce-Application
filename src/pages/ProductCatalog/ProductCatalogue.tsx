@@ -215,7 +215,7 @@ export default function ProductCatalogue() {
           </div>
         ) : null}
 
-        {!productListData?.results?.length && productsIsSuccess ? (
+        {!productListData?.results?.length && productsIsSuccess && !productsIsLoading ? (
           <p className="self-center justify-self-center text-text-grey">No Products Found :(</p>
         ) : null}
 
