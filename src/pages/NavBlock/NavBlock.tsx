@@ -8,9 +8,8 @@ function NavBlock() {
         fixed
         bottom-0 
         z-20
-        h-14
+        h-fit
         w-full
-        bg-separation-line
         dark:bg-dark-separation-line
         lg:col-start-1
         lg:col-end-2

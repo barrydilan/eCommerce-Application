@@ -37,11 +37,11 @@ html {
 
 @layer base {
   .navMenuItem {
-    @apply flex w-1/5 flex-col items-center justify-end lg:mr-auto lg:w-full lg:flex-row lg:justify-start lg:pl-6;
+    @apply flex min-w-[95px] flex-col items-center justify-end lg:mr-auto lg:w-full lg:flex-row lg:justify-start lg:pl-6;
   }
 
   .navMenuLink {
-    @apply text-center lg:text-left text-base min-w-[80px] min-h-[40];
+    @apply w-full text-center lg:text-left text-base min-w-[80px] min-h-[40];
   }
 
   .navMenuIcon {
