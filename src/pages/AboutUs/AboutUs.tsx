@@ -8,12 +8,14 @@ import PageBackBtn from '../../features/PageBackBtn/PageBackBtn';
 export default function AboutUs() {
   return (
     <div className="bg-[url('./src/assets/img/about_bg_mob.svg')] bg-cover bg-no-repeat">
-      <div className="mx-auto my-12 p-5 sm:mt-[5.6rem] xl:px-24">
+      <div className="mx-auto mt-12 p-5 sm:mt-[5.6rem] xl:px-24">
         <div className="flex flex-wrap items-center justify-between gap-10">
           <PageBackBtn title="About us" />
           <a
-            className="ml-auto rounded-md border-2 border-primary p-1 dark:bg-separation-line"
+            target="_blank"
+            className="ml-auto rounded-md border-2 border-primary p-2 dark:bg-separation-line"
             href="https://rs.school/"
+            rel="noreferrer"
           >
             <img src={rsSchoolLogo} alt="" />
           </a>
@@ -40,8 +42,10 @@ export default function AboutUs() {
               </div>
               <div className="relative -translate-y-24 rounded-3xl border-1 border-separation-line bg-primary px-4 py-6 text-text-grey shadow-[3px_5px_10px_1px_rgba(0,0,0,0.3)] dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-y-[245px] xl:translate-x-[360px]">
                 <a
+                  target="_blank"
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-separation-line"
                   href="https://github.com/"
+                  rel="noreferrer"
                 >
                   <img className="h-6 w-6" src={gitHubIcon} alt="" />
                 </a>
@@ -63,8 +67,10 @@ export default function AboutUs() {
               </div>
               <div className="relative -translate-y-24 rounded-3xl border-1 border-separation-line bg-primary px-4 py-6 text-text-grey shadow-[3px_5px_10px_1px_rgba(0,0,0,0.3)] dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-x-[200px] xl:-translate-y-[255px]">
                 <a
+                  target="_blank"
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center  justify-center rounded-full bg-separation-line"
                   href="https://github.com/"
+                  rel="noreferrer"
                 >
                   <img className="h-6 w-6" src={gitHubIcon} alt="" />
                 </a>
@@ -91,8 +97,10 @@ export default function AboutUs() {
               </div>
               <div className="relative -translate-y-24 rounded-3xl border-2 border-separation-line bg-primary px-4 py-6 text-text-grey shadow-[3px_5px_10px_1px_rgba(0,0,0,0.3)] dark:bg-dark-bg-primary xl:max-w-[420px] xl:-translate-y-[250px] xl:translate-x-[360px]">
                 <a
+                  target="_blank"
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center  justify-center rounded-full bg-separation-line"
                   href="https://github.com/"
+                  rel="noreferrer"
                 >
                   <img className="h-6 w-6" src={gitHubIcon} alt="" />
                 </a>
