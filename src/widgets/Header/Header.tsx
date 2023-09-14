@@ -63,30 +63,32 @@ function Header() {
             }}
           />
         </Link>
-        <h1
-          ref={scope}
-          className="
+        <Link to="/">
+          <h1
+            ref={scope}
+            className="
             relative
             -translate-y-1
-            text-sm
+            text-xl
             tracking-tight
             text-text-dark
             dark:text-primary
             md:pt-2
-            md:text-xl
             xl:text-2xl
           "
-        >
-          {logoName.map((letter, index) => {
-            return (
-              // eslint-disable-next-line react/no-array-index-key
-              <span className="letter opacity-3 inline-block translate-y-6 opacity-0" key={`${letter}-${index}`}>
-                {letter}
-              </span>
-            );
-          })}
-        </h1>
+          >
+            {logoName.map((letter, index) => {
+              return (
+                // eslint-disable-next-line react/no-array-index-key
+                <span className="letter opacity-3 inline-block translate-y-6 opacity-0" key={`${letter}-${index}`}>
+                  {letter}
+                </span>
+              );
+            })}
+          </h1>
+        </Link>
       </div>
+
       <SearchInput isHeader />
       <LogOutBtn isHeader />
       <UserProfileLink isHeader />
