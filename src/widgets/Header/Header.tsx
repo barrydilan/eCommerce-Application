@@ -19,22 +19,36 @@ function Header() {
 
   return (
     <header
-      className="
+      className={`
         fixed
         z-30
         col-span-full
         flex
+        h-16
         w-full
         items-center
         justify-end
         bg-primary
+        bg-opacity-50
+        backdrop-blur-lg
+        backdrop-saturate-200
         transition-all
-        duration-300 dark:bg-dark-bg-primary
+        duration-300
+        before:pointer-events-none
+        before:absolute
+        before:h-full
+        before:w-full
+        before:bg-[url('/src/assets/img/noise.svg')]
+        before:bg-[length:100px_100px]
+        before:opacity-10
+        dark:bg-dark-bg-primary
+        dark:bg-opacity-50
         md:border-b-2
-        md:border-separation-line dark:md:border-dark-separation-line
+        md:border-separation-line
+        dark:md:border-dark-separation-line
         lg:w-[1536px]
         lg:justify-start
-      "
+      `}
     >
       <div
         className="
