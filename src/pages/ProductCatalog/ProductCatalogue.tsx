@@ -151,7 +151,7 @@ export default function ProductCatalogue() {
   return (
     <div
       className="
-        mt-14
+        mt-16
         grid
         grid-cols-1
         grid-rows-prodPageMob
