@@ -8,4 +8,14 @@ type CartListResponse = Readonly<{
 	results: CartResponse[];
 }>;
 
-export default CartListResponse;
+type AddLineItemRequestBody = {
+	version: number;
+	actions: {
+		action: string;
+		productId: string;
+		variantId: number;
+		quantity: number;
+	}[];
+};
+
+export type { AddLineItemRequestBody, CartListResponse };

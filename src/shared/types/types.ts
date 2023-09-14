@@ -12,6 +12,7 @@ export type IAuthResponse = Readonly<{
 export type CartResponse = Readonly<{
 	type: 'Cart';
 	id: string;
+	version: number;
 	createdBy: {
 		anonymousId: string;
 	};

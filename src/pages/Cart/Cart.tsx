@@ -1,17 +1,38 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../app/store';
-import { useGetCartByIdQuery } from '../../entities/cart';
+import { useAddLineItemMutation, useGetCartByIdQuery } from '../../entities/cart';
 
 export default function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
   const { data } = useGetCartByIdQuery(cartId);
-  console.log(data);
+  const [cartVersion, setCartVersion] = useState(data?.version || 1);
+  const body = {
+    version: cartVersion,
+    actions: [
+      {
+        action: 'addLineItem',
+        productId: '215849a9-b440-40d1-9f91-e11bc15f1254',
+        variantId: 1,
+        quantity: 1,
+      },
+    ],
+  };
+  const [addLineItem] = useAddLineItemMutation();
+  const addToCart = async () => {
+    try {
+      const result = await addLineItem({ cartId, body });
+      setCartVersion(result.data.version);
+      console.log('updated cart', result.data.lineItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const isMobile = window.screen.width < 768;
   const isCart = location.pathname.includes('cart');
@@ -70,6 +91,7 @@ export default function Cart() {
         </button>
         <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">1</div>
         <button
+          onClick={addToCart}
           type="button"
           className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
         >
