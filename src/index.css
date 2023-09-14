@@ -159,6 +159,7 @@ html {
   max-width: 100px;
   left: 50% !important;
   transform: translate(-50%, 0%) !important;
+  width: fit-content !important;
 }
 
 .swiper-pagination-bullet,
