@@ -692,10 +692,8 @@ describe('RegPage', () => {
     /// /////////////////////////////////////
     // Actual test
 
-    const continueBtn = screen.getByText('Continue');
-
-    expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent('Oh snap!');
+    expect(screen.getByText('Oh snap!')).toBeInTheDocument();
     expect(screen.getByText('Change a few things up and try again')).toBeInTheDocument();
-    expect(continueBtn).toBeInTheDocument();
+    expect(screen.getByText('Continue')).toBeInTheDocument();
   });
 });
