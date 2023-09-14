@@ -118,7 +118,7 @@ export default function ProductCatalogue() {
 
     onFilterOpen();
 
-    if (query.get(QUERY_FILTER) !== encodedState) return;
+    if (query.get(QUERY_FILTER) === encodedState) return;
 
     fetchProducts();
     setProductItems(undefined);

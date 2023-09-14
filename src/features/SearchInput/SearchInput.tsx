@@ -18,7 +18,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   function handleSubmit(e: React.FocusEvent<HTMLInputElement>) {
     const val = e.target.value;
 
-    if (val === query.get('search') || val === '') return;
+    if (val === query.get('search')) return;
 
     query.set('search', val);
     setQuery(query);
