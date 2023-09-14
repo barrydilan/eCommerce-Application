@@ -1,12 +1,8 @@
-import { createApi } from '@reduxjs/toolkit/dist/query/react';
-
-import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
+import { rootApi } from '../../../shared/api';
 import { ILoginUserDataResponse, ILoginUserParams, IUser } from '../../../shared/types';
 import { IUpdateUserAddressParams, IUpdateUserDataParams, IUpdateUserPassword } from '../types/interfaces.ts';
 
-export const userDataApi = createApi({
-	reducerPath: 'userDataApi',
-	baseQuery: baseQueryWithReauth,
+export const userDataApi = rootApi.injectEndpoints({
 	endpoints: (build) => ({
 		loginUserData: build.mutation<ILoginUserDataResponse, ILoginUserParams>({
 			query: (loginData) => ({

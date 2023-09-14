@@ -1,12 +1,8 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-
-import baseQueryWithReauth from '../../../shared/api/baseQueryWithReauth.ts';
+import { rootApi } from '../../../shared/api';
 import { CartResponse } from '../../../shared/types';
 import ICreateCartParams from '../types/interfaces.ts';
 
-export const updateCartApi = createApi({
-	reducerPath: 'updateCartApi',
-	baseQuery: baseQueryWithReauth,
+export const updateCartApi = rootApi.injectEndpoints({
 	endpoints: (build) => ({
 		getCart: build.mutation<CartResponse, ICreateCartParams>({
 			query: (body) => ({

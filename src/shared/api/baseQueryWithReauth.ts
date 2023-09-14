@@ -1,10 +1,10 @@
-import { BaseQueryFn, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { BaseQueryFn } from '@reduxjs/toolkit/dist/query';
+import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { type FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 
 import authQuery from './authQuery.ts';
 import baseQuery from './baseQuery.ts';
-import { userSlice } from '../../entities/user';
 import { CartResponse, ErrorCodeStatus, IAuthResponse } from '../types';
 
 const mutex = new Mutex();
@@ -15,7 +15,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 ) => {
 	await mutex.waitForUnlock();
 
-	const { loggedOut, updateAccessToken } = userSlice.actions;
 	let result = await baseQuery(args, api, extraOptions);
 
 	if (result.error && result.error.status === ErrorCodeStatus.UNAUTHORIZED) {
@@ -60,16 +59,17 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 
 					if (!refreshResultCart || !refreshResultCart.data) throw new Error('Cart cannot created!');
 
-					api.dispatch(
-						updateAccessToken({
+					api.dispatch({
+						type: 'user/updateAccessToken',
+						payload: {
 							accessToken: refreshResultAnonToken.data.access_token as string,
 							refreshToken: refreshResultAnonToken.data.refresh_token as string,
 							cartId: (refreshResultCart.data as CartResponse).id as string,
-						}),
-					);
+						},
+					});
 					result = await baseQuery(args, api, extraOptions);
 				} else {
-					api.dispatch(loggedOut());
+					api.dispatch({ type: 'user/loggedOut' });
 				}
 			} finally {
 				release();
