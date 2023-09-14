@@ -7,7 +7,7 @@ function NavBlock() {
       className="
         fixed
         bottom-0 
-        z-40
+        z-20
         h-14
         w-full
         bg-separation-line
