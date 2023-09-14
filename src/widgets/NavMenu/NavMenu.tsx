@@ -22,7 +22,7 @@ function NavMenu() {
         lg:justify-start
         lg:gap-9
         lg:px-0
-        xl:pl-8
+        xl:pl-4
         "
     >
       <li className="navMenuItem">

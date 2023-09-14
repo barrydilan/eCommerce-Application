@@ -46,13 +46,14 @@ function Header() {
         md:border-b-2
         md:border-separation-line
         dark:md:border-dark-separation-line
+        lg:h-20
         lg:w-[1536px]
         lg:justify-start
       `}
     >
       <div
         className="
-          mr-auto 
+          mr-auto
           flex
           w-40
           select-none
@@ -60,14 +61,14 @@ function Header() {
           pb-2
           pl-1
           pt-2
-          md:h-16
+          md:h-20
           md:w-44
           md:border-r-2
           md:border-separation-line
           dark:md:border-dark-separation-line
           lg:mr-0
           xl:w-89
-          xl:pl-8
+          xl:pl-9
         "
       >
         <Link to="/">
@@ -87,6 +88,7 @@ function Header() {
             tracking-tight
             text-text-dark
             dark:text-primary
+            md:mb-2
             md:pt-2
             xl:text-2xl
           "
