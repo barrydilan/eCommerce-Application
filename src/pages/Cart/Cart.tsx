@@ -1,10 +1,17 @@
 import { useEffect } from 'react';
 
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import { RootState } from '../../app/store';
+import { useGetCartByIdQuery } from '../../entities/cart';
 
 export default function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
+  const cartId = useSelector((state: RootState) => state.userReducer.cartId);
+  const { data } = useGetCartByIdQuery(cartId);
+  console.log(data);
 
   const isMobile = window.screen.width < 768;
   const isCart = location.pathname.includes('cart');

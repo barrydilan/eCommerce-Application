@@ -11,7 +11,12 @@ export const readCartApi = rootApi.injectEndpoints({
 				},
 			}),
 		}),
+		getCartById: build.query<CartListResponse, string>({
+			query: (id) => ({
+				url: `/${import.meta.env.VITE_PROJECT_KEY}/carts/${id}`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetCartListQuery } = readCartApi;
+export const { useGetCartListQuery, useGetCartByIdQuery } = readCartApi;
