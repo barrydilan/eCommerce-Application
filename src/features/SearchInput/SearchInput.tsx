@@ -15,6 +15,15 @@ export default function SearchInput(props: { isHeader: boolean }) {
     searchInputRef?.current?.blur();
   }
 
+  function handleSubmit(e: React.FocusEvent<HTMLInputElement>) {
+    const val = e.target.value;
+
+    if (val === query.get('search') || val === '') return;
+
+    query.set('search', val);
+    setQuery(query);
+  }
+
   return (
     <label
       htmlFor="searchInput"
@@ -36,12 +45,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
         onKeyDown={handleKeyDown}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
-        onBlur={(e) => {
-          const val = e.target.value;
-          if (val === query.get('search')) return;
-          query.set('search', val);
-          setQuery(query);
-        }}
+        onBlur={handleSubmit}
         className={`
             peer
             h-12 
