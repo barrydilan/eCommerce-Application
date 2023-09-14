@@ -162,6 +162,7 @@ export default function ProductCatalogue() {
         md:py-[48px]
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
+        lg:pb-0
         "
     >
       <Blackout isBlackout={isFiltersOpen} />
@@ -229,7 +230,7 @@ export default function ProductCatalogue() {
               </div>
             }
             endMessage={<p className="text-text-grey">You Reached The End!</p>}
-            className="grid items-center gap-5 pb-12 lg:gap-6"
+            className="grid items-center gap-5 pb-14 lg:gap-6 lg:pb-0"
           >
             {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
               <MenuItem
