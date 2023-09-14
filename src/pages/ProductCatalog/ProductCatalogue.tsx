@@ -211,11 +211,11 @@ export default function ProductCatalogue() {
           : null}
       </CategoriesList>
       <MenuList>
-        {productsIsLoading ? (
+        {productsIsLoading && (
           <div className="flex h-full items-center justify-center">
             <LoadingAnimation />
           </div>
-        ) : null}
+        )}
 
         {!productListData?.results?.length && productsIsSuccess && !productsIsLoading ? <ProductNotFound /> : null}
 
