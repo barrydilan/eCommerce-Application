@@ -692,8 +692,12 @@ describe('RegPage', () => {
     /// /////////////////////////////////////
     // Actual test
 
-    expect(screen.getByText('Oh snap!')).toBeInTheDocument();
-    expect(screen.getByText('Change a few things up and try again')).toBeInTheDocument();
-    expect(screen.getByText('Continue')).toBeInTheDocument();
+    const errorMessage = await screen.findByText('Oh snap!');
+    const description = await screen.findByText('Change a few things up and try again');
+    const continueBtn = await screen.findByText('Continue');
+
+    expect(errorMessage).toBeInTheDocument();
+    expect(description).toBeInTheDocument();
+    expect(continueBtn).toBeInTheDocument();
   });
 });
