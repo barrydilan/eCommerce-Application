@@ -42,7 +42,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   function handleSubmit(e: React.FocusEvent<HTMLInputElement>) {
     const val = e.target.value;
 
-    // setIsActive(false);
+    if ((e?.relatedTarget as HTMLButtonElement)?.type !== 'button') setIsActive(false);
 
     if (val === query.get(SEARCH_QUERY)) return;
 
