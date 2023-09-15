@@ -9,9 +9,7 @@ import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
 
 interface ICartItemProps {
-  // addToCart: () => void;
   productId: string;
-  // removeOneFromCart: () => void;
 }
 
 export default function CartItem(props: ICartItemProps) {
@@ -45,8 +43,8 @@ export default function CartItem(props: ICartItemProps) {
       ],
     };
     try {
-      const result = await updateLineItem({ cartId, body });
-      console.log('updated cart', result.data.lineItems);
+      const result = await updateLineItem({ cartId, body }).unwrap();
+      console.log('updated cart', result.lineItems);
     } catch (error) {
       console.error(error);
     }
@@ -55,7 +53,7 @@ export default function CartItem(props: ICartItemProps) {
   const removeOneFromCart = async () => {
     try {
       const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
-      const lineItemId = targetItem[0].id;
+      const lineItemId = targetItem?.[0].id;
       const body = {
         version: cart?.version || 1,
         actions: [
@@ -67,8 +65,8 @@ export default function CartItem(props: ICartItemProps) {
           },
         ],
       };
-      const result = await updateLineItem({ cartId, body });
-      console.log('updated cart', result.data.lineItems);
+      const result = await updateLineItem({ cartId, body }).unwrap();
+      console.log('updated cart', result.lineItems);
     } catch (error) {
       console.error(error);
     }

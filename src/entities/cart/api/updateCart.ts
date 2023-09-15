@@ -12,7 +12,10 @@ export const updateCartApi = rootApi.injectEndpoints({
 				body,
 			}),
 		}),
-		addLineItem: build.mutation<CartResponse, { cartId: string; body: AddLineItemRequestBody }>({
+		addLineItem: build.mutation<
+			CartResponse,
+			{ cartId: string; body: AddLineItemRequestBody | RemoveLineItemRequestBody }
+		>({
 			query: ({ cartId, body }) => ({
 				url: `/${import.meta.env.VITE_PROJECT_KEY}/carts/${cartId}`,
 				method: 'POST',
