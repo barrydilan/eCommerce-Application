@@ -2,12 +2,8 @@ import { useRef, useState } from 'react';
 
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
+import { CATEGORIES_ALL_PATH, CATEGORIES_PATH, ENTER_KEY, SEARCH_QUERY } from './constants/constants.ts';
 import search from '../../assets/icons/search.svg';
-
-const ENTER_KEY = 'Enter';
-const CATEGORIES_PATH = 'categories';
-const CATEGORIES_ALL_PATH = '/categories/all';
-const SEARCH_QUERY = 'search';
 
 export default function SearchInput(props: { isHeader: boolean }) {
   const { isHeader } = props;
