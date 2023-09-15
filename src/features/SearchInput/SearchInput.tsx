@@ -133,7 +133,8 @@ export default function SearchInput(props: { isHeader: boolean }) {
             transition-[transform,background-color]
             duration-300
             focus:-translate-y-0.5
-            focus:border-none focus:bg-gradient-to-br focus:bg-clip-padding
+            focus:border-none focus:bg-secondary focus:bg-gradient-to-br
+            focus:bg-clip-padding
             focus:outline-none
             focus:drop-shadow-md
             dark:text-primary
