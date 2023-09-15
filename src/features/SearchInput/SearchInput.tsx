@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError, QueryDefinition } from '@reduxjs/toolkit/dist/query';
-import { QueryActionCreatorResult } from '@reduxjs/toolkit/dist/query/core/buildInitiate';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { CATEGORIES_ALL_PATH, CATEGORIES_PATH, ENTER_KEY, ESK_KEY, SEARCH_QUERY } from './constants/constants.ts';
@@ -19,7 +17,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   const [isActive, setIsActive] = useState(false);
   const [getProductList, { data }] = useLazyGetProductListQuery();
 
-  const resultNames = data?.results.map((res) => res.name.en);
+  const resultNames = searchValue ? data?.results.map((res) => res.name.en) : null;
 
   const queryProductList = useCallback(
     (args: IGetProductListParams) => {
@@ -65,19 +63,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   }
 
   useEffect(() => {
-    let request: QueryActionCreatorResult<
-      QueryDefinition<
-        IGetProductListParams,
-        BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        never,
-        Readonly<NonNullable<unknown>>,
-        'rootApi'
-      >
-    >;
-
-    if (searchValue) {
-      request = queryProductList({ searchQuery: searchValue, withTotal: false, limit: 5 });
-    }
+    const request = searchValue ? queryProductList({ searchQuery: searchValue, withTotal: false, limit: 5 }) : null;
 
     return () => request?.abort();
   }, [searchValue, queryProductList]);
@@ -140,9 +126,9 @@ export default function SearchInput(props: { isHeader: boolean }) {
           className="absolute left-8 top-1/2 -translate-y-2.5 duration-300 peer-focus:-translate-y-3 lg:left-10"
         />
       </label>
-      {isActive && (
+      {isActive && !!resultNames?.length && (
         <ul className="absolute left-0 ml-12 grid w-full gap-2 rounded-xl bg-secondary px-6 py-8 peer-focus:bg-accent">
-          {resultNames?.map((res) => (
+          {resultNames.map((res) => (
             <li className="w-full cursor-pointer rounded-md p-2 transition-all hover:bg-primary" key={res}>
               <button className="w-full text-left" type="button" onClick={handleResultClick}>
                 {res}
