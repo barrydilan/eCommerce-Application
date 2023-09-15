@@ -127,10 +127,12 @@ export default function SearchInput(props: { isHeader: boolean }) {
           className="absolute left-8 top-1/2 -translate-y-2.5 duration-300 peer-focus:-translate-y-3 lg:left-10"
         />
       </label>
+
       {isActive && !!resultNames?.length && (
         <ul className="absolute left-0 grid w-full gap-2 rounded-xl bg-secondary px-6 py-8 peer-focus:bg-accent">
           {resultNames.map((res) => (
-            <li className="w-full cursor-pointer rounded-md p-2 transition-all hover:bg-primary" key={res}>
+            <li className="flex w-full cursor-pointer gap-x-4 rounded-md p-2 transition-all hover:bg-primary" key={res}>
+              <img src={search} alt="" />
               <button className="w-full text-left" type="button" onClick={handleResultClick}>
                 {res}
               </button>
