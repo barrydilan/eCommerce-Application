@@ -4,9 +4,12 @@ import { AnimatePresence, motion, useCycle } from 'framer-motion';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { CATEGORIES_ALL_PATH, CATEGORIES_PATH, ENTER_KEY, ESK_KEY, SEARCH_QUERY } from './constants/constants.ts';
+import findMatch from './helpers/findMatch.ts';
+import replaceMatch from './helpers/replaceMatch.ts';
 import search from '../../assets/icons/search.svg';
 import { useLazyGetProductListQuery } from '../../entities/product';
 import { IGetProductListParams } from '../../entities/product/types/interfaces.ts';
+import { capitalize } from '../../shared/lib/helpers';
 
 export default function SearchInput(props: { isHeader: boolean }) {
   const { isHeader } = props;
@@ -140,7 +143,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
               damping: 20,
             }}
             exit={{ y: '15%', opacity: 0 }}
-            className="absolute left-0 grid w-full gap-2 rounded-3xl bg-secondary px-6 py-8 peer-focus:bg-accent"
+            className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 peer-focus:bg-accent"
           >
             {resultNames.map((res, i) => (
               <motion.li
@@ -152,12 +155,13 @@ export default function SearchInput(props: { isHeader: boolean }) {
                   damping: 18,
                   delay: i * 0.1,
                 }}
-                className="flex w-full cursor-pointer gap-x-4 rounded-md p-2 hover:bg-primary"
+                className="flex w-full cursor-pointer gap-x-5 rounded-xl px-4 py-3 hover:bg-primary"
                 key={res}
               >
                 <img src={search} alt="" />
                 <button className="w-full text-left" type="button" onClick={handleResultClick}>
-                  {res}
+                  <span>{capitalize(findMatch(res, searchValue))}</span>
+                  <span className="text-text-grey">{replaceMatch(res, searchValue)}</span>
                 </button>
               </motion.li>
             ))}
