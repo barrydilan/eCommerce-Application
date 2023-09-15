@@ -69,13 +69,13 @@ export default function SearchInput(props: { isHeader: boolean }) {
   }, [searchValue, queryProductList]);
 
   return (
-    <div className={`${isHeader ? 'w-2/5' : 'w-full'} relative`}>
+    <div className={`${isHeader ? 'ml-12 hidden w-2/5 sm:block' : 'mt-4 block w-full sm:hidden'} relative z-[25]`}>
       <label
         htmlFor="searchInput"
         className={`
           peer
           relative
-          ${isHeader ? 'ml-12 hidden sm:flex' : 'mt-4 flex sm:hidden'}
+          ${isHeader ? 'sm:flex' : 'flex'}
           w-full
           p-2
           pr-1
@@ -96,8 +96,8 @@ export default function SearchInput(props: { isHeader: boolean }) {
           onBlur={handleSubmit}
           className={`
             peer
-            h-12 
-            w-full
+            h-12
+            w-full 
             rounded-3xl
             border-1
             border-text-grey
@@ -106,6 +106,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
             to-separation-line
             bg-clip-text
             pl-14
+            pr-6
             transition-[transform,background-color]
             duration-300
             focus:-translate-y-0.5
@@ -127,7 +128,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
         />
       </label>
       {isActive && !!resultNames?.length && (
-        <ul className="absolute left-0 ml-12 grid w-full gap-2 rounded-xl bg-secondary px-6 py-8 peer-focus:bg-accent">
+        <ul className="absolute left-0 grid w-full gap-2 rounded-xl bg-secondary px-6 py-8 peer-focus:bg-accent">
           {resultNames.map((res) => (
             <li className="w-full cursor-pointer rounded-md p-2 transition-all hover:bg-primary" key={res}>
               <button className="w-full text-left" type="button" onClick={handleResultClick}>
