@@ -129,8 +129,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
             border-text-grey
             border-opacity-30
             bg-clip-text
-            pl-14
-            pr-6
+            px-14
             transition-[transform,background-color]
             duration-300
             focus:-translate-y-0.5
