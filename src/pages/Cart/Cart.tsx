@@ -4,44 +4,45 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../app/store';
-import { useAddLineItemMutation, useGetCartByIdQuery } from '../../entities/cart';
+import { useAddLineItemMutation } from '../../entities/cart';
+import CartItem from '../../widgets/CartItem/CartItem';
 
 export default function Cart() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const cartId = useSelector((state: RootState) => state.userReducer.cartId);
-  const { data } = useGetCartByIdQuery(cartId);
-  const [cartVersion, setCartVersion] = useState(data?.version || 1);
-  const body = {
-    version: cartVersion,
-    actions: [
-      {
-        action: 'addLineItem',
-        productId: '215849a9-b440-40d1-9f91-e11bc15f1254',
-        variantId: 1,
-        quantity: 1,
-      },
-    ],
-  };
-  const [addLineItem] = useAddLineItemMutation();
-  const addToCart = async () => {
-    try {
-      const result = await addLineItem({ cartId, body });
-      setCartVersion(result.data.version);
-      console.log('updated cart', result.data.lineItems);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const navigate = useNavigate();
+  // const location = useLocation();
+  // const cartId = useSelector((state: RootState) => state.userReducer.cartId);
+  // const { data } = useGetCartByIdQuery(cartId);
+  // const [cartVersion, setCartVersion] = useState(data?.version || 1);
+  // const body = {
+  //   version: cartVersion,
+  //   actions: [
+  //     {
+  //       action: 'addLineItem',
+  //       productId: '215849a9-b440-40d1-9f91-e11bc15f1254',
+  //       variantId: 1,
+  //       quantity: 1,
+  //     },
+  //   ],
+  // };
+  // const [addLineItem] = useAddLineItemMutation();
+  // const addToCart = async () => {
+  //   try {
+  //     const result = await addLineItem({ cartId, body });
+  //     setCartVersion(result.data.version);
+  //     console.log('updated cart', result.data.lineItems);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const isMobile = window.screen.width < 768;
-  const isCart = location.pathname.includes('cart');
+  // const isMobile = window.screen.width < 768;
+  // const isCart = location.pathname.includes('cart');
 
-  useEffect(() => {
-    if (!isMobile && isCart) {
-      navigate('categories/all?sort=price+desc');
-    }
-  });
+  // useEffect(() => {
+  //   if (!isMobile && isCart) {
+  //     navigate('categories/all?sort=price+desc');
+  //   }
+  // });
 
   return (
     <div
@@ -61,43 +62,7 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
-      <div className="relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2">
-        <div className="lg:max-w-[33%] xl:max-w-[35%]">
-          <img className="h-full w-full object-cover" src="src/assets/img/cart-img.png" alt="" />
-        </div>
-        <div>
-          <h3 className="text-lg sm:text-xl  lg:text-sm xl:mr-7 xl:text-base">Set four flavours of salmon</h3>
-          <p className="mt-1 hidden text-xs text-text-grey lg:block">
-            2205kcal <br />
-            1405 g
-          </p>
-        </div>
-        <button
-          type="button"
-          className="absolute right-0 top-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark"
-        >
-          ×
-        </button>
-      </div>
-      <div className="flex items-center justify-between">
-        <span className="block text-lg font-medium sm:text-xl lg:ml-auto lg:mt-2 lg:text-sm xl:text-lg">$24,50</span>
-      </div>
-      <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
-        <button
-          type="button"
-          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
-        >
-          -
-        </button>
-        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">1</div>
-        <button
-          onClick={addToCart}
-          type="button"
-          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
-        >
-          +
-        </button>
-      </div>
+      <CartItem />
     </div>
   );
 }

@@ -3,7 +3,13 @@ import PlusIcon from './PlusIcon';
 import heartAccent from '../../../assets/icons/heart-accent.svg';
 import shoppingCart from '../../../assets/icons/shopping-cart-accent.svg';
 
-function Footer() {
+interface IFooterProps {
+  addToCart: () => void;
+}
+
+function Footer(props: IFooterProps) {
+  const { addToCart } = props;
+
   return (
     <div className="relative mt-6 md:order-last md:flex md:w-[85%] md:items-center md:justify-end md:gap-x-5 md:self-end md:pb-5">
       <button
@@ -30,6 +36,7 @@ function Footer() {
         </button>
       </div>
       <button
+        onClick={addToCart}
         type="button"
         className="dark: mt-3 block w-full rounded-md bg-accent-lightest px-4 py-3 text-accent transition-all duration-300 dark:border-2 dark:border-text-grey dark:bg-dark-bg-primary dark:hover:bg-dark-separation-line md:mt-0 md:w-fit"
       >

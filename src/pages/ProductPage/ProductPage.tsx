@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useSelector } from 'react-redux';
+
 import getAttribute from './lib/helpers/getAttribute.ts';
 import AddWishlistMobile from './ui/AddWishlistMobile.tsx';
 import Allergens from './ui/Allergens.tsx';
@@ -15,6 +17,8 @@ import Price from './ui/Price.tsx';
 import Rating from './ui/Rating.tsx';
 import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
+import { RootState } from '../../app/store/index.ts';
+import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import 'swiper/css';
 import DEFAULT_TITLE from '../../shared/const';
@@ -26,6 +30,34 @@ export default function ProductPage() {
   const [isSliderOpen, setSliderOpen] = useState(false);
   const productId = useGetPath();
   const { data } = useGetProductQuery(productId);
+  const cartId = useSelector((state: RootState) => state.userReducer.cartId);
+  const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
+  const [addLineItem, { data: newCart }] = useAddLineItemMutation();
+
+  useEffect(() => {
+    if (!cartId) return;
+    getCart(cartId, false);
+  }, [newCart]);
+
+  const body = {
+    version: cart?.version || 1,
+    actions: [
+      {
+        action: 'addLineItem',
+        productId,
+        variantId: 1,
+        quantity: 1,
+      },
+    ],
+  };
+  const addToCart = async () => {
+    try {
+      const result = await addLineItem({ cartId, body });
+      console.log('updated cart', result.data.lineItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleSliderOpen = () => {
     setSliderOpen(true);
@@ -101,7 +133,7 @@ export default function ProductPage() {
                   <Price rawOldPrice={rawOldPrice} rawPrice={Number(rawPrice)} />
                 </>
               </Header>
-              <Footer />
+              <Footer addToCart={addToCart} />
               <Description attributes={attributes} />
               {ingredients ? (
                 <IngredientList>
