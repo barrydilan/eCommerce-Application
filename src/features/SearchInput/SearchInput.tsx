@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError, QueryDefinition } from '@reduxjs/toolkit/dist/query';
+import { QueryActionCreatorResult } from '@reduxjs/toolkit/dist/query/core/buildInitiate';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { CATEGORIES_ALL_PATH, CATEGORIES_PATH, ENTER_KEY, ESK_KEY, SEARCH_QUERY } from './constants/constants.ts';
 import search from '../../assets/icons/search.svg';
 import { useLazyGetProductListQuery } from '../../entities/product';
+import { IGetProductListParams } from '../../entities/product/types/interfaces.ts';
 
 export default function SearchInput(props: { isHeader: boolean }) {
   const { isHeader } = props;
@@ -18,9 +21,18 @@ export default function SearchInput(props: { isHeader: boolean }) {
 
   const resultNames = data?.results.map((res) => res.name.en);
 
+  const queryProductList = useCallback(
+    (args: IGetProductListParams) => {
+      return getProductList(args);
+    },
+    [getProductList],
+  );
+
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key !== ENTER_KEY && e.key !== ESK_KEY) return;
     searchInputRef?.current?.blur();
+
+    setIsActive(false);
 
     if (!pathname.includes(CATEGORIES_PATH))
       navigate({
@@ -53,8 +65,22 @@ export default function SearchInput(props: { isHeader: boolean }) {
   }
 
   useEffect(() => {
-    if (searchValue) getProductList({ searchQuery: searchValue, withTotal: false, limit: 5 });
-  }, [searchValue]);
+    let request: QueryActionCreatorResult<
+      QueryDefinition<
+        IGetProductListParams,
+        BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
+        never,
+        Readonly<NonNullable<unknown>>,
+        'rootApi'
+      >
+    >;
+
+    if (searchValue) {
+      request = queryProductList({ searchQuery: searchValue, withTotal: false, limit: 5 });
+    }
+
+    return () => request?.abort();
+  }, [searchValue, queryProductList]);
 
   return (
     <div className={`${isHeader ? 'w-2/5' : 'w-full'} relative`}>
@@ -115,10 +141,10 @@ export default function SearchInput(props: { isHeader: boolean }) {
         />
       </label>
       {isActive && (
-        <ul className="absolute left-0 ml-12 grid w-full gap-5 rounded-md bg-secondary px-6 py-8 peer-focus:bg-accent">
+        <ul className="absolute left-0 ml-12 grid w-full gap-2 rounded-xl bg-secondary px-6 py-8 peer-focus:bg-accent">
           {resultNames?.map((res) => (
-            <li className="cursor-pointer" key={res}>
-              <button type="button" onClick={handleResultClick}>
+            <li className="w-full cursor-pointer rounded-md p-2 transition-all hover:bg-primary" key={res}>
+              <button className="w-full text-left" type="button" onClick={handleResultClick}>
                 {res}
               </button>
             </li>
