@@ -1,26 +1,39 @@
 import { useRef, useState } from 'react';
 
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import search from '../../assets/icons/search.svg';
+
+const ENTER_KEY = 'Enter';
+const CATEGORIES_PATH = 'categories';
+const CATEGORIES_ALL_PATH = '/categories/all';
+const SEARCH_QUERY = 'search';
 
 export default function SearchInput(props: { isHeader: boolean }) {
   const { isHeader } = props;
   const [query, setQuery] = useSearchParams('');
-  const [searchValue, setSearchValue] = useState(query.get('search') ?? '');
+  const [searchValue, setSearchValue] = useState(query.get(SEARCH_QUERY) ?? '');
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key !== 'Enter') return;
+    if (e.key !== ENTER_KEY) return;
     searchInputRef?.current?.blur();
+
+    if (!pathname.includes(CATEGORIES_PATH))
+      navigate({
+        pathname: CATEGORIES_ALL_PATH,
+        search: query.toString(),
+      });
   }
 
   function handleSubmit(e: React.FocusEvent<HTMLInputElement>) {
     const val = e.target.value;
 
-    if (val === query.get('search')) return;
+    if (val === query.get(SEARCH_QUERY)) return;
 
-    query.set('search', val);
+    query.set(SEARCH_QUERY, val);
     setQuery(query);
   }
 
