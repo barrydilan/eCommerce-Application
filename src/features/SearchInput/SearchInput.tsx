@@ -99,15 +99,17 @@ export default function SearchInput(props: { isHeader: boolean }) {
           lg:flex-row-reverse
         `}
       >
-        <button
-          onClick={handleResetQuery}
-          type="button"
-          className={`absolute top-4 z-10 -translate-x-6 transition-all ${
-            isActive ? 'translate-y-0' : 'translate-y-0.5'
-          }`}
-        >
-          {searchValue && <img src={cross} alt="" />}
-        </button>
+        {searchValue && (
+          <button
+            onClick={handleResetQuery}
+            type="button"
+            className={`absolute right-6 top-4 z-10 transition-all lg:right-8 ${
+              isActive ? 'translate-y-0' : 'translate-y-0.5'
+            }`}
+          >
+            <img src={cross} alt="" />
+          </button>
+        )}
         <input
           id="searchInput"
           type="text"
