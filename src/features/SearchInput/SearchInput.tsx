@@ -6,6 +6,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { CATEGORIES_ALL_PATH, CATEGORIES_PATH, ENTER_KEY, ESK_KEY, SEARCH_QUERY } from './constants/constants.ts';
 import findMatch from './helpers/findMatch.ts';
 import replaceMatch from './helpers/replaceMatch.ts';
+import cross from '../../assets/icons/cross.svg';
 import search from '../../assets/icons/search.svg';
 import { useLazyGetProductListQuery } from '../../entities/product';
 import { IGetProductListParams } from '../../entities/product/types/interfaces.ts';
@@ -64,6 +65,11 @@ export default function SearchInput(props: { isHeader: boolean }) {
     setQuery(query);
   }
 
+  function handleResetQuery() {
+    setSearchValue('');
+    if (isActive) setIsActive();
+  }
+
   useEffect(() => {
     const request = searchValue ? queryProductList({ searchQuery: searchValue, withTotal: false, limit: 5 }) : null;
 
@@ -86,6 +92,15 @@ export default function SearchInput(props: { isHeader: boolean }) {
           lg:flex-row-reverse
         `}
       >
+        <button
+          onClick={handleResetQuery}
+          type="button"
+          className={`absolute top-4 z-10 -translate-x-6 transition-all ${
+            isActive ? 'translate-y-0' : 'translate-y-0.5'
+          }`}
+        >
+          {searchValue && <img src={cross} alt="" />}
+        </button>
         <input
           id="searchInput"
           type="text"
