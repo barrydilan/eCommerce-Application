@@ -135,14 +135,14 @@ export default function SearchInput(props: { isHeader: boolean }) {
       <AnimatePresence>
         {isActive && !!resultNames?.length && (
           <motion.ul
-            initial={{ y: '15%', opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            initial={{ y: '15%', opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
             transition={{
               type: 'spring',
               stiffness: 400,
               damping: 20,
             }}
-            exit={{ y: '15%', opacity: 0 }}
+            exit={{ y: '15%', opacity: 0, scale: 0.95 }}
             className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 drop-shadow-2xl peer-focus:bg-accent"
           >
             {resultNames.map((res, i) => (
