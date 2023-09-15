@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import { AnimatePresence, motion, useCycle } from 'framer-motion';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { CATEGORIES_ALL_PATH, CATEGORIES_PATH, ENTER_KEY, ESK_KEY, SEARCH_QUERY } from './constants/constants.ts';
@@ -14,7 +15,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useCycle(false, true);
   const [getProductList, { data }] = useLazyGetProductListQuery();
 
   const resultNames = searchValue ? data?.results.map((res) => res.name.en) : null;
@@ -30,7 +31,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
     if (e.key !== ENTER_KEY && e.key !== ESK_KEY) return;
     searchInputRef?.current?.blur();
 
-    setIsActive(false);
+    setIsActive();
 
     if (!pathname.includes(CATEGORIES_PATH))
       navigate({
@@ -42,7 +43,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   function handleSubmit(e: React.FocusEvent<HTMLInputElement>) {
     const val = e.target.value;
 
-    if ((e?.relatedTarget as HTMLButtonElement)?.type !== 'button') setIsActive(false);
+    if ((e?.relatedTarget as HTMLButtonElement)?.type !== 'button') setIsActive();
 
     if (val === query.get(SEARCH_QUERY)) return;
 
@@ -53,7 +54,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   function handleResultClick(e: React.MouseEvent<HTMLButtonElement>) {
     const val = (e.target as HTMLElement).textContent ?? '';
 
-    setIsActive(false);
+    setIsActive();
 
     if (val === query.get(SEARCH_QUERY)) return;
 
@@ -92,7 +93,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
           onKeyDown={handleKeyDown}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          onFocus={() => setIsActive(true)}
+          onFocus={() => setIsActive()}
           onBlur={handleSubmit}
           className={`
             peer
@@ -128,18 +129,33 @@ export default function SearchInput(props: { isHeader: boolean }) {
         />
       </label>
 
-      {isActive && !!resultNames?.length && (
-        <ul className="absolute left-0 grid w-full gap-2 rounded-xl bg-secondary px-6 py-8 peer-focus:bg-accent">
-          {resultNames.map((res) => (
-            <li className="flex w-full cursor-pointer gap-x-4 rounded-md p-2 transition-all hover:bg-primary" key={res}>
-              <img src={search} alt="" />
-              <button className="w-full text-left" type="button" onClick={handleResultClick}>
-                {res}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <AnimatePresence>
+        {isActive && !!resultNames?.length && (
+          <motion.ul
+            initial={{ y: '15%', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              type: 'spring',
+              stiffness: 360,
+              damping: 20,
+            }}
+            exit={{ y: '15%', opacity: 0 }}
+            className="absolute left-0 grid w-full gap-2 rounded-3xl bg-secondary px-6 py-8 peer-focus:bg-accent"
+          >
+            {resultNames.map((res) => (
+              <li
+                className="flex w-full cursor-pointer gap-x-4 rounded-md p-2 transition-all hover:bg-primary"
+                key={res}
+              >
+                <img src={search} alt="" />
+                <button className="w-full text-left" type="button" onClick={handleResultClick}>
+                  {res}
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
