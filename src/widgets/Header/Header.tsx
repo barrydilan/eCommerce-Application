@@ -34,13 +34,6 @@ function Header() {
         backdrop-saturate-200
         transition-all
         duration-300
-        before:pointer-events-none
-        before:absolute
-        before:h-full
-        before:w-full
-        before:bg-[url('/src/assets/img/noise.svg')]
-        before:bg-[length:100px_100px]
-        before:opacity-10
         dark:bg-dark-bg-primary
         dark:bg-opacity-50
         md:border-b-2
