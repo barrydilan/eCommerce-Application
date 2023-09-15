@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -34,10 +34,16 @@ export default function ProductPage() {
   const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
   const [addLineItem, { data: newCart }] = useAddLineItemMutation();
 
+  const memoizedGetCart = useCallback(
+    (_cartId: string) => {
+      getCart(_cartId, false);
+    },
+    [getCart],
+  );
+
   useEffect(() => {
-    if (!cartId) return;
-    getCart(cartId, false);
-  }, [newCart]);
+    memoizedGetCart(cartId);
+  }, [cartId, memoizedGetCart, newCart]);
 
   const body = {
     version: cart?.version || 1,
