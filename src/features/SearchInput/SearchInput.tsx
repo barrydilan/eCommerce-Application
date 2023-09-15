@@ -128,8 +128,6 @@ export default function SearchInput(props: { isHeader: boolean }) {
             border-1
             border-text-grey
             border-opacity-30
-            from-separation-line/50
-            to-separation-line
             bg-clip-text
             pl-14
             pr-6
@@ -165,7 +163,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
               damping: 20,
             }}
             exit={{ y: '15%', opacity: 0, scale: 0.95 }}
-            className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 drop-shadow-2xl peer-focus:bg-accent"
+            className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 drop-shadow-2xl peer-focus:bg-accent dark:bg-dark-bg-primary dark:text-primary"
           >
             {resultNames.map((res, i) => (
               <motion.li
@@ -177,7 +175,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
                   damping: 18,
                   delay: i * 0.07,
                 }}
-                className="flex w-full cursor-pointer gap-x-5 rounded-xl px-4 py-3 hover:bg-primary"
+                className="flex w-full cursor-pointer gap-x-5 rounded-xl px-4 py-3 hover:bg-primary dark:hover:bg-dark-separation-line"
                 key={res}
               >
                 <img src={search} alt="" />
