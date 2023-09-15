@@ -1,9 +1,10 @@
 interface ICartItemProps {
   addToCart: () => void;
+  removeOneFromCart: () => void;
 }
 
 export default function CartItem(props: ICartItemProps) {
-  const { addToCart } = props;
+  const { addToCart, removeOneFromCart } = props;
   return (
     <>
       <div className="relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2">
@@ -29,6 +30,7 @@ export default function CartItem(props: ICartItemProps) {
       </div>
       <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
         <button
+          onClick={removeOneFromCart}
           type="button"
           className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
         >

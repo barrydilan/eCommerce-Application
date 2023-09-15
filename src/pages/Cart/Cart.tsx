@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../app/store';
-import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
+import { useAddLineItemMutation, useLazyGetCartByIdQuery, useRemoveLineItemMutation } from '../../entities/cart';
 import CartItem from '../../widgets/CartItem/CartItem';
 
 export default function Cart() {
@@ -13,6 +13,7 @@ export default function Cart() {
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
   const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
   const [addLineItem, { data: newCart }] = useAddLineItemMutation();
+  const [removeLineItem] = useRemoveLineItemMutation();
 
   const memoizedGetCart = useCallback(
     (_cartId: string) => {
@@ -30,7 +31,19 @@ export default function Cart() {
     actions: [
       {
         action: 'addLineItem',
-        productId: '215849a9-b440-40d1-9f91-e11bc15f1254',
+        productId: 'efb69837-6e83-487e-832f-9cbbea245ab6',
+        variantId: 1,
+        quantity: 1,
+      },
+    ],
+  };
+
+  const removeBody = {
+    version: cart?.version || 1,
+    actions: [
+      {
+        action: 'removeLineItem',
+        lineItemId: 'cdf8f33f-3c10-46e3-9909-91b51ba981ba',
         variantId: 1,
         quantity: 1,
       },
@@ -40,6 +53,15 @@ export default function Cart() {
   const addToCart = async () => {
     try {
       const result = await addLineItem({ cartId, body });
+      console.log('updated cart', result.data.lineItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const removeOneFromCart = async () => {
+    try {
+      const result = await removeLineItem({ cartId, removeBody });
       console.log('updated cart', result.data.lineItems);
     } catch (error) {
       console.error(error);
@@ -73,7 +95,7 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
-      <CartItem addToCart={addToCart} />
+      <CartItem addToCart={addToCart} removeOneFromCart={removeOneFromCart} />
     </div>
   );
 }

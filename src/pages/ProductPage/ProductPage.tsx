@@ -32,7 +32,7 @@ export default function ProductPage() {
   const { data } = useGetProductQuery(productId);
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
   const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
-  const [addLineItem, { data: newCart }] = useAddLineItemMutation();
+  const [updateLineItem, { data: newCart }] = useAddLineItemMutation();
 
   const memoizedGetCart = useCallback(
     (_cartId: string) => {
@@ -45,20 +45,64 @@ export default function ProductPage() {
     memoizedGetCart(cartId);
   }, [cartId, memoizedGetCart, newCart]);
 
-  const body = {
-    version: cart?.version || 1,
-    actions: [
-      {
-        action: 'addLineItem',
-        productId,
-        variantId: 1,
-        quantity: 1,
-      },
-    ],
-  };
   const addToCart = async () => {
+    const body = {
+      version: cart?.version || 1,
+      actions: [
+        {
+          action: 'addLineItem',
+          productId,
+          variantId: 1,
+          quantity: 1,
+        },
+      ],
+    };
     try {
-      const result = await addLineItem({ cartId, body });
+      const result = await updateLineItem({ cartId, body });
+      console.log('updated cart', result.data.lineItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const removeOneFromCart = async () => {
+    try {
+      const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
+      const lineItemId = targetItem[0].id;
+      const body = {
+        version: cart?.version || 1,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+            quantity: 1,
+          },
+        ],
+      };
+      const result = await updateLineItem({ cartId, body });
+      console.log('updated cart', result.data.lineItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /// add to cart btn will change to remove from cart an this function will be called
+  const removeAllFromCart = async () => {
+    try {
+      const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
+      const lineItemId = targetItem[0].id;
+      const body = {
+        version: cart?.version || 1,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+          },
+        ],
+      };
+      const result = await updateLineItem({ cartId, body });
       console.log('updated cart', result.data.lineItems);
     } catch (error) {
       console.error(error);
@@ -77,7 +121,6 @@ export default function ProductPage() {
     if (!data) return;
     const title = data.name.en;
     document.title = title;
-
     // eslint-disable-next-line consistent-return
     return () => {
       document.title = DEFAULT_TITLE;
@@ -139,7 +182,7 @@ export default function ProductPage() {
                   <Price rawOldPrice={rawOldPrice} rawPrice={Number(rawPrice)} />
                 </>
               </Header>
-              <Footer addToCart={addToCart} />
+              <Footer addToCart={addToCart} removeOneFromCart={removeOneFromCart} />
               <Description attributes={attributes} />
               {ingredients ? (
                 <IngredientList>
