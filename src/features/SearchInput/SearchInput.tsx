@@ -34,8 +34,6 @@ export default function SearchInput(props: { isHeader: boolean }) {
     if (e.key !== ENTER_KEY && e.key !== ESK_KEY) return;
     searchInputRef?.current?.blur();
 
-    setIsActive();
-
     if (!pathname.includes(CATEGORIES_PATH))
       navigate({
         pathname: CATEGORIES_ALL_PATH,
