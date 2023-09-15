@@ -136,22 +136,30 @@ export default function SearchInput(props: { isHeader: boolean }) {
             animate={{ y: 0, opacity: 1 }}
             transition={{
               type: 'spring',
-              stiffness: 360,
+              stiffness: 380,
               damping: 20,
             }}
             exit={{ y: '15%', opacity: 0 }}
             className="absolute left-0 grid w-full gap-2 rounded-3xl bg-secondary px-6 py-8 peer-focus:bg-accent"
           >
-            {resultNames.map((res) => (
-              <li
-                className="flex w-full cursor-pointer gap-x-4 rounded-md p-2 transition-all hover:bg-primary"
+            {resultNames.map((res, i) => (
+              <motion.li
+                initial={{ y: '100%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 480,
+                  damping: 18,
+                  delay: i * 0.1,
+                }}
+                className="flex w-full cursor-pointer gap-x-4 rounded-md p-2 hover:bg-primary"
                 key={res}
               >
                 <img src={search} alt="" />
                 <button className="w-full text-left" type="button" onClick={handleResultClick}>
                   {res}
                 </button>
-              </li>
+              </motion.li>
             ))}
           </motion.ul>
         )}
