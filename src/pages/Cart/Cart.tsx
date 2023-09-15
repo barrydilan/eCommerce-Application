@@ -1,48 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../app/store';
-import { useAddLineItemMutation } from '../../entities/cart';
+import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
 import CartItem from '../../widgets/CartItem/CartItem';
 
 export default function Cart() {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const cartId = useSelector((state: RootState) => state.userReducer.cartId);
-  // const { data } = useGetCartByIdQuery(cartId);
-  // const [cartVersion, setCartVersion] = useState(data?.version || 1);
-  // const body = {
-  //   version: cartVersion,
-  //   actions: [
-  //     {
-  //       action: 'addLineItem',
-  //       productId: '215849a9-b440-40d1-9f91-e11bc15f1254',
-  //       variantId: 1,
-  //       quantity: 1,
-  //     },
-  //   ],
-  // };
-  // const [addLineItem] = useAddLineItemMutation();
-  // const addToCart = async () => {
-  //   try {
-  //     const result = await addLineItem({ cartId, body });
-  //     setCartVersion(result.data.version);
-  //     console.log('updated cart', result.data.lineItems);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const cartId = useSelector((state: RootState) => state.userReducer.cartId);
+  const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
+  const [addLineItem, { data: newCart }] = useAddLineItemMutation();
 
-  // const isMobile = window.screen.width < 768;
-  // const isCart = location.pathname.includes('cart');
+  const memoizedGetCart = useCallback(
+    (_cartId: string) => {
+      getCart(_cartId, false);
+    },
+    [getCart],
+  );
 
-  // useEffect(() => {
-  //   if (!isMobile && isCart) {
-  //     navigate('categories/all?sort=price+desc');
-  //   }
-  // });
+  useEffect(() => {
+    memoizedGetCart(cartId);
+  }, [cartId, memoizedGetCart, newCart]);
+
+  const body = {
+    version: cart?.version || 1,
+    actions: [
+      {
+        action: 'addLineItem',
+        productId: '215849a9-b440-40d1-9f91-e11bc15f1254',
+        variantId: 1,
+        quantity: 1,
+      },
+    ],
+  };
+
+  const addToCart = async () => {
+    try {
+      const result = await addLineItem({ cartId, body });
+      console.log('updated cart', result.data.lineItems);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const isMobile = window.screen.width < 768;
+  const isCart = location.pathname.includes('cart');
+
+  useEffect(() => {
+    if (!isMobile && isCart) {
+      navigate('categories/all?sort=price+desc');
+    }
+  });
 
   return (
     <div
@@ -62,7 +73,7 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
-      <CartItem />
+      <CartItem addToCart={addToCart} />
     </div>
   );
 }

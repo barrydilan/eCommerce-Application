@@ -1,4 +1,9 @@
-export default function CartItem() {
+interface ICartItemProps {
+  addToCart: () => void;
+}
+
+export default function CartItem(props: ICartItemProps) {
+  const { addToCart } = props;
   return (
     <>
       <div className="relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2">
@@ -31,6 +36,7 @@ export default function CartItem() {
         </button>
         <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">1</div>
         <button
+          onClick={addToCart}
           type="button"
           className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
         >
