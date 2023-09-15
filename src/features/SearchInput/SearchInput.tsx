@@ -3,7 +3,14 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useCycle } from 'framer-motion';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { CATEGORIES_ALL_PATH, CATEGORIES_PATH, ENTER_KEY, ESK_KEY, SEARCH_QUERY } from './constants/constants.ts';
+import {
+  BUTTON_TYPE_NAME,
+  CATEGORIES_ALL_PATH,
+  CATEGORIES_PATH,
+  ENTER_KEY,
+  ESK_KEY,
+  SEARCH_QUERY,
+} from './constants/constants.ts';
 import findMatch from './helpers/findMatch.ts';
 import replaceMatch from './helpers/replaceMatch.ts';
 import cross from '../../assets/icons/cross.svg';
@@ -13,7 +20,6 @@ import { IGetProductListParams } from '../../entities/product/types/interfaces.t
 import { capitalize } from '../../shared/lib/helpers';
 
 export default function SearchInput(props: { isHeader: boolean }) {
-  const { isHeader } = props;
   const [query, setQuery] = useSearchParams('');
   const [searchValue, setSearchValue] = useState(query.get(SEARCH_QUERY) ?? '');
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -22,6 +28,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   const [isActive, setIsActive] = useCycle(false, true);
   const [getProductList, { data }] = useLazyGetProductListQuery();
 
+  const { isHeader } = props;
   const resultNames = searchValue ? data?.results.map((res) => res.name.en) : null;
 
   const queryProductList = useCallback(
@@ -45,7 +52,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   function handleSubmit(e: React.FocusEvent<HTMLInputElement>) {
     const val = e.target.value;
 
-    if ((e?.relatedTarget as HTMLButtonElement)?.type !== 'button') setIsActive();
+    if ((e?.relatedTarget as HTMLButtonElement)?.type !== BUTTON_TYPE_NAME) setIsActive();
 
     if (val === query.get(SEARCH_QUERY)) return;
 
