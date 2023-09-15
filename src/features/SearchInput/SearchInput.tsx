@@ -151,7 +151,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
                   type: 'spring',
                   stiffness: 480,
                   damping: 18,
-                  delay: i * 0.1,
+                  delay: i * 0.07,
                 }}
                 className="flex w-full cursor-pointer gap-x-5 rounded-xl px-4 py-3 hover:bg-primary"
                 key={res}
