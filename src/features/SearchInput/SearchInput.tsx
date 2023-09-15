@@ -54,8 +54,8 @@ export default function SearchInput(props: { isHeader: boolean }) {
     setQuery(query);
   }
 
-  function handleResultClick(e: React.MouseEvent<HTMLButtonElement>) {
-    const val = (e.target as HTMLElement).textContent ?? '';
+  function handleResultClick(nameId: number) {
+    const val = resultNames?.[nameId] ?? '';
 
     setIsActive();
 
@@ -115,8 +115,8 @@ export default function SearchInput(props: { isHeader: boolean }) {
             duration-300
             focus:-translate-y-0.5
             focus:border-none focus:bg-gradient-to-br focus:bg-clip-padding
-            focus:shadow-md
             focus:outline-none
+            focus:drop-shadow-md
             dark:text-primary
             xs:border-none
             lg:transition-all
@@ -139,11 +139,11 @@ export default function SearchInput(props: { isHeader: boolean }) {
             animate={{ y: 0, opacity: 1 }}
             transition={{
               type: 'spring',
-              stiffness: 380,
+              stiffness: 400,
               damping: 20,
             }}
             exit={{ y: '15%', opacity: 0 }}
-            className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 peer-focus:bg-accent"
+            className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 drop-shadow-2xl peer-focus:bg-accent"
           >
             {resultNames.map((res, i) => (
               <motion.li
@@ -159,7 +159,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
                 key={res}
               >
                 <img src={search} alt="" />
-                <button className="w-full text-left" type="button" onClick={handleResultClick}>
+                <button className="w-full text-left" type="button" onClick={() => handleResultClick(i)}>
                   <span>{capitalize(findMatch(res, searchValue))}</span>
                   <span className="text-text-grey">{replaceMatch(res, searchValue)}</span>
                 </button>
