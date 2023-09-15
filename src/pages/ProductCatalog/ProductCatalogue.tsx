@@ -217,7 +217,9 @@ export default function ProductCatalogue() {
           </div>
         )}
 
-        {!rawProductListData?.results?.length && productsIsSuccess ? <ProductNotFound /> : null}
+        {!productListData?.results?.length && !rawProductListData?.results?.length && productsIsSuccess ? (
+          <ProductNotFound />
+        ) : null}
 
         {productListData?.results?.length && productListData.total && productListData.offset !== undefined ? (
           <InfiniteScroll
