@@ -26,7 +26,7 @@ function Blackout({ isBlackout, unlock, isScrollable }: IBlackoutProps) {
       onClick={unlock}
       className={`${isBlackout ? 'visible bg-border-black/50 dark:bg-border-black/60' : 'invisible'} ${
         unlock ? '' : 'pointer-events-none'
-      } fixed inset-0 z-30 m-auto h-[1750%] w-full cursor-auto transition-opacity duration-300`}
+      } fixed inset-0 z-30 m-auto h-[1750%] w-full cursor-auto backdrop-blur-sm transition-opacity duration-300`}
     />
   );
 }

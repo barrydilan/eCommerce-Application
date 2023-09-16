@@ -1,15 +1,15 @@
-import { stagger, useAnimate } from 'framer-motion';
+import { stagger, useAnimate, useCycle } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import LogOutBtn from '../../features/LogOutBtn/LogOutBtn';
-import SearchInput from '../../features/SearchInput/SearchInput';
+import SearchInput from '../../features/SearchInput/SearchInput.tsx';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
+import { LOGO_NAME } from '../../shared/const';
 import Logo from '../ui/Logo';
 
 function Header() {
   const [scope, animate] = useAnimate();
-
-  const logoName = 'SushiSushi'.split('');
+  const [isSearchActive, setIsSearchActive] = useCycle(false, true);
 
   const animationEndHandler = () => {
     if (scope.current) {
@@ -20,6 +20,7 @@ function Header() {
   return (
     <header
       className={`
+        ${isSearchActive ? '' : 'backdrop-blur-lg backdrop-saturate-200'}
         fixed
         z-30
         col-span-full
@@ -30,9 +31,7 @@ function Header() {
         justify-end
         bg-primary
         bg-opacity-50
-        backdrop-blur-lg
-        backdrop-saturate-200
-        transition-all
+        transition-[background-color]
         duration-300
         dark:bg-dark-bg-primary
         dark:bg-opacity-50
@@ -87,7 +86,7 @@ function Header() {
             xl:text-2xl
           "
           >
-            {logoName.map((letter, index) => {
+            {LOGO_NAME.map((letter, index) => {
               return (
                 // eslint-disable-next-line react/no-array-index-key
                 <span className="letter opacity-3 inline-block translate-y-6 opacity-0" key={`${letter}-${index}`}>
@@ -99,7 +98,7 @@ function Header() {
         </Link>
       </div>
 
-      <SearchInput isHeader />
+      <SearchInput isHeader setIsSearchActive={setIsSearchActive} />
       <LogOutBtn isHeader />
       <UserProfileLink isHeader />
     </header>

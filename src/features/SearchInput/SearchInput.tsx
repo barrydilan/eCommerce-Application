@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { AnimatePresence, motion, useCycle } from 'framer-motion';
+import { AnimatePresence, Cycle, motion, useCycle } from 'framer-motion';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import {
@@ -20,7 +20,7 @@ import { IGetProductListParams } from '../../entities/product/types/interfaces.t
 import { capitalize } from '../../shared/lib/helpers';
 import { Blackout } from '../../shared/ui';
 
-export default function SearchInput(props: { isHeader: boolean }) {
+export default function SearchInput(props: { isHeader: boolean; setIsSearchActive?: Cycle }) {
   const [query, setQuery] = useSearchParams('');
   const [searchValue, setSearchValue] = useState(query.get(SEARCH_QUERY) ?? '');
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -29,7 +29,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
   const [isActive, setIsActive] = useCycle(false, true);
   const [getProductList, { data }] = useLazyGetProductListQuery();
 
-  const { isHeader } = props;
+  const { isHeader, setIsSearchActive } = props;
   const resultNames = searchValue ? data?.results.map((res) => res.name.en) : null;
 
   const queryProductList = useCallback(
@@ -53,7 +53,10 @@ export default function SearchInput(props: { isHeader: boolean }) {
   function handleSubmit(e: React.FocusEvent<HTMLInputElement>) {
     const val = e.target.value;
 
-    if ((e?.relatedTarget as HTMLButtonElement)?.type !== BUTTON_TYPE_NAME) setIsActive();
+    if ((e?.relatedTarget as HTMLButtonElement)?.type !== BUTTON_TYPE_NAME) {
+      setIsSearchActive?.();
+      setIsActive();
+    }
 
     if (val === query.get(SEARCH_QUERY)) return;
 
@@ -65,6 +68,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
     const val = resultNames?.[nameId] ?? '';
 
     setIsActive();
+    setIsSearchActive?.();
 
     if (val === query.get(SEARCH_QUERY)) return;
 
@@ -75,7 +79,10 @@ export default function SearchInput(props: { isHeader: boolean }) {
 
   function handleResetQuery() {
     setSearchValue('');
-    if (isActive) setIsActive();
+    if (isActive) {
+      setIsActive();
+      setIsSearchActive?.();
+    }
   }
 
   useEffect(() => {
@@ -86,7 +93,14 @@ export default function SearchInput(props: { isHeader: boolean }) {
 
   return (
     <>
-      <Blackout isBlackout={isActive} isScrollable unlock={() => setIsActive()} />
+      <Blackout
+        isBlackout={isActive}
+        isScrollable
+        unlock={() => {
+          setIsSearchActive?.();
+          setIsActive();
+        }}
+      />
       <div
         className={`${isHeader ? 'ml-12 hidden w-2/5 sm:block' : 'mt-4 block w-full sm:hidden'} relative ${
           isActive ? 'z-[35]' : ''
@@ -125,7 +139,10 @@ export default function SearchInput(props: { isHeader: boolean }) {
             onKeyDown={handleKeyDown}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            onFocus={() => setIsActive()}
+            onFocus={() => {
+              setIsSearchActive?.();
+              setIsActive();
+            }}
             onBlur={handleSubmit}
             className={`
             peer
@@ -199,3 +216,7 @@ export default function SearchInput(props: { isHeader: boolean }) {
     </>
   );
 }
+
+SearchInput.defaultProps = {
+  setIsSearchActive: null,
+};
