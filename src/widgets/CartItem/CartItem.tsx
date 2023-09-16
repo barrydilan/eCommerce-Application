@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../app/store';
 import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
+import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types';
 import { correctPrice, ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
@@ -31,7 +32,7 @@ export default function CartItem(props: ICartItemProps) {
   }, [cartId, memoizedGetCart, newCart]);
 
   const addToCart = async () => {
-    const body = {
+    const body: AddLineItemRequestBody = {
       version: cart?.version || 1,
       actions: [
         {
@@ -52,21 +53,23 @@ export default function CartItem(props: ICartItemProps) {
 
   const removeOneFromCart = async () => {
     try {
-      const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
-      const lineItemId = targetItem?.[0].id;
-      const body = {
-        version: cart?.version || 1,
-        actions: [
-          {
-            action: 'removeLineItem',
-            lineItemId,
-            variantId: 1,
-            quantity: 1,
-          },
-        ],
-      };
-      const result = await updateLineItem({ cartId, body }).unwrap();
-      console.log('updated cart', result.lineItems);
+      const targetItem = cart?.lineItems.find((item) => item.productId === productId);
+      if (targetItem) {
+        const { lineItemId } = targetItem;
+        const body: RemoveLineItemRequestBody = {
+          version: cart?.version || 1,
+          actions: [
+            {
+              action: 'removeLineItem',
+              lineItemId,
+              variantId: 1,
+              quantity: 1,
+            },
+          ],
+        };
+        const result = await updateLineItem({ cartId, body }).unwrap();
+        console.log('updated cart', result.lineItems);
+      }
     } catch (error) {
       console.error(error);
     }

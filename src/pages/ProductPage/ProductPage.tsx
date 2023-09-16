@@ -24,6 +24,7 @@ import 'swiper/css';
 import DEFAULT_TITLE from '../../shared/const';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
+import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types.ts';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
@@ -46,7 +47,7 @@ export default function ProductPage() {
   }, [cartId, memoizedGetCart, newCart]);
 
   const addToCart = async () => {
-    const body = {
+    const body: AddLineItemRequestBody = {
       version: cart?.version || 1,
       actions: [
         {
@@ -58,8 +59,8 @@ export default function ProductPage() {
       ],
     };
     try {
-      const result = await updateLineItem({ cartId, body });
-      console.log('updated cart', result.data.lineItems);
+      const result = await updateLineItem({ cartId, body }).unwrap();
+      console.log('updated cart', result.lineItems);
     } catch (error) {
       console.error(error);
     }
@@ -67,47 +68,49 @@ export default function ProductPage() {
 
   const removeOneFromCart = async () => {
     try {
-      const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
-      const lineItemId = targetItem[0].id;
-      const body = {
-        version: cart?.version || 1,
-        actions: [
-          {
-            action: 'removeLineItem',
-            lineItemId,
-            variantId: 1,
-            quantity: 1,
-          },
-        ],
-      };
-      const result = await updateLineItem({ cartId, body });
-      console.log('updated cart', result.data.lineItems);
+      const targetItem = cart?.lineItems.find((item) => item.productId === productId);
+      if (targetItem) {
+        const { lineItemId } = targetItem;
+        const body: RemoveLineItemRequestBody = {
+          version: cart?.version || 1,
+          actions: [
+            {
+              action: 'removeLineItem',
+              lineItemId,
+              variantId: 1,
+              quantity: 1,
+            },
+          ],
+        };
+        const result = await updateLineItem({ cartId, body }).unwrap();
+        console.log('updated cart', result.lineItems);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
   /// add to cart btn will change to remove from cart an this function will be called
-  const removeAllFromCart = async () => {
-    try {
-      const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
-      const lineItemId = targetItem[0].id;
-      const body = {
-        version: cart?.version || 1,
-        actions: [
-          {
-            action: 'removeLineItem',
-            lineItemId,
-            variantId: 1,
-          },
-        ],
-      };
-      const result = await updateLineItem({ cartId, body });
-      console.log('updated cart', result.data.lineItems);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const removeAllFromCart = async () => {
+  //   try {
+  //     const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
+  //     const lineItemId = targetItem[0].id;
+  //     const body = {
+  //       version: cart?.version || 1,
+  //       actions: [
+  //         {
+  //           action: 'removeLineItem',
+  //           lineItemId,
+  //           variantId: 1,
+  //         },
+  //       ],
+  //     };
+  //     const result = await updateLineItem({ cartId, body }).unwrap();
+  //     console.log('updated cart', result.lineItems);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleSliderOpen = () => {
     setSliderOpen(true);

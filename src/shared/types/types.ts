@@ -16,7 +16,10 @@ export type CartResponse = Readonly<{
 	createdBy: {
 		anonymousId: string;
 	};
-	lineItems: [];
+	lineItems: {
+		productId: string;
+		lineItemId: string;
+	}[];
 	cartState: 'Active';
 	totalPrice: {
 		type: string;

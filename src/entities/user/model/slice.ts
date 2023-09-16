@@ -7,7 +7,6 @@ interface ILoggedInPayload {
 	userId: string;
 	refreshToken: string;
 	cartId?: string;
-	version: number;
 }
 
 interface IUpdateAccessTokenPayload extends Omit<ILoggedInPayload, 'userId'> {
