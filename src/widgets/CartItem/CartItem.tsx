@@ -49,6 +49,7 @@ export default function CartItem(props: ICartItemProps) {
     } catch (e) {
       // throw new Error(e);
     }
+    return null;
   };
 
   const removeOneFromCart = async () => {
@@ -73,6 +74,7 @@ export default function CartItem(props: ICartItemProps) {
     } catch (e) {
       // throw new Error(e);
     }
+    return null;
   };
 
   if (!data)

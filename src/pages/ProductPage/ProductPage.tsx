@@ -64,6 +64,7 @@ export default function ProductPage() {
     } catch (e) {
       // throw new Error(e);
     }
+    return null;
   };
 
   const removeOneFromCart = async () => {
@@ -88,6 +89,7 @@ export default function ProductPage() {
     } catch (e) {
       // throw new Error(e);
     }
+    return null;
   };
 
   /// add to cart btn will change to remove from cart an this function will be called
