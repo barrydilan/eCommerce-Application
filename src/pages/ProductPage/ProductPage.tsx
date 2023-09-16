@@ -76,7 +76,7 @@ export default function ProductPage() {
   return (
     <div
       className="
-        mt-14
+        mt-16
         sm:mt-16
         md:py-11
       "

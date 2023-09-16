@@ -8,6 +8,16 @@ html {
   scroll-behavior: smooth;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+::selection {
+  color: hsl(126, 55%, 47%);
+  background-color: hsl(134, 73%, 90%);
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 0;
@@ -32,15 +42,15 @@ html {
 
 @layer base {
   .navMenuItem {
-    @apply flex w-1/5 flex-col items-center justify-end lg:mr-auto lg:w-full lg:flex-row lg:justify-start lg:pl-6;
+    @apply flex min-w-[95px] flex-col items-center justify-end lg:mr-auto lg:w-full lg:flex-row lg:justify-start lg:pl-6;
   }
 
   .navMenuLink {
-    @apply text-center lg:text-left text-base min-w-[80px] min-h-[40];
+    @apply w-full text-center lg:text-left text-base min-w-[80px] min-h-[40];
   }
 
   .navMenuIcon {
-    @apply m-auto w-5 lg:mr-2 lg:w-6 lg:mr-4;
+    @apply m-auto w-5 lg:mr-3 lg:w-6;
   }
 
   .loginRegLabel {
@@ -149,6 +159,7 @@ html {
   max-width: 100px;
   left: 50% !important;
   transform: translate(-50%, 0%) !important;
+  width: fit-content !important;
 }
 
 .swiper-pagination-bullet,

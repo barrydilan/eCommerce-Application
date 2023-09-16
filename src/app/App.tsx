@@ -65,6 +65,7 @@ export function App() {
         <Header />
         <div
           className="
+            w-full
             lg:col-start-2
             lg:col-end-3
             lg:row-start-2

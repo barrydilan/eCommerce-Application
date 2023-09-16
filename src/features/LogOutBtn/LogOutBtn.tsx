@@ -29,7 +29,7 @@ export default function LogOutBtn(props: { isHeader: boolean }) {
     <div
       className={`navMenuItem ${
         isHeader
-          ? 'static mr-5 w-auto rounded-md border-2  border-text-grey/50 dark:border-separation-line/40 lg:hidden'
+          ? 'static mr-5 w-auto rounded-md border-2 border-text-grey/50 dark:border-separation-line/40 lg:hidden'
           : 'hidden lg:absolute'
       } lg:bottom-6 lg:block xl:pl-14`}
     >

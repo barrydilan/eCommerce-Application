@@ -17,6 +17,7 @@ import CategoriesList from './ui/CategoriesList.tsx';
 import CategoryItem from './ui/CategoryItem.tsx';
 import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
+import ProductNotFound from './ui/ProductNotFound.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import { useGetCategoriesQuery, useGetCategoryQuery, useLazyGetProductListQuery } from '../../entities/product';
 import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
@@ -118,7 +119,7 @@ export default function ProductCatalogue() {
 
     onFilterOpen();
 
-    if (query.get(QUERY_FILTER) !== encodedState) return;
+    if (query.get(QUERY_FILTER) === encodedState) return;
 
     fetchProducts();
     setProductItems(undefined);
@@ -151,7 +152,7 @@ export default function ProductCatalogue() {
   return (
     <div
       className="
-        mt-14
+        mt-16
         grid
         grid-cols-1
         grid-rows-prodPageMob
@@ -161,6 +162,7 @@ export default function ProductCatalogue() {
         md:py-[48px]
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
+        lg:pb-10
         "
     >
       <Blackout isBlackout={isFiltersOpen} />
@@ -209,14 +211,14 @@ export default function ProductCatalogue() {
           : null}
       </CategoriesList>
       <MenuList>
-        {productsIsLoading ? (
+        {productsIsLoading && (
           <div className="flex h-full items-center justify-center">
             <LoadingAnimation />
           </div>
-        ) : null}
+        )}
 
-        {!productListData?.results?.length && productsIsSuccess ? (
-          <p className="self-center justify-self-center text-text-grey">No Products Found :(</p>
+        {!productListData?.results?.length && !rawProductListData?.results?.length && productsIsSuccess ? (
+          <ProductNotFound />
         ) : null}
 
         {productListData?.results?.length && productListData.total && productListData.offset !== undefined ? (
@@ -229,8 +231,8 @@ export default function ProductCatalogue() {
                 <LoadingAnimation />
               </div>
             }
-            endMessage={<p className="text-text-grey">You Reached The End!</p>}
-            className="grid items-center gap-5 pb-12 lg:gap-6"
+            endMessage={<p className="text-center text-text-grey">You Reached The End!</p>}
+            className="grid items-center gap-5 pb-14 lg:gap-6 lg:pb-0"
           >
             {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
               <MenuItem

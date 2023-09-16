@@ -12,7 +12,7 @@ export default function Logo({ onAnimationEnd }: LogoProps) {
   };
   return (
     <svg
-      className="h-8 w-8 sm:h-12 sm:w-12"
+      className="h-10 w-10 sm:h-12 sm:w-12"
       viewBox="-409.6 -409.6 1843.20 1843.20"
       xmlns="http://www.w3.org/2000/svg"
       fill="#000000"
