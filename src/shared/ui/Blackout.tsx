@@ -24,7 +24,7 @@ function Blackout({ isBlackout, unlock, isScrollable }: IBlackoutProps) {
       aria-label="blackout"
       type="button"
       onClick={unlock}
-      className={`${isBlackout ? 'visible bg-border-black/50 dark:bg-border-black/50' : 'invisible'} ${
+      className={`${isBlackout ? 'visible bg-border-black/50 dark:bg-border-black/60' : 'invisible'} ${
         unlock ? '' : 'pointer-events-none'
       } fixed inset-0 z-30 m-auto h-[1750%] w-full cursor-auto transition-opacity duration-300`}
     />
