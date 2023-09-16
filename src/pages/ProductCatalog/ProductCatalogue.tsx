@@ -165,7 +165,7 @@ export default function ProductCatalogue() {
         lg:pb-10
         "
     >
-      <Blackout isBlackout={isFiltersOpen} />
+      <Blackout isBlackout={isFiltersOpen} unlock={() => onFilterOpen()} />
       <ProductPageHeader />
       <SearchInput isHeader={false} />
       <div

@@ -18,6 +18,7 @@ import search from '../../assets/icons/search.svg';
 import { useLazyGetProductListQuery } from '../../entities/product';
 import { IGetProductListParams } from '../../entities/product/types/interfaces.ts';
 import { capitalize } from '../../shared/lib/helpers';
+import { Blackout } from '../../shared/ui';
 
 export default function SearchInput(props: { isHeader: boolean }) {
   const [query, setQuery] = useSearchParams('');
@@ -84,10 +85,12 @@ export default function SearchInput(props: { isHeader: boolean }) {
   }, [searchValue, queryProductList]);
 
   return (
-    <div className={`${isHeader ? 'ml-12 hidden w-2/5 sm:block' : 'mt-4 block w-full sm:hidden'} relative z-[25]`}>
-      <label
-        htmlFor="searchInput"
-        className={`
+    <>
+      <Blackout isBlackout={isActive} isScrollable unlock={() => setIsActive()} />
+      <div className={`${isHeader ? 'ml-12 hidden w-2/5 sm:block' : 'mt-4 block w-full sm:hidden'} relative z-[35]`}>
+        <label
+          htmlFor="searchInput"
+          className={`
           peer
           relative
           ${isHeader ? 'sm:flex' : 'flex'}
@@ -98,29 +101,29 @@ export default function SearchInput(props: { isHeader: boolean }) {
           md:leading-10
           lg:flex-row-reverse
         `}
-      >
-        {searchValue && (
-          <button
-            onClick={handleResetQuery}
-            type="button"
-            className={`absolute right-6 top-4 z-10 transition-all lg:right-8 ${
-              isActive ? 'translate-y-0' : 'translate-y-0.5'
-            }`}
-          >
-            <img src={cross} alt="" />
-          </button>
-        )}
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="Search"
-          ref={searchInputRef}
-          onKeyDown={handleKeyDown}
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onFocus={() => setIsActive()}
-          onBlur={handleSubmit}
-          className={`
+        >
+          {searchValue && (
+            <button
+              onClick={handleResetQuery}
+              type="button"
+              className={`absolute right-6 top-4 z-10 transition-all lg:right-8 ${
+                isActive ? 'translate-y-0' : 'translate-y-0.5'
+              }`}
+            >
+              <img src={cross} alt="" />
+            </button>
+          )}
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search"
+            ref={searchInputRef}
+            onKeyDown={handleKeyDown}
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onFocus={() => setIsActive()}
+            onBlur={handleSubmit}
+            className={`
             peer
             h-12
             w-full 
@@ -144,50 +147,51 @@ export default function SearchInput(props: { isHeader: boolean }) {
             md:leading-10
             lg:pl-16
             `}
-        />
-        <img
-          src={search}
-          alt=""
-          className="absolute left-8 top-1/2 -translate-y-2.5 duration-300 peer-focus:-translate-y-3 lg:left-10"
-        />
-      </label>
+          />
+          <img
+            src={search}
+            alt=""
+            className="absolute left-8 top-1/2 -translate-y-2.5 duration-300 peer-focus:-translate-y-3 lg:left-10"
+          />
+        </label>
 
-      <AnimatePresence>
-        {isActive && !!resultNames?.length && (
-          <motion.ul
-            initial={{ y: '15%', opacity: 0, scale: 0.95 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            transition={{
-              type: 'spring',
-              stiffness: 400,
-              damping: 20,
-            }}
-            exit={{ y: '15%', opacity: 0, scale: 0.95 }}
-            className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 drop-shadow-2xl peer-focus:bg-accent dark:bg-dark-bg-primary dark:text-primary"
-          >
-            {resultNames.map((res, i) => (
-              <motion.li
-                initial={{ y: '100%', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 480,
-                  damping: 18,
-                  delay: i * 0.07,
-                }}
-                className="flex w-full cursor-pointer gap-x-5 rounded-xl px-4 py-3 hover:bg-primary dark:hover:bg-dark-separation-line"
-                key={res}
-              >
-                <img src={search} alt="" />
-                <button className="w-full text-left" type="button" onClick={() => handleResultClick(i)}>
-                  <span>{capitalize(findMatch(res, searchValue))}</span>
-                  <span className="text-text-grey">{replaceMatch(res, searchValue)}</span>
-                </button>
-              </motion.li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence>
-    </div>
+        <AnimatePresence>
+          {isActive && !!resultNames?.length && (
+            <motion.ul
+              initial={{ y: '15%', opacity: 0, scale: 0.95 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{
+                type: 'spring',
+                stiffness: 400,
+                damping: 20,
+              }}
+              exit={{ y: '15%', opacity: 0, scale: 0.95 }}
+              className="absolute left-0 grid w-full rounded-3xl bg-secondary px-6 py-8 drop-shadow-2xl peer-focus:bg-accent dark:bg-dark-bg-primary dark:text-primary"
+            >
+              {resultNames.map((res, i) => (
+                <motion.li
+                  initial={{ y: '100%', opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 480,
+                    damping: 18,
+                    delay: i * 0.07,
+                  }}
+                  className="flex w-full cursor-pointer gap-x-5 rounded-xl px-4 py-3 hover:bg-primary dark:hover:bg-dark-separation-line"
+                  key={res}
+                >
+                  <img src={search} alt="" />
+                  <button className="w-full text-left" type="button" onClick={() => handleResultClick(i)}>
+                    <span>{capitalize(findMatch(res, searchValue))}</span>
+                    <span className="text-text-grey">{replaceMatch(res, searchValue)}</span>
+                  </button>
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
 }

@@ -65,9 +65,9 @@ function UserProfileLink(props: { isHeader: boolean }) {
         }
         rounded-md
         bg-accent-lightest
-        text-center
+        text-center 
         leading-10 
-        text-accent 
+        text-accent
         lg:ml-6
         xl:ml-14`}
         to="/login"

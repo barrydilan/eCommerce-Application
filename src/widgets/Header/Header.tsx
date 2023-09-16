@@ -76,6 +76,7 @@ function Header() {
             ref={scope}
             className="
             relative
+            z-50
             -translate-y-1
             text-xl
             tracking-tight
