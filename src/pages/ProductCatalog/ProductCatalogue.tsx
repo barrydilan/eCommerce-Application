@@ -185,7 +185,7 @@ export default function ProductCatalogue() {
           lg:items-end
         "
         >
-          <FilterButton onFilterOpen={onFilterOpen} />
+          <FilterButton onFilterOpen={onFilterOpen} isFiltersOpen={isFiltersOpen} />
           <FilterModal
             isFiltersOpen={isFiltersOpen}
             filtersState={filtersState}
