@@ -1,15 +1,15 @@
-import { stagger, useAnimate } from 'framer-motion';
+import { stagger, useAnimate, useCycle } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 import LogOutBtn from '../../features/LogOutBtn/LogOutBtn';
-import SearchInput from '../../features/SearchInput/SearchInput';
+import SearchInput from '../../features/SearchInput/SearchInput.tsx';
 import UserProfileLink from '../../features/UserProfileLink/UserProfileLink';
+import { LOGO_NAME } from '../../shared/const';
 import Logo from '../ui/Logo';
 
 function Header() {
   const [scope, animate] = useAnimate();
-
-  const logoName = 'SushiSushi'.split('');
+  const [isSearchActive, setIsSearchActive] = useCycle(false, true);
 
   const animationEndHandler = () => {
     if (scope.current) {
@@ -19,26 +19,33 @@ function Header() {
 
   return (
     <header
-      className="
+      className={`
+        ${isSearchActive ? '' : 'backdrop-blur-lg backdrop-saturate-200'}
         fixed
-        z-50
+        z-30
         col-span-full
         flex
+        h-16
         w-full
         items-center
         justify-end
         bg-primary
-        transition-all
-        duration-300 dark:bg-dark-bg-primary
+        bg-opacity-50
+        transition-[background-color]
+        duration-300
+        dark:bg-dark-bg-primary
+        dark:bg-opacity-50
         md:border-b-2
-        md:border-separation-line dark:md:border-dark-separation-line
+        md:border-separation-line
+        dark:md:border-dark-separation-line
+        lg:h-20
         lg:w-[1536px]
         lg:justify-start
-      "
+      `}
     >
       <div
         className="
-          mr-auto 
+          mr-auto
           flex
           w-40
           select-none
@@ -46,14 +53,14 @@ function Header() {
           pb-2
           pl-1
           pt-2
-          md:h-16
+          md:h-20
           md:w-44
           md:border-r-2
           md:border-separation-line
           dark:md:border-dark-separation-line
           lg:mr-0
           xl:w-89
-          xl:pl-8
+          xl:pl-9
         "
       >
         <Link to="/">
@@ -63,31 +70,35 @@ function Header() {
             }}
           />
         </Link>
-        <h1
-          ref={scope}
-          className="
+        <Link to="/">
+          <h1
+            ref={scope}
+            className="
             relative
+            z-50
             -translate-y-1
-            text-sm
+            text-xl
             tracking-tight
             text-text-dark
             dark:text-primary
+            md:mb-2
             md:pt-2
-            md:text-xl
             xl:text-2xl
           "
-        >
-          {logoName.map((letter, index) => {
-            return (
-              // eslint-disable-next-line react/no-array-index-key
-              <span className="letter opacity-3 inline-block translate-y-6 opacity-0" key={`${letter}-${index}`}>
-                {letter}
-              </span>
-            );
-          })}
-        </h1>
+          >
+            {LOGO_NAME.map((letter, index) => {
+              return (
+                // eslint-disable-next-line react/no-array-index-key
+                <span className="letter opacity-3 inline-block translate-y-6 opacity-0" key={`${letter}-${index}`}>
+                  {letter}
+                </span>
+              );
+            })}
+          </h1>
+        </Link>
       </div>
-      <SearchInput isHeader />
+
+      <SearchInput isHeader setIsSearchActive={setIsSearchActive} />
       <LogOutBtn isHeader />
       <UserProfileLink isHeader />
     </header>

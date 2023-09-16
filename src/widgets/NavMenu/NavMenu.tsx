@@ -13,8 +13,7 @@ function NavMenu() {
         w-full
         justify-between
         bg-primary
-        px-4
-        py-2
+        p-2
         dark:bg-dark-bg-primary
         lg:mt-12
         lg:max-h-full
@@ -23,33 +22,33 @@ function NavMenu() {
         lg:justify-start
         lg:gap-9
         lg:px-0
-        xl:pl-8
+        xl:pl-4
         "
     >
       <li className="navMenuItem">
         <NavLink to="/categories/all" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
-            <>
+            <div className={`py rounded-xl px-2 py-1 ${isActive ? 'bg-accent-lightest lg:bg-opacity-0' : ''}`}>
               <MainIcon isActive={isActive || isPending} /> <span>Our menu</span>
-            </>
+            </div>
           )}
         </NavLink>
       </li>
       <li className="navMenuItem lg:hidden">
         <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
-            <>
+            <div className={`py rounded-xl px-2 py-1 ${isActive ? 'bg-accent-lightest lg:bg-opacity-0' : ''}`}>
               <CartIcon isActive={isActive || isPending} /> <span>Cart</span>
-            </>
+            </div>
           )}
         </NavLink>
       </li>
       <li className="navMenuItem">
         <NavLink to="/about" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
-            <>
+            <div className={`py rounded-xl px-2 py-1 ${isActive ? 'bg-accent-lightest lg:bg-opacity-0' : ''}`}>
               <ContactsIcon isActive={isActive || isPending} /> <span>Contacts</span>
-            </>
+            </div>
           )}
         </NavLink>
       </li>

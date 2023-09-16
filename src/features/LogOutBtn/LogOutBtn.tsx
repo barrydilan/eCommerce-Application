@@ -29,7 +29,7 @@ export default function LogOutBtn(props: { isHeader: boolean }) {
     <div
       className={`navMenuItem ${
         isHeader
-          ? 'static mr-5 w-auto rounded-md border-2  border-text-grey/50 dark:border-separation-line/40 lg:hidden'
+          ? 'static mr-5 w-auto rounded-md border-2 border-text-grey/50 dark:border-separation-line/40 lg:hidden'
           : 'hidden lg:absolute'
       } lg:bottom-6 lg:block xl:pl-14`}
     >
@@ -38,7 +38,7 @@ export default function LogOutBtn(props: { isHeader: boolean }) {
         type="button"
         className={`navMenuLink ${
           isHeader ? 'text-text-grey' : 'text-text-dark'
-        } cursor-pointer transition-all duration-300 hover:bg-separation-line dark:text-primary hover:dark:bg-dark-separation-line`}
+        } cursor-pointer transition-all duration-300 hover:text-text-grey dark:text-primary hover:dark:text-text-grey`}
       >
         <img src={logOutIcon} alt="" className={`navMenuIcon ${isHeader ? 'hidden' : 'lg:inline-block'}`} />
         Log out
