@@ -19,12 +19,12 @@ import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
 import { RootState } from '../../app/store/index.ts';
 import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
+import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types.ts';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import 'swiper/css';
 import DEFAULT_TITLE from '../../shared/const';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
-import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types.ts';
 
 export default function ProductPage() {
   const [rating, setRating] = useState(4.3);
