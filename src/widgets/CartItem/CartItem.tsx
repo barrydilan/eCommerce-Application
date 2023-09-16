@@ -45,6 +45,7 @@ export default function CartItem(props: ICartItemProps) {
     };
     try {
       const result = await updateLineItem({ cartId, body }).unwrap();
+      return result;
     } catch (e) {
       // throw new Error(e);
     }
@@ -67,6 +68,7 @@ export default function CartItem(props: ICartItemProps) {
           ],
         };
         const result = await updateLineItem({ cartId, body }).unwrap();
+        return result;
       }
     } catch (e) {
       // throw new Error(e);

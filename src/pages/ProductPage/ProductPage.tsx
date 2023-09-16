@@ -60,6 +60,7 @@ export default function ProductPage() {
     };
     try {
       const result = await updateLineItem({ cartId, body }).unwrap();
+      return result;
     } catch (e) {
       // throw new Error(e);
     }
@@ -82,6 +83,7 @@ export default function ProductPage() {
           ],
         };
         const result = await updateLineItem({ cartId, body }).unwrap();
+        return result;
       }
     } catch (e) {
       // throw new Error(e);
