@@ -22,7 +22,7 @@ import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/
 import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types.ts';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import 'swiper/css';
-import DEFAULT_TITLE from '../../shared/const';
+import { DEFAULT_TITLE } from '../../shared/const';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 
@@ -158,7 +158,7 @@ export default function ProductPage() {
   return (
     <div
       className="
-        mt-14
+        mt-16
         sm:mt-16
         md:py-11
       "

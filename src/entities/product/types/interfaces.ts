@@ -19,4 +19,5 @@ export interface IGetProductListParams {
 	};
 	filters?: IGetProductAttributes;
 	searchQuery?: string | null;
+	withTotal?: boolean;
 }

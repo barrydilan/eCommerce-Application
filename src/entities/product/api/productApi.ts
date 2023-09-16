@@ -6,13 +6,14 @@ import { CategoriesResponse, CategoryResult, ProductResponse, ProductResult } fr
 export const productApi = rootApi.injectEndpoints({
 	endpoints: (build) => ({
 		getProductList: build.query<ProductResponse, IGetProductListParams>({
-			query: ({ limit = 5, offset = 0, sort, filters, searchQuery }) => ({
+			query: ({ limit = 5, offset = 0, sort, filters, searchQuery, withTotal = true }) => ({
 				url: prepareFilterQuery(filters),
 				params: {
 					limit,
 					offset,
 					...(sort && { sort: `${sort.field} ${sort.order}` }),
 					...(searchQuery && { fuzzy: `true`, 'text.en': searchQuery }),
+					withTotal,
 				},
 			}),
 		}),

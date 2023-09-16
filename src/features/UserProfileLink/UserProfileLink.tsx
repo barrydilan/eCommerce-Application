@@ -58,12 +58,16 @@ function UserProfileLink(props: { isHeader: boolean }) {
     <>
       <Link
         className={`
-        ${isHeader ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 lg:hidden' : 'mt-28 hidden h-10 w-3/5 lg:mt-28 lg:block'}
+        ${
+          isHeader
+            ? 'mr-2 flex h-9 items-center px-2 text-sm leading-8 lg:hidden'
+            : 'mt-28 hidden h-10 w-3/5 lg:mt-28 lg:block'
+        }
         rounded-md
-        bg-accent
-        text-center
+        bg-accent-lightest
+        text-center 
         leading-10 
-        text-primary 
+        text-accent
         lg:ml-6
         xl:ml-14`}
         to="/login"
@@ -72,12 +76,12 @@ function UserProfileLink(props: { isHeader: boolean }) {
       </Link>
       <Link
         className={`
-        ${isHeader ? 'mr-2 h-8 pl-1 pr-1 text-sm leading-8 lg:hidden' : 'mt-3 hidden h-10 w-3/5 lg:block'}
+        ${isHeader ? 'mr-2 flex h-9 items-center px-2 text-sm leading-8 lg:hidden' : 'mt-3 hidden h-10 w-3/5 lg:block'}
         rounded-md
         bg-accent
         text-center
         leading-10 
-        text-primary 
+        text-accent-lightest 
         lg:ml-6
         xl:ml-14`}
         to="/registration"

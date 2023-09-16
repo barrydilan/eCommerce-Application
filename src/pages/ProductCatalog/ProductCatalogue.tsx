@@ -17,6 +17,7 @@ import CategoriesList from './ui/CategoriesList.tsx';
 import CategoryItem from './ui/CategoryItem.tsx';
 import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
+import ProductNotFound from './ui/ProductNotFound.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
 import { useGetCategoriesQuery, useGetCategoryQuery, useLazyGetProductListQuery } from '../../entities/product';
 import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
@@ -118,7 +119,7 @@ export default function ProductCatalogue() {
 
     onFilterOpen();
 
-    if (query.get(QUERY_FILTER) !== encodedState) return;
+    if (query.get(QUERY_FILTER) === encodedState) return;
 
     fetchProducts();
     setProductItems(undefined);
@@ -149,9 +150,11 @@ export default function ProductCatalogue() {
   }, [categoryData]);
 
   return (
-    <div
-      className="
-        mt-14
+    <>
+      <Blackout isBlackout={isFiltersOpen} unlock={() => onFilterOpen()} />
+      <div
+        className="
+        mt-16
         grid
         grid-cols-1
         grid-rows-prodPageMob
@@ -161,13 +164,13 @@ export default function ProductCatalogue() {
         md:py-[48px]
         lg:grid-cols-prodPageDesk
         lg:grid-rows-prodPageDesk
+        lg:pb-10
         "
-    >
-      <Blackout isBlackout={isFiltersOpen} />
-      <ProductPageHeader />
-      <SearchInput isHeader={false} />
-      <div
-        className="
+      >
+        <ProductPageHeader />
+        <SearchInput isHeader={false} />
+        <div
+          className="
           relative
           mt-6
           flex
@@ -181,72 +184,73 @@ export default function ProductCatalogue() {
           lg:flex-col
           lg:items-end
         "
-      >
-        <FilterButton onFilterOpen={onFilterOpen} />
-        <FilterModal
-          isFiltersOpen={isFiltersOpen}
-          filtersState={filtersState}
-          onFilterOpen={onFilterOpen}
-          setFiltersState={setFiltersState}
-          onApplyFilters={onApplyFilters}
-        />
-        <SortingSelector sortOrder={sortOrder} onSort={onSort} />
+        >
+          <FilterButton onFilterOpen={onFilterOpen} isFiltersOpen={isFiltersOpen} />
+          <FilterModal
+            isFiltersOpen={isFiltersOpen}
+            filtersState={filtersState}
+            onFilterOpen={onFilterOpen}
+            setFiltersState={setFiltersState}
+            onApplyFilters={onApplyFilters}
+          />
+          <SortingSelector sortOrder={sortOrder} onSort={onSort} />
+        </div>
+        <CategoriesList changeActiveCat={changeActiveCat}>
+          {categories
+            ? [...prevCategories, ...categories].map((item, i, arr) => {
+                const isPrevCat = typeof item === 'string';
+                const name = isPrevCat ? item : item.name.en;
+                const isLast = i === arr.length - 1;
+
+                return (
+                  <React.Fragment key={name}>
+                    <CategoryItem index={i} item={name} activeCat={activeCat} />
+                    {!isLast && (activeCat === name || isPrevCat) ? '/' : ''}
+                  </React.Fragment>
+                );
+              })
+            : null}
+        </CategoriesList>
+        <MenuList>
+          {productsIsLoading && (
+            <div className="flex h-full items-center justify-center">
+              <LoadingAnimation />
+            </div>
+          )}
+
+          {!productListData?.results?.length && !rawProductListData?.results?.length && productsIsSuccess ? (
+            <ProductNotFound />
+          ) : null}
+
+          {productListData?.results?.length && productListData.total && productListData.offset !== undefined ? (
+            <InfiniteScroll
+              dataLength={productListData.results.length}
+              hasMore={productListData.offset < productListData.total}
+              next={handleNextPage}
+              loader={
+                <div className="flex h-full items-center justify-center overflow-hidden">
+                  <LoadingAnimation />
+                </div>
+              }
+              endMessage={<p className="text-center text-text-grey">You Reached The End!</p>}
+              className="grid items-center gap-5 pb-14 lg:gap-6 lg:pb-0"
+            >
+              {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
+                <MenuItem
+                  key={`${id}-${i}`}
+                  id={id}
+                  name={name.en}
+                  prices={prices}
+                  image={images[0].url}
+                  attributes={attributes}
+                  isSpicy={Boolean(getAttribute(attributes, ProductAttributeNames.IS_SPICY))}
+                  isVegan={Boolean(getAttribute(attributes, ProductAttributeNames.IS_VEGAN))}
+                />
+              ))}
+            </InfiniteScroll>
+          ) : null}
+        </MenuList>
       </div>
-      <CategoriesList changeActiveCat={changeActiveCat}>
-        {categories
-          ? [...prevCategories, ...categories].map((item, i, arr) => {
-              const isPrevCat = typeof item === 'string';
-              const name = isPrevCat ? item : item.name.en;
-              const isLast = i === arr.length - 1;
-
-              return (
-                <React.Fragment key={name}>
-                  <CategoryItem index={i} item={name} activeCat={activeCat} />
-                  {!isLast && (activeCat === name || isPrevCat) ? '/' : ''}
-                </React.Fragment>
-              );
-            })
-          : null}
-      </CategoriesList>
-      <MenuList>
-        {productsIsLoading ? (
-          <div className="flex h-full items-center justify-center">
-            <LoadingAnimation />
-          </div>
-        ) : null}
-
-        {!productListData?.results?.length && productsIsSuccess ? (
-          <p className="self-center justify-self-center text-text-grey">No Products Found :(</p>
-        ) : null}
-
-        {productListData?.results?.length && productListData.total && productListData.offset !== undefined ? (
-          <InfiniteScroll
-            dataLength={productListData.results.length}
-            hasMore={productListData.offset < productListData.total}
-            next={handleNextPage}
-            loader={
-              <div className="flex h-full items-center justify-center overflow-hidden">
-                <LoadingAnimation />
-              </div>
-            }
-            endMessage={<p className="text-text-grey">You Reached The End!</p>}
-            className="grid items-center gap-5 pb-12 lg:gap-6"
-          >
-            {productListData.results?.map(({ id, name, masterVariant: { prices, images, attributes } }, i) => (
-              <MenuItem
-                key={`${id}-${i}`}
-                id={id}
-                name={name.en}
-                prices={prices}
-                image={images[0].url}
-                attributes={attributes}
-                isSpicy={Boolean(getAttribute(attributes, ProductAttributeNames.IS_SPICY))}
-                isVegan={Boolean(getAttribute(attributes, ProductAttributeNames.IS_VEGAN))}
-              />
-            ))}
-          </InfiniteScroll>
-        ) : null}
-      </MenuList>
-    </div>
+    </>
   );
 }
