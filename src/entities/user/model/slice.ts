@@ -19,7 +19,6 @@ export const userSlice = createSlice({
 	reducers: {
 		updateAccessToken: (state, action: PayloadAction<IUpdateAccessTokenPayload>) => {
 			const { accessToken, refreshToken, cartId } = action.payload;
-
 			state.accessToken = accessToken;
 			state.refreshToken = refreshToken;
 			state.cartId = cartId;

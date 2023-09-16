@@ -1,5 +1,3 @@
-interface ICreateCartParams {
+export default interface ICreateCartParams {
 	currency: 'USD' | 'UAH' | 'EUR';
 }
-
-export default ICreateCartParams;

@@ -1,5 +1,6 @@
 import { rootApi } from '../../../shared/api';
-import CartListResponse from '../types/types.ts';
+import { CartResponse } from '../../../shared/types/types.ts';
+import { CartListResponse } from '../types/types.ts';
 
 export const readCartApi = rootApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -11,7 +12,12 @@ export const readCartApi = rootApi.injectEndpoints({
 				},
 			}),
 		}),
+		getCartById: build.query<CartResponse, string>({
+			query: (id) => ({
+				url: `/${import.meta.env.VITE_PROJECT_KEY}/carts/${id}`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetCartListQuery } = readCartApi;
+export const { useGetCartListQuery, useLazyGetCartByIdQuery } = readCartApi;

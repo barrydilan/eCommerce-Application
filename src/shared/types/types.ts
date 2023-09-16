@@ -12,10 +12,14 @@ export type IAuthResponse = Readonly<{
 export type CartResponse = Readonly<{
 	type: 'Cart';
 	id: string;
+	version: number;
 	createdBy: {
 		anonymousId: string;
 	};
-	lineItems: [];
+	lineItems: {
+		productId: string;
+		lineItemId: string;
+	}[];
 	cartState: 'Active';
 	totalPrice: {
 		type: string;

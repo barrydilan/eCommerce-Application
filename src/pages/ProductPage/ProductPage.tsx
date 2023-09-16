@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { useSelector } from 'react-redux';
 
 import getAttribute from './lib/helpers/getAttribute.ts';
 import AddWishlistMobile from './ui/AddWishlistMobile.tsx';
@@ -15,6 +17,9 @@ import Price from './ui/Price.tsx';
 import Rating from './ui/Rating.tsx';
 import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
+import { RootState } from '../../app/store/index.ts';
+import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
+import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types.ts';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import 'swiper/css';
 import { DEFAULT_TITLE } from '../../shared/const';
@@ -26,6 +31,88 @@ export default function ProductPage() {
   const [isSliderOpen, setSliderOpen] = useState(false);
   const productId = useGetPath();
   const { data } = useGetProductQuery(productId);
+  const cartId = useSelector((state: RootState) => state.userReducer.cartId);
+  const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
+  const [updateLineItem, { data: newCart }] = useAddLineItemMutation();
+
+  const memoizedGetCart = useCallback(
+    (_cartId: string) => {
+      getCart(_cartId, false);
+    },
+    [getCart],
+  );
+
+  useEffect(() => {
+    memoizedGetCart(cartId);
+  }, [cartId, memoizedGetCart, newCart]);
+
+  const addToCart = async () => {
+    const body: AddLineItemRequestBody = {
+      version: cart?.version || 1,
+      actions: [
+        {
+          action: 'addLineItem',
+          productId,
+          variantId: 1,
+          quantity: 1,
+        },
+      ],
+    };
+    try {
+      const result = await updateLineItem({ cartId, body }).unwrap();
+      return result;
+    } catch (e) {
+      // throw new Error(e);
+    }
+    return null;
+  };
+
+  const removeOneFromCart = async () => {
+    try {
+      const targetItem = cart?.lineItems.find((item) => item.productId === productId);
+      if (targetItem) {
+        const { lineItemId } = targetItem;
+        const body: RemoveLineItemRequestBody = {
+          version: cart?.version || 1,
+          actions: [
+            {
+              action: 'removeLineItem',
+              lineItemId,
+              variantId: 1,
+              quantity: 1,
+            },
+          ],
+        };
+        const result = await updateLineItem({ cartId, body }).unwrap();
+        return result;
+      }
+    } catch (e) {
+      // throw new Error(e);
+    }
+    return null;
+  };
+
+  /// add to cart btn will change to remove from cart an this function will be called
+  // const removeAllFromCart = async () => {
+  //   try {
+  //     const targetItem = cart?.lineItems.filter((item) => item.productId === productId);
+  //     const lineItemId = targetItem[0].id;
+  //     const body = {
+  //       version: cart?.version || 1,
+  //       actions: [
+  //         {
+  //           action: 'removeLineItem',
+  //           lineItemId,
+  //           variantId: 1,
+  //         },
+  //       ],
+  //     };
+  //     const result = await updateLineItem({ cartId, body }).unwrap();
+  //     console.log('updated cart', result.lineItems);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleSliderOpen = () => {
     setSliderOpen(true);
@@ -37,8 +124,8 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (!data) return;
-    document.title = data.name.en;
-
+    const title = data.name.en;
+    document.title = title;
     // eslint-disable-next-line consistent-return
     return () => {
       document.title = DEFAULT_TITLE;
@@ -100,7 +187,7 @@ export default function ProductPage() {
                   <Price rawOldPrice={rawOldPrice} rawPrice={Number(rawPrice)} />
                 </>
               </Header>
-              <Footer />
+              <Footer addToCart={addToCart} removeOneFromCart={removeOneFromCart} />
               <Description attributes={attributes} />
               {ingredients ? (
                 <IngredientList>

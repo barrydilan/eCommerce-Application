@@ -1,4 +1,4 @@
-interface IInitialState {
+export interface IInitialState {
 	accessToken: string;
 	isLogged: boolean;
 	userId: string;
