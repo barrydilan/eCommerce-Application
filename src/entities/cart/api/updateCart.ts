@@ -1,6 +1,6 @@
 import { rootApi } from '../../../shared/api';
 import { CartResponse } from '../../../shared/types';
-import { ICreateCartParams } from '../types/interfaces.ts';
+import ICreateCartParams from '../types/interfaces.ts';
 import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../types/types.ts';
 
 export const updateCartApi = rootApi.injectEndpoints({

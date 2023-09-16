@@ -45,9 +45,8 @@ export default function CartItem(props: ICartItemProps) {
     };
     try {
       const result = await updateLineItem({ cartId, body }).unwrap();
-      console.log('updated cart', result.lineItems);
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      // throw new Error(e);
     }
   };
 
@@ -68,10 +67,9 @@ export default function CartItem(props: ICartItemProps) {
           ],
         };
         const result = await updateLineItem({ cartId, body }).unwrap();
-        console.log('updated cart', result.lineItems);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      // throw new Error(e);
     }
   };
 
