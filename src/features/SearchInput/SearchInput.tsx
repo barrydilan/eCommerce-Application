@@ -87,7 +87,11 @@ export default function SearchInput(props: { isHeader: boolean }) {
   return (
     <>
       <Blackout isBlackout={isActive} isScrollable unlock={() => setIsActive()} />
-      <div className={`${isHeader ? 'ml-12 hidden w-2/5 sm:block' : 'mt-4 block w-full sm:hidden'} relative z-[35]`}>
+      <div
+        className={`${isHeader ? 'ml-12 hidden w-2/5 sm:block' : 'mt-4 block w-full sm:hidden'} relative ${
+          isActive ? 'z-[35]' : ''
+        }`}
+      >
         <label
           htmlFor="searchInput"
           className={`

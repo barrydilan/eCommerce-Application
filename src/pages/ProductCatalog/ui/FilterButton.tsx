@@ -15,7 +15,7 @@ function FilterButton({ onFilterOpen, isFiltersOpen }: IFilterButton) {
         onFilterOpen();
       }}
       className={`
-        ${isFiltersOpen ? 'z-30' : 'z-20'}
+        ${isFiltersOpen ? 'z-40' : 'z-20'}
         flex
         items-center
         rounded-lg

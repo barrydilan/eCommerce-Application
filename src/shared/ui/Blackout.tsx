@@ -17,14 +17,16 @@ function Blackout({ isBlackout, unlock, isScrollable }: IBlackoutProps) {
     }
   }, [isBlackout, isScrollable]);
 
+  if (!isBlackout) return null;
+
   return (
     <button
       aria-label="blackout"
       type="button"
       onClick={unlock}
-      className={`${isBlackout ? 'scale-1 visible opacity-30 dark:opacity-50' : 'invisible scale-0 opacity-0'} ${
+      className={`${isBlackout ? 'visible bg-border-black/50 dark:bg-border-black/50' : 'invisible'} ${
         unlock ? '' : 'pointer-events-none'
-      } fixed inset-0 z-30 m-auto h-[1750%] w-full cursor-auto bg-border-black backdrop-blur-3xl transition-opacity duration-300`}
+      } fixed inset-0 z-30 m-auto h-[1750%] w-full cursor-auto transition-opacity duration-300`}
     />
   );
 }
