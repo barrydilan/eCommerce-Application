@@ -18,10 +18,9 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {
 		updateAccessToken: (state, action: PayloadAction<IUpdateAccessTokenPayload>) => {
-			const { accessToken, refreshToken, cartId } = action.payload;
+			const { accessToken, refreshToken } = action.payload;
 			state.accessToken = accessToken;
 			state.refreshToken = refreshToken;
-			state.cartId = cartId;
 		},
 
 		loggedIn: (state, action: PayloadAction<ILoggedInPayload>) => {
@@ -35,6 +34,10 @@ export const userSlice = createSlice({
 		},
 
 		loggedOut: () => initialState,
+
+		updateCartId: (state, action: PayloadAction<string>) => {
+			state.cartId = action.payload;
+		},
 	},
 });
 

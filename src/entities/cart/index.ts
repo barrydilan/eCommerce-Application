@@ -1,7 +1,7 @@
 export { readCartApi, useGetCartListQuery, useLazyGetCartByIdQuery } from './api/readCartApi.ts';
 export {
 	updateCartApi,
-	useGetCartMutation,
+	useCreateCartMutation,
 	useAddLineItemMutation,
 	useRemoveLineItemMutation,
 } from './api/updateCart.ts';

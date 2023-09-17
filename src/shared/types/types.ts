@@ -32,3 +32,7 @@ export type CartResponse = Readonly<{
 	discountCodes: [];
 	directDiscounts: [];
 }>;
+
+export type CreateCartResponse = Readonly<{
+	data: CartResponse;
+}>;

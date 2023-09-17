@@ -1,5 +1,3 @@
-import CartItem from '../../widgets/CartItem/CartItem';
-
 export default function Cart() {
   return (
     <div
@@ -19,7 +17,7 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
-      <CartItem productId="efb69837-6e83-487e-832f-9cbbea245ab6" />
+      {/* <CartItem productId="efb69837-6e83-487e-832f-9cbbea245ab6" /> */}
     </div>
   );
 }
