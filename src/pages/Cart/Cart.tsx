@@ -1,22 +1,6 @@
-import { useEffect } from 'react';
-
-import { useLocation, useNavigate } from 'react-router-dom';
-
 import CartItem from '../../widgets/CartItem/CartItem';
 
 export default function Cart() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const isMobile = window.screen.width < 768;
-  const isCart = location.pathname.includes('cart');
-
-  useEffect(() => {
-    if (!isMobile && isCart) {
-      navigate('categories/all?sort=price+desc');
-    }
-  });
-
   return (
     <div
       className="

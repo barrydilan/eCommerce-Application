@@ -1,1 +1,1 @@
-export { DEFAULT_TITLE, LOGO_NAME } from './constants.ts';
+export { DEFAULT_TITLE, LOGO_NAME, PRODUCT_PATH } from './constants.ts';
