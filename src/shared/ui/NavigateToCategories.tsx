@@ -2,13 +2,12 @@ import { ReactNode } from 'react';
 
 import { Navigate } from 'react-router-dom';
 
+import { PRODUCT_PATH } from '../const';
 import { useGetPath } from '../lib/hooks';
 
 interface ILoginRequiredProps {
   children: ReactNode;
 }
-
-const PRODUCT_PATH = 'categories/all';
 
 function NavigateToCategories({ children }: ILoginRequiredProps) {
   const path = useGetPath();
