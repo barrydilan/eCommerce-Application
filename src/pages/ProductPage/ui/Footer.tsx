@@ -1,15 +1,77 @@
+import { useCallback, useEffect } from 'react';
+
 import MinusIcon from './MinusIcon';
 import PlusIcon from './PlusIcon';
 import heartAccent from '../../../assets/icons/heart-accent.svg';
 import shoppingCart from '../../../assets/icons/shopping-cart-accent.svg';
+import { useAddLineItemMutation, useGetCartByIdQuery, useLazyGetCartByIdQuery } from '../../../entities/cart';
+import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../../entities/cart/types/types.ts';
+import { padZero } from '../../../shared/lib/helpers';
+import { useAppSelector, useGetPath } from '../../../shared/lib/hooks';
+import { LineItem } from '../../../shared/types';
 
-interface IFooterProps {
-  addToCart: () => void;
-  removeOneFromCart: () => void;
-}
+function Footer() {
+  const { cartId } = useAppSelector((state) => state.userReducer);
+  const { data } = useGetCartByIdQuery(cartId);
+  const productId = useGetPath();
+  const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
+  const [updateLineItem, { data: newCart }] = useAddLineItemMutation();
 
-function Footer(props: IFooterProps) {
-  const { addToCart, removeOneFromCart } = props;
+  const memoizedGetCart = useCallback(
+    (_cartId: string) => {
+      getCart(_cartId, false);
+    },
+    [getCart],
+  );
+
+  useEffect(() => {
+    memoizedGetCart(cartId);
+  }, [cartId, memoizedGetCart, newCart]);
+
+  if (!data) return null;
+
+  const { lineItems } = data;
+  const { quantity, id: lineItemId } = lineItems.find((item) => item.productId === productId) as LineItem;
+
+  const removeOneFromCart = async () => {
+    try {
+      const body: RemoveLineItemRequestBody = {
+        version: cart?.version || 1,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+            quantity: 1,
+          },
+        ],
+      };
+
+      updateLineItem({ cartId, body }).unwrap();
+    } catch (e) {
+      // throw new Error(e);
+    }
+  };
+
+  const addToCart = async () => {
+    const body: AddLineItemRequestBody = {
+      version: cart?.version || 1,
+      actions: [
+        {
+          action: 'addLineItem',
+          productId,
+          variantId: 1,
+          quantity: 1,
+        },
+      ],
+    };
+    try {
+      return await updateLineItem({ cartId, body }).unwrap();
+    } catch (e) {
+      // throw new Error(e);
+    }
+    return null;
+  };
 
   return (
     <div className="relative mt-6 md:order-last md:flex md:w-[85%] md:items-center md:justify-end md:gap-x-5 md:self-end md:pb-5">
@@ -28,7 +90,7 @@ function Footer(props: IFooterProps) {
         >
           <MinusIcon />
         </button>
-        <span className="dark:text-primary sm:text-xl">01</span>
+        <span className="dark:text-primary sm:text-xl">{padZero(quantity)}</span>
         <button
           onClick={addToCart}
           className="flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line
