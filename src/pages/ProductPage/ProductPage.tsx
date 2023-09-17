@@ -17,11 +17,12 @@ import Price from './ui/Price.tsx';
 import Rating from './ui/Rating.tsx';
 import Title from './ui/Title.tsx';
 import TitleAbout from './ui/TitleAbout.tsx';
-import { RootState } from '../../app/store/index.ts';
+import { RootState } from '../../app/store';
 import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
 import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types.ts';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import 'swiper/css';
+import { ProductPrice } from '../../entities/product/types/types.ts';
 import { DEFAULT_TITLE } from '../../shared/const';
 import { useGetPath } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
@@ -144,12 +145,16 @@ export default function ProductPage() {
     name: { en },
   } = data;
 
-  const price = prices[0].value.centAmount;
-  const discountPrice = getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE);
+  const {
+    discounted: { value: { centAmount: discountPrice = undefined } = {} } = {},
+    value: { centAmount: currPrice, currencyCode },
+  } = prices.at(0) as ProductPrice;
+
+  const centPrice = discountPrice ?? currPrice;
+  const centOldPrice = discountPrice ? currPrice : null;
+
   const isSpicy = Boolean(getAttribute(attributes, ProductAttributeNames.IS_SPICY));
   const isVegan = Boolean(getAttribute(attributes, ProductAttributeNames.IS_VEGAN));
-  const rawPrice = discountPrice ?? price;
-  const rawOldPrice = discountPrice ? price : null;
   const name = en;
 
   const imgList = images.map((img) => img.url);
@@ -184,7 +189,7 @@ export default function ProductPage() {
               <Header>
                 <>
                   <Rating rating={rating} setRating={setRating} />
-                  <Price rawOldPrice={rawOldPrice} rawPrice={Number(rawPrice)} />
+                  <Price centOldPrice={centOldPrice} centPrice={centPrice} currencyCode={currencyCode} />
                 </>
               </Header>
               <Footer addToCart={addToCart} removeOneFromCart={removeOneFromCart} />

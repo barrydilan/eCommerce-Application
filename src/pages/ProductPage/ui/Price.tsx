@@ -1,19 +1,27 @@
-import { calcPriceDiscountPercentage, correctPrice } from '../../../entities/product';
+import { calcPriceDiscountPercentage } from '../../../entities/product';
+import formatPrice from '../../../entities/product/lib/helpers/formatPrice.ts';
+import pennieToMoney from '../../../entities/product/lib/helpers/pennieToMoney.ts';
 
 interface IPriceProps {
-  rawPrice: number;
-  rawOldPrice: number | null;
+  centPrice: number;
+  centOldPrice: number | null;
+  currencyCode: string;
 }
 
-function Price({ rawPrice, rawOldPrice }: IPriceProps) {
-  const price = correctPrice(rawPrice);
-  const oldPrice = rawOldPrice ? correctPrice(rawOldPrice) : null;
-  const discountPercentage = rawOldPrice ? calcPriceDiscountPercentage(rawOldPrice / 100, rawPrice / 100) : null;
+function Price({ centPrice, centOldPrice, currencyCode }: IPriceProps) {
+  const moneyOldPrice = centOldPrice ? pennieToMoney(centOldPrice) : null;
+  const moneyPrice = pennieToMoney(centPrice);
+
+  const corePrice = formatPrice(moneyPrice, currencyCode, 'en-US');
+  const coreOldPrice = moneyOldPrice ? formatPrice(moneyOldPrice, currencyCode, 'en-US') : null;
+  const discountPercentage = moneyOldPrice ? calcPriceDiscountPercentage(moneyOldPrice, moneyPrice) : null;
 
   return (
     <div className="grid">
-      {oldPrice ? <span className="justify-self-end text-base text-text-grey line-through">$ {oldPrice}</span> : null}
-      <h2 className="pr-4 text-3xl font-bold text-text-dark dark:text-primary md:text-2xl">$ {price}</h2>
+      {coreOldPrice ? (
+        <span className="justify-self-end text-base text-text-grey line-through">{coreOldPrice}</span>
+      ) : null}
+      <h2 className="pr-4 text-3xl font-bold text-text-dark dark:text-primary md:text-2xl">{corePrice}</h2>
       {discountPercentage ? <p className="mt-1 text-sm text-accent">You save: {discountPercentage}%</p> : null}
     </div>
   );

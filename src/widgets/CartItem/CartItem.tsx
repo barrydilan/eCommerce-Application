@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
 import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types';
-import { correctPrice, ProductAttributeNames, useGetProductQuery } from '../../entities/product';
+import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
+import formatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
+import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
+import { ProductPrice } from '../../entities/product/types/types.ts';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
 
@@ -83,11 +86,21 @@ export default function CartItem(props: ICartItemProps) {
         <LoadingAnimation />
       </div>
     );
-  const name = data.name.en;
+
   const { attributes, prices, images } = data.masterVariant;
+  const {
+    discounted: { value: { centAmount: discountPrice = undefined } = {} } = {},
+    value: { centAmount: currPrice, currencyCode },
+  } = prices.at(0) as ProductPrice;
+
+  const centPrice = discountPrice ?? currPrice;
+  const centOldPrice = discountPrice ? currPrice : null;
+
+  const corePrice = formatPrice(pennieToMoney(centPrice), currencyCode);
+  const oldPrice = centOldPrice ? formatPrice(pennieToMoney(centOldPrice), currencyCode) : null;
+
+  const name = data.name.en;
   const imgUrl = images[0].url as string;
-  const rawPrice = prices[0].value.centAmount;
-  const price = correctPrice(rawPrice);
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
@@ -111,8 +124,11 @@ export default function CartItem(props: ICartItemProps) {
           ×
         </button>
       </div>
-      <div className="flex items-center justify-between">
-        <span className="block text-lg font-medium sm:text-xl lg:ml-auto lg:mt-2 lg:text-sm xl:text-lg">${price}</span>
+      <div className="grid items-center justify-end">
+        {oldPrice ? (
+          <span className="justify-self-end text-sm text-text-grey line-through md:text-base">{oldPrice}</span>
+        ) : null}
+        <h3 className="mt-1 text-lg font-semibold text-text-dark dark:text-primary lg:text-lg">{corePrice}</h3>
       </div>
       <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
         <button

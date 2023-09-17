@@ -5,7 +5,9 @@ import StarsRating from 'react-star-rate';
 
 import spicyIcon from '../../assets/icons/spicy.svg';
 import veganIcon from '../../assets/icons/vegan.svg';
-import { correctPrice, ProductAttribute, ProductAttributeNames } from '../../entities/product';
+import { ProductAttribute, ProductAttributeNames } from '../../entities/product';
+import formatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
+import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
 import { ProductPrice } from '../../entities/product/types/types.ts';
 import AddToCartBtn from '../../features/AddToCart/AddToCartBtn';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute.ts';
@@ -26,7 +28,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
 
   const {
     discounted: { value: { centAmount: discountPrice = undefined } = {} } = {},
-    value: { centAmount: currPrice },
+    value: { centAmount: currPrice, currencyCode },
   } = prices.at(0) as ProductPrice;
 
   const centPrice = discountPrice ?? currPrice;
@@ -35,8 +37,8 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
-  const corePrice = correctPrice(centPrice);
-  const oldPrice = centOldPrice ? correctPrice(centOldPrice) : null;
+  const corePrice = formatPrice(pennieToMoney(centPrice), currencyCode);
+  const oldPrice = centOldPrice ? formatPrice(pennieToMoney(centOldPrice), currencyCode) : null;
 
   return (
     <li className="w-full list-none">
@@ -79,9 +81,9 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
           </div>
           <div className="flex flex-col items-end justify-end py-4 md:py-7">
             {oldPrice ? (
-              <span className="justify-self-end text-sm text-text-grey line-through md:text-base">$ {oldPrice}</span>
+              <span className="justify-self-end text-sm text-text-grey line-through md:text-base">{oldPrice}</span>
             ) : null}
-            <h3 className="mt-1 text-lg font-semibold text-text-dark dark:text-primary lg:text-lg">$ {corePrice}</h3>
+            <h3 className="mt-1 text-lg font-semibold text-text-dark dark:text-primary lg:text-lg">{corePrice}</h3>
             <AddToCartBtn />
           </div>
         </div>
