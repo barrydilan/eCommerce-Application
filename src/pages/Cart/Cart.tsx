@@ -24,7 +24,7 @@ export default function Cart() {
       dark:text-primary
       sm:mt-16
       sm:px-28
-      lg:fixed 
+      lg:fixed
       lg:mx-3
       lg:px-0
       lg:py-[6px]
@@ -35,7 +35,9 @@ export default function Cart() {
       {!data.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
 
       {data.lineItems?.length
-        ? data.lineItems.map(({ id, productId }) => <CartItem key={id} productId={productId} id={id} />)
+        ? data.lineItems.map(({ id, productId, quantity }) => (
+            <CartItem key={id} productId={productId} id={id} quantity={quantity} />
+          ))
         : null}
     </div>
   );

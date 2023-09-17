@@ -15,14 +15,15 @@ import LoadingAnimation from '../../shared/ui/LoadingAnimation';
 interface ICartItemProps {
   productId: string;
   id: string;
+  quantity: number;
 }
 
 export default function CartItem(props: ICartItemProps) {
-  const { productId, id: lineItemId } = props;
+  const { productId, id: lineItemId, quantity } = props;
   const { data } = useGetProductQuery(productId);
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
-  const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
-  const [updateLineItem, { data: newCart }] = useAddLineItemMutation();
+  const [getCart, { data: cart, isLoading: cartIsLoading }] = useLazyGetCartByIdQuery();
+  const [updateLineItem, { data: newCart, isLoading: updateItemsIsLoading }] = useAddLineItemMutation();
 
   const memoizedGetCart = useCallback(
     (_cartId: string) => {
@@ -127,17 +128,23 @@ export default function CartItem(props: ICartItemProps) {
       </div>
       <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
         <button
+          disabled={cartIsLoading || updateItemsIsLoading}
           onClick={removeOneFromCart}
           type="button"
-          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
+          className={`h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg ${
+            cartIsLoading || updateItemsIsLoading ? 'cursor-wait opacity-30' : ''
+          }`}
         >
           -
         </button>
-        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">1</div>
+        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">{quantity}</div>
         <button
+          disabled={cartIsLoading || updateItemsIsLoading}
           onClick={addToCart}
           type="button"
-          className="h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
+          className={`h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg ${
+            cartIsLoading || updateItemsIsLoading ? 'cursor-wait opacity-30' : ''
+          }`}
         >
           +
         </button>

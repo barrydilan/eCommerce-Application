@@ -34,6 +34,7 @@ export type LineItem = Readonly<{
 		en: string;
 	};
 	price: ProductPrice;
+	quantity: number;
 }>;
 
 export type CartResponse = Readonly<{
