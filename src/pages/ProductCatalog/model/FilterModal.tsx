@@ -34,7 +34,7 @@ export default function FilterModal(props: {
 
   let veganResults = 0;
   let spicyResults = 0;
-  let promoResults = 0;
+  const promoResults = 0;
 
   if (data) {
     data.results.forEach(({ masterVariant: { attributes } }) => {
@@ -44,10 +44,6 @@ export default function FilterModal(props: {
 
       if (getAttribute(attributes, ProductAttributeNames.IS_SPICY)) {
         spicyResults += 1;
-      }
-
-      if (getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE)) {
-        promoResults += 1;
       }
     });
   }

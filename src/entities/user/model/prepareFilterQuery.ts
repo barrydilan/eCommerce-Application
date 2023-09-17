@@ -7,7 +7,7 @@ function prepareFilterQuery(filters: IGetProductListParams['filters']) {
 	const queries = Object.entries(filters)
 		.map(([name, value]) => {
 			if (name === 'isPromo') {
-				return value ? `variants.attributes.discountPrice:exists` : null;
+				return value ? `variants.prices.discounted:exists` : null;
 			}
 
 			if (name === 'categoryId') {
