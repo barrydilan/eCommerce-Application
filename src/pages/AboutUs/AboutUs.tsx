@@ -7,7 +7,7 @@ import PageBackBtn from '../../features/PageBackBtn/PageBackBtn';
 
 export default function AboutUs() {
   return (
-    <div className="bg-[url('./src/assets/img/about_bg_mob.svg')] bg-cover bg-no-repeat">
+    <div className="bg-aboutMob bg-cover bg-no-repeat">
       <div className="mx-auto mt-12 p-5 sm:mt-[5.6rem] xl:px-24">
         <div className="flex flex-wrap items-center justify-between gap-10">
           <PageBackBtn title="About us" />
