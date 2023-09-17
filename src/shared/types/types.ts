@@ -40,6 +40,7 @@ export type LineItem = Readonly<{
 export type CartResponse = Readonly<{
 	type: 'Cart';
 	id: string;
+	customerId: string;
 	version: number;
 	createdBy: {
 		anonymousId: string;

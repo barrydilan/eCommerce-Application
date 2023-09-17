@@ -24,7 +24,7 @@ type RemoveLineItemRequestBody = {
 		action: string;
 		lineItemId: string;
 		variantId: number;
-		quantity: number;
+		quantity?: number;
 	}[];
 };
 

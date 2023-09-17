@@ -4,9 +4,7 @@ import { Mutex } from 'async-mutex';
 
 import authQuery from './authQuery.ts';
 import baseQuery from './baseQuery.ts';
-import { CreateCartResponse, ErrorCodeStatus } from '../types';
-
-const MISSING_CART_ERROR = 'currency: Missing required value';
+import { ErrorCodeStatus } from '../types';
 
 const mutex = new Mutex();
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
@@ -17,45 +15,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 	await mutex.waitForUnlock();
 
 	let result = await baseQuery(args, api, extraOptions);
-
-	if (
-		result.error &&
-		result.error.status === ErrorCodeStatus.BAD_REQUEST &&
-		(result.error.data?.errors?.at(0)?.detailedErrorMessage as string) === MISSING_CART_ERROR
-	) {
-		if (!mutex.isLocked()) {
-			const release = await mutex.acquire();
-			try {
-				const refreshResultCartId = (await baseQuery(
-					{
-						url: `/${import.meta.env.VITE_PROJECT_KEY}/me/carts`,
-						method: 'POST',
-						body: {
-							currency: 'USD',
-						},
-					},
-					api,
-					extraOptions,
-				)) as unknown as CreateCartResponse;
-
-				if (refreshResultCartId?.data?.id) {
-					api.dispatch({
-						type: 'user/updateCartId',
-						payload: refreshResultCartId.data.id,
-					});
-
-					result = await baseQuery(args, api, extraOptions);
-				}
-			} catch (e) {
-				throw new Error('Cannot create new cart!');
-			} finally {
-				release();
-			}
-		} else {
-			await mutex.waitForUnlock();
-			result = await baseQuery(args, api, extraOptions);
-		}
-	}
 
 	if (result.error && result.error.status === ErrorCodeStatus.UNAUTHORIZED) {
 		if (!mutex.isLocked()) {

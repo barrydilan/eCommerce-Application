@@ -21,4 +21,5 @@ export const readCartApi = rootApi.injectEndpoints({
 	}),
 });
 
-export const { useGetCartListQuery, useGetCartByIdQuery, useLazyGetCartByIdQuery } = readCartApi;
+export const { useGetCartListQuery, useLazyGetCartListQuery, useGetCartByIdQuery, useLazyGetCartByIdQuery } =
+	readCartApi;

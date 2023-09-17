@@ -1,11 +1,46 @@
-import { useGetCartByIdQuery } from '../../entities/cart';
-import { useAppSelector } from '../../shared/lib/hooks';
+import { useEffect } from 'react';
+
+import { useCreateCartMutation, useGetCartByIdQuery, useLazyGetCartListQuery } from '../../entities/cart';
+import { userSlice } from '../../entities/user';
+import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import CartItem from '../../widgets/CartItem/CartItem.tsx';
 
 export default function Cart() {
-  const { cartId } = useAppSelector((state) => state.userReducer);
+  const { cartId, userId } = useAppSelector((state) => state.userReducer);
   const { data } = useGetCartByIdQuery(cartId);
+  const [getCartList] = useLazyGetCartListQuery();
+  const dispatch = useAppDispatch();
+  const { updateCartId } = userSlice.actions;
+  const [createCart] = useCreateCartMutation();
+
+  useEffect(() => {
+    async function fetchCreateCart() {
+      try {
+        const newCart = await createCart({ currency: 'USD' }).unwrap();
+
+        if (newCart?.id) dispatch(updateCartId(newCart.id));
+      } catch (e) {
+        if (e && typeof e === 'object' && 'message' in e) throw new Error(`Could not create a cart ${e.message}`);
+      }
+    }
+
+    if (!userId && !cartId) {
+      fetchCreateCart();
+      return;
+    }
+
+    async function fetchCartList() {
+      const response = await getCartList().unwrap();
+      const id = response.results.find(({ customerId }) => customerId === userId)?.id;
+
+      if (id) dispatch(updateCartId(id));
+    }
+
+    if (!cartId) fetchCartList();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartId, userId]);
 
   if (!data)
     return (

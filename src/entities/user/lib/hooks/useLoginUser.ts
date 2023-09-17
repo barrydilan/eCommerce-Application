@@ -35,7 +35,7 @@ function useLoginUser() {
 				refresh_token: refreshToken,
 			} = await getLoginToken({ email, password }).unwrap();
 
-			dispatch(loggedIn({ accessToken, userId: id, refreshToken }));
+			dispatch(loggedIn({ accessToken, userId: id, refreshToken, cartId: '' }));
 
 			const [accessTokenCookie, idCookie, refreshTokenCookie, cardIdCookie] = prepareLoginCookieData({
 				accessToken,

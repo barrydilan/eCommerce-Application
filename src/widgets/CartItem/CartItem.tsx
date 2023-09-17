@@ -76,6 +76,25 @@ export default function CartItem(props: ICartItemProps) {
     return null;
   };
 
+  const removeAllFromCart = async () => {
+    try {
+      const body: RemoveLineItemRequestBody = {
+        version: cart?.version || 1,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+          },
+        ],
+      };
+      return await updateLineItem({ cartId, body }).unwrap();
+    } catch (e) {
+      // throw new Error(e);
+    }
+    return null;
+  };
+
   if (!data)
     return (
       <div className="flex h-full items-center justify-center overflow-hidden">
@@ -114,6 +133,8 @@ export default function CartItem(props: ICartItemProps) {
           </p>
         </div>
         <button
+          disabled={cartIsLoading || updateItemsIsLoading}
+          onClick={removeAllFromCart}
           type="button"
           className="absolute right-0 top-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark"
         >
