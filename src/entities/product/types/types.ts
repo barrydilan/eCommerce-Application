@@ -1,4 +1,5 @@
 import { ProductAttributeNames } from './enums.ts';
+import { ProductResult } from '../../../shared/types';
 
 export type ProductAttribute = Readonly<{
 	name: ProductAttributeNames;
@@ -28,21 +29,6 @@ export type ProductImage = Readonly<{
 		w: number;
 	};
 	url: string;
-}>;
-
-export type ProductResult = Readonly<{
-	id: string;
-	name: {
-		de: string;
-		en: string;
-		uk: string;
-	};
-	masterVariant: {
-		id: number;
-		attributes: ProductAttribute[];
-		images: ProductImage[];
-		prices: ProductPrice[];
-	};
 }>;
 
 export type ProductResponse = Readonly<{

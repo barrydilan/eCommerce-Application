@@ -1,4 +1,19 @@
+import { useGetCartByIdQuery } from '../../entities/cart';
+import { useAppSelector } from '../../shared/lib/hooks';
+import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
+import CartItem from '../../widgets/CartItem/CartItem.tsx';
+
 export default function Cart() {
+  const { cartId } = useAppSelector((state) => state.userReducer);
+  const { data } = useGetCartByIdQuery(cartId);
+
+  if (!data)
+    return (
+      <div className="flex h-full items-center justify-center overflow-hidden">
+        <LoadingAnimation />
+      </div>
+    );
+
   return (
     <div
       className="
@@ -17,7 +32,11 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
-      {/* <CartItem productId="efb69837-6e83-487e-832f-9cbbea245ab6" /> */}
+      {!data.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
+
+      {data.lineItems?.length
+        ? data.lineItems.map((item) => <CartItem key={item.id} productId={item.productId} />)
+        : null}
     </div>
   );
 }

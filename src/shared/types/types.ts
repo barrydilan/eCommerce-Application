@@ -1,7 +1,24 @@
 import { ISignUpAddress } from './interfaces.ts';
+import { ProductAttribute, ProductImage, ProductPrice } from '../../entities/product/types/types.ts';
 
 export type CookieTuple = [string, string, number];
 export type SignUpAddresses = [ISignUpAddress, ISignUpAddress] | [ISignUpAddress];
+
+export type ProductResult = Readonly<{
+	id: string;
+	name: {
+		de: string;
+		en: string;
+		uk: string;
+	};
+	masterVariant: {
+		id: number;
+		attributes: ProductAttribute[];
+		images: ProductImage[];
+		prices: ProductPrice[];
+	};
+}>;
+
 export type IAuthResponse = Readonly<{
 	access_token: string;
 	expires_in: number;
@@ -9,6 +26,17 @@ export type IAuthResponse = Readonly<{
 	scope: string;
 	token_type: string;
 }>;
+
+export type LineItem = Readonly<{
+	id: string;
+	lineItemId: string;
+	productId: string;
+	name: {
+		en: string;
+	};
+	price: ProductPrice;
+}>;
+
 export type CartResponse = Readonly<{
 	type: 'Cart';
 	id: string;
@@ -16,10 +44,7 @@ export type CartResponse = Readonly<{
 	createdBy: {
 		anonymousId: string;
 	};
-	lineItems: {
-		productId: string;
-		lineItemId: string;
-	}[];
+	lineItems: LineItem[];
 	cartState: 'Active';
 	totalPrice: {
 		type: string;

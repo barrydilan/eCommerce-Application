@@ -1,4 +1,4 @@
-export { readCartApi, useGetCartListQuery, useLazyGetCartByIdQuery } from './api/readCartApi.ts';
+export { readCartApi, useGetCartListQuery, useLazyGetCartByIdQuery, useGetCartByIdQuery } from './api/readCartApi.ts';
 export {
 	updateCartApi,
 	useCreateCartMutation,
