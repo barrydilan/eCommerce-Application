@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 
 import { useCreateCartMutation, useGetCartByIdQuery, useLazyGetCartListQuery } from '../../entities/cart';
+import FormatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
+import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
 import { userSlice } from '../../entities/user';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
@@ -49,12 +51,15 @@ export default function Cart() {
       </div>
     );
 
+  const totalPrice = FormatPrice(pennieToMoney(data.totalPrice.centAmount), data.totalPrice.currencyCode);
+
   return (
     <div
       className="
       my-28
-      border-b-2
-      border-text-grey/30
+      grid
+      gap-5
+      overflow-y-auto
       px-6
       dark:text-primary
       sm:mt-16
@@ -74,6 +79,8 @@ export default function Cart() {
             <CartItem key={id} productId={productId} id={id} quantity={quantity} />
           ))
         : null}
+
+      <div>Total Price: {totalPrice}</div>
     </div>
   );
 }

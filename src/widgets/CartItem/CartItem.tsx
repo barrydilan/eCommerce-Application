@@ -120,7 +120,7 @@ export default function CartItem(props: ICartItemProps) {
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
   return (
-    <>
+    <div className="border-b-2 border-text-grey/30">
       <div className="relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2">
         <div className="lg:max-w-[33%] xl:max-w-[35%]">
           <img className="h-full w-full object-cover" src={imgUrl} alt="" />
@@ -170,6 +170,6 @@ export default function CartItem(props: ICartItemProps) {
           +
         </button>
       </div>
-    </>
+    </div>
   );
 }
