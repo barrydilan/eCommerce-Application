@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import { AnimatePresence, Cycle, motion } from 'framer-motion';
 
@@ -6,7 +6,6 @@ import FilterModalCheckbox from './FilterModalCheckbox';
 import FilterModalNumberInput from './FilterModalNumberInput';
 import { FiltersFields, filtersInitialState } from './filtersInitialState.ts';
 import { ProductAttributeNames, useLazyGetProductListQuery } from '../../../entities/product';
-import getAttribute from '../../ProductPage/lib/helpers/getAttribute.ts';
 import { MOBILE_WIDTH } from '../const/constants.ts';
 
 const initialDesktop = { y: '-63%', x: '40%', scale: 0, opacity: 0 };
@@ -20,7 +19,10 @@ export default function FilterModal(props: {
   onApplyFilters: () => void;
 }) {
   const { isFiltersOpen, onFilterOpen, filtersState, setFiltersState, onApplyFilters } = props;
-  const [getProducts, { data }] = useLazyGetProductListQuery();
+  const [getProducts, { data: productData }] = useLazyGetProductListQuery();
+  const veganResults = useRef(0);
+  const spicyResults = useRef(0);
+  const promoResults = useRef(0);
 
   const clientWidth = window.innerWidth;
   const isMobile = clientWidth > MOBILE_WIDTH;
@@ -32,23 +34,21 @@ export default function FilterModal(props: {
     });
   };
 
-  let veganResults = 0;
-  let spicyResults = 0;
-  let promoResults = 0;
-
-  if (data) {
-    data.results.forEach(({ masterVariant: { attributes } }) => {
-      if (getAttribute(attributes, ProductAttributeNames.IS_VEGAN)) {
-        veganResults += 1;
+  if (productData && (!veganResults.current || !spicyResults.current)) {
+    productData.results.forEach(({ masterVariant: { attributes, prices } }) => {
+      if (prices.at(0)?.discounted) {
+        promoResults.current += 1;
       }
 
-      if (getAttribute(attributes, ProductAttributeNames.IS_SPICY)) {
-        spicyResults += 1;
-      }
+      attributes.forEach(({ name, value }) => {
+        if (name === ProductAttributeNames.IS_VEGAN && value) {
+          veganResults.current += 1;
+        }
 
-      if (getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE)) {
-        promoResults += 1;
-      }
+        if (name === ProductAttributeNames.IS_SPICY && value) {
+          spicyResults.current += 1;
+        }
+      });
     });
   }
 
@@ -56,6 +56,7 @@ export default function FilterModal(props: {
     getProducts(
       {
         limit: 100,
+        withTotal: false,
       },
       true,
     );
@@ -123,7 +124,7 @@ export default function FilterModal(props: {
                 checked={filtersState.isVegan}
                 universalFilterChanger={universalFilterChanger}
                 text="Vegan"
-                itemsNum={veganResults}
+                itemsNum={veganResults.current}
                 peer="peer-checked/isVegan:before:block"
               />
               <FilterModalCheckbox
@@ -131,7 +132,7 @@ export default function FilterModal(props: {
                 checked={filtersState.isSpicy}
                 universalFilterChanger={universalFilterChanger}
                 text="Spicy"
-                itemsNum={spicyResults}
+                itemsNum={spicyResults.current}
                 peer="peer-checked/isSpicy:before:block"
               />
               <FilterModalCheckbox
@@ -139,7 +140,7 @@ export default function FilterModal(props: {
                 checked={filtersState.isPromo}
                 universalFilterChanger={universalFilterChanger}
                 text="Promo"
-                itemsNum={promoResults}
+                itemsNum={promoResults.current}
                 peer="peer-checked/isPromo:before:block"
               />
             </div>
