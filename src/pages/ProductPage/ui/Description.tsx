@@ -15,7 +15,6 @@ function Description({ attributes }: IDescriptionProps) {
             index === 0 ||
             attr.name === ProductAttributeNames.IS_SPICY ||
             attr.name === ProductAttributeNames.IS_VEGAN ||
-            attr.name === ProductAttributeNames.DISCOUNT_PRICE ||
             attr.name === ProductAttributeNames.ALLERGENS
           )
             return null;

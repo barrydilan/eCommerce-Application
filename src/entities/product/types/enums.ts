@@ -7,7 +7,6 @@ export enum ProductAttributeNames {
 	CARBOHYDRATES = 'carbohydrates',
 	IS_VEGAN = 'isVegan',
 	IS_SPICY = 'isSpicy',
-	DISCOUNT_PRICE = 'discountPrice',
 	ALLERGENS = 'allergens',
 }
 
