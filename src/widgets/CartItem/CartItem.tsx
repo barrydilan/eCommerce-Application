@@ -14,10 +14,11 @@ import LoadingAnimation from '../../shared/ui/LoadingAnimation';
 
 interface ICartItemProps {
   productId: string;
+  id: string;
 }
 
 export default function CartItem(props: ICartItemProps) {
-  const { productId } = props;
+  const { productId, id: lineItemId } = props;
   const { data } = useGetProductQuery(productId);
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
   const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
@@ -47,8 +48,7 @@ export default function CartItem(props: ICartItemProps) {
       ],
     };
     try {
-      const result = await updateLineItem({ cartId, body }).unwrap();
-      return result;
+      return await updateLineItem({ cartId, body }).unwrap();
     } catch (e) {
       // throw new Error(e);
     }
@@ -57,23 +57,18 @@ export default function CartItem(props: ICartItemProps) {
 
   const removeOneFromCart = async () => {
     try {
-      const targetItem = cart?.lineItems.find((item) => item.productId === productId);
-      if (targetItem) {
-        const { lineItemId } = targetItem;
-        const body: RemoveLineItemRequestBody = {
-          version: cart?.version || 1,
-          actions: [
-            {
-              action: 'removeLineItem',
-              lineItemId,
-              variantId: 1,
-              quantity: 1,
-            },
-          ],
-        };
-        const result = await updateLineItem({ cartId, body }).unwrap();
-        return result;
-      }
+      const body: RemoveLineItemRequestBody = {
+        version: cart?.version || 1,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+            quantity: 1,
+          },
+        ],
+      };
+      return await updateLineItem({ cartId, body }).unwrap();
     } catch (e) {
       // throw new Error(e);
     }

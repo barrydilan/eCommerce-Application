@@ -29,7 +29,6 @@ export type IAuthResponse = Readonly<{
 
 export type LineItem = Readonly<{
 	id: string;
-	lineItemId: string;
 	productId: string;
 	name: {
 		en: string;

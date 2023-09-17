@@ -35,7 +35,7 @@ export default function Cart() {
       {!data.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
 
       {data.lineItems?.length
-        ? data.lineItems.map((item) => <CartItem key={item.id} productId={item.productId} />)
+        ? data.lineItems.map(({ id, productId }) => <CartItem key={id} productId={productId} id={id} />)
         : null}
     </div>
   );
