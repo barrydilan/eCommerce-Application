@@ -6,13 +6,20 @@ export type ProductAttribute = Readonly<{
 }>;
 
 export type ProductPrice = Readonly<{
+	id: string;
 	value: {
 		type: string;
 		fractionDigits: number;
 		centAmount: number;
 		currencyCode: string;
 	};
-	id: string;
+	discounted?: {
+		id: string;
+		value: {
+			centAmount: number;
+			currencyCode: string;
+		};
+	};
 }>;
 
 export type ProductImage = Readonly<{

@@ -24,15 +24,19 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
   const [rating, setRating] = useState(4.5);
   const [isLoading, setIsLoading] = useState(true);
 
-  const discountPrice = getAttribute(attributes, ProductAttributeNames.DISCOUNT_PRICE);
+  const {
+    discounted: { value: { centAmount: discountPrice = undefined } = {} } = {},
+    value: { centAmount: currPrice },
+  } = prices.at(0) as ProductPrice;
+
+  const centPrice = discountPrice ?? currPrice;
+  const centOldPrice = discountPrice ? currPrice : null;
+
   const calories = getAttribute(attributes, ProductAttributeNames.CALORIES);
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
-  const price = prices[0].value.centAmount;
-  const rawPrice = discountPrice ?? price;
-  const rawOldPrice = discountPrice ? price : null;
 
-  const corePrice = correctPrice(Number(rawPrice));
-  const oldPrice = rawOldPrice ? correctPrice(rawOldPrice) : null;
+  const corePrice = correctPrice(centPrice);
+  const oldPrice = centOldPrice ? correctPrice(centOldPrice) : null;
 
   return (
     <li className="w-full list-none">
