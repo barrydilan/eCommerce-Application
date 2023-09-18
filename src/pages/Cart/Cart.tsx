@@ -9,7 +9,7 @@ export default function Cart() {
   return (
     <div
       className={
-        !isCart
+        isCart
           ? `
       mx-auto
       my-28
