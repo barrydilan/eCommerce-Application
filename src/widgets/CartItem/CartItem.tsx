@@ -123,9 +123,12 @@ export default function CartItem(props: ICartItemProps) {
           </p>
         </div>
         <button
+          disabled={updateIsLoading}
           onClick={removeAllFromCart}
           type="button"
-          className="absolute right-[-20px] top-[-45px] cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark md:right-[-5px] md:top-[-35px]"
+          className={`${
+            updateIsLoading ? 'animate-pulse cursor-wait' : ''
+          } absolute right-[-20px] top-[-45px] cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark md:right-[-5px] md:top-[-35px]`}
         >
           ×
         </button>
