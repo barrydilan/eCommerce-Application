@@ -9,7 +9,7 @@ import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import CartItem from '../../widgets/CartItem/CartItem.tsx';
 
 export default function Cart() {
-  const { cartId, userId } = useAppSelector((state) => state.userReducer);
+  const { cartId, userId, isLogged } = useAppSelector((state) => state.userReducer);
   const { data } = useGetCartByIdQuery(cartId);
   const [getCartList] = useLazyGetCartListQuery();
   const dispatch = useAppDispatch();
@@ -27,11 +27,6 @@ export default function Cart() {
       }
     }
 
-    if (!userId && !cartId) {
-      fetchCreateCart();
-      return;
-    }
-
     async function fetchCartList() {
       const response = await getCartList().unwrap();
       const id = response.results.find(({ customerId }) => customerId === userId)?.id;
@@ -39,7 +34,10 @@ export default function Cart() {
       if (id) dispatch(updateCartId(id));
     }
 
-    if (!cartId) fetchCartList();
+    if (isLogged) fetchCartList();
+    else {
+      fetchCreateCart();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartId, userId]);
