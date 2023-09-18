@@ -155,12 +155,11 @@ export default function ProductCatalogue() {
       <Blackout isBlackout={isFiltersOpen} unlock={() => onFilterOpen()} />
       <div
         className="
-        mt-16
+        my-16
         grid
         grid-cols-1
         grid-rows-prodPageMob
         px-[10px]
-        sm:mt-16
         md:px-5
         md:py-[48px]
         lg:grid-cols-prodPageDesk
