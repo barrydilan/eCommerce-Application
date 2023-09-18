@@ -1,28 +1,31 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   useCreateCartMutation,
   useDeleteCartMutation,
   useGetCartByIdQuery,
   useLazyGetCartListQuery,
+  useUpdateCartMutation,
 } from '../../entities/cart';
-import FormatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
-import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
+import { formatPrice, pennieToMoney } from '../../entities/product';
 import { userSlice } from '../../entities/user';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import CartItem from '../../widgets/CartItem/CartItem.tsx';
 
 export default function Cart() {
+  const [promoValue, setPromoValue] = useState('');
   const { cartId, userId, isLogged } = useAppSelector((state) => state.userReducer);
-  const { data } = useGetCartByIdQuery(cartId);
+  const { data: cart } = useGetCartByIdQuery(cartId);
   const [getCartList] = useLazyGetCartListQuery();
   const dispatch = useAppDispatch();
   const { updateCartId } = userSlice.actions;
   const [createCart] = useCreateCartMutation();
   const [deleteCart] = useDeleteCartMutation();
+  const [updateCart] = useUpdateCartMutation();
 
-  const isCartEmpty = !data?.lineItems?.length;
+  const isCartEmpty = !cart?.totalLineItemQuantity;
+  const cartVersion = cart?.version ?? 1;
 
   useEffect(() => {
     async function fetchCreateCart() {
@@ -54,16 +57,25 @@ export default function Cart() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartId, userId]);
 
-  if (!data)
+  if (!cart)
     return (
       <div className="flex h-full items-center justify-center overflow-hidden">
         <LoadingAnimation />
       </div>
     );
 
-  async function clearCart() {
+  const totalPriceAmount = cart?.totalPrice?.centAmount;
+  const totalPrice = formatPrice(pennieToMoney(totalPriceAmount), cart?.totalPrice?.currencyCode);
+  const discountAmount = cart?.lineItems
+    ?.at(0)
+    ?.discountedPricePerQuantity.at(0)
+    ?.discountedPrice?.includedDiscounts?.at(0)?.discountedAmount.centAmount;
+  const totalItems = cart?.totalLineItemQuantity;
+  const oldPrice = discountAmount ? formatPrice(pennieToMoney(totalPriceAmount + discountAmount * totalItems)) : null;
+
+  async function handleClearCart() {
     try {
-      await deleteCart({ cartId, version: data?.version ?? 1 });
+      await deleteCart({ cartId, version: cartVersion });
       const { id } = await createCart({ currency: 'USD' }).unwrap();
 
       dispatch(updateCartId(id));
@@ -72,7 +84,25 @@ export default function Cart() {
     }
   }
 
-  const totalPrice = FormatPrice(pennieToMoney(data?.totalPrice?.centAmount), data?.totalPrice?.currencyCode);
+  async function handleApplyPromo(e: React.SyntheticEvent) {
+    e.preventDefault();
+
+    try {
+      const body = {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'addDiscountCode',
+            code: promoValue,
+          },
+        ],
+      };
+
+      updateCart({ cartId, body }).unwrap();
+    } catch (err) {
+      if (err && typeof err === 'object' && 'message' in err) throw new Error(`Could not apply promo! ${err.message}`);
+    }
+  }
 
   return (
     <div
@@ -93,22 +123,43 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-2xl sm:mt-24 lg:mt-10">Your Order</h2>
-      {!data.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
+      {!cart.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
 
       {isCartEmpty ? null : (
         <>
-          {data.lineItems.map(({ id, productId, quantity }) => (
+          {cart.lineItems.map(({ id, productId, quantity }) => (
             <CartItem key={id} productId={productId} id={id} quantity={quantity} />
           ))}
 
           <div className="mt-6 text-text-dark">
-            <span className="text-text-grey">Total Price</span>: {totalPrice}
+            {oldPrice ? (
+              <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
+            ) : null}
+            <h3 className="mt-1 text-lg text-text-dark dark:text-primary lg:text-lg">
+              <span className="text-text-grey">Total Price:</span> {totalPrice}
+            </h3>
           </div>
+
+          <form>
+            <input
+              value={promoValue}
+              onChange={(e) => setPromoValue(e.target.value)}
+              type="text"
+              className="max-h-1/2"
+            />
+            <button
+              onClick={handleApplyPromo}
+              type="submit"
+              className="flex h-[40px] items-center justify-center rounded-xl bg-accent-lightest p-4"
+            >
+              Apply Promo
+            </button>
+          </form>
 
           <button type="button" className="h-[40px] rounded-xl bg-accent">
             CHECKOUT
           </button>
-          <button type="button" onClick={clearCart}>
+          <button type="button" onClick={handleClearCart}>
             Clear all
           </button>
         </>

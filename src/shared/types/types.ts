@@ -27,9 +27,21 @@ export type IAuthResponse = Readonly<{
 	token_type: string;
 }>;
 
+type DiscountedPricePerQuantity = Readonly<{
+	quantity: number;
+	discountedPrice: {
+		includedDiscounts: {
+			discountedAmount: {
+				centAmount: number;
+			};
+		}[];
+	};
+}>;
+
 export type LineItem = Readonly<{
 	id: string;
 	productId: string;
+	discountedPricePerQuantity: DiscountedPricePerQuantity[];
 	name: {
 		en: string;
 	};
@@ -46,17 +58,12 @@ export type CartResponse = Readonly<{
 		anonymousId: string;
 	};
 	lineItems: LineItem[];
-	cartState: 'Active';
 	totalPrice: {
 		type: string;
 		currencyCode: string;
 		centAmount: number;
 	};
-	shippingMode: string;
-	shipping: [];
-	customLineItems: [];
-	discountCodes: [];
-	directDiscounts: [];
+	totalLineItemQuantity: number;
 }>;
 
 export type CreateCartResponse = Readonly<{
