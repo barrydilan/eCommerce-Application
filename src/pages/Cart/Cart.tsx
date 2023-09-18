@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { useLocation } from 'react-router-dom';
+
 import {
   useCreateCartMutation,
   useGetCartByIdQuery,
@@ -21,6 +23,8 @@ export default function Cart() {
   const { updateCartId } = userSlice.actions;
   const [createCart] = useCreateCartMutation();
   const [updateCart] = useUpdateCartMutation();
+  const pathName = useLocation().pathname;
+  const isCart = pathName === '/cart';
 
   const isCartEmpty = !cart?.totalLineItemQuantity;
   const cartVersion = cart?.version ?? 1;
@@ -117,21 +121,31 @@ export default function Cart() {
 
   return (
     <div
-      className="
+      className={
+        !isCart
+          ? `
+      mx-auto
       my-28
-      grid
-      h-full
-      overflow-y-scroll
-      px-6
+      border-b-2
+      border-text-grey/30
+      px-6 
       dark:text-primary
       sm:mt-16
       sm:px-28
       lg:fixed
       lg:mx-3
-      lg:p-10
-      lg:pb-20
-      xl:w-[332px]
-"
+      lg:px-0 
+      lg:py-[6px] 
+      xl:w-[332px]`
+          : `mx-auto
+      mt-24
+      border-b-2
+      border-text-grey/30
+      px-6
+      dark:text-primary
+      sm:px-28
+      md:max-w-[850px]`
+      }
     >
       <h2 className="mb-6 text-2xl sm:mt-24 lg:mt-10">Your Order</h2>
       {!cart.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
