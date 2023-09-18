@@ -1,9 +1,7 @@
-import { useCallback, useEffect } from 'react';
-
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../app/store';
-import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
+import { useGetCartByIdQuery, useUpdateCartMutation } from '../../entities/cart';
 import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import formatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
@@ -23,23 +21,14 @@ export default function CartItem(props: ICartItemProps) {
   const { productId, id: lineItemId, quantity } = props;
   const { data } = useGetProductQuery(productId);
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
-  const [getCart, { data: cart, isLoading: cartIsLoading }] = useLazyGetCartByIdQuery();
-  const [updateLineItem, { data: newCart, isLoading: updateItemsIsLoading }] = useAddLineItemMutation();
+  const { data: cart } = useGetCartByIdQuery(cartId);
+  const [updateCart, { isLoading: updateIsLoading }] = useUpdateCartMutation();
 
-  const memoizedGetCart = useCallback(
-    (_cartId: string) => {
-      getCart(_cartId, false);
-    },
-    [getCart],
-  );
-
-  useEffect(() => {
-    memoizedGetCart(cartId);
-  }, [cartId, memoizedGetCart, newCart]);
+  const cartVersion = cart?.version || 1;
 
   const addToCart = async () => {
     const body: AddLineItemRequestBody = {
-      version: cart?.version || 1,
+      version: cartVersion,
       actions: [
         {
           action: 'addLineItem',
@@ -50,7 +39,7 @@ export default function CartItem(props: ICartItemProps) {
       ],
     };
     try {
-      return await updateLineItem({ cartId, body }).unwrap();
+      return await updateCart({ cartId, body }).unwrap();
     } catch (e) {
       // throw new Error(e);
     }
@@ -60,7 +49,7 @@ export default function CartItem(props: ICartItemProps) {
   const removeOneFromCart = async () => {
     try {
       const body: RemoveLineItemRequestBody = {
-        version: cart?.version || 1,
+        version: cartVersion,
         actions: [
           {
             action: 'removeLineItem',
@@ -70,7 +59,7 @@ export default function CartItem(props: ICartItemProps) {
           },
         ],
       };
-      return await updateLineItem({ cartId, body }).unwrap();
+      return await updateCart({ cartId, body }).unwrap();
     } catch (e) {
       // throw new Error(e);
     }
@@ -80,7 +69,7 @@ export default function CartItem(props: ICartItemProps) {
   const removeAllFromCart = async () => {
     try {
       const body: RemoveLineItemRequestBody = {
-        version: cart?.version || 1,
+        version: cartVersion,
         actions: [
           {
             action: 'removeLineItem',
@@ -89,7 +78,7 @@ export default function CartItem(props: ICartItemProps) {
           },
         ],
       };
-      return await updateLineItem({ cartId, body }).unwrap();
+      return await updateCart({ cartId, body }).unwrap();
     } catch (e) {
       // throw new Error(e);
     }
@@ -134,7 +123,6 @@ export default function CartItem(props: ICartItemProps) {
           </p>
         </div>
         <button
-          disabled={cartIsLoading || updateItemsIsLoading}
           onClick={removeAllFromCart}
           type="button"
           className="absolute -top-2 right-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark"
@@ -150,22 +138,22 @@ export default function CartItem(props: ICartItemProps) {
       </div>
       <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
         <button
-          disabled={cartIsLoading || updateItemsIsLoading}
+          disabled={updateIsLoading}
           onClick={removeOneFromCart}
           type="button"
           className={`h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg ${
-            cartIsLoading || updateItemsIsLoading ? 'cursor-wait opacity-30' : ''
+            updateIsLoading ? 'animate-pulse cursor-wait' : ''
           }`}
         >
           -
         </button>
         <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">{padZero(quantity)}</div>
         <button
-          disabled={cartIsLoading || updateItemsIsLoading}
+          disabled={updateIsLoading}
           onClick={addToCart}
           type="button"
           className={`h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg ${
-            cartIsLoading || updateItemsIsLoading ? 'cursor-wait opacity-30' : ''
+            updateIsLoading ? 'animate-pulse cursor-wait' : ''
           }`}
         >
           +

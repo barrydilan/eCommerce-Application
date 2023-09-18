@@ -1,10 +1,8 @@
-import { useCallback, useEffect } from 'react';
-
 import MinusIcon from './MinusIcon';
 import PlusIcon from './PlusIcon';
 import heartAccent from '../../../assets/icons/heart-accent.svg';
 import shoppingCart from '../../../assets/icons/shopping-cart-accent.svg';
-import { useAddLineItemMutation, useGetCartByIdQuery, useLazyGetCartByIdQuery } from '../../../entities/cart';
+import { useGetCartByIdQuery, useUpdateCartMutation } from '../../../entities/cart';
 import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../../entities/cart/types/types.ts';
 import { padZero } from '../../../shared/lib/helpers';
 import { useAppSelector, useGetPath } from '../../../shared/lib/hooks';
@@ -12,25 +10,13 @@ import { LineItem } from '../../../shared/types';
 
 function Footer() {
   const { cartId } = useAppSelector((state) => state.userReducer);
-  const { data } = useGetCartByIdQuery(cartId);
+  const { data: cart } = useGetCartByIdQuery(cartId);
   const productId = useGetPath();
-  const [getCart, { data: cart, isLoading: cartIsLoading }] = useLazyGetCartByIdQuery();
-  const [updateLineItem, { data: newCart, isLoading: newCartIsLoading }] = useAddLineItemMutation();
+  const [updateLineItem, { isLoading: updateIsLoading }] = useUpdateCartMutation();
 
-  const memoizedGetCart = useCallback(
-    (_cartId: string) => {
-      getCart(_cartId, false);
-    },
-    [getCart],
-  );
+  if (!cart) return null;
 
-  useEffect(() => {
-    memoizedGetCart(cartId);
-  }, [cartId, memoizedGetCart, newCart]);
-
-  if (!data) return null;
-
-  const { lineItems } = data;
+  const { lineItems } = cart;
   const currItem = lineItems?.find((item) => item?.productId === productId) as LineItem;
   const quantity = currItem?.quantity ?? 0;
   const lineItemId = currItem?.id ?? '';
@@ -85,9 +71,9 @@ function Footer() {
       </button>
       <div className="flex items-center gap-x-4">
         <button
-          disabled={quantity === 0 || newCartIsLoading || cartIsLoading}
+          disabled={quantity === 0 || updateIsLoading}
           onClick={removeOneFromCart}
-          className={`${newCartIsLoading || cartIsLoading ? 'cursor-wait opacity-30' : ''} ${
+          className={`${updateIsLoading ? 'cursor-wait opacity-30' : ''} ${
             quantity === 0 ? 'opacity-30' : ''
           } flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line sm:h-8 sm:w-8`}
           type="button"
@@ -96,10 +82,10 @@ function Footer() {
         </button>
         <span className="dark:text-primary sm:text-xl">{padZero(quantity)}</span>
         <button
-          disabled={newCartIsLoading || cartIsLoading}
+          disabled={updateIsLoading}
           onClick={addToCart}
           className={`${
-            newCartIsLoading || cartIsLoading ? 'cursor-wait opacity-30' : ''
+            updateIsLoading ? 'cursor-wait opacity-30' : ''
           } flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line sm:h-8 sm:w-8`}
           type="button"
         >

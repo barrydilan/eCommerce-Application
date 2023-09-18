@@ -8,7 +8,6 @@ export {
 export {
 	updateCartApi,
 	useCreateCartMutation,
-	useAddLineItemMutation,
-	useRemoveLineItemMutation,
 	useDeleteCartMutation,
-} from './api/updateCart.ts';
+	useUpdateCartMutation,
+} from './api/updateCartApi.ts';
