@@ -19,6 +19,7 @@ import FilterButton from './ui/FilterButton.tsx';
 import MenuList from './ui/MenuList.tsx';
 import ProductNotFound from './ui/ProductNotFound.tsx';
 import ProductPageHeader from './ui/ProductPageHeader';
+import PromoBanner from './ui/PromoBanner.tsx';
 import { useGetCategoriesQuery, useGetCategoryQuery, useLazyGetProductListQuery } from '../../entities/product';
 import { ProductAttributeNames, ProductSortingFields, ProductSortOrders } from '../../entities/product/types/enums.ts';
 import { CategoryResult, ProductResponse } from '../../entities/product/types/types.ts';
@@ -168,6 +169,7 @@ export default function ProductCatalogue() {
         "
       >
         <ProductPageHeader />
+        <PromoBanner />
         <SearchInput isHeader={false} />
         <div
           className="
@@ -179,7 +181,7 @@ export default function ProductCatalogue() {
           lg:col-start-2
           lg:col-end-3
           lg:row-start-1
-          lg:row-end-3
+          lg:row-end-4
           lg:mt-0 lg:h-full
           lg:flex-col
           lg:items-end
