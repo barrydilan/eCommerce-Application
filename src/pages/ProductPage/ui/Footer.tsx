@@ -14,8 +14,8 @@ function Footer() {
   const { cartId } = useAppSelector((state) => state.userReducer);
   const { data } = useGetCartByIdQuery(cartId);
   const productId = useGetPath();
-  const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
-  const [updateLineItem, { data: newCart }] = useAddLineItemMutation();
+  const [getCart, { data: cart, isLoading: cartIsLoading }] = useLazyGetCartByIdQuery();
+  const [updateLineItem, { data: newCart, isLoading: newCartIsLoading }] = useAddLineItemMutation();
 
   const memoizedGetCart = useCallback(
     (_cartId: string) => {
@@ -31,7 +31,9 @@ function Footer() {
   if (!data) return null;
 
   const { lineItems } = data;
-  const { quantity, id: lineItemId } = lineItems.find((item) => item.productId === productId) as LineItem;
+  const currItem = lineItems.find((item) => item.productId === productId) as LineItem;
+  const quantity = currItem?.quantity ?? 0;
+  const lineItemId = currItem?.id ?? '';
 
   const removeOneFromCart = async () => {
     try {
@@ -83,18 +85,22 @@ function Footer() {
       </button>
       <div className="flex items-center gap-x-4">
         <button
+          disabled={quantity === 0 || newCartIsLoading || cartIsLoading}
           onClick={removeOneFromCart}
-          className="flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line
-          sm:h-8 sm:w-8"
+          className={`${
+            quantity === 0 || newCartIsLoading || cartIsLoading ? 'cursor-wait opacity-30' : ''
+          } flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line sm:h-8 sm:w-8`}
           type="button"
         >
           <MinusIcon />
         </button>
         <span className="dark:text-primary sm:text-xl">{padZero(quantity)}</span>
         <button
+          disabled={newCartIsLoading || cartIsLoading}
           onClick={addToCart}
-          className="flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line
-          sm:h-8 sm:w-8"
+          className={`${
+            newCartIsLoading || cartIsLoading ? 'cursor-wait opacity-30' : ''
+          } flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line sm:h-8 sm:w-8`}
           type="button"
         >
           <PlusIcon />
