@@ -240,7 +240,10 @@ export default function Cart() {
                   No
                 </button>
                 <button
-                  onClick={handleClearCart}
+                  onClick={() => {
+                    setIsModalShown(false);
+                    handleClearCart();
+                  }}
                   className="rounded-md border-2 border-text-grey/30 px-2 "
                   type="button"
                 >
