@@ -21,7 +21,7 @@ export default function PromoBanner() {
         <div className="mx-auto flex justify-center space-x-2 first-line:mb-6 xs:w-[60%]">
           <motion.span
             id="cpnCode"
-            className="relative flex items-center justify-center rounded-l border border-dashed px-4 py-2 text-white"
+            className="relative flex items-center justify-center rounded-l border border-dashed px-2 py-2 text-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
