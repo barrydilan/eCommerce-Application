@@ -34,7 +34,7 @@ function NavMenu() {
           )}
         </NavLink>
       </li>
-      <li className="navMenuItem lg:hidden">
+      <li className="navMenuItem">
         <NavLink to="/cart" className="navMenuLink text-text-grey hover:text-accent">
           {({ isActive, isPending }) => (
             <div className={`py rounded-xl px-2 py-1 ${isActive ? 'bg-accent-lightest lg:bg-opacity-0' : ''}`}>
