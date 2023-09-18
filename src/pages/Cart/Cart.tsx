@@ -23,15 +23,19 @@ export default function Cart() {
 
         if (newCart?.id) dispatch(updateCartId(newCart.id));
       } catch (e) {
-        if (e && typeof e === 'object' && 'message' in e) throw new Error(`Could not create a cart ${e.message}`);
+        if (e && typeof e === 'object' && 'message' in e) throw new Error(`Could not create a cart! ${e.message}`);
       }
     }
 
     async function fetchCartList() {
-      const response = await getCartList().unwrap();
-      const id = response.results.find(({ customerId }) => customerId === userId)?.id;
+      try {
+        const response = await getCartList().unwrap();
+        const id = response.results.find(({ customerId }) => customerId === userId)?.id;
 
-      if (id) dispatch(updateCartId(id));
+        if (id) dispatch(updateCartId(id));
+      } catch (e) {
+        if (e && typeof e === 'object' && 'message' in e) throw new Error(`Could not query a cart! ${e.message}`);
+      }
     }
 
     if (isLogged) fetchCartList();
