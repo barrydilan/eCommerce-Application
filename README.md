@@ -1,72 +1,138 @@
-# *Имя нашего сайта*
+# <img src="./src/assets//icons//logo.svg" width="70px"><img>  **SushiSushi | RS-School Stage 2 Final Task**
 
-*Имя нашего сайта* - is not just your regular food delivery, it's also one of the best *RS2023Q1 graduation projects!* :smirk: 
+**SushiSushi** - Is not just your regular food delivery, it's also one of the best *RS2023Q1 graduation projects!* 😏
 
-## Getting Started :boom:
+# Getting Started 🚀
 
-To run our project locally, you woud have to download zip file with our repository or run git clone.
+To run our project locally, you woud have to **download zip** file with our repository or **clone** it to your computer. 🦥
 
-### Prerequisites :computer:
+## Setup and Running ⚠️
 
-What things do you need to run our project locally?
-
-
-* Latest version of Node.js :boom:
-* Installed .git :boom:
-* Code Editor :boom:
+What things do you need to do in order to run our project locally? 🤔
 
 
-### Installing :exclamation:
+* Use node 18.x or higher. ⚡
+* Installed .git on your computer. ✌️
+* Code Editor of your choice. 📝
+* Installed npm. 📦
+* Created [commercetools](https://docs.commercetools.com/) account. 🌐
 
-First make sure you have all the prerequisites installed and then run:
+
+## Instalation And Preparation ⬇️
+
+ First make sure you have all the things listed in the previous section. Then clone our repository to your computer: 👌
 
 ```
 git clone git@github.com:Quiddlee/eCommerce-Application.git
 ```
 
-Then navigate into project folder and run: 
+or download zip file manually with our repository. 😏
+
+Navigate into project folder and run: 📦 
 
 ```
 npm install
 ```
-To run a development server: 
+
+Create ```.env``` file in the root of the project and add your commercetools credentials 🔥.
+
+You can find ```.env.example``` as an example file in the project root or follow the lines below: 🐺
+
+
+```TS
+VITE_PROJECT_KEY=PROJECT_KEY
+VITE_CLIENT_SECRET=CLIENT_SECRET
+VITE_CLIENT_ID=CLIENT_ID
+VITE_AUTH_SERVICE_URL=AUTH_SERVICE_URL
+VITE_API_HOST_URL=API_HOST_URL
+VITE_DEFAULT_CUSTOMER_SCOPE=DEFAULT_CUSTOMER_SCOPE
+```
+
+Finally run a development server: 🤩
 ```
 npm run dev
 ```
-Congratulations! :sunglasses:
+Aaaaand you're done! 🎉🥳
 
-## Running the tests :grimacing:
 
-To run tests simply type in your console
+## Available Scripts 🥑
 
-```
-npm run test
-```
+Here you can find all the scripts that are available in our project. 🦚
 
-## Useful scripts :point_left:
+Linting and Prettifying happens automatically when files are staged 😎, however you can do it manually with absolutely no problems:
 
-Linting and Prettifying happens automatically when files are staged, however:
-
-To manually run ESlint:
+Lint the App with **ESlint**: ✔️
 
 ```
 npm run lint
 ```
 
-To manually run Prettier:
+Format the App with **Prettier**: 🧹
 
 ```
 npm run format
 ```
 
+Type check the App with **TypeScript**: 📝
+
+```
+npm run type-check
+```
+
+Install **Husky** to enable pre-commit hooks: 🎣
+
+```
+npm run prepare
+```
+
+Run unit-tests with  **Vitest**: 🧪
+
+```
+npm run test
+```
+
+**Build** project for production: 🏗️
+
+```
+npm run build
+```
+
+**Preview** the **production build** locally: 👀
+
+```
+npm run preview
+```
+
 ## Adding products data to commerce tools:
+Here you can find detailed instructions on how to add products data to commercetools 🕵️.
 
-For adding data of your products into commercetools we prepared [fully set upped repo](https://github.com/Tedzury/commercetools-sushisushi-data). If you want exactly same products, as we have, you just need to register your account at commercetools, clone example repo, insert .env file with your creds into cloned repo, and type few commands into terminal to upload all the data about products into your commercetools account. Detailed instructions will be provided in further reading. Nevertheless, you may feel free to modify data in any possible way you want to. Main steps and cornerstones will be covered in further reading. So, let's proceed into detailed instructions.
+To add data with products in commercetools we prepared [fully setted up repo](https://github.com/Tedzury/commercetools-sushisushi-data) for you 🫂.
 
-### Step-by-step guide
+ If you want exactly the same products as we have 😏:
+ * You need to follow all the [Instalation and Preparation]() steps. ⛔
+ * Aaaand Type a few 🤏 commands into the terminal to upload all the data into your commercetools account! 🤩
 
-1. Clone [example repo](https://github.com/Tedzury/commercetools-sushisushi-data) into your computer. 
-2. Register your account at commercetools. Go to Settings > Developer settings > Create new API client > Select predefined Admin scope > Create API client > (!important step) Scroll to bottom of web page, there will be select input with suggested options for downloading environment variables. Pick option to download in format .env file. Don't close this window until you download needed file, this info is shown only once and till you won't close the window.
+
+Detailed instructions will be provided in further reading.
+  
+Nevertheless, you may feel free to modify data in any possible way you want to 🤝.
+
+Main steps and cornerstones will be covered in further reading. So, let's proceed into detailed instructions. ⏩
+
+# Step-by-step guide on how to add your own products data to commercetools 😇
+
+To add your own products data to commercetools you need to follow next steps 🦝:
+
+* Clone [example repo](https://github.com/Tedzury/commercetools-sushisushi-data) into your computer. 😶‍🌫️
+
+* Register your account at commercetools.
+ Go to ```Settings > Developer settings > Create new API client > Select predefined Admin scope > Create API client``` > 
+ 
+ **⚠️ !important step ⚠️** Scroll to bottom of web page, there will be **select input** 👇 with suggested options for downloading environment variables.
+ 
+Pick option to download in format ```.env``` file. **Don't close this window** 🚨 until you download all the files needed, this info is shown only **once** 🙀 till you won't close the window 🍃. 
+
+
 3. After downloading, insert downloaded .env file into your cloned repo from first step. Remove suggested name from this file, so there is only left .env in file name. More detailed info with pictures is available at [original sunrisedata](https://github.com/commercetools/commercetools-sunrise-data) 
 4. Open terminal at you cloned repo folder and type next instructions: npm run clean:categories && npm run import:categories && npm run clean:products && npm run import:products.
 
