@@ -22,6 +22,8 @@ export default function Cart() {
   const [createCart] = useCreateCartMutation();
   const [deleteCart] = useDeleteCartMutation();
 
+  const isCartEmpty = !data?.lineItems?.length;
+
   useEffect(() => {
     async function fetchCreateCart() {
       try {
@@ -93,22 +95,24 @@ export default function Cart() {
       <h2 className="mb-6 text-2xl sm:mt-24 lg:mt-10">Your Order</h2>
       {!data.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
 
-      {data.lineItems?.length
-        ? data.lineItems.map(({ id, productId, quantity }) => (
+      {isCartEmpty ? null : (
+        <>
+          {data.lineItems.map(({ id, productId, quantity }) => (
             <CartItem key={id} productId={productId} id={id} quantity={quantity} />
-          ))
-        : null}
+          ))}
 
-      <div className="mt-6 text-text-dark">
-        <span className="text-text-grey">Total Price</span>: {totalPrice}
-      </div>
+          <div className="mt-6 text-text-dark">
+            <span className="text-text-grey">Total Price</span>: {totalPrice}
+          </div>
 
-      <button type="button" className="h-[40px] rounded-xl bg-accent">
-        CHECKOUT
-      </button>
-      <button type="button" onClick={clearCart}>
-        Clear all
-      </button>
+          <button type="button" className="h-[40px] rounded-xl bg-accent">
+            CHECKOUT
+          </button>
+          <button type="button" onClick={clearCart}>
+            Clear all
+          </button>
+        </>
+      )}
     </div>
   );
 }
