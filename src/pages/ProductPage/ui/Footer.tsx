@@ -31,7 +31,7 @@ function Footer() {
   if (!data) return null;
 
   const { lineItems } = data;
-  const currItem = lineItems.find((item) => item.productId === productId) as LineItem;
+  const currItem = lineItems?.find((item) => item?.productId === productId) as LineItem;
   const quantity = currItem?.quantity ?? 0;
   const lineItemId = currItem?.id ?? '';
 
