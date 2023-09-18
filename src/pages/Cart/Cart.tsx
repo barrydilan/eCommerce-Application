@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import {
   useCreateCartMutation,
-  useDeleteCartMutation,
   useGetCartByIdQuery,
   useLazyGetCartListQuery,
   useUpdateCartMutation,
@@ -21,7 +20,6 @@ export default function Cart() {
   const dispatch = useAppDispatch();
   const { updateCartId } = userSlice.actions;
   const [createCart] = useCreateCartMutation();
-  const [deleteCart] = useDeleteCartMutation();
   const [updateCart] = useUpdateCartMutation();
 
   const isCartEmpty = !cart?.totalLineItemQuantity;
@@ -75,10 +73,23 @@ export default function Cart() {
 
   async function handleClearCart() {
     try {
-      await deleteCart({ cartId, version: cartVersion });
-      const { id } = await createCart({ currency: 'USD' }).unwrap();
+      if (!cart) return;
 
-      dispatch(updateCartId(id));
+      const actions = cart.lineItems.map(({ id }) => {
+        return {
+          action: 'removeLineItem',
+          lineItemId: id,
+          variantId: 1,
+        };
+      });
+
+      updateCart({
+        cartId,
+        body: {
+          version: cartVersion,
+          actions,
+        },
+      });
     } catch (e) {
       if (e && typeof e === 'object' && 'message' in e) throw new Error(`Could not clear cart! ${e.message}`);
     }

@@ -1,6 +1,6 @@
 import { rootApi } from '../../../shared/api';
 import { CartResponse } from '../../../shared/types';
-import { ICreateCartParams, IDeleteCartParams, IUpdateCartParams } from '../types/interfaces.ts';
+import { ICreateCartParams, IUpdateCartParams } from '../types/interfaces.ts';
 
 export const updateCartApi = rootApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -20,17 +20,7 @@ export const updateCartApi = rootApi.injectEndpoints({
 			}),
 			invalidatesTags: [{ type: 'CartItems', id: 'LIST' }],
 		}),
-
-		deleteCart: build.mutation<CartResponse, IDeleteCartParams>({
-			query: ({ cartId, version }) => ({
-				url: `/${import.meta.env.VITE_PROJECT_KEY}/me/carts/${cartId}`,
-				method: 'DELETE',
-				params: {
-					version,
-				},
-			}),
-		}),
 	}),
 });
 
-export const { useUpdateCartMutation, useCreateCartMutation, useDeleteCartMutation } = updateCartApi;
+export const { useUpdateCartMutation, useCreateCartMutation } = updateCartApi;
