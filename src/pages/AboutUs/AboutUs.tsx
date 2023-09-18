@@ -44,7 +44,7 @@ export default function AboutUs() {
                 <a
                   target="_blank"
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-separation-line"
-                  href="https://github.com/"
+                  href="https://github.com/Quiddlee"
                   rel="noreferrer"
                 >
                   <img className="h-6 w-6" src={gitHubIcon} alt="" />
@@ -77,7 +77,7 @@ export default function AboutUs() {
                 <a
                   target="_blank"
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center  justify-center rounded-full bg-separation-line"
-                  href="https://github.com/"
+                  href="https://github.com/barrydilan"
                   rel="noreferrer"
                 >
                   <img className="h-6 w-6" src={gitHubIcon} alt="" />
@@ -106,7 +106,7 @@ export default function AboutUs() {
                 <a
                   target="_blank"
                   className="absolute right-4 flex h-10 w-10 translate-y-2 items-center  justify-center rounded-full bg-separation-line"
-                  href="https://github.com/"
+                  href="https://github.com/Tedzury"
                   rel="noreferrer"
                 >
                   <img className="h-6 w-6" src={gitHubIcon} alt="" />
