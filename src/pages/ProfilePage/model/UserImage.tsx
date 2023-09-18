@@ -1,15 +1,16 @@
 import pencilIcon from '../../../assets/icons/pencilIcon.svg';
 import { getFullName } from '../../../entities/user';
 import { IUser } from '../../../shared/types';
+import UserIcon from '../../../shared/ui/UserIcon';
 
-export default function UserImage(props: { userData: IUser; pic: string }) {
-  const { userData, pic } = props;
+export default function UserImage(props: { userData: IUser }) {
+  const { userData } = props;
   const { firstName, lastName, email } = userData;
 
   return (
     <div className="relative mt-7 flex items-center">
       <div className="w-[60px]">
-        <img className="w-full rounded-full" src={pic} alt="" />
+        <UserIcon isHeader={false} />
       </div>
       <div className="ml-6">
         <h5 className="text-base font-medium dark:text-primary">{getFullName(firstName, lastName)}</h5>

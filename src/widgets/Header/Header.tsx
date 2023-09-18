@@ -55,10 +55,10 @@ function Header() {
           pt-2
           md:h-20
           md:w-44
-          md:border-r-2
-          md:border-separation-line
-          dark:md:border-dark-separation-line
           lg:mr-0
+          lg:border-r-2
+          lg:border-separation-line
+          dark:lg:border-dark-separation-line
           xl:w-89
           xl:pl-9
         "

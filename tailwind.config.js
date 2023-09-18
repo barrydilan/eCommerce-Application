@@ -28,7 +28,7 @@ export default {
         poppins: ['Poppins', 'sans-serif'],
       },
       backgroundImage: {
-        aboutMob: "url('./src/assets/img/about_bg_mob.svg')",
+        aboutMob: "url('assets/img/about_bg_mob.svg')",
       },
       screens: {
         xs: '420px',
