@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import getGreeting from './helpers/getGreeting';
-import userPic from '../../assets/img/UserImg.jpg';
 import { getFullName, useGetUserQuery } from '../../entities/user';
 import { useAppSelector } from '../../shared/lib/hooks';
+import UserIcon from '../../shared/ui/UserIcon';
 
 const headerLoggedClass = 'block lg:hidden';
 const menuLoggedClass =
@@ -26,7 +26,7 @@ function UserProfileLink(props: { isHeader: boolean }) {
         to="/profile"
         className={`${isHeader ? headerLoggedClass : menuLoggedClass} ${isLoading ? 'animate-pulse' : ''}`}
       >
-        <img src={userPic} alt="user avatar" className={isHeader ? 'mr-2 w-8 rounded-full' : 'w-12 rounded-xl'} />
+        <UserIcon isHeader={isHeader} />
         <div className={isHeader ? 'hidden' : ''}>
           <h5
             className="

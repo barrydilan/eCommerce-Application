@@ -6,7 +6,6 @@ import TabSelector from './model/TabSelector';
 import ThemeSelector from './model/ThemeSelector.tsx';
 import UserImage from './model/UserImage';
 import ProfileHeader from './ui/ProfileHeader';
-import userImage from '../../assets/img/UserImg.jpg';
 import { useLazyGetUserQuery } from '../../entities/user';
 import PageBackBtn from '../../features/PageBackBtn/PageBackBtn.tsx';
 import { useAppSelector } from '../../shared/lib/hooks';
@@ -40,7 +39,7 @@ export default function ProfilePage() {
       <div className="mx-auto my-12 p-5 sm:mt-[5.6rem] xl:px-24 ">
         <PageBackBtn title="Account" />
         <ProfileHeader />
-        <UserImage pic={userImage} userData={data} />
+        <UserImage userData={data} />
         <ThemeSelector />
         <TabSelector isAccTabActive={isAccTabActive} setIsAccTabActive={setIsAccTabActive} />
         {isAccTabActive ? <AccountSettings userData={data} /> : <AddressesSettings userData={data} />}
