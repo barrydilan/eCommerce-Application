@@ -20,6 +20,7 @@ if (
   (!('sushiTheme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
 ) {
   document.documentElement.classList.add('dark');
+  document.body.classList.add('dark:bg-dark-bg-primary');
 } else {
   document.documentElement.classList.remove('dark');
 }
@@ -34,7 +35,7 @@ export function App() {
     const [token, userId, refreshToken] = getCookie(COOKIE_ACCESS_TOKEN, COOKIE_USER_ID, COOKIE_REFRESH_TOKEN);
 
     if (token && userId && refreshToken) {
-      dispatch(loggedIn({ accessToken: token, userId, refreshToken }));
+      dispatch(loggedIn({ accessToken: token, userId, refreshToken, cartId: '' }));
     }
   }, [dispatch, loggedIn]);
 

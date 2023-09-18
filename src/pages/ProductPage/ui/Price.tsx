@@ -12,8 +12,8 @@ function Price({ centPrice, centOldPrice, currencyCode }: IPriceProps) {
   const moneyOldPrice = centOldPrice ? pennieToMoney(centOldPrice) : null;
   const moneyPrice = pennieToMoney(centPrice);
 
-  const corePrice = formatPrice(moneyPrice, currencyCode, 'en-US');
-  const coreOldPrice = moneyOldPrice ? formatPrice(moneyOldPrice, currencyCode, 'en-US') : null;
+  const corePrice = formatPrice(moneyPrice, currencyCode);
+  const coreOldPrice = moneyOldPrice ? formatPrice(moneyOldPrice, currencyCode) : null;
   const discountPercentage = moneyOldPrice ? calcPriceDiscountPercentage(moneyOldPrice, moneyPrice) : null;
 
   return (
