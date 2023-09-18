@@ -123,35 +123,37 @@ export default function Cart() {
   return (
     <div
       className={
-        !isCart
+        isCart
           ? `
-      mx-auto
-      my-28
-      border-b-2
-      border-text-grey/30
-      px-6 
-      dark:text-primary
-      sm:mt-16
-      sm:px-28
-      lg:fixed
-      lg:mx-3
-      lg:px-0 
-      lg:py-[6px] 
-      xl:w-[332px]`
+          mx-auto
+          my-16
+          px-3
+          pb-8
+          dark:text-primary
+          sm:px-5
+          md:max-w-[850px]
+          md:py-12
+          lg:mb-0
+          `
           : `
-      mx-auto
-      my-16
-      px-3
-      pb-8
-      dark:text-primary
-      sm:px-5
-      md:max-w-[850px]
-      md:py-12
-      lg:mb-0
+          mx-auto
+          my-[104px]
+          h-full
+          overflow-y-auto
+          border-b-2
+          border-text-grey/30
+          dark:text-primary
+          lg:fixed
+          lg:w-[200px] 
+          lg:px-2 
+          lg:pb-[210px]
+          xl:w-[360px]
+          xl:px-5
+          xl:pb-[150px]
       `
       }
     >
-      <h2 className="text-2xl lg:mt-0">Your Order</h2>
+      <h2 className={`${isCart ? 'text-2xl lg:mt-0' : 'lg:mt-2'} `}>Your Order</h2>
       {!cart.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
 
       {isCartEmpty ? null : (
@@ -160,13 +162,21 @@ export default function Cart() {
             <CartItem key={id} productId={productId} id={id} quantity={quantity} />
           ))}
 
-          <form className="flex flex-wrap justify-end gap-5 border-b-2 border-separation-line pb-10 pt-5 dark:border-dark-separation-line">
+          <form
+            className={`${
+              isCart
+                ? 'border-separation-line pb-10 pt-5 dark:border-dark-separation-line'
+                : 'border-text-grey/30 pb-5 pt-0'
+            } flex flex-wrap justify-end gap-5 border-b-2 border-separation-line pb-10  `}
+          >
             <input
               value={promoValue}
               onChange={(e) => setPromoValue(e.target.value)}
               type="text"
               placeholder="Promocode"
-              className="h-10 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark"
+              className={`${
+                isCart ? '' : 'w-[185px]'
+              } h-10 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
             />
             <button
               onClick={handleApplyPromo}
@@ -177,7 +187,7 @@ export default function Cart() {
             </button>
           </form>
 
-          <div className="flex flex-col items-end py-4 text-text-dark">
+          <div className={`${isCart ? 'py-4' : 'py-0'} flex flex-col items-end py-4 text-text-dark`}>
             {oldPrice ? (
               <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
             ) : null}
@@ -188,23 +198,29 @@ export default function Cart() {
 
           <button
             type="button"
-            className="ml-auto h-10 w-[300px] rounded-xl bg-accent text-primary transition-all duration-200 hover:bg-accent-lightest"
+            className={`${
+              isCart ? 'w-[300px]' : 'w-[150px]'
+            } ml-auto h-10   rounded-xl bg-accent text-primary transition-all duration-200 hover:bg-accent-lightest`}
           >
             CHECKOUT
           </button>
 
           <div className="relative">
             <button
-              className="mr-auto mt-5 h-10 rounded-xl border-2 border-separation-line px-3 text-text-grey transition-all duration-200 hover:bg-separation-line dark:border-dark-separation-line dark:text-primary dark:hover:bg-dark-separation-line"
+              className={`${
+                isCart
+                  ? 'mt-5 border-separation-line hover:bg-separation-line  dark:border-dark-separation-line dark:hover:bg-dark-separation-line'
+                  : 'mt-3 border-text-grey/30 hover:bg-text-grey/30'
+              } mr-auto h-10  rounded-xl border-2 px-3  text-text-grey transition-all duration-200 dark:text-primary `}
               type="button"
               onClick={() => setIsModalShown((prev) => !prev)}
             >
               CLEAR CART
             </button>
             <div
-              className={`${
-                isModalShown ? 'opacity-100' : 'opacity-0'
-              }  absolute left-[150px] top-0 rounded-md border-2 border-text-grey/30 bg-separation-line p-2 transition-all duration-300 dark:bg-dark-separation-line`}
+              className={`${isModalShown ? 'opacity-100' : 'opacity-0'} ${
+                isCart ? 'left-[150px] top-0' : 'lg:left-0 lg:top-[60px] xl:left-[150px] xl:top-0'
+              } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 transition-all duration-300 dark:bg-dark-separation-line`}
             >
               <p>Are you sure?</p>
               <div className="mt-2 flex justify-between">
