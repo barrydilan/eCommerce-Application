@@ -7,5 +7,13 @@ export type {
 	ISignUpAddress,
 	IUpdateUserParams,
 } from './interfaces.ts';
-export type { CookieTuple, SignUpAddresses, IAuthResponse, CartResponse } from './types.ts';
+export type {
+	CookieTuple,
+	SignUpAddresses,
+	IAuthResponse,
+	CartResponse,
+	CreateCartResponse,
+	LineItem,
+	ProductResult,
+} from './types.ts';
 export { ErrorCodeStatus, TokenTypeHints } from './enums.ts';

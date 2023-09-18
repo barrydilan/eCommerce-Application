@@ -8,8 +8,9 @@
  */
 
 const US_LOCALE = 'en-US';
+const US_CURRENCY = 'USD';
 
-const formatPrice = (num: number, currency: string, locale: string = US_LOCALE) => {
+const formatPrice = (num: number, currency: string = US_CURRENCY, locale: string = US_LOCALE) => {
 	const numFormatOptions = new Intl.NumberFormat(locale, {
 		style: 'currency',
 		currency,

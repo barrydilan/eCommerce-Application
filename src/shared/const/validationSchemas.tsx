@@ -1,9 +1,11 @@
 import * as Yup from 'yup';
 
+import { padZero } from '../lib/helpers';
+
 export const RESTRICTED_AGE = 13;
 
 function correctDate(year: number, month: number, day: number) {
-  return new Date(`${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
+  return new Date(`${year}-${padZero(month + 1)}-${day.toString().padStart(2, '0')}`);
 }
 
 export function validEmail() {

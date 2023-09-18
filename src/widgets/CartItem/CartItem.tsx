@@ -1,42 +1,34 @@
-import { useCallback, useEffect } from 'react';
-
 import { useSelector } from 'react-redux';
 
 import { RootState } from '../../app/store';
-import { useAddLineItemMutation, useLazyGetCartByIdQuery } from '../../entities/cart';
+import { useGetCartByIdQuery, useUpdateCartMutation } from '../../entities/cart';
 import { AddLineItemRequestBody, RemoveLineItemRequestBody } from '../../entities/cart/types/types';
 import { ProductAttributeNames, useGetProductQuery } from '../../entities/product';
 import formatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
 import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
 import { ProductPrice } from '../../entities/product/types/types.ts';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
+import { padZero } from '../../shared/lib/helpers';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
 
 interface ICartItemProps {
   productId: string;
+  id: string;
+  quantity: number;
 }
 
 export default function CartItem(props: ICartItemProps) {
-  const { productId } = props;
+  const { productId, id: lineItemId, quantity } = props;
   const { data } = useGetProductQuery(productId);
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
-  const [getCart, { data: cart }] = useLazyGetCartByIdQuery();
-  const [updateLineItem, { data: newCart }] = useAddLineItemMutation();
+  const { data: cart } = useGetCartByIdQuery(cartId);
+  const [updateCart, { isLoading: updateIsLoading }] = useUpdateCartMutation();
 
-  const memoizedGetCart = useCallback(
-    (_cartId: string) => {
-      getCart(_cartId, false);
-    },
-    [getCart],
-  );
-
-  useEffect(() => {
-    memoizedGetCart(cartId);
-  }, [cartId, memoizedGetCart, newCart]);
+  const cartVersion = cart?.version || 1;
 
   const addToCart = async () => {
     const body: AddLineItemRequestBody = {
-      version: cart?.version || 1,
+      version: cartVersion,
       actions: [
         {
           action: 'addLineItem',
@@ -47,8 +39,7 @@ export default function CartItem(props: ICartItemProps) {
       ],
     };
     try {
-      const result = await updateLineItem({ cartId, body }).unwrap();
-      return result;
+      return await updateCart({ cartId, body }).unwrap();
     } catch (e) {
       // throw new Error(e);
     }
@@ -57,23 +48,37 @@ export default function CartItem(props: ICartItemProps) {
 
   const removeOneFromCart = async () => {
     try {
-      const targetItem = cart?.lineItems.find((item) => item.productId === productId);
-      if (targetItem) {
-        const { lineItemId } = targetItem;
-        const body: RemoveLineItemRequestBody = {
-          version: cart?.version || 1,
-          actions: [
-            {
-              action: 'removeLineItem',
-              lineItemId,
-              variantId: 1,
-              quantity: 1,
-            },
-          ],
-        };
-        const result = await updateLineItem({ cartId, body }).unwrap();
-        return result;
-      }
+      const body: RemoveLineItemRequestBody = {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+            quantity: 1,
+          },
+        ],
+      };
+      return await updateCart({ cartId, body }).unwrap();
+    } catch (e) {
+      // throw new Error(e);
+    }
+    return null;
+  };
+
+  const removeAllFromCart = async () => {
+    try {
+      const body: RemoveLineItemRequestBody = {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+          },
+        ],
+      };
+      return await updateCart({ cartId, body }).unwrap();
     } catch (e) {
       // throw new Error(e);
     }
@@ -118,31 +123,41 @@ export default function CartItem(props: ICartItemProps) {
           </p>
         </div>
         <button
+          disabled={updateIsLoading}
+          onClick={removeAllFromCart}
           type="button"
-          className="absolute right-[-20px] top-[-45px] cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark md:right-[-5px] md:top-[-35px]"
+          className={`${
+            updateIsLoading ? 'animate-pulse cursor-wait' : ''
+          } absolute right-[-20px] top-[-45px] cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark md:right-[-5px] md:top-[-35px]`}
         >
           ×
         </button>
-      </div>
-      <div className="grid items-center justify-end">
-        {oldPrice ? (
-          <span className="justify-self-end text-sm text-text-grey line-through md:text-base">{oldPrice}</span>
-        ) : null}
-        <h3 className="mt-1 text-lg font-semibold text-text-dark dark:text-primary lg:text-lg">{corePrice}</h3>
+        <div className="mx-auto grid items-center justify-end">
+          {oldPrice ? (
+            <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
+          ) : null}
+          <h3 className="mt-1 text-lg text-text-dark dark:text-primary lg:text-lg">{corePrice}</h3>
+        </div>
       </div>
       <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
         <button
+          disabled={updateIsLoading}
           onClick={removeOneFromCart}
           type="button"
-          className="flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
+          className={`${
+            updateIsLoading ? 'animate-pulse cursor-wait' : ''
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg`}
         >
           -
         </button>
-        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">1</div>
+        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">{padZero(quantity)}</div>
         <button
+          disabled={updateIsLoading}
           onClick={addToCart}
           type="button"
-          className="flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg"
+          className={`${
+            updateIsLoading ? 'animate-pulse cursor-wait' : ''
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg`}
         >
           +
         </button>

@@ -4,6 +4,7 @@ import baseQueryWithReauth from './baseQueryWithReauth.ts';
 
 const rootApi = createApi({
 	reducerPath: 'rootApi',
+	tagTypes: ['CartItems'],
 	baseQuery: baseQueryWithReauth,
 	endpoints: () => ({}),
 });

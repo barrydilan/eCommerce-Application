@@ -24,8 +24,16 @@ type RemoveLineItemRequestBody = {
 		action: string;
 		lineItemId: string;
 		variantId: number;
-		quantity: number;
+		quantity?: number;
 	}[];
 };
 
-export type { AddLineItemRequestBody, RemoveLineItemRequestBody, CartListResponse };
+type AddDiscountCodeRequestBody = {
+	version: number;
+	actions: {
+		action: string;
+		code: string;
+	}[];
+};
+
+export type { AddLineItemRequestBody, RemoveLineItemRequestBody, CartListResponse, AddDiscountCodeRequestBody };

@@ -1,7 +1,8 @@
 import rootApi from '../../../shared/api/rootApi.ts';
+import { ProductResult } from '../../../shared/types';
 import prepareFilterQuery from '../../user/model/prepareFilterQuery.ts';
 import { IGetProductListParams } from '../types/interfaces.ts';
-import { CategoriesResponse, CategoryResult, ProductResponse, ProductResult } from '../types/types.ts';
+import { CategoriesResponse, CategoryResult, ProductResponse } from '../types/types.ts';
 
 export const productApi = rootApi.injectEndpoints({
 	endpoints: (build) => ({
