@@ -10,6 +10,7 @@ import formatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
 import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
 import { ProductPrice } from '../../entities/product/types/types.ts';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
+import { padZero } from '../../shared/lib/helpers';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
 
 interface ICartItemProps {
@@ -122,12 +123,12 @@ export default function CartItem(props: ICartItemProps) {
   return (
     <div className="border-b-2 border-text-grey/30">
       <div className="relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2">
-        <div className="lg:max-w-[33%] xl:max-w-[35%]">
-          <img className="h-full w-full object-cover" src={imgUrl} alt="" />
+        <div className="lg:max-w-[80px] xl:max-w-[70px]">
+          <img className="h-full w-full rounded-md object-cover" src={imgUrl} alt="" />
         </div>
-        <div>
-          <h3 className="text-lg sm:text-xl  lg:text-sm xl:mr-7 xl:text-base">{name}</h3>
-          <p className="mt-1 hidden text-xs text-text-grey lg:block">
+        <div className="grid gap-4">
+          <h3 className="text-lg sm:text-xl lg:text-sm xl:mr-7 xl:text-base">{name}</h3>
+          <p className="hidden self-end text-xs text-text-grey lg:block">
             {calories}kcal <br />
             {weight} g
           </p>
@@ -136,16 +137,16 @@ export default function CartItem(props: ICartItemProps) {
           disabled={cartIsLoading || updateItemsIsLoading}
           onClick={removeAllFromCart}
           type="button"
-          className="absolute right-0 top-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark"
+          className="absolute -top-2 right-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark"
         >
           ×
         </button>
-      </div>
-      <div className="grid items-center justify-end">
-        {oldPrice ? (
-          <span className="justify-self-end text-sm text-text-grey line-through md:text-base">{oldPrice}</span>
-        ) : null}
-        <h3 className="mt-1 text-lg font-semibold text-text-dark dark:text-primary lg:text-lg">{corePrice}</h3>
+        <div className="mx-auto grid items-center justify-end">
+          {oldPrice ? (
+            <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
+          ) : null}
+          <h3 className="mt-1 text-lg text-text-dark dark:text-primary lg:text-lg">{corePrice}</h3>
+        </div>
       </div>
       <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
         <button
@@ -158,7 +159,7 @@ export default function CartItem(props: ICartItemProps) {
         >
           -
         </button>
-        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">{quantity}</div>
+        <div className="text-lg sm:text-xl lg:text-sm xl:text-lg">{padZero(quantity)}</div>
         <button
           disabled={cartIsLoading || updateItemsIsLoading}
           onClick={addToCart}

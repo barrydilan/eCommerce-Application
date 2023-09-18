@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 
-import { useCreateCartMutation, useGetCartByIdQuery, useLazyGetCartListQuery } from '../../entities/cart';
+import {
+  useCreateCartMutation,
+  useDeleteCartMutation,
+  useGetCartByIdQuery,
+  useLazyGetCartListQuery,
+} from '../../entities/cart';
 import FormatPrice from '../../entities/product/lib/helpers/formatPrice.ts';
 import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
 import { userSlice } from '../../entities/user';
@@ -15,6 +20,7 @@ export default function Cart() {
   const dispatch = useAppDispatch();
   const { updateCartId } = userSlice.actions;
   const [createCart] = useCreateCartMutation();
+  const [deleteCart] = useDeleteCartMutation();
 
   useEffect(() => {
     async function fetchCreateCart() {
@@ -53,6 +59,17 @@ export default function Cart() {
       </div>
     );
 
+  async function clearCart() {
+    try {
+      await deleteCart({ cartId, version: data?.version ?? 1 });
+      const { id } = await createCart({ currency: 'USD' }).unwrap();
+
+      dispatch(updateCartId(id));
+    } catch (e) {
+      if (e && typeof e === 'object' && 'message' in e) throw new Error(`Could not clear cart! ${e.message}`);
+    }
+  }
+
   const totalPrice = FormatPrice(pennieToMoney(data?.totalPrice?.centAmount), data?.totalPrice?.currencyCode);
 
   return (
@@ -60,20 +77,20 @@ export default function Cart() {
       className="
       my-28
       grid
-      gap-5
-      overflow-y-auto
+      h-full
+      overflow-y-scroll
       px-6
       dark:text-primary
       sm:mt-16
       sm:px-28
       lg:fixed
       lg:mx-3
-      lg:px-0
-      lg:py-[6px]
+      lg:p-10
+      lg:pb-20
       xl:w-[332px]
 "
     >
-      <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
+      <h2 className="mb-6 text-2xl sm:mt-24 lg:mt-10">Your Order</h2>
       {!data.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
 
       {data.lineItems?.length
@@ -82,7 +99,16 @@ export default function Cart() {
           ))
         : null}
 
-      <div>Total Price: {totalPrice}</div>
+      <div className="mt-6 text-text-dark">
+        <span className="text-text-grey">Total Price</span>: {totalPrice}
+      </div>
+
+      <button type="button" className="h-[40px] rounded-xl bg-accent">
+        CHECKOUT
+      </button>
+      <button type="button" onClick={clearCart}>
+        Clear all
+      </button>
     </div>
   );
 }

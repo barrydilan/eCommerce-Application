@@ -31,7 +31,18 @@ export const updateCartApi = rootApi.injectEndpoints({
 				removeBody,
 			}),
 		}),
+
+		deleteCart: build.mutation<CartResponse, { cartId: string; version: number }>({
+			query: ({ cartId, version }) => ({
+				url: `/${import.meta.env.VITE_PROJECT_KEY}/me/carts/${cartId}`,
+				method: 'DELETE',
+				params: {
+					version,
+				},
+			}),
+		}),
 	}),
 });
 
-export const { useCreateCartMutation, useAddLineItemMutation, useRemoveLineItemMutation } = updateCartApi;
+export const { useCreateCartMutation, useAddLineItemMutation, useRemoveLineItemMutation, useDeleteCartMutation } =
+	updateCartApi;

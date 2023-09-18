@@ -10,4 +10,5 @@ export {
 	useCreateCartMutation,
 	useAddLineItemMutation,
 	useRemoveLineItemMutation,
+	useDeleteCartMutation,
 } from './api/updateCart.ts';
