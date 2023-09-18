@@ -18,9 +18,7 @@ export default function Cart() {
 "
     >
       <h2 className="mb-6 text-xl sm:mt-24 lg:mt-10">Your order</h2>
-      <CartItem productId="04f60ec8-bce0-4b2d-9d1f-610397b13763" />
-      <CartItem productId="04f60ec8-bce0-4b2d-9d1f-610397b13763" />
-      <CartItem productId="04f60ec8-bce0-4b2d-9d1f-610397b13763" />
+      <CartItem productId="d37d2e04-5dc4-41bb-808c-5c3ba4da3b59" />
     </div>
   );
 }
