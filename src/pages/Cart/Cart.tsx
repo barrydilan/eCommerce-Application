@@ -4,12 +4,12 @@ import CartItem from '../../widgets/CartItem/CartItem';
 
 export default function Cart() {
   const pathName = useLocation().pathname;
-  const isCart = pathName !== '/cart';
+  const isCart = pathName === '/cart';
 
   return (
     <div
       className={
-        isCart
+        !isCart
           ? `
       mx-auto
       my-28
