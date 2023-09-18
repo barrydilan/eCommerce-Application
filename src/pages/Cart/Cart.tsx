@@ -39,7 +39,7 @@ export default function Cart() {
     }
 
     if (isLogged) fetchCartList();
-    else {
+    else if (!isLogged && !cartId) {
       fetchCreateCart();
     }
 
@@ -53,7 +53,7 @@ export default function Cart() {
       </div>
     );
 
-  const totalPrice = FormatPrice(pennieToMoney(data.totalPrice.centAmount), data.totalPrice.currencyCode);
+  const totalPrice = FormatPrice(pennieToMoney(data?.totalPrice?.centAmount), data?.totalPrice?.currencyCode);
 
   return (
     <div
