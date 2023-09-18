@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   useCreateCartMutation,
@@ -154,7 +154,15 @@ export default function Cart() {
       }
     >
       <h2 className={`${isCart ? 'text-2xl lg:mt-0' : 'lg:mt-2'} `}>Your Order</h2>
-      {!cart.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
+      {!cart.lineItems?.length ? (
+        <p className={`${isCart ? 'w-[max-content]' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}>
+          Empty cart ? Visit{' '}
+          <Link className="text-lg text-accent" to="/">
+            Product catalog
+          </Link>{' '}
+          to add some.
+        </p>
+      ) : null}
 
       {isCartEmpty ? null : (
         <div className="mt-6 flex flex-col gap-5">
