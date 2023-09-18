@@ -110,14 +110,14 @@ export default function CartItem(props: ICartItemProps) {
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
   return (
-    <div className="border-b-2 border-text-grey/30">
-      <div className="relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2">
-        <div className="lg:max-w-[80px] xl:max-w-[70px]">
-          <img className="h-full w-full rounded-md object-cover" src={imgUrl} alt="" />
+    <div className="relative mb-16 border-b-2 border-dark-separation-line pb-8">
+      <div className="relative flex items-start gap-x-4 lg:gap-x-4 xl:gap-x-4">
+        <div className="xs:max-w-1/2 max-w-[40%] lg:max-w-[40%] xl:max-w-[35%]">
+          <img className="h-full w-full object-cover md:w-full" src={imgUrl} alt="" />
         </div>
-        <div className="grid gap-4">
-          <h3 className="text-lg sm:text-xl lg:text-sm xl:mr-7 xl:text-base">{name}</h3>
-          <p className="hidden self-end text-xs text-text-grey lg:block">
+        <div className="">
+          <h3 className="text-lg xs:text-2xl sm:text-2xl lg:text-sm xl:mr-7 xl:text-base">{name}</h3>
+          <p className="mt-1 hidden text-xs text-text-grey xl:block">
             {calories}kcal <br />
             {weight} g
           </p>
@@ -125,7 +125,7 @@ export default function CartItem(props: ICartItemProps) {
         <button
           onClick={removeAllFromCart}
           type="button"
-          className="absolute -top-2 right-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark"
+          className="absolute right-[-20px] top-[-45px] cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark md:right-[-5px] md:top-[-35px]"
         >
           ×
         </button>
@@ -141,9 +141,9 @@ export default function CartItem(props: ICartItemProps) {
           disabled={updateIsLoading}
           onClick={removeOneFromCart}
           type="button"
-          className={`h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg ${
+          className={`${
             updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          }`}
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg`}
         >
           -
         </button>
@@ -152,9 +152,9 @@ export default function CartItem(props: ICartItemProps) {
           disabled={updateIsLoading}
           onClick={addToCart}
           type="button"
-          className={`h-7 w-7 rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg ${
+          className={`${
             updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          }`}
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl text-accent sm:text-xl lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg`}
         >
           +
         </button>
