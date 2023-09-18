@@ -44,7 +44,7 @@ export default function PromoBanner() {
           <button
             type="button"
             id="cpnBtn"
-            className="focus:scale-80 flex transform animate-wiggle cursor-pointer items-center justify-center rounded-sm border border-white bg-white px-2 py-2 text-sm text-shop-cart-red shadow-lg outline-none transition-transform active:scale-75"
+            className="focus:scale-80 flex transform cursor-pointer items-center justify-center rounded-sm border border-white bg-white px-2 py-2 text-sm text-shop-cart-red shadow-lg outline-none transition-transform active:scale-75"
             onClick={() => {
               handleButtonClick();
               navigator.clipboard.writeText(PROMOCODE);
