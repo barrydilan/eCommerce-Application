@@ -84,7 +84,7 @@ export default function MenuItem({ name, image, id, attributes, prices, isSpicy,
               <span className="justify-self-end text-sm text-text-grey line-through md:text-base">{oldPrice}</span>
             ) : null}
             <h3 className="mt-1 text-lg font-semibold text-text-dark dark:text-primary lg:text-lg">{corePrice}</h3>
-            <AddToCartBtn />
+            <AddToCartBtn productId={id} />
           </div>
         </div>
       </Link>

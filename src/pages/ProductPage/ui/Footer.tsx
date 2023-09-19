@@ -41,6 +41,25 @@ function Footer() {
     }
   };
 
+  const removeAllFromCart = async () => {
+    try {
+      const body: RemoveLineItemRequestBody = {
+        version: cart?.version || 1,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            variantId: 1,
+          },
+        ],
+      };
+      updateLineItem({ cartId, body }).unwrap();
+    } catch (e) {
+      // throw new Error(e);
+    }
+    return null;
+  };
+
   const addToCart = async () => {
     const body: AddLineItemRequestBody = {
       version: cart?.version || 1,
@@ -93,13 +112,13 @@ function Footer() {
         </button>
       </div>
       <button
-        onClick={addToCart}
+        onClick={quantity > 0 ? removeAllFromCart : addToCart}
         type="button"
         className="dark: mt-3 block w-full rounded-md bg-accent-lightest px-4 py-3 text-accent transition-all duration-300 dark:border-2 dark:border-text-grey dark:bg-dark-bg-primary dark:hover:bg-dark-separation-line md:mt-0 md:w-fit"
       >
         <span className="mx-auto flex w-fit gap-x-2">
           <img src={shoppingCart} alt="" />
-          <span className="inline-block">Add to Cart</span>
+          <span className="inline-block">{quantity > 0 ? 'Remove from cart' : 'Add to Cart'}</span>
         </span>
       </button>
     </div>

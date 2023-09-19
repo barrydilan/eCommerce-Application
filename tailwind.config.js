@@ -43,11 +43,10 @@ export default {
         emailIconRed: "url('$icons/emailIconRed.svg')",
       },
       gridTemplateColumns: {
-        mdGridCols: '174px 1fr 200px',
-        lgGridCols: '174px 1fr 360px',
+        lgGridCols: '174px 1fr 200px',
         xlGridCols: '350px 1fr 360px',
         prodPageDesk: '1fr 130px',
-        mdNoCartGrid: '174px 1fr',
+        lgNoCartGrid: '174px 1fr',
         xlNoCartGrid: '350px 1fr',
       },
       gridTemplateRows: {

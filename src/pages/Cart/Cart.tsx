@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   useCreateCartMutation,
@@ -16,6 +16,7 @@ import CartItem from '../../widgets/CartItem/CartItem.tsx';
 
 export default function Cart() {
   const [promoValue, setPromoValue] = useState('');
+  const [isModalShown, setIsModalShown] = useState(false);
   const { cartId, userId, isLogged } = useAppSelector((state) => state.userReducer);
   const { data: cart } = useGetCartByIdQuery(cartId);
   const [getCartList] = useLazyGetCartListQuery();
@@ -122,72 +123,136 @@ export default function Cart() {
   return (
     <div
       className={
-        !isCart
+        isCart
           ? `
-      mx-auto
-      my-28
-      border-b-2
-      border-text-grey/30
-      px-6 
-      dark:text-primary
-      sm:mt-16
-      sm:px-28
-      lg:fixed
-      lg:mx-3
-      lg:px-0 
-      lg:py-[6px] 
-      xl:w-[332px]`
-          : `mx-auto
-      mt-24
-      border-b-2
-      border-text-grey/30
-      px-6
-      dark:text-primary
-      sm:px-28
-      md:max-w-[850px]`
+          mx-auto
+          my-16
+          px-3
+          pb-8
+          dark:text-primary
+          sm:px-5
+          md:max-w-[850px]
+          md:py-12
+          lg:mb-0
+          `
+          : `
+          mx-auto
+          my-[104px]
+          h-full
+          overflow-y-auto
+          border-b-2
+          border-text-grey/30
+          dark:text-primary
+          lg:fixed
+          lg:w-[200px] 
+          lg:px-2 
+          lg:pb-[210px]
+          xl:w-[360px]
+          xl:px-5
+          xl:pb-[150px]
+      `
       }
     >
-      <h2 className="mb-6 text-2xl sm:mt-24 lg:mt-10">Your Order</h2>
-      {!cart.lineItems?.length ? <p className="text-center">Your cart is empty</p> : null}
+      <h2 className={`${isCart ? 'text-2xl lg:mt-0' : 'lg:mt-2'} `}>Your Order</h2>
+      {!cart.lineItems?.length ? (
+        <p className={`${isCart ? 'w-[max-content]' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}>
+          Empty cart ? Visit{' '}
+          <Link className="text-lg text-accent" to="/">
+            Product catalog
+          </Link>{' '}
+          to add some.
+        </p>
+      ) : null}
 
       {isCartEmpty ? null : (
-        <>
+        <div className="mt-6 flex flex-col gap-5">
           {cart.lineItems.map(({ id, productId, quantity }) => (
             <CartItem key={id} productId={productId} id={id} quantity={quantity} />
           ))}
 
-          <div className="mt-6 text-text-dark">
-            {oldPrice ? (
-              <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
-            ) : null}
-            <h3 className="mt-1 text-lg text-text-dark dark:text-primary lg:text-lg">
-              <span className="text-text-grey">Total Price:</span> {totalPrice}
-            </h3>
-          </div>
-
-          <form>
+          <form
+            className={`${
+              isCart
+                ? 'border-separation-line pb-10 pt-5 dark:border-dark-separation-line'
+                : 'border-text-grey/30 pb-5 pt-0'
+            } flex flex-wrap justify-end gap-5 border-b-2 border-separation-line pb-10  `}
+          >
             <input
               value={promoValue}
               onChange={(e) => setPromoValue(e.target.value)}
               type="text"
-              className="max-h-1/2"
+              placeholder="Promocode"
+              className={`${
+                isCart ? '' : 'w-[185px]'
+              } h-10 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
             />
             <button
               onClick={handleApplyPromo}
               type="submit"
-              className="flex h-[40px] items-center justify-center rounded-xl bg-accent-lightest p-4"
+              className="h-10 w-[133px] rounded-xl bg-accent leading-[40px] text-primary transition-all duration-200 hover:bg-accent-lightest"
             >
               Apply Promo
             </button>
           </form>
 
-          <button type="button" className="h-[40px] rounded-xl bg-accent">
+          <div className={`${isCart ? 'py-4' : 'py-0'} flex flex-col items-end py-4 text-text-dark`}>
+            {oldPrice ? (
+              <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
+            ) : null}
+            <h3 className="mt-1 text-xl text-text-dark dark:text-primary lg:text-lg">
+              <span className="text-text-grey">Total Price:&nbsp;</span> {totalPrice}
+            </h3>
+          </div>
+
+          <button
+            type="button"
+            className={`${
+              isCart ? 'w-[300px]' : 'w-[150px]'
+            } ml-auto h-10   rounded-xl bg-accent text-primary transition-all duration-200 hover:bg-accent-lightest`}
+          >
             CHECKOUT
           </button>
-          <button type="button" onClick={handleClearCart}>
-            Clear all
-          </button>
-        </>
+
+          <div className="relative">
+            <button
+              className={`${
+                isCart
+                  ? 'mt-5 border-separation-line hover:bg-separation-line  dark:border-dark-separation-line dark:hover:bg-dark-separation-line'
+                  : 'mt-3 border-text-grey/30 hover:bg-text-grey/30'
+              } mr-auto h-10  rounded-xl border-2 px-3  text-text-grey transition-all duration-200 dark:text-primary `}
+              type="button"
+              onClick={() => setIsModalShown((prev) => !prev)}
+            >
+              CLEAR CART
+            </button>
+            <div
+              className={`${isModalShown ? 'opacity-100' : 'opacity-0'} ${
+                isCart ? 'left-[150px] top-0' : 'lg:left-0 lg:top-[60px] xl:left-[150px] xl:top-0'
+              } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 transition-all duration-300 dark:bg-dark-separation-line`}
+            >
+              <p>Are you sure?</p>
+              <div className="mt-2 flex justify-between">
+                <button
+                  onClick={() => setIsModalShown(false)}
+                  className="rounded-md border-2 border-text-grey/30 px-2 "
+                  type="button"
+                >
+                  No
+                </button>
+                <button
+                  onClick={() => {
+                    setIsModalShown(false);
+                    handleClearCart();
+                  }}
+                  className="rounded-md border-2 border-text-grey/30 px-2 "
+                  type="button"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

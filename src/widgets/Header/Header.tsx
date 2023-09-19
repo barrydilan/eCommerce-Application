@@ -39,8 +39,8 @@ function Header() {
         md:border-separation-line
         dark:md:border-dark-separation-line
         lg:h-20
-        lg:w-[1536px]
         lg:justify-start
+        xl:w-[1536px]
       `}
     >
       <div

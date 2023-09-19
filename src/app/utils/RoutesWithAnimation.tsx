@@ -41,8 +41,6 @@ export default function RoutesWithAnimation() {
           </LoginRequired>
         }
       />
-      <Route path="delivery" element={<p>Delivery</p>} />
-      <Route path="payment" element={<p>Payment</p>} />
       <Route
         path="profile"
         element={

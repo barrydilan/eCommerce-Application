@@ -54,7 +54,7 @@ export function App() {
           text-text-dark
           2xl:container
           lg:grid-rows-tabGridRows
-          ${isCartToRender ? 'lg:grid-cols-mdGridCols' : 'lg:grid-cols-mdNoCartGrid'}
+          ${isCartToRender ? 'lg:grid-cols-lgGridCols' : 'lg:grid-cols-lgNoCartGrid'}
           ${isCartToRender ? 'xl:grid-cols-xlGridCols' : 'xl:grid-cols-xlNoCartGrid'}
           `}
       >
