@@ -67,6 +67,7 @@ function NavMenu() {
               <AnimatePresence>
                 {!!cartItemsCount && (
                   <motion.span
+                    key={cartItemsCount}
                     initial={spanInitial}
                     animate={spanAnimate}
                     transition={spanTransition}
