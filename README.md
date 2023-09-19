@@ -179,6 +179,9 @@ npm run preview
 * [Discord](https://discord.com/) - **The 3xWeek Meeting Communication Tool** 🗣️
 * [Telegram](https://web.telegram.org/) - **The Main Chatting Communication Tool** 💬
 
+### **Project planing 🦍**
+* [Lucidchart](https://www.lucidchart.com/) - **The Project planing Tool** 🧠
+
 # Core Development Team 👨‍💻
 
 ### **Bohdan Shcherbyna** ([Quiddlee](https://github.com/Quiddlee)) - **Front-end Developer / Team Lead** 🦁
