@@ -4,6 +4,14 @@ import { AnimatePresence, motion, useCycle } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
 import {
+  animate,
+  initialAnimation,
+  modalAnimate,
+  modalExit,
+  modalInitial,
+  modalTransition,
+} from './constants/constants.ts';
+import {
   useCreateCartMutation,
   useGetCartByIdQuery,
   useLazyGetCartListQuery,
@@ -15,6 +23,9 @@ import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import {
   buttonTapAnimation,
   buttonTransition,
+  emptyCartAnimate,
+  emptyCartInitial,
+  emptyCartTransition,
   itemAnimation,
   itemExit,
   itemInitial,
@@ -22,44 +33,6 @@ import {
 } from '../../shared/ui/animations.tsx';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import CartItem from '../../widgets/CartItem/CartItem.tsx';
-
-const initialAnimation = {
-  opacity: 0,
-  y: '10%',
-};
-const animate = {
-  opacity: 1,
-  y: 0,
-};
-const modalInitial = {
-  scale: 0,
-  opacity: 0,
-  y: '-100%',
-};
-
-const modalTransition = {
-  type: 'spring',
-  stiffness: 760,
-  damping: 30,
-};
-const modalAnimate = {
-  type: 'spring',
-  stiffness: 760,
-  damping: 30,
-};
-const modalExit = {
-  scale: 0,
-  opacity: 0,
-  y: '-100%',
-};
-
-const emptyCartInitial = { opacity: 0, scale: 0 };
-const emptyCartAnimate = { opacity: 1, scale: 1 };
-const emptyCartTransition = {
-  type: 'spring',
-  stiffness: 560,
-  damping: 20,
-};
 
 export default function Cart() {
   const [promoValue, setPromoValue] = useState('');

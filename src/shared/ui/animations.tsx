@@ -87,3 +87,11 @@ export const itemExit = {
   opacity: 0,
   scale: 0,
 };
+
+export const emptyCartInitial = { opacity: 0, scale: 0 };
+export const emptyCartAnimate = { opacity: 1, scale: 1 };
+export const emptyCartTransition = {
+  type: 'spring',
+  stiffness: 560,
+  damping: 20,
+};
