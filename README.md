@@ -181,15 +181,19 @@ npm run preview
 
 # Core Development Team 👨‍💻
 
-## **Bohdan Shcherbyna** ([Quiddlee](https://github.com/Quiddlee)) - **Front-end Developer / Team Lead** 🦁
+### **Bohdan Shcherbyna** ([Quiddlee](https://github.com/Quiddlee)) - **Front-end Developer / Team Lead** 🦁
 ### Contribution:
 * Working with API, Managing App State, Animations, UI / UX Design, Code Review, Testing, Deployment, Documentation, CI/CD ✨.
 
-## **Oleksii Drohachov** ([Tedzury](https://github.com/Tedzury)) - **Front-end Developer** 🦈
+#
+
+### **Oleksii Drohachov** ([Tedzury](https://github.com/Tedzury)) - **Front-end Developer** 🦈
 ### Contribution:
 * Managing App router, Code Review, Documentation, Working with CommerceTools data, Managing App Products, Fully implement user profile page, UI Layout, Project setup, Working with API 🩺.
 
-## **Harry Holubiev** ([barrydilan](https://github.com/barrydilan)) - **Front-end Developer** 🐲
+#
+
+### **Harry Holubiev** ([barrydilan](https://github.com/barrydilan)) - **Front-end Developer** 🐲
 ### Contribution:
 * Designed Product Card, Product Page, Logo and animations, implemented some features in Cart component, Managing App router, Code Review, Documentation, UI Layout, Working with API 🪄.
 
