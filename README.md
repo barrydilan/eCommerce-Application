@@ -143,7 +143,7 @@ npm run preview
 ### **Design 🎨**
 * [Figma](https://www.figma.com/) - **The Design Tool** 🎨
 * [Project Design](https://www.figma.com/file/rYRBs7GD0vDQDjgjU0n972/eCommerce-Application-%F0%9F%8C%90?type=design&node-id=0%3A1&mode=design&t=asbvxijfRHlGg8Uz-1) - **The Project Design** 😉
-![img_9.png](img_9.png)
+![img_9](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/2bb48054-8bbb-4e70-89f4-e1446e47f665)
 
 ### **Version Control 📝**
 * [Git](https://git-scm.com/) - **The Version Control System** 🗂️
@@ -161,19 +161,19 @@ npm run preview
 ### **API 📡**
 * [Commercetools](https://docs.commercetools.com/) - **The API** 🦖
 
-![img_4.png](img_4.png)
+![img_4](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/e4338e4d-7352-44b3-8ef5-e3aa3063ca63)
 
 ### **CI/CD 🚀**
 * [GitHub Actions](https://pages.github.com/) - **The CI/CD** 🕊️
 
-![img_5.png](img_5.png)
+![img_5](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/0d36c736-efa8-4116-9aa8-67f56b443c40)
 
 ### **Project Management 📈**
 * [GitHub Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) - **The Project Management Tool** 📊
 
-![img_6.png](img_6.png)
-![img_1.png](img_1.png)
-![img_8.png](img_8.png)
+![img_6](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/314fd403-6eaf-49b5-a78a-d7ccfcced64f)
+![img_1](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/0c7b9559-3616-4b9c-aca6-85f0d314d580)
+![img_8](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/2646267e-cba1-4f02-888d-cfe85ff477b3)
 
 ### **Communication 📣**
 * [Discord](https://discord.com/) - **The 3xWeek Meeting Communication Tool** 🗣️
@@ -201,7 +201,7 @@ npm run preview
 Here you can find detailed instructions on how to add products data to commercetools 🕵️. To add data with products in commercetools we prepared [fully setted up repo](https://github.com/Tedzury/commercetools-sushisushi-data) for you 🫂.
 
 If you want exactly the same products as we have 😏:
-* You need to follow all the [Installation and Preparation]() steps. ⛔
+* You need to follow all the [Installation and Preparation](#Installation-and-Preparation) steps. ⛔
 * Aaand type a few 🤏 commands into the terminal to upload all the data into your commercetools account! 🤩
 
 
