@@ -123,7 +123,7 @@ export default function CartItem(props: ICartItemProps) {
           <img
             className={`${isCart ? 'h-[90px] min-w-[90px] md:h-40' : 'h-full'} rounded-md object-cover`}
             src={imgUrl}
-            alt=""
+            alt={name}
           />
         </div>
         <div className={`${isCart ? 'min-h-[90px] md:min-h-[160px]' : 'min-h-[98px]'} ml-5 grid`}>
