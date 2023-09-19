@@ -137,7 +137,7 @@ export default function Cart() {
           mx-auto
           my-16
           px-3
-          pb-8
+          pb-16
           dark:text-primary
           sm:px-5
           md:max-w-[850px]
@@ -178,9 +178,7 @@ export default function Cart() {
 
           <form
             className={`${
-              isCart
-                ? 'border-separation-line pb-10 pt-5 dark:border-dark-separation-line'
-                : 'border-text-grey/30 pb-5 pt-0'
+              isCart ? 'border-separation-line pb-10 dark:border-dark-separation-line' : 'border-text-grey/30 pb-5 pt-0'
             } flex flex-wrap justify-end gap-6 border-b-2 border-separation-line pb-6`}
           >
             <input
@@ -197,7 +195,9 @@ export default function Cart() {
               transition={buttonTransition}
               onClick={handleApplyPromo}
               type="submit"
-              className="h-14 w-full rounded-md bg-accent-lightest leading-[40px] tracking-wide text-accent transition-all hover:bg-accent/20"
+              className={`${
+                isCart ? 'w-36' : 'w-full'
+              } h-14 rounded-md bg-accent-lightest leading-[40px] tracking-wide text-accent transition-all hover:bg-accent/20`}
             >
               Apply
             </motion.button>
@@ -207,9 +207,9 @@ export default function Cart() {
             {oldPrice ? (
               <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
             ) : null}
-            <h3 className="mt-1 text-xl text-text-dark dark:text-primary lg:text-lg">
-              <span className="text-text-grey">Total Price:&nbsp;</span>{' '}
-              <span className="font-semibold">{totalPrice}</span>
+            <h3 className="text-3 mt-1 text-text-dark dark:text-primary lg:text-xl">
+              <span className="text-text-grey">Total Price:&nbsp;</span>
+              <span className="font-semibold"> {totalPrice}</span>
             </h3>
           </div>
 
@@ -218,21 +218,21 @@ export default function Cart() {
             transition={buttonTransition}
             type="button"
             className={`${
-              isCart ? 'w-[300px]' : 'h-14 w-full'
-            } ml-auto h-10 rounded-md bg-accent tracking-wide text-primary transition-all duration-200 hover:bg-accent/80`}
+              isCart ? 'w-full md:w-96' : 'w-full'
+            } ml-auto h-14 rounded-md bg-accent tracking-wide text-primary transition-all duration-200 hover:bg-accent/80`}
           >
             CHECKOUT
           </motion.button>
 
-          <div className="relative">
+          <div className="relative flex">
             <motion.button
               whileTap={buttonTap}
               transition={buttonTransition}
               className={`${
                 isCart
-                  ? 'mt-5 border-separation-line hover:bg-separation-line dark:border-dark-separation-line dark:hover:bg-dark-separation-line'
-                  : 'mt-3 border-text-grey/30 hover:bg-text-grey/30'
-              } mr-auto h-14 w-full rounded-md border-2 px-3 text-text-grey transition-all duration-200 dark:text-primary`}
+                  ? 'mt-5 w-full border-separation-line hover:bg-separation-line dark:border-dark-separation-line dark:hover:bg-dark-separation-line md:w-96'
+                  : 'mt-3 w-full border-text-grey/30 hover:bg-text-grey/30'
+              } ml-auto h-14 rounded-md border-2 px-3 text-text-grey transition-all duration-200 dark:text-primary`}
               type="button"
               onClick={() => setIsModalShown()}
             >
@@ -252,7 +252,7 @@ export default function Cart() {
                   }}
                   key="modal"
                   className={`${
-                    isCart ? 'left-[150px] top-0' : 'lg:left-0 lg:top-[60px] xl:left-[150px] xl:top-10'
+                    isCart ? 'right-0 top-0' : 'lg:right-0 lg:top-[60px] xl:left-[150px] xl:top-10'
                   } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 dark:bg-dark-separation-line`}
                 >
                   <p className="text-text-dark">Are you sure?</p>
