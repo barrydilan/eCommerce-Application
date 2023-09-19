@@ -123,6 +123,8 @@ export default function Cart() {
   async function handleApplyPromo(e: React.SyntheticEvent) {
     e.preventDefault();
 
+    if (!promoValue) return;
+
     try {
       const body = {
         version: cartVersion,
