@@ -187,7 +187,7 @@ export default function Cart() {
               type="text"
               placeholder="Promocode"
               className={`${
-                isCart ? '' : 'w-full'
+                isCart ? 'w-full md:w-56' : 'w-full'
               } h-14 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
             />
             <motion.button
@@ -196,7 +196,7 @@ export default function Cart() {
               onClick={handleApplyPromo}
               type="submit"
               className={`${
-                isCart ? 'w-36' : 'w-full'
+                isCart ? 'w-full md:w-36' : 'w-full'
               } h-14 rounded-md bg-accent-lightest leading-[40px] tracking-wide text-accent transition-all hover:bg-accent/20`}
             >
               Apply

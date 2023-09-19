@@ -119,10 +119,14 @@ export default function CartItem(props: ICartItemProps) {
       } relative border-b-2 pb-[22px]`}
     >
       <div className={`${isCart ? 'mb-5' : ''} relative flex items-start`}>
-        <div className={`${isCart ? 'max-w-[30%] xs:max-w-[25%]' : 'lg:max-w-[33%] xl:max-w-[35%]'}`}>
-          <img className="h-full rounded-md object-cover" src={imgUrl} alt="" />
+        <div className={`${isCart ? 'xs:max-w-[25%] md:max-w-[30%]' : 'lg:max-w-[33%] xl:max-w-[35%]'}`}>
+          <img
+            className={`${isCart ? 'h-[90px] min-w-[90px] md:h-40' : 'h-full'} rounded-md object-cover`}
+            src={imgUrl}
+            alt=""
+          />
         </div>
-        <div className="ml-5 grid min-h-[98px]">
+        <div className={`${isCart ? 'min-h-[90px] md:min-h-[160px]' : 'min-h-[98px]'} ml-5 grid`}>
           <h3
             className={`truncate-text ${
               isCart ? 'w-full text-lg xs:text-xl xl:mr-7' : 'lg:text-sm xl:mr-7 xl:text-base'
@@ -131,7 +135,7 @@ export default function CartItem(props: ICartItemProps) {
             {name}
           </h3>
           <p
-            className={`hidden self-end ${
+            className={`self-end ${
               isCart ? 'text-sm text-text-grey sm:inline-block' : 'text-text-grey xl:inline-block'
             }`}
           >
