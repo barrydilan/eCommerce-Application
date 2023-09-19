@@ -12,7 +12,14 @@ import { ProductPrice } from '../../entities/product/types/types.ts';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
 import { padZero } from '../../shared/lib/helpers';
 import { PlusIcon } from '../../shared/ui';
-import { buttonTapAnimation, buttonTransition } from '../../shared/ui/animations.tsx';
+import {
+  buttonTapAnimation,
+  buttonTransition,
+  itemAnimation,
+  itemExit,
+  itemInitial,
+  itemTransition,
+} from '../../shared/ui/animations.tsx';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
 import MinusIcon from '../../shared/ui/MinusIcon.tsx';
 
@@ -29,8 +36,8 @@ export default function CartItem(props: ICartItemProps) {
   const { data: cart } = useGetCartByIdQuery(cartId);
   const [updateCart, { isLoading: updateIsLoading }] = useUpdateCartMutation();
   const pathName = useLocation().pathname;
-  const isCart = pathName === '/cart';
 
+  const isCart = pathName === '/cart';
   const cartVersion = cart?.version || 1;
 
   const addToCart = async () => {
@@ -117,7 +124,12 @@ export default function CartItem(props: ICartItemProps) {
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={itemInitial}
+      animate={itemAnimation}
+      transition={itemTransition}
+      exit={itemExit}
       className={`${
         isCart ? 'border-separation-line dark:border-dark-separation-line' : 'border-text-grey/20'
       } relative border-b-2 pb-[22px]`}
@@ -207,6 +219,6 @@ export default function CartItem(props: ICartItemProps) {
           <PlusIcon />
         </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 }

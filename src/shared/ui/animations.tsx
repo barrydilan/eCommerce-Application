@@ -66,3 +66,24 @@ export const buttonTapAnimation = {
 export const buttonTransition = {
   duration: 0.01,
 };
+
+export const itemInitial = {
+  opacity: 0,
+  scale: 0.5,
+};
+
+export const itemAnimation = {
+  opacity: 1,
+  scale: 1,
+};
+
+export const itemTransition = {
+  type: 'spring',
+  stiffness: 860,
+  damping: 30,
+};
+
+export const itemExit = {
+  opacity: 0,
+  scale: 0,
+};

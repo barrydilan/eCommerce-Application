@@ -12,9 +12,54 @@ import {
 import { formatPrice, pennieToMoney } from '../../entities/product';
 import { userSlice } from '../../entities/user';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import { buttonTapAnimation, buttonTransition } from '../../shared/ui/animations.tsx';
+import {
+  buttonTapAnimation,
+  buttonTransition,
+  itemAnimation,
+  itemExit,
+  itemInitial,
+  itemTransition,
+} from '../../shared/ui/animations.tsx';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import CartItem from '../../widgets/CartItem/CartItem.tsx';
+
+const initialAnimation = {
+  opacity: 0,
+  y: '10%',
+};
+const animate = {
+  opacity: 1,
+  y: 0,
+};
+const modalInitial = {
+  scale: 0,
+  opacity: 0,
+  y: '-100%',
+};
+
+const modalTransition = {
+  type: 'spring',
+  stiffness: 760,
+  damping: 30,
+};
+const modalAnimate = {
+  type: 'spring',
+  stiffness: 760,
+  damping: 30,
+};
+const modalExit = {
+  scale: 0,
+  opacity: 0,
+  y: '-100%',
+};
+
+const emptyCartInitial = { opacity: 0, scale: 0 };
+const emptyCartAnimate = { opacity: 1, scale: 1 };
+const emptyCartTransition = {
+  type: 'spring',
+  stiffness: 560,
+  damping: 20,
+};
 
 export default function Cart() {
   const [promoValue, setPromoValue] = useState('');
@@ -123,7 +168,11 @@ export default function Cart() {
   }
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={initialAnimation}
+      animate={animate}
+      transition={itemTransition}
       className={
         isCart
           ? `
@@ -152,124 +201,137 @@ export default function Cart() {
       `
       }
     >
-      <h2 className="text-2xl">Your Order</h2>
-      {!cart.lineItems?.length ? (
-        <p className={`${isCart ? 'w-[max-content]' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}>
-          Empty cart ? Visit{' '}
-          <Link className="text-lg text-accent" to="/">
-            Product catalog
-          </Link>{' '}
-          to add some.
-        </p>
-      ) : null}
-
-      {isCartEmpty ? null : (
-        <div className="mt-6 flex flex-col gap-6">
-          {cart.lineItems.map(({ id, productId, quantity }) => (
-            <CartItem key={id} productId={productId} id={id} quantity={quantity} />
-          ))}
-
-          <form
-            className={`${
-              isCart ? 'border-separation-line pb-10 dark:border-dark-separation-line' : 'border-text-grey/30 pb-5 pt-0'
-            } flex flex-wrap justify-end gap-6 border-b-2 border-separation-line pb-6`}
+      <AnimatePresence>
+        <h2 className="text-2xl">Your Order</h2>
+        {isCartEmpty ? (
+          <motion.p
+            initial={emptyCartInitial}
+            animate={emptyCartAnimate}
+            transition={emptyCartTransition}
+            className={`text-center ${isCart ? 'w-[max-content]' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}
           >
-            <input
-              value={promoValue}
-              onChange={(e) => setPromoValue(e.target.value)}
-              type="text"
-              placeholder="Promocode"
-              className={`${
-                isCart ? 'w-full md:w-56' : 'w-full'
-              } h-14 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
-            />
-            <motion.button
-              whileTap={buttonTapAnimation}
-              transition={buttonTransition}
-              onClick={handleApplyPromo}
-              type="submit"
-              className={`${
-                isCart ? 'w-full md:w-36' : 'w-full'
-              } h-14 rounded-md bg-accent-lightest leading-[40px] tracking-wide text-accent transition-all hover:bg-accent/20`}
-            >
-              Apply
-            </motion.button>
-          </form>
-
-          <div className="flex flex-col items-end text-text-dark">
-            {oldPrice ? (
-              <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
-            ) : null}
-            <h3 className="text-3 mt-1 text-text-dark dark:text-primary lg:text-xl">
-              <span className="text-text-grey">Total Price:&nbsp;</span>
-              <span className="font-semibold"> {totalPrice}</span>
-            </h3>
-          </div>
-
-          <motion.button
-            whileTap={buttonTapAnimation}
-            transition={buttonTransition}
-            type="button"
-            className={`${
-              isCart ? 'w-full md:w-96' : 'w-full'
-            } ml-auto h-14 rounded-md bg-accent tracking-wide text-primary transition-all duration-200 hover:bg-accent/80`}
+            Your cart is empty! <br /> Visit{' '}
+            <Link className="text-lg text-accent transition-all hover:text-accent/70" to="/">
+              Product catalog
+            </Link>{' '}
+            to find good meals :)
+          </motion.p>
+        ) : (
+          <motion.div
+            initial={itemInitial}
+            animate={itemAnimation}
+            transition={itemTransition}
+            exit={itemExit}
+            layout
+            className="mt-6 grid gap-6"
           >
-            CHECKOUT
-          </motion.button>
-
-          <div className="relative flex">
-            <motion.button
-              whileTap={buttonTapAnimation}
-              transition={buttonTransition}
+            {cart.lineItems.map(({ id, productId, quantity }) => (
+              <CartItem key={id} productId={productId} id={id} quantity={quantity} />
+            ))}
+            <form
               className={`${
                 isCart
-                  ? 'mt-5 w-full border-separation-line hover:bg-separation-line dark:border-dark-separation-line dark:hover:bg-dark-separation-line md:w-96'
-                  : 'mt-3 w-full border-text-grey/30 hover:bg-text-grey/30'
-              } ml-auto h-14 rounded-md border-2 px-3 text-text-grey transition-all duration-200 dark:text-primary`}
-              type="button"
-              onClick={() => setIsModalShown()}
+                  ? 'border-separation-line pb-10 dark:border-dark-separation-line'
+                  : 'border-text-grey/30 pb-5 pt-0'
+              } flex flex-wrap justify-end gap-6 border-b-2 border-separation-line pb-6`}
             >
-              CLEAR CART
+              <input
+                value={promoValue}
+                onChange={(e) => setPromoValue(e.target.value)}
+                type="text"
+                placeholder="Promocode"
+                className={`${
+                  isCart ? 'w-full md:w-56' : 'w-full'
+                } h-14 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
+              />
+              <motion.button
+                whileTap={buttonTapAnimation}
+                transition={buttonTransition}
+                onClick={handleApplyPromo}
+                type="submit"
+                className={`${
+                  isCart ? 'w-full md:w-36' : 'w-full'
+                } h-14 rounded-md bg-accent-lightest leading-[40px] tracking-wide text-accent transition-all hover:bg-accent/20`}
+              >
+                Apply
+              </motion.button>
+            </form>
+
+            <div className="flex flex-col items-end text-text-dark">
+              {oldPrice ? (
+                <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
+              ) : null}
+              <h3 className="text-3 mt-1 text-text-dark dark:text-primary lg:text-xl">
+                <span className="text-text-grey">Total Price:&nbsp;</span>
+                <span className="font-semibold"> {totalPrice}</span>
+              </h3>
+            </div>
+
+            <motion.button
+              whileTap={buttonTapAnimation}
+              transition={buttonTransition}
+              type="button"
+              className={`${
+                isCart ? 'w-full md:w-96' : 'w-full'
+              } ml-auto h-14 rounded-md bg-accent tracking-wide text-primary transition-all duration-200 hover:bg-accent/80`}
+            >
+              CHECKOUT
             </motion.button>
 
-            <AnimatePresence>
-              {isModalShown && (
-                <motion.div
-                  initial={{ scale: 0, opacity: 0, y: '-100%' }}
-                  animate={{ y: '50%', scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0, y: '-100%' }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 760,
-                    damping: 30,
-                  }}
-                  key="modal"
-                  className={`${
-                    isCart ? 'right-0 top-0' : 'lg:right-0 lg:top-[60px] xl:left-[150px] xl:top-10'
-                  } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 dark:bg-dark-separation-line`}
-                >
-                  <p className="text-text-dark">Are you sure?</p>
-                  <div className="mt-2 flex justify-between">
-                    <button onClick={() => setIsModalShown()} className="rounded-md px-2 text-text-grey" type="button">
-                      No
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsModalShown();
-                        handleClearCart();
-                      }}
-                      className="rounded-md bg-accent-lightest px-2 text-accent"
-                      type="button"
-                    >
-                      Yes
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      )}
-    </div>
+            <div className="relative flex">
+              <motion.button
+                whileTap={buttonTapAnimation}
+                transition={buttonTransition}
+                className={`${
+                  isCart
+                    ? 'mt-5 w-full border-separation-line hover:bg-separation-line dark:border-dark-separation-line dark:hover:bg-dark-separation-line md:w-96'
+                    : 'mt-3 w-full border-text-grey/30 hover:bg-text-grey/30'
+                } ml-auto h-14 rounded-md border-2 px-3 text-text-grey transition-all duration-200 dark:text-primary`}
+                type="button"
+                onClick={() => setIsModalShown()}
+              >
+                CLEAR CART
+              </motion.button>
+
+              <AnimatePresence>
+                {isModalShown && (
+                  <motion.div
+                    initial={modalInitial}
+                    animate={modalAnimate}
+                    exit={modalExit}
+                    transition={modalTransition}
+                    key="modal"
+                    className={`${
+                      isCart ? 'right-0 top-0' : 'lg:right-0 lg:top-[60px] xl:left-[150px] xl:top-10'
+                    } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 dark:bg-dark-separation-line`}
+                  >
+                    <p className="text-text-dark">Are you sure?</p>
+                    <div className="mt-2 flex justify-between">
+                      <button
+                        onClick={() => setIsModalShown()}
+                        className="rounded-md px-2 text-text-grey"
+                        type="button"
+                      >
+                        No
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsModalShown();
+                          handleClearCart();
+                        }}
+                        className="rounded-md bg-accent-lightest px-2 text-accent"
+                        type="button"
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
