@@ -12,16 +12,9 @@ import {
 import { formatPrice, pennieToMoney } from '../../entities/product';
 import { userSlice } from '../../entities/user';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import { buttonTapAnimation, buttonTransition } from '../../shared/ui/animations.tsx';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import CartItem from '../../widgets/CartItem/CartItem.tsx';
-
-const buttonTap = {
-  scale: 0.9,
-};
-
-const buttonTransition = {
-  duration: 0.01,
-};
 
 export default function Cart() {
   const [promoValue, setPromoValue] = useState('');
@@ -191,7 +184,7 @@ export default function Cart() {
               } h-14 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
             />
             <motion.button
-              whileTap={buttonTap}
+              whileTap={buttonTapAnimation}
               transition={buttonTransition}
               onClick={handleApplyPromo}
               type="submit"
@@ -214,7 +207,7 @@ export default function Cart() {
           </div>
 
           <motion.button
-            whileTap={buttonTap}
+            whileTap={buttonTapAnimation}
             transition={buttonTransition}
             type="button"
             className={`${
@@ -226,7 +219,7 @@ export default function Cart() {
 
           <div className="relative flex">
             <motion.button
-              whileTap={buttonTap}
+              whileTap={buttonTapAnimation}
               transition={buttonTransition}
               className={`${
                 isCart

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -10,7 +11,10 @@ import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
 import { ProductPrice } from '../../entities/product/types/types.ts';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
 import { padZero } from '../../shared/lib/helpers';
+import { PlusIcon } from '../../shared/ui';
+import { buttonTapAnimation, buttonTransition } from '../../shared/ui/animations.tsx';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
+import MinusIcon from '../../shared/ui/MinusIcon.tsx';
 
 interface ICartItemProps {
   productId: string;
@@ -173,31 +177,35 @@ export default function CartItem(props: ICartItemProps) {
         </div>
       </div>
       <div className="flex items-center justify-start gap-x-3 lg:mt-2 xl:mt-6 xl:gap-x-5">
-        <button
+        <motion.button
+          whileTap={buttonTapAnimation}
+          transition={buttonTransition}
           disabled={updateIsLoading}
           onClick={removeOneFromCart}
           type="button"
           className={`${
             updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent transition-all duration-200 hover:bg-accent hover:text-primary ${
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest fill-accent px-2 text-center text-xl leading-[40px] hover:bg-accent/30 ${
             isCart ? 'md:h-9 md:w-9 md:text-2xl' : 'md:h-7 md:w-7 lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg'
           }`}
         >
-          -
-        </button>
+          <MinusIcon />
+        </motion.button>
         <div className="text-lg sm:text-xl">{padZero(quantity)}</div>
-        <button
+        <motion.button
+          whileTap={buttonTapAnimation}
+          transition={buttonTransition}
           disabled={updateIsLoading}
           onClick={addToCart}
           type="button"
           className={`${
             updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl text-accent transition-all duration-200 hover:bg-accent hover:text-primary sm:text-xl md:h-9  md:w-9 md:text-2xl ${
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest fill-accent px-2 text-center text-xl hover:bg-accent/30 sm:text-xl md:h-9  md:w-9 md:text-2xl ${
             isCart ? 'md:h-9 md:w-9 md:text-2xl' : 'md:h-7 md:w-7 lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg'
           }`}
         >
-          +
-        </button>
+          <PlusIcon />
+        </motion.button>
       </div>
     </div>
   );

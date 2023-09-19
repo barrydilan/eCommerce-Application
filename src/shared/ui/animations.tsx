@@ -58,3 +58,11 @@ export const checkboxAnimation = {
     delay: 0.3,
   },
 };
+
+export const buttonTapAnimation = {
+  scale: 0.9,
+};
+
+export const buttonTransition = {
+  duration: 0.01,
+};
