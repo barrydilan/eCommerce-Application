@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { AnimatePresence, motion, useCycle } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
 import {
@@ -14,9 +15,17 @@ import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation.tsx';
 import CartItem from '../../widgets/CartItem/CartItem.tsx';
 
+const buttonTap = {
+  scale: 0.9,
+};
+
+const buttonTransition = {
+  duration: 0.01,
+};
+
 export default function Cart() {
   const [promoValue, setPromoValue] = useState('');
-  const [isModalShown, setIsModalShown] = useState(false);
+  const [isModalShown, setIsModalShown] = useCycle(false, true);
   const { cartId, userId, isLogged } = useAppSelector((state) => state.userReducer);
   const { data: cart } = useGetCartByIdQuery(cartId);
   const [getCartList] = useLazyGetCartListQuery();
@@ -172,7 +181,7 @@ export default function Cart() {
               isCart
                 ? 'border-separation-line pb-10 pt-5 dark:border-dark-separation-line'
                 : 'border-text-grey/30 pb-5 pt-0'
-            } flex flex-wrap justify-end gap-5 border-b-2 border-separation-line pb-10  `}
+            } flex flex-wrap justify-end gap-6 border-b-2 border-separation-line pb-6`}
           >
             <input
               value={promoValue}
@@ -180,74 +189,91 @@ export default function Cart() {
               type="text"
               placeholder="Promocode"
               className={`${
-                isCart ? '' : 'w-[185px]'
-              } h-10 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
+                isCart ? '' : 'w-full'
+              } h-14 rounded-md border-2 border-text-grey/30 bg-separation-line pl-4 text-text-dark`}
             />
-            <button
+            <motion.button
+              whileTap={buttonTap}
+              transition={buttonTransition}
               onClick={handleApplyPromo}
               type="submit"
-              className="h-10 w-[133px] rounded-xl bg-accent leading-[40px] text-primary transition-all duration-200 hover:bg-accent-lightest"
+              className="h-14 w-full rounded-md bg-accent-lightest leading-[40px] tracking-wide text-accent transition-all hover:bg-accent/20"
             >
-              Apply Promo
-            </button>
+              Apply
+            </motion.button>
           </form>
 
-          <div className={`${isCart ? 'py-4' : 'py-0'} flex flex-col items-end py-4 text-text-dark`}>
+          <div className="flex flex-col items-end text-text-dark">
             {oldPrice ? (
               <span className="justify-self-end text-text-grey line-through md:text-base">{oldPrice}</span>
             ) : null}
             <h3 className="mt-1 text-xl text-text-dark dark:text-primary lg:text-lg">
-              <span className="text-text-grey">Total Price:&nbsp;</span> {totalPrice}
+              <span className="text-text-grey">Total Price:&nbsp;</span>{' '}
+              <span className="font-semibold">{totalPrice}</span>
             </h3>
           </div>
 
-          <button
+          <motion.button
+            whileTap={buttonTap}
+            transition={buttonTransition}
             type="button"
             className={`${
-              isCart ? 'w-[300px]' : 'w-[150px]'
-            } ml-auto h-10   rounded-xl bg-accent text-primary transition-all duration-200 hover:bg-accent-lightest`}
+              isCart ? 'w-[300px]' : 'h-14 w-full'
+            } ml-auto h-10 rounded-md bg-accent tracking-wide text-primary transition-all duration-200 hover:bg-accent/80`}
           >
             CHECKOUT
-          </button>
+          </motion.button>
 
           <div className="relative">
-            <button
+            <motion.button
+              whileTap={buttonTap}
+              transition={buttonTransition}
               className={`${
                 isCart
-                  ? 'mt-5 border-separation-line hover:bg-separation-line  dark:border-dark-separation-line dark:hover:bg-dark-separation-line'
+                  ? 'mt-5 border-separation-line hover:bg-separation-line dark:border-dark-separation-line dark:hover:bg-dark-separation-line'
                   : 'mt-3 border-text-grey/30 hover:bg-text-grey/30'
-              } mr-auto h-10  rounded-xl border-2 px-3  text-text-grey transition-all duration-200 dark:text-primary `}
+              } mr-auto h-14 w-full rounded-md border-2 px-3 text-text-grey transition-all duration-200 dark:text-primary`}
               type="button"
-              onClick={() => setIsModalShown((prev) => !prev)}
+              onClick={() => setIsModalShown()}
             >
               CLEAR CART
-            </button>
-            <div
-              className={`${isModalShown ? 'opacity-100' : 'opacity-0'} ${
-                isCart ? 'left-[150px] top-0' : 'lg:left-0 lg:top-[60px] xl:left-[150px] xl:top-0'
-              } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 transition-all duration-300 dark:bg-dark-separation-line`}
-            >
-              <p>Are you sure?</p>
-              <div className="mt-2 flex justify-between">
-                <button
-                  onClick={() => setIsModalShown(false)}
-                  className="rounded-md border-2 border-text-grey/30 px-2 "
-                  type="button"
-                >
-                  No
-                </button>
-                <button
-                  onClick={() => {
-                    setIsModalShown(false);
-                    handleClearCart();
+            </motion.button>
+
+            <AnimatePresence>
+              {isModalShown && (
+                <motion.div
+                  initial={{ scale: 0, opacity: 0, y: '-100%' }}
+                  animate={{ y: '50%', scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0, y: '-100%' }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 760,
+                    damping: 30,
                   }}
-                  className="rounded-md border-2 border-text-grey/30 px-2 "
-                  type="button"
+                  key="modal"
+                  className={`${
+                    isCart ? 'left-[150px] top-0' : 'lg:left-0 lg:top-[60px] xl:left-[150px] xl:top-10'
+                  } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 dark:bg-dark-separation-line`}
                 >
-                  Yes
-                </button>
-              </div>
-            </div>
+                  <p className="text-text-dark">Are you sure?</p>
+                  <div className="mt-2 flex justify-between">
+                    <button onClick={() => setIsModalShown()} className="rounded-md px-2 text-text-grey" type="button">
+                      No
+                    </button>
+                    <button
+                      onClick={() => {
+                        setIsModalShown();
+                        handleClearCart();
+                      }}
+                      className="rounded-md bg-accent-lightest px-2 text-accent"
+                      type="button"
+                    >
+                      Yes
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       )}

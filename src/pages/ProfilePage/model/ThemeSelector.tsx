@@ -106,8 +106,8 @@ export default function ThemeSelector() {
               animate={theme ? themeToggleVariants.light : themeToggleVariants.dark}
               transition={{
                 type: 'spring',
-                stiffness: 460,
-                damping: 26,
+                stiffness: 700,
+                damping: 30,
               }}
               className={`
                 relative
