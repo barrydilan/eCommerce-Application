@@ -21,9 +21,9 @@ export const modalTransition = {
 };
 
 export const modalAnimate = {
-	type: 'spring',
-	stiffness: 760,
-	damping: 30,
+	scale: 1,
+	opacity: 1,
+	y: '50%',
 };
 
 export const modalExit = {
