@@ -181,6 +181,7 @@ npm run preview
 
 ### **Project planing 🦍**
 * [Lucidchart](https://www.lucidchart.com/) - **The Project planing Tool** 🧠
+![eCommerce-Application](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/90446667-f0b5-47ec-a083-f17982cd7137)
 
 # Core Development Team 👨‍💻
 
