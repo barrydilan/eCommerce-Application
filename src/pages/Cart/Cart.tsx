@@ -276,7 +276,7 @@ export default function Cart() {
                     isCart ? 'right-0 top-0' : 'lg:right-0 lg:top-[60px] xl:left-[150px] xl:top-10'
                   } absolute rounded-md border-2 border-text-grey/30 bg-separation-line p-2 dark:bg-dark-separation-line`}
                 >
-                  <p className="text-text-dark">Are you sure?</p>
+                  <p className="text-text-dark dark:text-primary">Are you sure?</p>
                   <div className="mt-2 flex justify-between">
                     <button onClick={() => setIsModalShown()} className="rounded-md px-2 text-text-grey" type="button">
                       No
