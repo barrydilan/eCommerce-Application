@@ -165,7 +165,7 @@ export default function CartItem(props: ICartItemProps) {
           onClick={removeAllFromCart}
           type="button"
           className={`${
-            updateIsLoading ? 'animate-pulse cursor-wait' : ''
+            updateIsLoading ? 'animate-pulse' : ''
           } absolute -top-2 right-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark  ${
             isCart ? 'leading-4 md:text-4xl' : ''
           }
@@ -197,7 +197,7 @@ export default function CartItem(props: ICartItemProps) {
           onClick={removeOneFromCart}
           type="button"
           className={`${
-            updateIsLoading ? 'animate-pulse cursor-wait' : ''
+            updateIsLoading ? 'animate-pulse' : ''
           } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest fill-accent px-2 text-center text-xl leading-[40px] hover:bg-accent/30 ${
             isCart ? 'md:h-9 md:w-9 md:text-2xl' : 'md:h-7 md:w-7 lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg'
           }`}
@@ -212,7 +212,7 @@ export default function CartItem(props: ICartItemProps) {
           onClick={addToCart}
           type="button"
           className={`${
-            updateIsLoading ? 'animate-pulse cursor-wait' : ''
+            updateIsLoading ? 'animate-pulse' : ''
           } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest fill-accent px-2 text-center text-xl hover:bg-accent/30 sm:text-xl md:h-9  md:w-9 md:text-2xl ${
             isCart ? 'md:h-9 md:w-9 md:text-2xl' : 'md:h-7 md:w-7 lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg'
           }`}

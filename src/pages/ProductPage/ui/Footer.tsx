@@ -92,7 +92,7 @@ function Footer() {
         <button
           disabled={quantity === 0 || updateIsLoading}
           onClick={removeOneFromCart}
-          className={`${updateIsLoading ? 'cursor-wait opacity-30' : ''} ${
+          className={`${updateIsLoading ? 'opacity-30' : ''} ${
             quantity === 0 ? 'opacity-30' : ''
           } flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line sm:h-8 sm:w-8`}
           type="button"
@@ -104,7 +104,7 @@ function Footer() {
           disabled={updateIsLoading}
           onClick={addToCart}
           className={`${
-            updateIsLoading ? 'cursor-wait opacity-30' : ''
+            updateIsLoading ? 'opacity-30' : ''
           } flex h-8 w-8 items-center justify-center rounded-full border-1 border-text-dark p-2 transition-all duration-300 dark:border-primary dark:hover:bg-dark-separation-line sm:h-8 sm:w-8`}
           type="button"
         >
