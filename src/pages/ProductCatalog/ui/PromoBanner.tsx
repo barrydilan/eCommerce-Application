@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 export default function PromoBanner() {
   const [showMessage, setShowMessage] = useState(false);
 
-  const PROMOCODE = 'STEALDEAL20';
+  const PROMOCODE = 'myLovelyPromoCode';
 
   const handleButtonClick = () => {
     setShowMessage(true);
@@ -16,7 +16,7 @@ export default function PromoBanner() {
 
   return (
     <div className="mx-auto mt-4 flex w-full">
-      <div className="relative self-center overflow-hidden rounded-lg bg-gradient-to-br from-shop-cart-red to-rating-star  py-4 text-center text-white shadow-md">
+      <div className="relative self-center overflow-hidden rounded-lg bg-gradient-to-br from-shop-cart-red to-rating-star py-4 text-center text-white shadow-md">
         <h3 className="mb-4 px-12 text-2xl font-semibold">15% flat off on all items only today!</h3>
         <div className="mx-auto flex justify-center space-x-2 first-line:mb-6 xs:w-[60%]">
           <motion.span
@@ -30,6 +30,7 @@ export default function PromoBanner() {
               <AnimatePresence>
                 <motion.div
                   className="opacity-90"
+                  transition={{ duration: 0.5 }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -38,7 +39,15 @@ export default function PromoBanner() {
                 </motion.div>
               </AnimatePresence>
             ) : (
-              'myLovelyPromoCode'
+              <motion.div
+                className="opacity-90"
+                transition={{ duration: 0.5 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                {PROMOCODE}
+              </motion.div>
             )}
           </motion.span>
           <button
