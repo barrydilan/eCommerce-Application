@@ -69,7 +69,7 @@ export const buttonTransition = {
 
 export const itemInitial = {
   opacity: 0,
-  scale: 0.5,
+  scale: 0.7,
 };
 
 export const itemAnimation = {
@@ -79,8 +79,8 @@ export const itemAnimation = {
 
 export const itemTransition = {
   type: 'spring',
-  stiffness: 860,
-  damping: 30,
+  stiffness: 800,
+  damping: 35,
 };
 
 export const itemExit = {
@@ -89,7 +89,9 @@ export const itemExit = {
 };
 
 export const emptyCartInitial = { opacity: 0, scale: 0 };
+
 export const emptyCartAnimate = { opacity: 1, scale: 1 };
+
 export const emptyCartTransition = {
   type: 'spring',
   stiffness: 560,

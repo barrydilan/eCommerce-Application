@@ -27,10 +27,11 @@ interface ICartItemProps {
   productId: string;
   id: string;
   quantity: number;
+  delay: number;
 }
 
 export default function CartItem(props: ICartItemProps) {
-  const { productId, id: lineItemId, quantity } = props;
+  const { productId, id: lineItemId, quantity, delay } = props;
   const { data } = useGetProductQuery(productId);
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
   const { data: cart } = useGetCartByIdQuery(cartId);
@@ -128,7 +129,7 @@ export default function CartItem(props: ICartItemProps) {
       layout
       initial={itemInitial}
       animate={itemAnimation}
-      transition={itemTransition}
+      transition={{ ...itemTransition, delay: delay * 0.07 }}
       exit={itemExit}
       className={`${
         isCart ? 'border-separation-line dark:border-dark-separation-line' : 'border-text-grey/20'

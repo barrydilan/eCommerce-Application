@@ -198,8 +198,8 @@ export default function Cart() {
             layout
             className="mt-6 grid gap-6"
           >
-            {cart.lineItems.map(({ id, productId, quantity }) => (
-              <CartItem key={id} productId={productId} id={id} quantity={quantity} />
+            {cart.lineItems.map(({ id, productId, quantity }, i) => (
+              <CartItem key={id} productId={productId} id={id} quantity={quantity} delay={i} />
             ))}
             <form
               className={`${
