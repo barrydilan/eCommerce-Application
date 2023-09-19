@@ -115,19 +115,25 @@ export default function CartItem(props: ICartItemProps) {
   return (
     <div
       className={`${
-        isCart ? 'border-separation-line dark:border-dark-separation-line' : 'border-text-grey/30'
-      } relative border-b-2  pb-5 `}
+        isCart ? 'border-separation-line dark:border-dark-separation-line' : 'border-text-grey/20'
+      } relative border-b-2 pb-[22px]`}
     >
-      <div className={`${isCart ? 'mb-5' : ''} relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2`}>
+      <div className={`${isCart ? 'mb-5' : ''} relative flex items-start`}>
         <div className={`${isCart ? 'max-w-[30%] xs:max-w-[25%]' : 'lg:max-w-[33%] xl:max-w-[35%]'}`}>
-          <img className="h-full w-full object-cover" src={imgUrl} alt="" />
+          <img className="h-full rounded-md object-cover" src={imgUrl} alt="" />
         </div>
-        <div className="w-full">
-          <h3 className={`${isCart ? 'w-full text-lg xs:text-xl xl:mr-7' : 'lg:text-sm xl:mr-7 xl:text-base'} `}>
+        <div className="ml-5 grid min-h-[98px]">
+          <h3
+            className={`truncate-text ${
+              isCart ? 'w-full text-lg xs:text-xl xl:mr-7' : 'lg:text-sm xl:mr-7 xl:text-base'
+            }`}
+          >
             {name}
           </h3>
           <p
-            className={`mt-1 hidden ${isCart ? 'text-sm text-text-grey sm:block' : 'text-xs text-text-grey xl:block'}`}
+            className={`hidden self-end ${
+              isCart ? 'text-sm text-text-grey sm:inline-block' : 'text-text-grey xl:inline-block'
+            }`}
           >
             {calories}kcal <br />
             {weight} g
@@ -139,7 +145,7 @@ export default function CartItem(props: ICartItemProps) {
           type="button"
           className={`${
             updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          } absolute right-0 top-0 cursor-pointer text-3xl font-semibold  text-text-grey transition-all ease-in hover:text-text-dark  ${
+          } absolute -top-2 right-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark  ${
             isCart ? 'leading-4 md:text-4xl' : ''
           }
           
@@ -147,13 +153,9 @@ export default function CartItem(props: ICartItemProps) {
         >
           ×
         </button>
-        <div className="mx-auto mt-7 grid w-[max-content] items-center justify-end md:mt-12">
+        <div className="ml-auto grid w-[max-content] items-center justify-end self-end">
           {oldPrice ? (
-            <span
-              className={`justify-self-end text-text-grey line-through ${
-                isCart ? 'md:text-lg' : 'lg:text-sm xl:text-lg'
-              }`}
-            >
+            <span className={`justify-self-end text-text-grey line-through ${isCart ? 'md:text-lg' : ''}`}>
               {oldPrice}
             </span>
           ) : null}
@@ -166,7 +168,7 @@ export default function CartItem(props: ICartItemProps) {
           </h3>
         </div>
       </div>
-      <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
+      <div className="flex items-center justify-start gap-x-3 lg:mt-2 xl:mt-6 xl:gap-x-5">
         <button
           disabled={updateIsLoading}
           onClick={removeOneFromCart}

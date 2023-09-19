@@ -136,8 +136,6 @@ export default function Cart() {
           lg:mb-0
           `
           : `
-          mx-auto
-          my-[104px]
           h-full
           overflow-y-auto
           border-b-2
@@ -145,15 +143,14 @@ export default function Cart() {
           dark:text-primary
           lg:fixed
           lg:w-[200px] 
-          lg:px-2 
+          lg:px-10
+          lg:py-28
           lg:pb-[210px]
           xl:w-[360px]
-          xl:px-5
-          xl:pb-[150px]
       `
       }
     >
-      <h2 className={`${isCart ? 'text-2xl lg:mt-0' : 'lg:mt-2'} `}>Your Order</h2>
+      <h2 className="text-2xl">Your Order</h2>
       {!cart.lineItems?.length ? (
         <p className={`${isCart ? 'w-[max-content]' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}>
           Empty cart ? Visit{' '}
@@ -165,7 +162,7 @@ export default function Cart() {
       ) : null}
 
       {isCartEmpty ? null : (
-        <div className="mt-6 flex flex-col gap-5">
+        <div className="mt-6 flex flex-col gap-6">
           {cart.lineItems.map(({ id, productId, quantity }) => (
             <CartItem key={id} productId={productId} id={id} quantity={quantity} />
           ))}
