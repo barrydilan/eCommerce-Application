@@ -181,7 +181,7 @@ export default function Cart() {
           initial={emptyCartInitial}
           animate={emptyCartAnimate}
           transition={emptyCartTransition}
-          className={`text-center ${isCart ? 'w-[max-content]' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}
+          className={`text-center ${isCart ? 'w-fit' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}
         >
           Your cart is empty! <br /> Visit{' '}
           <Link className="text-lg text-accent transition-all hover:text-accent/70" to="/">
