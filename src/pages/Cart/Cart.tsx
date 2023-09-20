@@ -11,6 +11,7 @@ import {
   modalInitial,
   modalTransition,
 } from './constants/constants.ts';
+import emptyCart from '../../assets/icons/empty-cart-icon.svg';
 import {
   useCreateCartMutation,
   useGetCartByIdQuery,
@@ -178,19 +179,27 @@ export default function Cart() {
     >
       <h2 className="text-2xl">Your Order</h2>
       {isCartEmpty ? (
-        <motion.p
-          key="empty-cart"
-          initial={emptyCartInitial}
-          animate={emptyCartAnimate}
-          transition={emptyCartTransition}
-          className={`text-center ${isCart ? 'w-fit' : 'lg:w-[150px] xl:w-[300px]'} mx-auto mt-5`}
-        >
-          Your cart is empty! <br /> Visit{' '}
-          <Link className="text-lg text-accent transition-all hover:text-accent/70" to="/">
-            Product catalog
-          </Link>{' '}
-          to find good meals :)
-        </motion.p>
+        <div className="grid items-center justify-items-center">
+          <img width="250px" src={emptyCart} alt="" />
+          <motion.p
+            key="empty-cart"
+            initial={emptyCartInitial}
+            animate={emptyCartAnimate}
+            transition={emptyCartTransition}
+            className={`text-center text-lg text-text-grey ${
+              isCart ? 'w-fit' : 'lg:w-[150px] xl:w-[300px]'
+            } mx-auto mt-5`}
+          >
+            <span className="text-3xl font-bold">Your cart is empty!</span> <br />
+            <div className="mt-2">
+              <span className="text-text-grey">Visit </span>
+              <Link className="text-accent transition-all hover:text-accent/70" to="/">
+                Product catalog
+              </Link>{' '}
+              to find good meals :)
+            </div>
+          </motion.p>
+        </div>
       ) : (
         <motion.div
           initial={itemInitial}
