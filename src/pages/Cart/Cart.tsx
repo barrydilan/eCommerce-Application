@@ -185,12 +185,19 @@ export default function Cart() {
       <h2 className="text-2xl">Your Order</h2>
       {isCartEmpty ? (
         <div className="m-auto grid justify-items-center self-center">
-          <img width="250px" src={emptyCart} alt="" />
+          <motion.img
+            initial={emptyCartInitial}
+            animate={emptyCartAnimate}
+            transition={emptyCartTransition}
+            width="250px"
+            src={emptyCart}
+            alt=""
+          />
           <motion.p
             key="empty-cart"
             initial={emptyCartInitial}
             animate={emptyCartAnimate}
-            transition={emptyCartTransition}
+            transition={{ ...emptyCartTransition, delay: 0.1 }}
             className={`text-center text-lg text-text-grey ${
               isCart ? 'w-fit' : 'lg:w-[150px] xl:w-[300px]'
             } mx-auto mt-5`}
