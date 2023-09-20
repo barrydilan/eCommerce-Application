@@ -1,7 +1,11 @@
+import { motion } from 'framer-motion';
+
 import { useGetCartByIdQuery, useUpdateCartMutation } from '../../entities/cart';
 import { AddLineItemRequestBody } from '../../entities/cart/types/types';
 import { useAppSelector } from '../../shared/lib/hooks';
 import { LineItem } from '../../shared/types';
+import { PlusIcon } from '../../shared/ui';
+import { buttonTapAnimation, buttonTransition } from '../../shared/ui/animations.tsx';
 
 export default function AddToCartBtn(props: { productId: string }) {
   const { cartId } = useAppSelector((state) => state.userReducer);
@@ -38,7 +42,9 @@ export default function AddToCartBtn(props: { productId: string }) {
   };
 
   return (
-    <button
+    <motion.button
+      whileTap={buttonTapAnimation}
+      transition={buttonTransition}
       type="button"
       disabled={disabled}
       onClick={(e) => {
@@ -47,10 +53,10 @@ export default function AddToCartBtn(props: { productId: string }) {
         addToCart();
       }}
       className={`${
-        updateIsLoading ? 'cursor-wait opacity-30' : ''
-      } mt-auto inline-block min-w-[30px] max-w-[50px] self-end rounded-md bg-accent-lightest text-2xl text-accent transition delay-150 duration-300 ease-in-out hover:bg-accent hover:text-accent-light disabled:bg-separation-line disabled:text-text-grey`}
+        updateIsLoading ? 'opacity-30' : ''
+      } mt-auto flex h-8 min-w-[30px] max-w-[50px] items-center justify-center self-end rounded-md bg-accent-lightest fill-accent text-2xl transition-all hover:bg-accent/30  disabled:bg-separation-line disabled:text-text-grey`}
     >
-      +
-    </button>
+      <PlusIcon />
+    </motion.button>
   );
 }

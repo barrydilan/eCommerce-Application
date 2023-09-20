@@ -6,6 +6,17 @@ import Input from './Input.tsx';
 import LoginNotRequired from './LoginNotRequired.tsx';
 import LoginRequired from './LoginRequired.tsx';
 import NavigateToCategories from './NavigateToCategories.tsx';
+import PlusIcon from './PlusIcon.tsx';
 
-export { Button, Input, ErrorMessage, LoginRequired, NavigateToCategories, Blackout, AnimateCounter, LoginNotRequired };
+export {
+	Button,
+	Input,
+	ErrorMessage,
+	LoginRequired,
+	NavigateToCategories,
+	Blackout,
+	AnimateCounter,
+	LoginNotRequired,
+	PlusIcon,
+};
 export { checkboxAnimation, inputAnimation, svgAnimation, pageVariants } from './animations.tsx';

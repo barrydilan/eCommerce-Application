@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -10,23 +11,34 @@ import pennieToMoney from '../../entities/product/lib/helpers/pennieToMoney.ts';
 import { ProductPrice } from '../../entities/product/types/types.ts';
 import getAttribute from '../../pages/ProductPage/lib/helpers/getAttribute';
 import { padZero } from '../../shared/lib/helpers';
+import { PlusIcon } from '../../shared/ui';
+import {
+  buttonTapAnimation,
+  buttonTransition,
+  itemAnimation,
+  itemExit,
+  itemInitial,
+  itemTransition,
+} from '../../shared/ui/animations.tsx';
 import LoadingAnimation from '../../shared/ui/LoadingAnimation';
+import MinusIcon from '../../shared/ui/MinusIcon.tsx';
 
 interface ICartItemProps {
   productId: string;
   id: string;
   quantity: number;
+  delay: number;
 }
 
 export default function CartItem(props: ICartItemProps) {
-  const { productId, id: lineItemId, quantity } = props;
+  const { productId, id: lineItemId, quantity, delay } = props;
   const { data } = useGetProductQuery(productId);
   const cartId = useSelector((state: RootState) => state.userReducer.cartId);
   const { data: cart } = useGetCartByIdQuery(cartId);
   const [updateCart, { isLoading: updateIsLoading }] = useUpdateCartMutation();
   const pathName = useLocation().pathname;
-  const isCart = pathName === '/cart';
 
+  const isCart = pathName === '/cart';
   const cartVersion = cart?.version || 1;
 
   const addToCart = async () => {
@@ -113,21 +125,36 @@ export default function CartItem(props: ICartItemProps) {
   const weight = getAttribute(attributes, ProductAttributeNames.WEIGHT);
 
   return (
-    <div
+    <motion.div
+      layout
+      initial={itemInitial}
+      animate={itemAnimation}
+      transition={{ ...itemTransition, delay: delay * 0.07 }}
+      exit={itemExit}
       className={`${
-        isCart ? 'border-separation-line dark:border-dark-separation-line' : 'border-text-grey/30'
-      } relative border-b-2  pb-5 `}
+        isCart ? 'border-separation-line dark:border-dark-separation-line' : 'border-text-grey/20'
+      } relative border-b-2 pb-[22px]`}
     >
-      <div className={`${isCart ? 'mb-5' : ''} relative flex items-start gap-x-4 lg:gap-x-1 xl:gap-x-2`}>
-        <div className={`${isCart ? 'max-w-[30%] xs:max-w-[25%]' : 'lg:max-w-[33%] xl:max-w-[35%]'}`}>
-          <img className="h-full w-full object-cover" src={imgUrl} alt="" />
+      <div className={`${isCart ? 'mb-5' : ''} relative flex items-start`}>
+        <div className={`${isCart ? 'xs:max-w-[25%] md:max-w-[30%]' : 'lg:max-w-[33%] xl:max-w-[35%]'}`}>
+          <img
+            className={`${isCart ? 'h-[90px] min-w-[90px] md:h-40' : 'h-full'} rounded-md object-cover`}
+            src={imgUrl}
+            alt={name}
+          />
         </div>
-        <div className="w-full">
-          <h3 className={`${isCart ? 'w-full text-lg xs:text-xl xl:mr-7' : 'lg:text-sm xl:mr-7 xl:text-base'} `}>
+        <div className={`${isCart ? 'min-h-[90px] md:min-h-[160px]' : 'min-h-[98px]'} ml-5 grid`}>
+          <h3
+            className={`truncate-text ${
+              isCart ? 'w-full text-lg xs:text-xl xl:mr-7' : 'lg:text-sm xl:mr-7 xl:text-base'
+            }`}
+          >
             {name}
           </h3>
           <p
-            className={`mt-1 hidden ${isCart ? 'text-sm text-text-grey sm:block' : 'text-xs text-text-grey xl:block'}`}
+            className={`self-end ${
+              isCart ? 'text-sm text-text-grey sm:inline-block' : 'text-text-grey xl:inline-block'
+            }`}
           >
             {calories}kcal <br />
             {weight} g
@@ -138,8 +165,8 @@ export default function CartItem(props: ICartItemProps) {
           onClick={removeAllFromCart}
           type="button"
           className={`${
-            updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          } absolute right-0 top-0 cursor-pointer text-3xl font-semibold  text-text-grey transition-all ease-in hover:text-text-dark  ${
+            updateIsLoading ? 'animate-pulse' : ''
+          } absolute -top-2 right-0 cursor-pointer text-3xl font-semibold text-text-grey transition-all ease-in hover:text-text-dark  ${
             isCart ? 'leading-4 md:text-4xl' : ''
           }
           
@@ -147,13 +174,9 @@ export default function CartItem(props: ICartItemProps) {
         >
           ×
         </button>
-        <div className="mx-auto mt-7 grid w-[max-content] items-center justify-end md:mt-12">
+        <div className="ml-auto grid w-[max-content] items-center justify-end self-end">
           {oldPrice ? (
-            <span
-              className={`justify-self-end text-text-grey line-through ${
-                isCart ? 'md:text-lg' : 'lg:text-sm xl:text-lg'
-              }`}
-            >
+            <span className={`justify-self-end text-text-grey line-through ${isCart ? 'md:text-lg' : ''}`}>
               {oldPrice}
             </span>
           ) : null}
@@ -166,33 +189,37 @@ export default function CartItem(props: ICartItemProps) {
           </h3>
         </div>
       </div>
-      <div className="flex items-center justify-end gap-x-3 lg:mt-2 xl:mb-3 xl:mt-4 xl:gap-x-3">
-        <button
+      <div className="flex items-center justify-start gap-x-3 lg:mt-2 xl:mt-6 xl:gap-x-5">
+        <motion.button
+          whileTap={buttonTapAnimation}
+          transition={buttonTransition}
           disabled={updateIsLoading}
           onClick={removeOneFromCart}
           type="button"
           className={`${
-            updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl leading-[40px] text-accent transition-all duration-200 hover:bg-accent hover:text-primary ${
+            updateIsLoading ? 'animate-pulse' : ''
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest fill-accent px-2 text-center text-xl leading-[40px] hover:bg-accent/30 ${
             isCart ? 'md:h-9 md:w-9 md:text-2xl' : 'md:h-7 md:w-7 lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg'
           }`}
         >
-          -
-        </button>
-        <div className="text-lg sm:text-xl">{padZero(quantity)}</div>
-        <button
+          <MinusIcon />
+        </motion.button>
+        <div className="min-w-2 text-lg sm:text-xl">{padZero(quantity)}</div>
+        <motion.button
+          whileTap={buttonTapAnimation}
+          transition={buttonTransition}
           disabled={updateIsLoading}
           onClick={addToCart}
           type="button"
           className={`${
-            updateIsLoading ? 'animate-pulse cursor-wait' : ''
-          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest px-2 text-center text-xl text-accent transition-all duration-200 hover:bg-accent hover:text-primary sm:text-xl md:h-9  md:w-9 md:text-2xl ${
+            updateIsLoading ? 'animate-pulse' : ''
+          } flex h-7 w-7 items-center justify-center rounded-full bg-accent-lightest fill-accent px-2 text-center text-xl hover:bg-accent/30 sm:text-xl md:h-9  md:w-9 md:text-2xl ${
             isCart ? 'md:h-9 md:w-9 md:text-2xl' : 'md:h-7 md:w-7 lg:px-1 lg:text-sm xl:h-9 xl:w-9 xl:px-2 xl:text-lg'
           }`}
         >
-          +
-        </button>
+          <PlusIcon />
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 }

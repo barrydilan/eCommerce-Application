@@ -58,3 +58,42 @@ export const checkboxAnimation = {
     delay: 0.3,
   },
 };
+
+export const buttonTapAnimation = {
+  scale: 0.9,
+};
+
+export const buttonTransition = {
+  duration: 0.01,
+};
+
+export const itemInitial = {
+  opacity: 0,
+  scale: 0.7,
+};
+
+export const itemAnimation = {
+  opacity: 1,
+  scale: 1,
+};
+
+export const itemTransition = {
+  type: 'spring',
+  stiffness: 800,
+  damping: 35,
+};
+
+export const itemExit = {
+  opacity: 0,
+  scale: 0,
+};
+
+export const emptyCartInitial = { opacity: 0, scale: 0 };
+
+export const emptyCartAnimate = { opacity: 1, scale: 1 };
+
+export const emptyCartTransition = {
+  type: 'spring',
+  stiffness: 560,
+  damping: 20,
+};
