@@ -154,6 +154,9 @@ export default function Cart() {
           ? `
           mx-auto
           my-16
+          flex
+          h-full
+          flex-col
           px-3
           pb-16
           dark:text-primary
@@ -163,13 +166,15 @@ export default function Cart() {
           lg:mb-0
           `
           : `
+          flex
           h-full
+          flex-col
           overflow-y-auto
-          border-b-2
+          border-b-2 
           border-text-grey/30
           dark:text-primary
           lg:fixed
-          lg:w-[200px] 
+          lg:w-[200px]
           lg:px-10
           lg:py-28
           lg:pb-[210px]
@@ -179,7 +184,7 @@ export default function Cart() {
     >
       <h2 className="text-2xl">Your Order</h2>
       {isCartEmpty ? (
-        <div className="grid items-center justify-items-center">
+        <div className="m-auto grid justify-items-center self-center">
           <img width="250px" src={emptyCart} alt="" />
           <motion.p
             key="empty-cart"
