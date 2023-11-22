@@ -3,6 +3,8 @@
 *RS-School 🦥 eCommerce-Application. Stage 2 Final Task RS2023Q1* 🧙‍ <br>
 ️***SushiSushi** - Is not just your regular food delivery; it's a culinary journey to Japan's finest flavors, delivered to your doorstep 😉.* 
 
+**🏆🥳 One of the best RS2023Q1 [graduation projects](https://discord.com/channels/516715744646660106/1072962541812191423/1156268411123408926)!**
+
 **Task description** - [Task description](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/eCommerce-Application) 📝 <br>
 **Deployed project preview** - [SushiSushi](https://quiddlee.github.io/eCommerce-Application/) 👀
 
@@ -109,6 +111,42 @@ npm run build
 npm run preview
 ```
 
+# Features 🚀
+
+* **Browse the world of royal asian flavour meals! 😃🍣**
+
+![gif-1](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/3d3e9cfe-20cc-4f67-8890-08748e8fdc31)
+
+* **Choose the meal you like the most 😋🍴**
+
+<img src="https://github.com/Quiddlee/eCommerce-Application/assets/114234698/6e3ef9f9-ec15-421d-83f3-a9bdc2beeac2" width="800px">
+
+* **Fill your shopping cart 🛍️🛒**
+
+![gif-2](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/df2b1cb3-ba0d-43be-9aeb-80ecd9d5a16e)
+
+* **Search for your lovely meals! 🔍**
+
+![gif-3](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/fbd16e70-1095-4726-a915-758c8fb1d71d)
+
+* **Filter the results to make easier your search 😊**
+
+![gif-4](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/3cec92b9-0c43-4af6-98cc-054a1739fe9f)
+
+* **Sign up your account! 🌌**
+
+![gif-6](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/d5a7ccfb-8ad6-42a3-856b-3b53e6f0dc7c)
+
+* **Change your data at any time 👌**
+
+![gif-5](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/6e8138e9-66ef-468e-b009-6a1d1106ebeb)
+
+* **Beautiful Mobile App, and much much more features, try by yourself 😉!**
+
+<img src="https://github.com/Quiddlee/eCommerce-Application/assets/114234698/42d15ba0-1594-45e8-a54b-a36f503f81e5" height="500px">
+<img src="https://github.com/Quiddlee/eCommerce-Application/assets/114234698/4a5838f3-7cf1-4d48-868a-a2e706ee9903" height="500px">
+<img src="https://github.com/Quiddlee/eCommerce-Application/assets/114234698/4077c659-9d4e-4bda-a9f8-c80b55ee6f42" height="500px">
+
 # Technology Stack ⚙️
 
 ### **Developing 😍**
@@ -143,11 +181,7 @@ npm run preview
 ### **Design 🎨**
 * [Figma](https://www.figma.com/) - **The Design Tool** 🎨
 * [Project Design](https://www.figma.com/file/rYRBs7GD0vDQDjgjU0n972/eCommerce-Application-%F0%9F%8C%90?type=design&node-id=0%3A1&mode=design&t=asbvxijfRHlGg8Uz-1) - **The Project Design** 😉
-![img_9](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/2bb48054-8bbb-4e70-89f4-e1446e47f665)
-
-### **Version Control 📝**
-* [Git](https://git-scm.com/) - **The Version Control System** 🗂️
-* [GitHub](https://github.com/) - **The Version Control Hosting** 🗄️
+![img_9](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/0d1edaa7-1eb5-4fb2-ad19-1589037968b9)
 
 ### **Git Methodology**
 * [Git Flow](https://datasift.github.io/gitflow/IntroducingGitFlow.html) - **The Git Flow** 🌊
@@ -155,25 +189,22 @@ npm run preview
 ### **Architecture 🏛️**
 * [Feature Sliced Design](https://feature-sliced.design/) - **The Architecture** 🏛️
 
-### **Hosting 🌐**
-* [GitHub Pages](https://pages.github.com/) - **The Hosting** 🏠
-
 ### **API 📡**
 * [Commercetools](https://docs.commercetools.com/) - **The API** 🦖
 
-![img_4](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/e4338e4d-7352-44b3-8ef5-e3aa3063ca63)
+![img_4](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/8b582001-a67d-4d09-b8a7-2ebea68d542b)
 
 ### **CI/CD 🚀**
 * [GitHub Actions](https://pages.github.com/) - **The CI/CD** 🕊️
 
-![img_5](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/0d36c736-efa8-4116-9aa8-67f56b443c40)
+![img_5](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/84db0b98-fd9d-4717-a1d3-14919ca63a46)
 
 ### **Project Management 📈**
 * [GitHub Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) - **The Project Management Tool** 📊
 
-![img_6](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/314fd403-6eaf-49b5-a78a-d7ccfcced64f)
-![image](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/4e282f2d-e225-4e18-95b8-67ce102a0459)
-![img_8](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/2646267e-cba1-4f02-888d-cfe85ff477b3)
+![img_6](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/7cb7743d-2a30-4d68-8c19-2d539e0821c4)
+![img_1](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/0082f31f-26fe-4458-9f6b-fcfcc5f079eb)
+![img_8](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/2dca6b9b-e2b1-4df2-80ab-f53aff0ccd8a)
 
 ### **Communication 📣**
 * [Discord](https://discord.com/) - **The 3xWeek Meeting Communication Tool** 🗣️
@@ -181,31 +212,80 @@ npm run preview
 
 ### **Project planing 🦍**
 * [Lucidchart](https://www.lucidchart.com/) - **The Project planing Tool** 🧠
-![eCommerce-Application](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/90446667-f0b5-47ec-a083-f17982cd7137)
+![eCommerce-Application](https://github.com/Quiddlee/eCommerce-Application/assets/114234698/5749689e-e893-4359-ae15-15bf3cf968dd)
 
 # Core Development Team 👨‍💻
 
-### **Bohdan Shcherbyna** ([Quiddlee](https://github.com/Quiddlee)) - **Front-end Developer / Team Lead** 🦁
-### Contribution:
-* Working with API, Managing App State, Animations, UI / UX Design, Code Review, Testing, Deployment, Documentation, CI/CD ✨.
+### **Bohdan Shcherbyna** - **Front-end Developer / Team Lead** 🦁
+
+<img height="400px" src="src/assets/img/Bogdan.jpg">
+
+### Contribution 🪄:
+* Working with the API 🌐
+* Managing the Redux store 🏪
+* Animations 🦕
+* UI/UX Design 🍭
+* Code review 🔫
+* Testing 🧪
+* Deployment 🚀
+* Documentation 📃
+* CI/CD ✨
+
+### Contact 👋:
+* Email - ```bogdanscherbinadev@gmail.com``` 📬
+* Linkedin - [Bohdan Shcherbyna](https://www.linkedin.com/in/quiddle/) ✒️
+* Telegram - [@Quiddle](https://t.me/quiddle) 📱
+* GitHub - [Quiddlee](https://github.com/Quiddlee) 🦉
 
 #
 
-### **Oleksii Drohachov** ([Tedzury](https://github.com/Tedzury)) - **Front-end Developer** 🦈
-### Contribution:
-* Managing App router, Code Review, Documentation, Working with CommerceTools data, Managing App Products, Fully implement user profile page, UI Layout, Project setup, Working with API 🩺.
+### **Oleksii Drohachov** - **Front-end Developer** 🦈
+
+<img height="400px" src="src/assets/img/Oleksii.jpg">
+
+### Contribution 🪄:
+* Managing the app router 🛖
+* Code review 🔫
+* Documentation 📃
+* Working with CommerceTools data 💀
+* Managing app products 💎
+* Fully implement user profile page 💪
+* UI layout 🦥
+* Project setup 💫
+* Working with the API 🩺
+
+### Contact 👋:
+* Email - ```asdrogachev@gmail.com``` 📬
+* Linkedin - [Oleksii Drohachov](https://www.linkedin.com/in/oleksii-drohachov-b127a9245/) ✒️
+* Telegram - [@Tedzury](https://t.me/tedzury) 📱
+* GutHub - [Tedzury](https://github.com/Tedzury) 🦉
 
 #
 
-### **Harry Holubiev** ([barrydilan](https://github.com/barrydilan)) - **Front-end Developer** 🐲
-### Contribution:
-* Designed Product Card, Product Page, Logo and animations, implemented some features in Cart component, Managing App router, Code Review, Documentation, UI Layout, Working with API 🪄.
+### **Harry Holubiev** - **Front-end Developer** 🐲
+
+<img height="400px" src="src/assets/img/Harry.jpg">
+
+### Contribution 🪄:
+* Designed product card 🎴
+* Product page 📄
+* Logo and animations 🍣
+* implemented some features in Cart component 🛒
+* Managing the app router 🛖
+* Code review 🔫
+* Documentation 📃
+* UI Layout 🦥
+* Working with the API 🪄
+
+### Contact 👋:
+* Email - ```queharambe@gmail.com``` 📬
+* GitHub - [barrydilan](https://github.com/barrydilan) 🦉
 
 # Adding products data to commerce tools 🦩:
 Here you can find detailed instructions on how to add products data to commercetools 🕵️. To add data with products in commercetools we prepared [fully setted up repo](https://github.com/Tedzury/commercetools-sushisushi-data) for you 🫂.
 
 If you want exactly the same products as we have 😏:
-* You need to follow all the [Installation and Preparation](#Installation-and-Preparation) steps. ⛔
+* You need to follow all the [Installation and Preparation](#Installation And Preparation) steps. ⛔
 * Aaand type a few 🤏 commands into the terminal to upload all the data into your commercetools account! 🤩
 
 
